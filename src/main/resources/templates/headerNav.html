@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><img src="/public/img/icon/black_chap.png" style="height: 50px; "></a>
+    <!--소형창 토글 버튼-->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!--소형창 토글 버튼 -->
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+
+      <ul class="navbar-nav">
+        <th:block th:if="${session.loginUser==null}">
+          <li class="nav-item d-flex border-1">
+            <a class="nav-link me-2 border" href="/user/login.do">로그인</a>
+            <a class="nav-link me-2 border" href="/user/signup.do">회원가입</a>
+          </li>
+        </th:block>
+        <th:block th:if="${session.loginUser!=null}">
+          <li class="nav-item d-flex border-1">
+            <a class="nav-link me-2 border"
+               th:href="@{'/user/{userId}/detail.do'(userId=${session.loginUser.userId})}">
+              <span th:text="${session.loginUser.userId}"></span>
+              (<span th:text="${session.loginUser.name}"></span>)
+            </a>
+            <a class="nav-link border" href="/user/logout.do">로그아웃</a>
+          </li>
+        </th:block>
+      </ul>
+    </div>
+  </div>
+</nav>
+<th:block th:if="${msg!=null || session.msg !=null}">
+  <div id="actionModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">액션 메세지</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="${msg}"></p>
+          <p th:text="${session.msg}"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--타임리프 문서에서 session 을 삭제할 수 없다.-->
+  <script th:inline="javascript">
+    const actionModal=document.getElementById("actionModal");
+    new bootstrap.Modal(actionModal).show();
+  </script>
+</th:block>
+
+</html>
