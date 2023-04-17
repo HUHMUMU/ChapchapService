@@ -1,38 +1,119 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<nav class="navbar navbar-expand-lg bg-light" style="background-color: #ffe3a9">
+<style>
+  #tagListCont.list-group-item:hover{
+    background-color:#31363b !important; ;
+  }
+</style>
+<nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/"><img src="/public/icon/black_chap.png" style="height: 50px; "></a>
-    <!--소형창 토글 버튼-->
+    <a class="navbar-brand" href="/">
+      <img src="/public/img/logo.png" alt="" width="120px" height="40px" style="margin-top: 10px">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <!--소형창 토글 버튼 -->
-<!--커밋용 주석-->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-
-      <ul class="navbar-nav">
-        <th:block th:if="${session.loginUser==null}">
-          <li class="nav-item d-flex border-1">
-            <a class="nav-link me-2 border" href="/user/login.do">로그인</a>
-            <a class="nav-link me-2 border" href="/user/signup.do">회원가입</a>
-          </li>
-        </th:block>
-        <th:block th:if="${session.loginUser!=null}">
-          <li class="nav-item d-flex border-1">
-            <a class="nav-link me-2 border"
-               th:href="@{'/user/{userId}/detail.do'(userId=${session.loginUser.userId})}">
-              <span th:text="${session.loginUser.userId}"></span>
-              (<span th:text="${session.loginUser.name}"></span>)
-            </a>
-            <a class="nav-link border" href="/user/logout.do">로그아웃</a>
-          </li>
-        </th:block>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/board/list.do">게시판</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/board/register.do">
+            게시글 등록
+            <i class="bi bi-plus-square"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasSearch" role="button" aria-controls="offcanvasExample">
+            해시태그 검색
+            <i class="bi bi-search"></i>
+          </a>
+        </li>
       </ul>
+
+      <div class="d-flex">
+        <i class="nav-link" href="/user/login.do">
+          <!--로그인 아이디/회원가입 아이디-->
+          <a class="bi bi-person" style="font-size: 30px; margin-right: 10px;"></a>
+        </i>
+        <i class="nav-link">
+          <!--로그인 아이디/회원가입 아이디-->
+          <a class="bi bi-person-add" href="/user/signup.do" style="font-size: 30px; margin-right: 5px"></a>
+        </i>
+          <th:block th:if="${session.loginUser!=null}">
+            <li class="breadcrumb-item">
+              <a class="nav-link" th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.uId})}">
+                <span th:text="${session.loginUser.uId}"></span>
+                (<span th:text="${session.loginUser.name}"></span>)
+              </a>
+            </li>
+            <li class="breadcrumb-item">
+              <a class="nav-link" href="/user/logout.do">로그아웃</a>
+            </li>
+          </th:block>
+      </div>
     </div>
   </div>
 </nav>
-<th:block th:if="${msg!=null || session.msg !=null}">
+
+<div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasSearch" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">해시태그 검색</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="input-group">
+      <label class="input-group-text text-light bg-dark">
+        <i class="bi bi-hash"></i>
+      </label>
+      <input type="text" id="searchTagInput" class="form-control" placeholder="해시태그">
+    </div>
+    <hr>
+    <div id="tagListCont" class="list-group"></div>
+  </div>
+</div>
+<script>
+  function tagListComponent (tagObj) {
+    return `
+      <a href="/board/${tagObj.tag}/searchTag.do" class="list-group-item text-bg-dark d-flex align-items-center" >
+        <i class="bi bi-hash border rounded-circle fs-2 d-flex justify-content-center align-items-center" style="width: 45px; height: 45px"></i>
+        <div class="ms-3">
+          <div>
+            <i class="bi bi-hash"></i>
+            <span>${tagObj.tag}</span>
+          </div>
+          <div class="text-white text-opacity-75">
+            <small>게시물</small>
+            <small>${tagObj.bCnt}</small>
+          </div>
+        </div>
+      </a>`;
+  }
+  const searchTagInput=document.getElementById("searchTagInput");
+  const tagListCont = document.getElementById("tagListCont");
+  searchTagInput.addEventListener("input",async (e) => {
+    let tag=searchTagInput.value;
+    if (tag.length>0) {
+      const tags=await searchTags(tag);
+      if (tags) {
+        tagListCont.innerHTML="";
+        for (const tagObj of tags) {
+          tagListCont.insertAdjacentHTML("beforeend",tagListComponent(tagObj));
+        }
+      }
+    }
+  });
+  async function searchTags (tag) {
+    let url=`/hashtag/${tag}/search.do`;
+    const resp=await fetch(url);
+    if (resp.status===200) {
+      return await resp.json();
+    }
+  }
+</script>
+<!-- 타임리프 문서에서 session 을 삭제할 수 없다. -->
+<th:block th:if="${msg!=null || session.msg!=null}">
   <div id="actionModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -45,16 +126,10 @@
           <p th:text="${session.msg}"></p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
         </div>
       </div>
     </div>
   </div>
-  <!--타임리프 문서에서 session 을 삭제할 수 없다.-->
-  <script th:inline="javascript">
-    const actionModal=document.getElementById("actionModal");
-    new bootstrap.Modal(actionModal).show();
-  </script>
 </th:block>
-
 </html>
