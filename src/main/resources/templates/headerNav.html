@@ -43,8 +43,8 @@
         </i>
           <th:block th:if="${session.loginUser!=null}">
             <li class="breadcrumb-item">
-              <a class="nav-link" th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.uId})}">
-                <span th:text="${session.loginUser.uId}"></span>
+              <a class="nav-link" th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.userId})}">
+                <span th:text="${session.loginUser.userId}"></span>
                 (<span th:text="${session.loginUser.name}"></span>)
               </a>
             </li>
