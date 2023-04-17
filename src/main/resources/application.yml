@@ -8,18 +8,20 @@ spring:
   devtools:
     livereload:
       enabled: true
+    restart:
+      enabled: true
   #    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-#  servlet:
-#    multipart:
-#      location: ${user.dir}/src/main/resources/static/public/img
-#      max-file-size: 1MB
-#      max-request-size: 5MB
-#img:
-#  upload:
-#    path: ${user.dir}/src/main/resources/static/public/img
+  servlet:
+    multipart:
+      location: ${user.dir}/src/main/resources/static/public/img
+      max-file-size: 1MB
+      max-request-size: 5MB
+img:
+  upload:
+    path: ${user.dir}/src/main/resources/static/public/img
 #
-#static:
-#  path: ${user.dir}/src/main/resources/static
+static:
+    path: ${user.dir}/src/main/resources/static
 
 server:
   port: 8070

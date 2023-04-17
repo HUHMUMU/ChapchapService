@@ -34,7 +34,8 @@
                         youtube_url=#{youtubeUrl},
                         introduce=#{introduce},
                         birth=#{birth},
-                        gender=#{gender}
+                        gender=#{gender},
+                        profile_img=#{profileimg}
         where user_id=#{userId}
     </update>
     <update id="setLoginUserId">

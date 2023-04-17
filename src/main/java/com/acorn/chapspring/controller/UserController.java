@@ -8,11 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 @AllArgsConstructor //모든 필드를 pojo 형식의 생성자로 자동 생성
 @Controller //< @Component 요청과 응답을 처리 가능
@@ -23,6 +25,13 @@ public class UserController {
     // "/user/login.do" 동적페이지 정의
 
     private UserService userService;
+
+//    @Value("${img.upload.path}")
+//    private String uploadPath;
+//
+//    @Value("${static.path}")
+//    private String staticPath;
+
     @GetMapping("/dropout.do")
     public String dropoutForm(
             @SessionAttribute UserDto loginUser){
@@ -106,8 +115,11 @@ public class UserController {
         UserDto user=userService.detail(userId);
         modelAndView.setViewName("/user/detail");
         modelAndView.addObject("user",user);
+
+
         return  modelAndView;
     }
+
 
 
 
@@ -199,5 +211,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("msg","아이디나 패스워드를 확인하세요!");
             return "redirect:/user/login.do";
         }
+
+
     }
 }
