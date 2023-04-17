@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 상세 페이지</title>
+</head>
+
+<style>
+    .box0{/*대외부 박스*/
+        border : 1px solid black;
+        display: flex;
+        flex-direction: column;
+    }
+    .box1{</*섹션 1 박스,비동기*/
+        border: 1px solid black;
+    }
+
+    .box2{/*섹션 2 박스,ajax*/
+        border: 1px solid black;
+    }
+</style>
+<div layout:fragment="content" >
+    <!--비동기 정보 섹션-->
+    <div>
+        <section>
+
+        <!--
+       유저 좌측 정보
+       1. 프로필 사진
+       2. 닉네임
+       3. 팔로우 버튼
+   -->
+        <div>
+            <!--이미지 틀-->
+            <div th:if="${user.profileimg!=null}">
+                <!--이미지가 존재할 경우-->
+                <img th:src="@{'{path}'(path=${user.profileimg})}" class="img-thumbnail" alt="이미지">
+            </div>
+            <div th:if="${user.profileimg==null}">
+                <img src="/public/icon/usericon.png" alt="기본 아이콘">
+                <!--
+                <i class="fa-solid fa-user"></i>
+                -->
+            </div>
+            <!--나머지 틀-->
+            <div>
+                <p>
+                    유저 닉네임
+                </p>
+                <button>팔로우+</button>
+            </div>
+
+        </div>
+        <div style="border: 1px solid black;">
+            <p>팔로워</p>
+            <p>팔로잉</p>
+            <p>자기소게</p>
+            <div>뱃지</div>
+            <ul>
+                <li>페이스북</li>
+                <li>인스타</li>
+                <li>유튜브</li>
+                <li>공유</li>
+                <li>챱스토리</li>
+            </ul>
+        </div>
+
+
+        <!--
+            유저 우측 정보
+            1. 팔로워/팔로잉
+            2. 유저 자기소개
+            3. 유저 등급 및 뱃지
+            4. 유저 링크
+        -->
+
+        </section>
+
+        <!--ajax 정보 섹션-->
+        <section>
+            <nav>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="waitingListTab" data-bs-toggle="pill"
+                                data-bs-target="#waitingList" type="button" onclick="div1()"
+                                role="tab" aria-controls="waitingList" aria-selected="true">
+                            버튼1
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button
+                                class="nav-link" id="jjimListTab" data-bs-toggle="pill"
+                                data-bs-target="#jjimList" type="button" role="tab" onclick="div2()"
+                                aria-controls="jjimList" aria-selected="false">
+                            버튼2
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button
+                                class="nav-link" id="reviewListTab" data-bs-toggle="pill"
+                                data-bs-target="#reviewList" type="button" role="tab" onclick="div3()"
+                                aria-controls="reviewList" aria-selected="false">
+                            버트3
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button
+                                class="nav-link" id="recommandListTab" data-bs-toggle="pill"
+                                data-bs-target="#recommandList" type="button" role="tab" onclick="div4()"
+                                aria-controls="recommandList" aria-selected="false">
+                            버튼4
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div th:include="/user/waitingList" class="tab-pane fade show active" id="waitingList" role="tabpanel"
+                            aria-labelledby="waitingListTab" tabindex="0">
+                    </div>
+                    <div th:include="/user/jjimList" class="tab-pane fade" id="jjimList" role="tabpanel"
+                            aria-labelledby="jjimListTab" tabindex="0">
+
+                    </div>
+                    <div th:include="/user/reviewList" class="tab-pane fade" id="reviewList" role="tabpanel"
+                            aria-labelledby="reviewListTab" tabindex="0">
+                        <p>ajax 구현 부분?</p>
+                        <p th:text="${user}"></p>
+                    </div>
+                    <div th:include="/user/recommandList" class="tab-pane fade" id="recommandList" role="tabpanel"
+                         aria-labelledby="recommandListTab" tabindex="0">
+                        <p>ajax 구현 부분?</p>
+                        <p th:text="${user}"></p>
+                    </div>
+                </div>
+            </nav>
+            <div>
+                <p>
+                    <a th:href="@{'/user/{userId}/modify.do'(userId=${user.userId})}">수정페이지</a>
+                </p>
+            </div>
+        </section>
+
+
+    </div>
+
+
+
+</div>
+</html>

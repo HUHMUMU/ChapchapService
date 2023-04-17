@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.UserMapper">
+<resultMap id="UserMap" type="UserDto">
+    <id column="user_id" property="userId"/>
+    <result column="nickname" property="nickname"/>
+    <result column="pw" property="pw"/>
+    <result column="name" property="name"/>
+    <result column="birth" property="birth"/>
+    <result column="gender" property="gender"/>
+    <result column="address" property="address"/>
+    <result column="detail_address" property="detailAddress"/>
+    <result column="email" property="email"/>
+    <result column="insta_url" property="instaUrl"/>
+    <result column="face_url" property="faceUrl"/>
+    <result column="youtube_url" property="youtubeUrl"/>
+    <result column="profile_img" property="profileimg"/>
+    <result column="introduce" property="introduce"/>
+    <result column="u_rstatus" property="urStatus"/>
+</resultMap>
+    <insert id="insertOne" parameterType="UserDto">
+        insert into users (user_id, nickname, pw, name, birth, gender, address, detail_address, email)
+            VALUE (#{userId}, #{nickname}, #{pw}, #{name}, #{birth}, #{gender}, #{address}, #{detailAddress}, #{email})
+    </insert>
+    <update id="updateOne" parameterType="UserDto">
+        update users set
+                        nickname=#{nickname},
+                        pw=#{pw},
+                        address=#{address},
+                        detail_address=#{detailAddress},
+                        email=#{email},
+                        insta_url=#{instaUrl},
+                        face_url=#{faceUrl},
+                        youtube_url=#{youtubeUrl},
+                        introduce=#{introduce},
+                        birth=#{birth},
+                        gender=#{gender},
+                        profile_img=#{profileimg}
+        where user_id=#{userId}
+    </update>
+    <update id="setLoginUserId">
+        set @loginUserId=#{uId}
+    </update>
+    <update id="setLoginUserIdIsNull">
+        set @loginUserId=Null
+    </update>
+    <delete id="deleteByUserIdAndPw" parameterType="UserDto">
+        delete from users where user_id=#{userId} and pw=#{pw}
+    </delete>
+    <select id="findByUserId" resultMap="UserMap">
+        select * from users where user_id=#{userId}
+    </select>
+    <select id="findByUserIdAndPw" resultMap="UserMap">
+        select * from users where user_id=#{userId} and pw=#{pw}
+    </select>
+    <select id="findByUserIdByEmailAndName" resultType="java.lang.String">
+        select user_id from users where email=#{email} and name=#{name}
+    </select>
+
+
+</mapper>
