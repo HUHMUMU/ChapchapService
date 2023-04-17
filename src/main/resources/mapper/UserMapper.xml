@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.chapchapserviceproject.mapper.UserMapper">
+    <resultMap id="UserMap" type="UserDto">
+        <id column="user_id" property="userId"/>
+        <result column="nickname" property="nickName"/>
+        <result column="pw" property="pw"/>
+        <result column="name" property="name"/>
+        <result column="birth" property="birth"/>
+        <result column="gender" property="gender"/>
+        <result column="address" property="address"/>
+        <result column="detail_address" property="detailAddress"/>
+        <result column="email" property="email"/>
+    </resultMap>
+    <!--회원 가입 mapper-->
+    <insert id="insertOne" parameterType="UserDto">
+        INSERT INTO users(user_id, nickname, pw, name, birth, gender, address, detail_address, email)
+        VALUE (#{userId}, #{nickName} ,#{pw}, #{name}, #{birth}, #{gender}, #{address}, #{detailAddress}, #{email})
+    </insert>
+    <update id="updateOne"></update>
+    <update id="updatePwByStoreId"></update>
+    <delete id="deleteByStoreIdAndPw"></delete>
+    <select id="findByStoreId" resultType="com.example.chapchapserviceproject.dto.UserDto"></select>
+    <select id="findByStoreIdAndPw" resultType="com.example.chapchapserviceproject.dto.UserDto"></select>
+    <select id="findStoreIdByEmailAndPhoneAndName" resultType="java.lang.String"></select>
+</mapper>
