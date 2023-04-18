@@ -2,6 +2,8 @@ package com.acorn.chapspring.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class UserDto {
     private String userId;

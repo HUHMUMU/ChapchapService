@@ -1,7 +1,12 @@
 package com.acorn.chapspring.mapper;
 
+import com.acorn.chapspring.dto.JjimManageDto;
+import com.acorn.chapspring.dto.ReviewDto;
 import com.acorn.chapspring.dto.UserDto;
+import com.acorn.chapspring.dto.VisitedStoreDto;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -14,4 +19,7 @@ public interface UserMapper {
     int deleteByUserIdAndPw(UserDto user);//유저 삭제
     int setLoginUserId(String userId);
     int setLoginUserIdIsNull();
+    List<VisitedStoreDto> findAllVisited(String userId);
+    List<ReviewDto> findAllReviewed(String userId);
+    List<JjimManageDto> findAllJjim(String userId);
 }

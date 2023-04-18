@@ -7,21 +7,6 @@
     <meta charset="UTF-8">
     <title>유저 상세 페이지</title>
 </head>
-
-<style>
-    .box0{/*대외부 박스*/
-        border : 1px solid black;
-        display: flex;
-        flex-direction: column;
-    }
-    .box1{</*섹션 1 박스,비동기*/
-        border: 1px solid black;
-    }
-
-    .box2{/*섹션 2 박스,ajax*/
-        border: 1px solid black;
-    }
-</style>
 <div layout:fragment="content" >
     <!--비동기 정보 섹션-->
     <div>
@@ -47,8 +32,8 @@
             </div>
             <!--나머지 틀-->
             <div>
-                <p>
-                    유저 닉네임
+                <p th:text="${user.nickname}">
+
                 </p>
                 <button>팔로우+</button>
             </div>
@@ -82,10 +67,10 @@
         <!--ajax 정보 섹션-->
         <section>
             <nav>
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" >
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="waitingListTab" data-bs-toggle="pill"
-                                data-bs-target="#waitingList" type="button" onclick="div1()"
+                                data-bs-target="#waitingList" type="button"
                                 role="tab" aria-controls="waitingList" aria-selected="true">
                             버튼1
                         </button>
@@ -93,7 +78,7 @@
                     <li class="nav-item" role="presentation">
                         <button
                                 class="nav-link" id="jjimListTab" data-bs-toggle="pill"
-                                data-bs-target="#jjimList" type="button" role="tab" onclick="div2()"
+                                data-bs-target="#jjimList" type="button" role="tab"
                                 aria-controls="jjimList" aria-selected="false">
                             버튼2
                         </button>
@@ -101,7 +86,7 @@
                     <li class="nav-item" role="presentation">
                         <button
                                 class="nav-link" id="reviewListTab" data-bs-toggle="pill"
-                                data-bs-target="#reviewList" type="button" role="tab" onclick="div3()"
+                                data-bs-target="#reviewList" type="button" role="tab"
                                 aria-controls="reviewList" aria-selected="false">
                             버트3
                         </button>
@@ -109,26 +94,26 @@
                     <li class="nav-item" role="presentation">
                         <button
                                 class="nav-link" id="recommandListTab" data-bs-toggle="pill"
-                                data-bs-target="#recommandList" type="button" role="tab" onclick="div4()"
+                                data-bs-target="#recommandList" type="button" role="tab"
                                 aria-controls="recommandList" aria-selected="false">
                             버튼4
                         </button>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
-                    <div th:include="/user/waitingList" class="tab-pane fade show active" id="waitingList" role="tabpanel"
+                    <div th:include="/user/detail/waitingList" class="tab-pane fade show active" id="waitingList" role="tabpanel"
                             aria-labelledby="waitingListTab" tabindex="0">
                     </div>
-                    <div th:include="/user/jjimList" class="tab-pane fade" id="jjimList" role="tabpanel"
+                    <div th:include="/user/detail/jjimList" class="tab-pane fade" id="jjimList" role="tabpanel"
                             aria-labelledby="jjimListTab" tabindex="0">
 
                     </div>
-                    <div th:include="/user/reviewList" class="tab-pane fade" id="reviewList" role="tabpanel"
+                    <div th:include="/user/detail/reviewList" class="tab-pane fade" id="reviewList" role="tabpanel"
                             aria-labelledby="reviewListTab" tabindex="0">
                         <p>ajax 구현 부분?</p>
                         <p th:text="${user}"></p>
                     </div>
-                    <div th:include="/user/recommandList" class="tab-pane fade" id="recommandList" role="tabpanel"
+                    <div th:include="/user/detail/recommandList" class="tab-pane fade" id="recommandList" role="tabpanel"
                          aria-labelledby="recommandListTab" tabindex="0">
                         <p>ajax 구현 부분?</p>
                         <p th:text="${user}"></p>

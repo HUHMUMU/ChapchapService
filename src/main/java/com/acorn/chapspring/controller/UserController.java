@@ -1,6 +1,8 @@
 package com.acorn.chapspring.controller;
 
+import com.acorn.chapspring.dto.ReviewDto;
 import com.acorn.chapspring.dto.UserDto;
+import com.acorn.chapspring.dto.VisitedStoreDto;
 import com.acorn.chapspring.lib.AESEncryption;
 import com.acorn.chapspring.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -14,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 
 @AllArgsConstructor //모든 필드를 pojo 형식의 생성자로 자동 생성
@@ -113,8 +117,13 @@ public class UserController {
         }
 
         UserDto user=userService.detail(userId);
+        List<VisitedStoreDto> visited=userService.visited(userId);
+        List<ReviewDto> reviewed=userService.reviewed(userId);
+
         modelAndView.setViewName("/user/detail");
         modelAndView.addObject("user",user);
+        modelAndView.addObject("visited",visited);
+        modelAndView.addObject("reviewed",reviewed);
 
 
         return  modelAndView;

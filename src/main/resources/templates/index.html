@@ -5,5 +5,17 @@
       layout:decorate="~{layout}">
 <div layout:fragment="content">
   <h5>스프링 프로젝트 서비스 페이지</h5>
+  <div>
+    <a th:href="@{'/user/user01/detail.do'}">유저 1</a>
+    참고 : th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.userId})}"
+  </div>
+  <div>
+    <a th:href="@{'/user/user02/detail.do'}">유저 2</a>
+    참고 : th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.userId})}"
+  </div>
+  <div>
+    <a th:href="@{'/user/user03/detail.do'}">유저 3</a>
+    참고 : th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.userId})}"
+  </div>
 </div>
 </html>

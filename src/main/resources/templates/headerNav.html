@@ -33,17 +33,21 @@
       </ul>
 
       <div class="d-flex">
-        <i class="nav-link" href="/user/login.do">
-          <!--로그인 아이디/회원가입 아이디-->
-          <a class="bi bi-person" style="font-size: 30px; margin-right: 10px;"></a>
-        </i>
-        <i class="nav-link">
-          <!--로그인 아이디/회원가입 아이디-->
-          <a class="bi bi-person-add" href="/user/signup.do" style="font-size: 30px; margin-right: 5px"></a>
-        </i>
+        <th:block th:if="${session.loginUser==null}">
+          <i class="nav-link">
+            <!--로그인 아이디/회원가입 아이디-->
+            <a class="bi bi-person"  href="/user/login.do" style="font-size: 30px; margin-right: 10px;"></a>
+          </i>
+          <i class="nav-link">
+            <!--로그인 아이디/회원가입 아이디-->
+            <a class="bi bi-person-add" href="/user/signup.do" style="font-size: 30px; margin-right: 5px"></a>
+          </i>
+
+        </th:block>
+
           <th:block th:if="${session.loginUser!=null}">
             <li class="breadcrumb-item">
-              <a class="nav-link" th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.userId})}">
+              <a class="nav-link" th:href="@{'/user/{userId}/detail.do'(userId=${session.loginUser.userId})}">
                 <span th:text="${session.loginUser.userId}"></span>
                 (<span th:text="${session.loginUser.name}"></span>)
               </a>
