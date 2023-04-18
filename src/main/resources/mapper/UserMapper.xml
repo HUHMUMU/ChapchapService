@@ -57,4 +57,7 @@
         select user_id from users where email=#{email} and name=#{name}
     </select>
 
+    <select id="idCheck" resultType="int">
+        SELECT COUNT(*) FROM users WHERE user_id=#{userId}
+    </select>
 </mapper>

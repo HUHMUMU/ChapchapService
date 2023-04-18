@@ -29,6 +29,11 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
+    public int idCheck(String userId) throws Exception {
+        return userMapper.idCheck(userId);
+    }
+
+    @Override
     public int modify(UserDto user){
         return userMapper.updateOne(user);
     }

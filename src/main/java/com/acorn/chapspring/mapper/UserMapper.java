@@ -14,4 +14,6 @@ public interface UserMapper {
     int deleteByUserIdAndPw(UserDto user);//유저 삭제
     int setLoginUserId(String userId);
     int setLoginUserIdIsNull();
+    //아이디 중복 검사
+    int idCheck(String userId);
 }

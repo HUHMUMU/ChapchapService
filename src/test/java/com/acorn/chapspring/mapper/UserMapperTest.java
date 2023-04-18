@@ -67,6 +67,7 @@ class UserMapperTest {
     }
 
     @Test
+    @Order(4)
     void insertOne() {
         user=new UserDto();
         user.setUserId("user21");
@@ -91,5 +92,12 @@ class UserMapperTest {
         user.setPw("password222");
         int delete= userMapper.deleteByUserIdAndPw(user);
         assertEquals(delete,1);
+    }
+    @Test
+    public void memberIdChk() throws Exception {
+        String id="test01"; //존재하는 아이디
+        String idx="test02"; //존재하지 않는 아이디
+        userMapper.idCheck(id);
+        userMapper.idCheck(idx);
     }
 }

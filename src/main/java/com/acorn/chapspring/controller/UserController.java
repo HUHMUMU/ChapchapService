@@ -8,12 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @AllArgsConstructor //모든 필드를 pojo 형식의 생성자로 자동 생성
@@ -124,24 +125,25 @@ public class UserController {
 
 
     @GetMapping("/signup.do")
-    public void signupForm(){}
+    public void signupForm() {}
     @PostMapping("/signup.do")
     public String signupAction(
             @ModelAttribute UserDto user,
-            RedirectAttributes redirectAttributes){
+            RedirectAttributes redirectAttributes) {
         int signup=0;
         String errorMsg=null;
         try {
             signup=userService.signup(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e);
             errorMsg=e.getMessage();
         }
-        if(signup>0){
-            redirectAttributes.addFlashAttribute("msg","회원가입을 축하합니다!! 로그인 하세요.");
+
+        if (signup>0) {
+            redirectAttributes.addFlashAttribute("msg","회원가입 성공");
             return "redirect:/";
-        }else{
-            redirectAttributes.addFlashAttribute("msg","회원가입 실패 에러:"+errorMsg);
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "회원 가입 실패 : " + errorMsg);
             return "redirect:/user/signup.do";
         }
     }
@@ -211,7 +213,24 @@ public class UserController {
             redirectAttributes.addFlashAttribute("msg","아이디나 패스워드를 확인하세요!");
             return "redirect:/user/login.do";
         }
+    }
+    //아이디 중복 체크
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    @GetMapping(value = "/memberIdChk.do")
+    public @ResponseBody String memberIdChkPOST(String userId) throws Exception {
 
+//        logger.info("memberIdChkPOST() 진입");
+
+        logger.info("memberIdChkPOST() 진입");
+        int result=userService.idCheck(userId);
+
+        logger.info("결과값 = " + result);
+
+        if (result!=0) {
+            return "fail"; //중복 아이디 있음
+        } else {
+            return "success"; //중복 아이디 없음
+        }
     }
 }
