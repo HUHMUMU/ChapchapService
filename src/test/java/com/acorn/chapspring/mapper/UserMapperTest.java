@@ -1,12 +1,15 @@
 package com.acorn.chapspring.mapper;
 
 import com.acorn.chapspring.dto.UserDto;
+import com.acorn.chapspring.dto.VisitedStoreDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -15,6 +18,7 @@ class UserMapperTest {
     @Autowired
 
     private UserMapper userMapper;
+    private static VisitedStoreDto visited;
     private static UserDto user;
     @Test
     @Order(1)
@@ -67,7 +71,6 @@ class UserMapperTest {
     }
 
     @Test
-    @Order(4)
     void insertOne() {
         user=new UserDto();
         user.setUserId("user21");
@@ -94,10 +97,10 @@ class UserMapperTest {
         assertEquals(delete,1);
     }
     @Test
-    public void memberIdChk() throws Exception {
-        String id="test01"; //존재하는 아이디
-        String idx="test02"; //존재하지 않는 아이디
-        userMapper.idCheck(id);
-        userMapper.idCheck(idx);
+    void findAll() {
+        visited=new VisitedStoreDto();
+        visited.setUserId("admin");
+        List<VisitedStoreDto> find=userMapper.findAllVisited(visited.getUserId());
+        System.out.println(find);
     }
 }

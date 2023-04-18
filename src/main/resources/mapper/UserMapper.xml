@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acorn.chapspring.mapper.UserMapper">
+<!--Users 테이블맵-->
     <resultMap id="UserMap" type="UserDto">
         <id column="user_id" property="userId"/>
         <result column="nickname" property="nickname"/>
@@ -18,10 +19,40 @@
         <result column="introduce" property="introduce"/>
         <result column="u_rstatus" property="urStatus"/>
     </resultMap>
+<!--visitedStoreList 테이블맵-->
+    <resultMap id="VisitedMap" type="VisitedStoreDto">
+        <id column="user_id" property="userId"/>
+        <result column="visited_store_order" property="visitedStoreOrder"/>
+        <result column="visited_date" property="visitedDate"/>
+        <result column="store_name" property="storeName"/>
+        <result column="address" property="address"/>
+    </resultMap>
+<!--리뷰 테이블맵-->
+    <resultMap id="ReviewMap" type="ReviewDto">
+        <id column="review_num" property="reviewNum"/>
+        <result column="user_id" property="userId"/>
+        <result column="store_num" property="storeNum"/>
+        <result column="content" property="content"/>
+        <result column="comment" property="comment"/>
+        <result column="img" property="img"/>
+        <result column="date" property="date"/>
+        <result column="star" property="star"/>
+        <result column="r_rstatus" property="rrStatus"/>
+    </resultMap>
+<!--유저방문조회구문-->
+    <select id="findAllVisited" resultMap="VisitedMap">
+        select *<!--visited_date,store_name,address--> from visited_store_lists where user_id=#{userId}
+    </select>
+<!--리뷰조회구문-->
+    <select id="findAllReviewed" resultMap="ReviewMap">
+        select * from reviews where user_id=#{userId}
+    </select>
+<!--유저서비스 구문-->
     <insert id="insertOne" parameterType="UserDto">
         insert into users (user_id, nickname, pw, name, birth, gender, address, detail_address, email)
             VALUE (#{userId}, #{nickname}, #{pw}, #{name}, #{birth}, #{gender}, #{address}, #{detailAddress}, #{email})
     </insert>
+
     <update id="updateOne" parameterType="UserDto">
         update users set
                          nickname=#{nickname},
@@ -39,7 +70,7 @@
         where user_id=#{userId}
     </update>
     <update id="setLoginUserId">
-        set @loginUserId=#{uId}
+        set @loginUserId=#{userId}
     </update>
     <update id="setLoginUserIdIsNull">
         set @loginUserId=Null
@@ -55,6 +86,9 @@
     </select>
     <select id="findByUserIdByEmailAndName" resultType="java.lang.String">
         select user_id from users where email=#{email} and name=#{name}
+    </select>
+    <select id="findAllJjim" resultType="JjimManageDto">
+        select * from jjim_manages where user_id=#{userId};
     </select>
 
     <select id="idCheck" resultType="int">
