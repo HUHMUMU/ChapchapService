@@ -13,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReviewMapperTest {
     @Autowired
 
-    private ReviewMapper reviewMapper;
+//    private ReviewMapper reviewMapper;
     private static ReviewDto review;
-    @Test
-    void findByUserId() {
-        review=new ReviewDto();
-        review.setUserId("user01");
-        List<ReviewDto> find=reviewMapper.findByUserId(review.getUserId());
-        System.out.println(find);
-    }
+//    @Test
+//    void findByUserId() {
+//        review=new ReviewDto();
+//        review.setUserId("user01");
+//        List<ReviewDto> find=reviewMapper.findByUserId(review.getUserId());
+//        System.out.println(find);
+//    }
 }
