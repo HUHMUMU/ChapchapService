@@ -51,4 +51,10 @@ public class UserServiceImp implements UserService{
         return list;
     }
 
+    @Override
+    public int idCheck(String userId) {
+        // 임시 구현해서 return이 없음. 빨간줄 지울라고
+        return 0;
+    }
+
 }

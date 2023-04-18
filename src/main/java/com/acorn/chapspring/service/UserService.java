@@ -16,5 +16,7 @@ public interface UserService {
     int dropout(UserDto user);//회원탈퇴
     List<VisitedStoreDto> visited(String userId);//유저 방문조회
     List<ReviewDto> reviewed(String userId);//유저 리뷰조회
+
+    int idCheck(String userId);
 }
 
