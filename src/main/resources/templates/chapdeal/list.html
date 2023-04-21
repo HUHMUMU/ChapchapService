@@ -4,9 +4,56 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
+    <meta charset="UTF-8">
     <title>챱딜</title>
 </head>
-<body>
+<div layout:fragment="content" >
+    <div class="d-flex justify-content-center mb-5" th:each="c:${chapDeals}">
+        <!-- th:href="${c.storeNum}/detail.do" -->
+        <a href="#" style="text-decoration:none; color:inherit;">
+            <div class="card">
+                <img th:src="${c.eventImg}" class="card-img-top" style="width:800px; height:300px;">
+                <div class="card-img-overlay p-0">
+                    <div class="bookMark d-inline p-2" th:text="${c.eventTitle}"></div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-text me-2" th:text="${c.storeName}"></h5>
+                    <small th:text="${#dates.format(c.eventStart,'yyyy-MM-dd')+'~'+#dates.format(c.eventEnd,'yyyy-MM-dd')}"></small>
+                    <div class="d-flex justify-content-between mt-4">
+                        <p class="mb-0" th:text="${c.eventCondition}"></p>
+                        <h4 class="reward mb-0" th:text="${c.eventReward}"></h4>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
 
-</body>
+
+    <style>
+        .card-img-overlay .d-inline {
+            position: relative;
+            top: 20px;
+            left: -5px;
+        }
+        .card-body {
+            background-color: #FFE3A9;
+            margin-bottom: 0px;
+        }
+        .card-text{
+            display: inline-block;
+            font-weight: bold;
+        }
+        .bookMark{
+            background-color: #FF5D5D;
+            border-radius: 0px 5px 5px 0px;
+            color:#fff;
+            font-weight:bold;
+        }
+        .reward{
+            color: #FF5D5D;
+            font-weight: bold;
+        }
+    </style>
+
+</div>
 </html>
