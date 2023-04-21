@@ -5,24 +5,23 @@
   <title>회원가입 폼</title>
 </head>
 <div layout:fragment="content" style="margin-top: 3em">
-
-  <form name="signupForm" action="./signup.do" method="post" style="width: 500px;margin: 0 auto;">
+  <form action="/user/signup.do" method="post" style="width: 500px;margin: 0 auto;">
 
     <a class="navbar-brand" href="/">
       <img src="/public/img/logo.png" alt="" width="350px" height="120px" style="margin-left: 5em">
     </a>
     <p class="form-floating">
-      <input id="storeId" type="text" name="userId" value="" class="form-control id_input" placeholder="??" style="background: #FFFAED">
+      <input id="userId" type="text" name="userId" value="" class="form-control id_input" placeholder="??" style="background: #FFFAED; margin-bottom: 10px">
       <label class="">아이디</label>
       <span class="id_input_re_1" style="display: none; color: #0b5ed7">사용 가능한 아이디입니다.</span>
       <span class="id_input_re_2" style="display: none; color: #b02a37">아이디가 이미 존재합니다.</span>
     </p>
     <p class="form-floating">
-      <input id="pwd" type="password" name="pwd" onchange="check_pw()" class="form-control" placeholder="??" style="background: #FFFAED">
+      <input id="pwd" type="password" name="pw" onchange="check_pw()" class="form-control" placeholder="??" style="background: #FFFAED">
       <label>비밀번호</label>
     </p>
     <p class="form-floating">
-      <input id="repwd" type="password" name="repwd" onchange="check_pw()" class="form-control" placeholder="??" style="background: #FFFAED; margin-bottom: 10px">
+      <input id="repwd" type="password" onchange="check_pw()" class="form-control" placeholder="??" style="background: #FFFAED; margin-bottom: 10px">
       <span id="check"></span>
       <label>비밀번호 확인</label>
     </p>
@@ -31,16 +30,14 @@
       <label>이름</label>
     </p>
     <p class="form-floating">
-      <input id="nickName" type="text" name="nickName" value="" class="form-control" placeholder="??" style="background: #FFFAED">
+      <input id="nickName" type="text" name="nickname" value="" class="form-control nickName_input" placeholder="??" style="background: #FFFAED; margin-bottom: 10px">
       <label>닉네임</label>
+      <span class="nickNameCheck1" style="display: none; color: #0b5ed7">사용 가능한 닉네임입니다.</span>
+      <span class="nickNameCheck2" style="display: none; color: #b02a37">중복 닉네임 입니다. 다시 입력해주세요</span>
     </p>
     <p class="form-floating">
       <input id="birth" type="date" name="birth" value="" class="form-control" placeholder="??" style="background: #FFFAED">
       <label>생일</label>
-    </p>
-    <p class="form-floating">
-      <input id="phone" type="text" name="phone" value="" class="form-control" placeholder="??" style="background: #FFFAED">
-      <label>핸드폰</label>
     </p>
     <p class="form-floating">
       <select name="gender" class="form-control" style="background: #FFFAED">
@@ -52,7 +49,7 @@
     <div style="width: 20em; display: inline-block">
       <p class="form-floating">
         <input type="text"
-               name="addr1" id="addr1" value="" class="form-control" placeholder="??" style="background: #FFFAED">
+               name="postnumber" id="postnumber" value="" class="form-control" placeholder="??" style="background: #FFFAED">
         <label>우편번호</label>
       </p>
     </div>
@@ -63,49 +60,76 @@
       </button>
     </div>
     <p class="form-floating">
-      <input type="text" name="addr2" id="addr2" value="" class="form-control" placeholder="??" style="background: #FFFAED">
+      <input type="text" name="address" id="aaddressddr2" value="" class="form-control" placeholder="??" style="background: #FFFAED">
       <label>도로명 주소</label>
     </p>
     <p class="form-floating">
-      <input type="text" name="addr3" id="addr3" value="" class="form-control" placeholder="??" style="background: #FFFAED">
+      <input type="text" name="detailAddress" id="detailAddress" value="" class="form-control" placeholder="??" style="background: #FFFAED">
       <label>상세 주소</label>
     </p>
-    <div style="width: 20em; display: inline-block">
-      <p class="form-floating">
-        <input type="text" name="sm_email" value="" class="form-control" placeholder="??" style="background: #FFFAED">
-        <label>이메일</label>
-      </p>
-    </div>
-    <div style="float: right; width: 33%;">
-      <button type="submit" class="btn btn-warning"
-              style="width: 10em; height: 3.5em; background: #FFE3A9; color: #FF5D5D;">
-        <a style="font-size: 18px; font-weight: 800">인증번호 받기</a>
-      </button>
-    </div>
     <div>
       <p class="form-floating">
-        <input type="text" name="email" value="" class="form-control" placeholder="??" style="background: #FFFAED">
-        <label style="">인증번호</label>
+        <input type="email" name="email" value="" class="form-control email_input" placeholder="??" style="background: #FFFAED">
+        <label style="">이메일</label>
+        <span class="emailCheck1" style="display: none; color: #0b5ed7">사용 가능한 이메일 입니다.</span>
+        <span class="emailCheck2" style="display: none; color: #b02a37">중복 이메일 입니다. 다시 입력해주세요</span>
       </p>
     </div>
     <div>
       <p class="form-floating">
-        <input type="checkbox" name="agree_all" id="agree_all">
-        <span>약관 동의</span>
-        <span type="button" style="color: dodgerblue; margin-left: 10px">약관 보러가기</span>
+        <input type="checkbox" name="U_checkAgreement1"  id="checkId1">약관 동의
+        <a type="button" style="color: dodgerblue; margin-left: 5px" data-bs-toggle="modal" data-bs-target="#exampleModal">약관 보러가기</a>
       </p>
     </div>
+        <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background-color: #FFFAED">
+            <div class="modal-header" style="background-color: #FFFAED">
+              <h5 class="modal-title" id="exampleModalLabel">이용약관</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <div class="mb-3">
+                  <p href="">
+                    <div style="text-align: center">
+                      제 1 조 (목적)<br>
+                      이 약관은 {COMPANY_NAME}(이하 "사이트"라 합니다)에서 <br>제공하는 인터넷서비스(이하 "서비스"라 합니다)의 이용 조건 및 <br>절차에 관한 기본적인 사항을 규정함을 목적으로 합니다.
+                    </div>
+                    <hr style="border : 1px solid;">
+                    <div style="text-align: center">
+                      제 2 조 (약관의 효력 및 변경)<br>
+                      ① 이 약관은 서비스 화면이나 기타의 방법으로 <br>이용고객에게 공지함으로써 효력을 발생합니다.<br>
+                      ② 사이트는 이 약관의 내용을 변경할 수 있으며, <br>변경된 약관은 제1항과 같은 방법으로 공지 또는<br> 통지함으로써 효력을 발생합니다.
+                    </div>
+                  </p>
+                  <div id="emailHelp" class="form-text" style="text-align: center">동의하시면 회원가입 창에 약관 동의를 체크해주세요</div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--여기까지 모달-->
+
     <p class="text-end">
-      <button type="submit" class="btn btn-warning"
-              style="width: 31.3em; height: 3.5em; background: #FFE3A9; color: #FF5D5D;">
-        <a style="font-size: 25px; font-weight: 800" onclick="return validatePassword()">회원가입</a>
+      <button type="submit" class="btn btn-warning" onsubmit="event.preventDefault(); is_Checked(event);"
+              style="width: 31.3em; height: 3.5em; background: #FFE3A9; color: #FF5D5D; margin-right: 400px">
+          <span style="font-size: 25px; font-weight: 800;">회원가입</span>
       </button>
     </p>
+
   </form>
+
 
 
   <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
   <script>
+    //주소 API
     function execPostCode() {
       new daum.Postcode({
         oncomplete: function(data) {
@@ -135,12 +159,9 @@
           console.log(fullRoadAddr);
 
 
-          document.querySelector("[name=addr1]").value = data.zonecode;
-          document.querySelector("[name=addr2]").value = fullRoadAddr;
+          document.querySelector("[name=postnumber]").value = data.zonecode;
+          document.querySelector("[name=address]").value = fullRoadAddr;
 
-          /* document.getElementById('signUpUserPostNo').value = data.zonecode; //5자리 새우편번호 사용
-          document.getElementById('signUpUserCompanyAddress').value = fullRoadAddr;
-          document.getElementById('signUpUserCompanyAddressDetail').value = data.jibunAddress; */
         }
       }).open();
     }
@@ -157,7 +178,7 @@
     //  return true
     // }
 
-    //밑줄로 나오게 하기
+    //비밀번호 유효성 검사
     function check_pw() {
       var pwd=document.getElementById('pwd').value;
       var SC=["!","@","#","$","%"];
@@ -188,30 +209,90 @@
       }
     }
 
-    document.querySelector('.id_input').addEventListener("propertychange", handleChange);
+    //아이디 중복 체크
     document.querySelector('.id_input').addEventListener("change", handleChange);
-    document.querySelector('.id_input').addEventListener("keyup", handleChange);
-    document.querySelector('.id_input').addEventListener("paste", handleChange);
-    document.querySelector('.id_input').addEventListener("input", handleChange);
-
-    function handleChange() {
+    async function handleChange() {
       // console.log("keyup 테스트");
       const memberId = document.querySelector('.id_input').value; // .id_input에 입력되는 값
-      const data = { memberId: memberId }; // '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
+      const resp=await fetch('/user/memberIdChk.do?memberId='+memberId);
+        if(resp.status===200){
+          const text=await resp.text();
+          if(text!=='fail'){
+            document.querySelector('.id_input_re_1').style.display = 'inline-block';
+            document.querySelector('.id_input_re_2').style.display = 'none';
 
-      fetch('/member/memberIdChk', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' },
-        success: function(result) {
-          console.log("성공 여부: " + result);
+          }else{
+            document.querySelector('.id_input_re_2').style.display = 'inline-block';
+            document.querySelector('.id_input_re_1').style.display = 'none';
+
+          }
         }
-      });
+    }
+
+    //닉네임 중복 체크
+    document.querySelector('.nickName_input').addEventListener("change", handleChange_nick);
+    async function handleChange_nick() {
+      const nickNameId=document.querySelector('.nickName_input').value;
+      const resp=await fetch('/user/nickNameChk.do?nickNameId='+nickNameId);
+      if (resp.status===200) {
+        const text=await resp.text();
+        if (text!=='fail') {
+          document.querySelector('.nickNameCheck1').style.display = 'inline-block';
+          document.querySelector('.nickNameCheck2').style.display = 'none';
+        } else {
+          document.querySelector('.nickNameCheck2').style.display = 'inline-block';
+          document.querySelector('.nickNameCheck1').style.display = 'none';
+        }
+      }
+    }
+
+    document.querySelector('.email_input').addEventListener("change", handleChange_email);
+    async function handleChange_email() {
+      const emailId=document.querySelector('.email_input').value;
+      const resp=await fetch('/user/emailChk.do?emailId='+emailId);
+      if (resp.status===200) {
+        const text=await resp.text();
+        if (text!=='fail') {
+          document.querySelector('.emailCheck1').style.display = 'inline-block';
+          document.querySelector('.emailCheck2').style.display = 'none';
+        } else {
+          document.querySelector('.emailCheck2').style.display = 'inline-block';
+          document.querySelector('.emailCheck1').style.display = 'none';
+        }
+      }
+    }
+
+    // document.getElementById("testBtn").addEventListener("click", function(e) {
+    //   e.preventDefault();
+    //   document.getElementById("testModal").modal("show");
+    // });
+
+
+    //모달 자바스크립트
+    const emailInputEl = document.querySelector("#exampleInputEmail1");
+    const modelEl = document.querySelector("#exampleModal");
+
+    modelEl.addEventListener("shown.bs.modal", function() {
+      emailInputEl.focus();
+    })
+
+
+    //약관 동의 여부 체크
+    function is_Checked(e) {
+      e.preventDefault();
+      const checkbox=document.getElementById('checkId1');
+      const is_Checked=checkbox.checked;
+
+      if (is_Checked===false) {
+        alert("약관 동의 여부를 체크하세요");
+      } else {
+        //alert("회원가입이 완료되었습니다.");
+        e.target.submit();
+      }
     }
   </script>
 
 
-  </script>
 
 </div>
 </html>

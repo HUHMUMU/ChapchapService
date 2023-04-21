@@ -1,9 +1,9 @@
 package com.acorn.chapspring.controller;
 
-import com.acorn.chapspring.dto.ReviewDto;
+import com.acorn.chapspring.dto.EmailDto;
 import com.acorn.chapspring.dto.UserDto;
-import com.acorn.chapspring.dto.VisitedStoreDto;
 import com.acorn.chapspring.lib.AESEncryption;
+import com.acorn.chapspring.service.EmailService;
 import com.acorn.chapspring.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 
 @AllArgsConstructor //모든 필드를 pojo 형식의 생성자로 자동 생성
@@ -30,6 +31,7 @@ public class UserController {
     // "/user/login.do" 동적페이지 정의
 
     private UserService userService;
+    private EmailService emailService;
 
 //    @Value("${img.upload.path}")
 //    private String uploadPath;
@@ -118,23 +120,100 @@ public class UserController {
         }
 
         UserDto user=userService.detail(userId);
-        List<VisitedStoreDto> visited=userService.visited(userId);
-        List<ReviewDto> reviewed=userService.reviewed(userId);
-
         modelAndView.setViewName("/user/detail");
         modelAndView.addObject("user",user);
-        modelAndView.addObject("visited",visited);
-        modelAndView.addObject("reviewed",reviewed);
 
 
         return  modelAndView;
     }
 
 
-
-
     @GetMapping("/signup.do")
     public void signupForm() {}
+    //아이디 중복 체크
+
+    @GetMapping(value = "/memberIdChk.do")
+    public @ResponseBody String memberIdChkPOST(String memberId) throws Exception {
+
+//        logger.info("memberIdChkPOST() 진입");
+
+        log.info("memberIdChkPOST() 진입");
+        int result=userService.idCheck(memberId);
+
+        log.info("결과값 = " + result);
+
+        if (result!=0) {
+            return "fail"; //중복 아이디 있음
+        } else {
+            return "success"; //중복 아이디 없음
+        }
+    }
+
+    //닉네임 중복 체크
+    @GetMapping(value = "/nickNameChk.do")
+    public @ResponseBody String nickNameChkPOST(String nickNameId) throws Exception {
+
+//        logger.info("memberIdChkPOST() 진입");
+
+        log.info("nickNameChkPOST() 진입");
+        int result=userService.nickName_Check(nickNameId);
+
+        log.info("결과값 = " + result);
+
+        if (result!=0) {
+            return "fail"; //중복 아이디 있음
+        } else {
+            return "success"; //중복 아이디 없음
+        }
+    }
+
+    @GetMapping(value = "/emailChk.do")
+    public @ResponseBody String emailChkPOST(String emailId) throws Exception {
+
+        log.info("memberIdChkPOST() 진입");
+
+        log.info("nickNameChkPOST() 진입");
+        int result=userService.email_Check(emailId);
+
+        log.info("결과값 = " + result);
+
+        if (result!=0) {
+            return "fail"; //중복 아이디 있음
+        } else {
+            return "success"; //중복 아이디 없음
+        }
+    }
+
+    @GetMapping("/emailCheck.do")
+    public void emailCheckForm(@RequestParam String userId){}
+
+    @PostMapping ("/emailCheck.do")
+    public String emailCheckAction(
+            UserDto user,
+            RedirectAttributes redirectAttributes){
+        String msg="";
+        String redirectPath="";
+        int emailCheck=0;
+        try {
+            user.setUrStatus(UserDto.StatusType.공개);
+            emailCheck=userService.modifyEmailCheck(user);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        if (emailCheck>0) { //보낸 코드와 생성된 코드가 같은 경우
+            msg="이메일이 확인되었습니다.(회원가입 완료) 로그인 하세요";
+            redirectPath="redirect:/user/login.do";
+        } else {
+            msg="이메일로 보낸 코드를 다시 확인 하세요";
+            redirectPath="redirect:/user/emailCheck.do";
+            redirectAttributes.addAttribute("userId",user.getUserId());
+        }
+        redirectAttributes.addFlashAttribute("msg",msg);
+        return redirectPath;
+    }
+
+
     @PostMapping("/signup.do")
     public String signupAction(
             @ModelAttribute UserDto user,
@@ -142,19 +221,30 @@ public class UserController {
         int signup=0;
         String errorMsg=null;
         try {
+            SecureRandom random=new SecureRandom();
+            byte[] bytes=new byte[6];
+            random.nextBytes(bytes);
+            String emailCheckCode= Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+            user.setEmailCheckCode(emailCheckCode);
+            user.setUrStatus(UserDto.StatusType.심사);
             signup=userService.signup(user);
+            if (signup>0) {
+                EmailDto emailDto=new EmailDto();
+                emailDto.setTo(user.getEmail());
+                emailDto.setTitle("이메일 확인 코드 입니다.");
+                emailDto.setMessage("해당 코드를 입력하세요" + emailCheckCode);
+                emailService.sendMail(emailDto);
+                redirectAttributes.addFlashAttribute("msg", "이메일을 확인해야 회원가입이 성공합니다.");
+                //return "redirect:/user/emailCheck.do?uId"+user.getUId();
+                redirectAttributes.addAttribute("userId", user.getUserId());
+                return "redirect:/user/emailCheck.do";
+            }
         } catch (Exception e) {
             log.error(e);
             errorMsg=e.getMessage();
         }
-
-        if (signup>0) {
-            redirectAttributes.addFlashAttribute("msg","회원가입 성공");
-            return "redirect:/";
-        } else {
-            redirectAttributes.addFlashAttribute("msg", "회원 가입 실패 : " + errorMsg);
-            return "redirect:/user/signup.do";
-        }
+        redirectAttributes.addFlashAttribute("msg","회원가입 실패 에러"+errorMsg);
+        return "redirect:/user/signup.do";
     }
 
     @GetMapping("/logout.do")
@@ -221,25 +311,6 @@ public class UserController {
         }else{
             redirectAttributes.addFlashAttribute("msg","아이디나 패스워드를 확인하세요!");
             return "redirect:/user/login.do";
-        }
-    }
-    //아이디 중복 체크
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
-    @GetMapping(value = "/memberIdChk.do")
-    public @ResponseBody String memberIdChkPOST(String userId) throws Exception {
-
-//        logger.info("memberIdChkPOST() 진입");
-
-        logger.info("memberIdChkPOST() 진입");
-        int result=userService.idCheck(userId);
-
-        logger.info("결과값 = " + result);
-
-        if (result!=0) {
-            return "fail"; //중복 아이디 있음
-        } else {
-            return "success"; //중복 아이디 없음
         }
     }
 }

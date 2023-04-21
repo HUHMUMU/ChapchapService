@@ -41,6 +41,22 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
+    public int nickName_Check(String nickname) throws Exception {
+        return userMapper.nickName_Check(nickname);
+    }
+
+    @Override
+    public int email_Check(String email) throws Exception {
+        return userMapper.email_Check(email);
+    }
+
+    @Override
+    public int modifyEmailCheck(UserDto user) {
+        int modifyEmailCheck=userMapper.updateStatusByUidAndEmailCheckCode(user);
+        return modifyEmailCheck;
+    }
+
+    @Override
     public int modify(UserDto user){
         return userMapper.updateOne(user);
     }

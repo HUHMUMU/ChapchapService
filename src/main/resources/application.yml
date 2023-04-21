@@ -15,17 +15,18 @@ spring:
       location: ${user.dir}/ChapChapServiceProject/src/main/resources/static/public/img
       max-file-size: 1MB
       max-request-size: 5MB
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username: fhrzl55040@gmail.com
-#    password: Yw71088923?!!
-#    properties:
-#      mail:
-#        smtp:
-#          starttls:
-#            enable: true
-#          auth: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: fhrzl55040@gmail.com
+    #password : gmail 아이디 비밀번호가 아니라 2차 인증 어플리케이션 인증 받은 번호를 넣어야 한다.
+    password: fbonqozuwpllzqcu
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 static:
   path: ${user.dir}/ChapChapServiceProject/src/main/resources/static
 
