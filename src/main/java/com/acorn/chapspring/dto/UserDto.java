@@ -4,6 +4,9 @@ import lombok.Data;
 
 @Data
 public class UserDto {
+    public enum StatusType {
+        공개,심사,비공개,휴먼,탈퇴
+    }
     private String userId;
     private String nickname;
     private String pw;
@@ -18,5 +21,8 @@ public class UserDto {
     private String youtubeUrl;
     private String profileimg;
     private String introduce;
-    private String urStatus;
+    private String postnumber;
+    private String emailCheckCode;
+    private StatusType urStatus;
+
 }

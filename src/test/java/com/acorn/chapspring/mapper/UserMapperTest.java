@@ -100,4 +100,18 @@ class UserMapperTest {
         userMapper.idCheck(id);
         userMapper.idCheck(idx);
     }
+    @Test
+    public void nickNameChk() throws Exception {
+        String nick="밀다라심경"; //존재하는 아이디
+        String nickx="뚱이씨"; //존재하지 않는 아이디
+        userMapper.nickName_Check(nick);
+        userMapper.nickName_Check(nickx);
+    }
+    @Test
+    public void emailChk() throws Exception {
+        String email="test03@gmail.com";
+        String emailx="fhrzl550@gmail.com";
+        userMapper.email_Check(email);
+        userMapper.email_Check(emailx);
+    }
 }

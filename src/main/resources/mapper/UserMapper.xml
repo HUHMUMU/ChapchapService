@@ -10,6 +10,7 @@
         <result column="gender" property="gender"/>
         <result column="address" property="address"/>
         <result column="detail_address" property="detailAddress"/>
+        <result column="postnumber" property="postnumber"/>
         <result column="email" property="email"/>
         <result column="insta_url" property="instaUrl"/>
         <result column="face_url" property="faceUrl"/>
@@ -17,10 +18,11 @@
         <result column="profile_img" property="profileimg"/>
         <result column="introduce" property="introduce"/>
         <result column="u_rstatus" property="urStatus"/>
+        <result column="email_check_code" property="emailCheckCode"/>
     </resultMap>
     <insert id="insertOne" parameterType="UserDto">
-        insert into users (user_id, nickname, pw, name, birth, gender, address, detail_address, email)
-            VALUE (#{userId}, #{nickname}, #{pw}, #{name}, #{birth}, #{gender}, #{address}, #{detailAddress}, #{email})
+        insert into users (user_id, nickname, pw, name, birth, gender, address,postnumber, detail_address, email,u_rstatus,email_check_code)
+            VALUE (#{userId}, #{nickname}, #{pw}, #{name}, #{birth}, #{gender}, #{address},#{postnumber}, #{detailAddress}, #{email},#{urStatus}, #{emailCheckCode})
     </insert>
     <update id="updateOne" parameterType="UserDto">
         update users set
@@ -28,6 +30,7 @@
                          pw=#{pw},
                          address=#{address},
                          detail_address=#{detailAddress},
+                         postnumber=#{postnumber},
                          email=#{email},
                          insta_url=#{instaUrl},
                          face_url=#{faceUrl},
@@ -44,6 +47,9 @@
     <update id="setLoginUserIdIsNull">
         set @loginUserId=Null
     </update>
+    <update id="updateStatusByUidAndEmailCheckCode">
+        UPDATE users SET u_rstatus=#{urStatus} WHERE user_id=#{userId} AND email_check_code=#{emailCheckCode}
+    </update>
     <delete id="deleteByUserIdAndPw" parameterType="UserDto">
         delete from users where user_id=#{userId} and pw=#{pw}
     </delete>
@@ -57,7 +63,18 @@
         select user_id from users where email=#{email} and name=#{name}
     </select>
 
+    <!--아이디 중복 검사-->
     <select id="idCheck" resultType="int">
         SELECT COUNT(*) FROM users WHERE user_id=#{userId}
+    </select>
+
+    <!--닉네임 중복 검사-->
+    <select id="nickName_Check" resultType="int">
+        SELECT COUNT(*) FROM users WHERE nickname=#{nickname}
+    </select>
+
+    <!--이메일 중복 검사-->
+    <select id="email_Check" resultType="int">
+        SELECT COUNT(*) FROM users WHERE email=#{email}
     </select>
 </mapper>
