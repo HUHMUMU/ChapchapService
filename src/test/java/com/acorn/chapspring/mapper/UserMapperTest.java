@@ -96,13 +96,13 @@ class UserMapperTest {
         int delete= userMapper.deleteByUserIdAndPw(user);
         assertEquals(delete,1);
     }
-    @Test
-    void findAll() {
-        visited=new VisitedStoreDto();
-        visited.setUserId("admin");
-        List<VisitedStoreDto> find=userMapper.findAllVisited(visited.getUserId());
-        System.out.println(find);
-    }
+//    @Test
+//    void findAll() {
+//        visited=new VisitedStoreDto();
+//        visited.setUserId("admin");
+//        List<VisitedStoreDto> find=userMapper.findAllVisited(visited.getUserId());
+//        System.out.println(find);
+//    }
     @Test
     public void nickNameChk() throws Exception {
         String nick="밀다라심경"; //존재하는 아이디

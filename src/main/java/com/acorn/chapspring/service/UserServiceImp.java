@@ -33,12 +33,12 @@ public class UserServiceImp implements UserService{
         return userMapper.deleteByUserIdAndPw(user);
     }
 
-    @Override
-    public List<VisitedStoreDto> visited(String loginUserId) {
-        userMapper.setLoginUserId(loginUserId);
-        List<VisitedStoreDto> list=userMapper.findAllVisited(loginUserId);
-        return list;
-    }
+//    @Override
+//    public List<VisitedStoreDto> visited(String loginUserId) {
+//        userMapper.setLoginUserId(loginUserId);
+//        List<VisitedStoreDto> list=userMapper.findAllVisited(loginUserId);
+//        return list;
+//    }
 
     @Override
     public int nickName_Check(String nickname) throws Exception {
@@ -60,12 +60,12 @@ public class UserServiceImp implements UserService{
     public int modify(UserDto user){
         return userMapper.updateOne(user);
     }
-    @Override
-    public List<ReviewDto> reviewed(String loginUserId){
-        userMapper.setLoginUserId(loginUserId);
-        List<ReviewDto> list=userMapper.findAllReviewed(loginUserId);
-        return list;
-    }
+//    @Override
+//    public List<ReviewDto> reviewed(String loginUserId){
+//        userMapper.setLoginUserId(loginUserId);
+//        List<ReviewDto> list=userMapper.findAllReviewed(loginUserId);
+//        return list;
+//    }
 
     @Override
     public int idCheck(String userId) {
