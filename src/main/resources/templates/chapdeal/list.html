@@ -12,7 +12,7 @@
         <!-- th:href="${c.storeNum}/detail.do" -->
         <a href="#" style="text-decoration:none; color:inherit;">
             <div class="card">
-                <img th:src="'/public/'+${c.eventImg}" class="card-img-top" style="width:800px; height:300px;">
+                <img th:src="'http://localhost:8080'+${c.eventImg}" class="card-img-top" style="width:800px; height:300px;">
                 <div class="card-img-overlay p-0">
                     <div class="bookMark d-inline p-2" th:text="${c.eventTitle}"></div>
                 </div>
