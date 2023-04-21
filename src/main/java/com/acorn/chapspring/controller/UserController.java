@@ -1,8 +1,6 @@
 package com.acorn.chapspring.controller;
 
-import com.acorn.chapspring.dto.ReviewDto;
-import com.acorn.chapspring.dto.UserDto;
-import com.acorn.chapspring.dto.VisitedStoreDto;
+import com.acorn.chapspring.dto.*;
 import com.acorn.chapspring.lib.AESEncryption;
 import com.acorn.chapspring.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -39,7 +37,11 @@ public class UserController {
 
     @GetMapping("/dropout.do")
     public String dropoutForm(
-            @SessionAttribute UserDto loginUser){
+            @SessionAttribute UserDto loginUser,
+            @ModelAttribute UserDto user,
+            Model model
+    ){
+
         return "/user/dropout";
     }
     @PostMapping("/dropout.do")
@@ -99,7 +101,6 @@ public class UserController {
     }
 
 
-
     //filter(interceptor) : 해당페이지를 요청하기 전에 로그인 했는지 검사
     //controller : 해당페이지에서 로그인 했는지 검사
     @GetMapping("/{userId}/detail.do")
@@ -120,12 +121,21 @@ public class UserController {
         UserDto user=userService.detail(userId);
         List<VisitedStoreDto> visited=userService.visited(userId);
         List<ReviewDto> reviewed=userService.reviewed(userId);
+        List<UserDto> list=userService.userList();
+        List<RecommendStoreDto> recommend=userService.recommendList(userId);
+
+        List<JjimManageDto> jjim=userService.jjimList(userId);
+
+
+
 
         modelAndView.setViewName("/user/detail");
         modelAndView.addObject("user",user);
         modelAndView.addObject("visited",visited);
         modelAndView.addObject("reviewed",reviewed);
-
+        modelAndView.addObject("list",list);
+        modelAndView.addObject("recommend",recommend);
+        modelAndView.addObject("jjim",jjim);
 
         return  modelAndView;
     }
@@ -179,6 +189,8 @@ public class UserController {
         redirectAttributes.addFlashAttribute("msg","로그아웃 되었습니다.");
         return "redirect:/";
     }
+
+
     @GetMapping("/login.do")
     public String loginForm(){
 

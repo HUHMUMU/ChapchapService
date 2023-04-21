@@ -1,9 +1,8 @@
 package com.acorn.chapspring.service;
 
-import com.acorn.chapspring.dto.ReviewDto;
-import com.acorn.chapspring.dto.UserDto;
-import com.acorn.chapspring.dto.VisitedStoreDto;
+import com.acorn.chapspring.dto.*;
 import com.acorn.chapspring.mapper.UserMapper;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,6 +47,21 @@ public class UserServiceImp implements UserService{
     public List<ReviewDto> reviewed(String loginUserId){
         userMapper.setLoginUserId(loginUserId);
         List<ReviewDto> list=userMapper.findAllReviewed(loginUserId);
+        return list;
+    }
+    @Override
+    public List<UserDto> userList(){
+        List<UserDto> list=userMapper.findAllUsers();
+        return list;
+    }
+    @Override
+    public List<RecommendStoreDto> recommendList(String userId){
+        List<RecommendStoreDto> list=userMapper.findAllRecommend(userId);
+        return list;
+    }
+    @Override
+    public  List<JjimManageDto> jjimList(String userId){
+        List<JjimManageDto> list=userMapper.findAllJjim(userId);
         return list;
     }
 

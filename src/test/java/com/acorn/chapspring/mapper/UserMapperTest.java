@@ -1,7 +1,6 @@
 package com.acorn.chapspring.mapper;
 
-import com.acorn.chapspring.dto.UserDto;
-import com.acorn.chapspring.dto.VisitedStoreDto;
+import com.acorn.chapspring.dto.*;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,11 +19,19 @@ class UserMapperTest {
     private UserMapper userMapper;
     private static VisitedStoreDto visited;
     private static UserDto user;
+    private static ReviewDto reviewer;
+    private static RecommendStoreDto recommendstore;
+    private static JjimManageDto jjim;
     @Test
     @Order(1)
     void findByUserId() {
-        //user=new UserDto();
-        UserDto findUser=userMapper.findByUserId("user01");
+//        user=new UserDto();//user 데이터를 UserDto에서 조회라는 느낌
+//        user.setUserId("user01");
+//        UserDto findUser=userMapper.findByUserId(user.getUserId());
+
+        reviewer=new ReviewDto();
+        reviewer.setUserId("user01");
+        UserDto findUser=userMapper.findByUserId(reviewer.getUserId());
         System.out.println("findUser : "+findUser);
         assertNotNull(findUser);
     }
@@ -102,5 +109,96 @@ class UserMapperTest {
         visited.setUserId("admin");
         List<VisitedStoreDto> find=userMapper.findAllVisited(visited.getUserId());
         System.out.println(find);
+    }
+    @Test
+    void findAllUsers(){
+
+        List<UserDto> list=userMapper.findAllUsers();
+        System.out.println("firstUser : "+list.get(0).getUserId());
+        int userNumber=0;
+        for(UserDto userList : list){
+            System.out.println("userNumber"+userNumber+" : "+userList.getUserId());
+            userNumber++;
+        }
+
+    }
+
+    @Test
+    void findAllRecommend() {
+        recommendstore=new RecommendStoreDto();
+        recommendstore.setUserId("user01");
+        List<RecommendStoreDto> list=userMapper.findAllRecommend(recommendstore.getUserId());
+        int listNum=0;
+        for (RecommendStoreDto recommendList : list){
+            listNum++;
+            System.out.println("number"+listNum+" : "+recommendList);
+        }
+    }
+
+    @Test
+    void insertOneByUserId() {
+        recommendstore=new RecommendStoreDto();
+        recommendstore.setUserId("admin");
+        recommendstore.setComment("맛있어요!");
+        recommendstore.setStoreNum(8);
+        //---------------------------------------------------
+
+        List<RecommendStoreDto> list=userMapper.findAllRecommend(recommendstore.getUserId());
+        System.out.println(recommendstore.getUserId()+"'s list number : " +list.size());
+
+        if(list.size()<3){
+            int insert= userMapper.insertOneByUserId(recommendstore);//성공하면 1 반환
+            assertEquals(insert,1);
+            list=userMapper.findAllRecommend(recommendstore.getUserId());
+            int listNum=1;
+            for (RecommendStoreDto recommendList : list){
+                System.out.println("number"+listNum+" : "+recommendList);
+                listNum++;
+            }
+        }else{
+            System.out.println("store can't recommend over 3!");
+        }
+//-------------------------------------------------------------------
+
+//        int insert= userMapper.insertOneByUserId(recommendstore);//성공하면 1 반환
+//        assertEquals(insert,1);
+
+        //--------------------------------------------------------------------------
+
+//        List<RecommendStoreDto> list=userMapper.findAllRecommend(recommendstore.getUserId());
+//        int listNum=0;
+//        for (RecommendStoreDto recommendList : list){
+//            listNum++;
+//            System.out.println("number"+listNum+" : "+recommendList);
+//        }
+
+    }
+
+    @Test
+    void deleteOneByUserIdAndStoreNum() {
+        recommendstore=new RecommendStoreDto();
+        recommendstore.setStoreNum(8);
+        recommendstore.setUserId("admin");
+        int delete=userMapper.deleteOneByUserIdAndStoreNum(recommendstore);
+        assertEquals(delete,1);
+        List<RecommendStoreDto> list=userMapper.findAllRecommend(recommendstore.getUserId());
+        int listNum=0;
+        for (RecommendStoreDto recommendList : list){
+            listNum++;
+            System.out.println("number"+listNum+" : "+recommendList);
+        }
+    }
+
+    @Test
+    void findAllJjim(){
+        jjim=new JjimManageDto();
+        jjim.setUserId("user01");
+        List<JjimManageDto> list=userMapper.findAllJjim(jjim.getUserId());
+        int listnum=0;
+        for(JjimManageDto jjimlist : list){
+            System.out.println("number"+listnum+" : "+jjimlist);
+            listnum++;
+        }
+
     }
 }

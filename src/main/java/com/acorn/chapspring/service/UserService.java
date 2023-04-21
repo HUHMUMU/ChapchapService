@@ -1,8 +1,6 @@
 package com.acorn.chapspring.service;
 
-import com.acorn.chapspring.dto.ReviewDto;
-import com.acorn.chapspring.dto.UserDto;
-import com.acorn.chapspring.dto.VisitedStoreDto;
+import com.acorn.chapspring.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +14,9 @@ public interface UserService {
     int dropout(UserDto user);//회원탈퇴
     List<VisitedStoreDto> visited(String userId);//유저 방문조회
     List<ReviewDto> reviewed(String userId);//유저 리뷰조회
+    List<UserDto> userList();
+    List<RecommendStoreDto> recommendList(String userId);
+    List<JjimManageDto> jjimList(String userId);
 
     int idCheck(String userId);
 }

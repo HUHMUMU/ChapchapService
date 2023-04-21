@@ -1,9 +1,6 @@
 package com.acorn.chapspring.mapper;
 
-import com.acorn.chapspring.dto.JjimManageDto;
-import com.acorn.chapspring.dto.ReviewDto;
-import com.acorn.chapspring.dto.UserDto;
-import com.acorn.chapspring.dto.VisitedStoreDto;
+import com.acorn.chapspring.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,4 +19,13 @@ public interface UserMapper {
     List<VisitedStoreDto> findAllVisited(String userId);
     List<ReviewDto> findAllReviewed(String userId);
     List<JjimManageDto> findAllJjim(String userId);
+
+//-------------- 추천가게 데이터 처리문-----------------------------
+    List<RecommendStoreDto> findAllRecommend(String userId);
+
+    int insertOneByUserId(RecommendStoreDto recommendStore);
+    int deleteOneByUserIdAndStoreNum(RecommendStoreDto recommendStore);
+
+//----------------------------------------------------------------
+    List<UserDto> findAllUsers();
 }
