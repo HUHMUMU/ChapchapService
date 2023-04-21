@@ -30,7 +30,7 @@ static:
   path: ${user.dir}/ChapChapServiceProject/src/main/resources/static
 
 server:
-  port: 8080
+  port: 9090
 mybatis:
   type-aliases-package: com.acorn.chapspring.dto
   mapper-locations: mapper/*Mapper.xml
