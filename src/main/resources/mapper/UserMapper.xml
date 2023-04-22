@@ -47,6 +47,7 @@
         <result column="comment" property="comment"/>
         <result column="user_id" property="userId"/>
         <result column="store_num" property="storeNum"/>
+        <result column="store_name" property="storeName"/>
     </resultMap>
 
     <resultMap id="JjimMap" type="JjimManageDto">
@@ -126,7 +127,10 @@
         select * from users;
     </select>
     <select id="findAllRecommend" resultMap="RecommendMap">
-        select * from recommend_stores where user_id=#{userId}
+        select *
+            from stores inner join recommend_stores
+            on stores.store_num = recommend_stores.store_num
+            where user_id=#{userId}
     </select>
 
     <!--닉네임 중복 검사-->

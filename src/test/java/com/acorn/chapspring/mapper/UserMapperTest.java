@@ -140,7 +140,9 @@ class UserMapperTest {
     @Test
     void findAllRecommend() {
         recommendstore=new RecommendStoreDto();
-        recommendstore.setUserId("user01");
+        user=new UserDto();
+        user.setUserId("admin");
+        recommendstore.setUserId("admin");
         List<RecommendStoreDto> list=userMapper.findAllRecommend(recommendstore.getUserId());
         int listNum=0;
         for (RecommendStoreDto recommendList : list){

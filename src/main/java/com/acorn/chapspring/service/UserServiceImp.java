@@ -32,10 +32,13 @@ public class UserServiceImp implements UserService{
         return userMapper.deleteByUserIdAndPw(user);
     }
 
+
     @Override
     public int nickName_Check(String nickname) throws Exception {
         return userMapper.nickName_Check(nickname);
     }
+
+
 
     @Override
     public List<VisitedStoreDto> visited(String loginUserId) {

@@ -1,0 +1,102 @@
+.userCard-container {
+    border: 1px solid black;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+/*유저카드 좌측 css*/
+.userCard-left{
+    /*border: 1px solid black;*/
+    justify-content: center;
+    margin: 20px;
+}
+.img-containerbox{/*이미지박스*/
+    /*border: 1px solid black;*/
+    margin: 0px 10px 10px 10px;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    overflow: hidden;
+}
+.profileimg{/*이미지 스탯*/
+    width: 200px;
+    height: 200px;
+    object-fit: fill;
+}
+.text-and-button-containerbox{/*이미지 아래부분*/
+    /*border: 1px solid black;*/
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    margin : auto;
+}
+.profilebutton{/*버튼 스탯*/
+    border : 1px solid black;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 15px;
+    transition: 0.2s;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.profilebutton:hover{/*버튼 상태변화*/
+    color: #4477f9;
+    background-color: #ffe69c;
+}
+
+/*유저카드 우특 css*/
+.userCard-right{
+    border: 1px solid black;
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    align-items: center;
+}
+
+.followbox{/*팔로우 정보 표시 부분 css*/
+    border : 1px solid black;
+    display: flex;
+    justify-content: center;
+    border-radius: 50px;
+    width: 300px;
+    overflow: hidden;
+}
+.followbox span{/*팔로우박스*/
+    /*border : 1px solid black;*/
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.user-badgebox{
+    border: 1px solid black;
+    text-align: center;
+    height: 50px;
+
+}
+.userCard-right ul{/*커뮤니티 목록 css*/
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+    margin: 10px;
+    width: 100%;
+}
+.userCard-right ul li{
+
+}
+.userCard-right p{
+    border: 1px solid black;
+    height: 100px;
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+}
