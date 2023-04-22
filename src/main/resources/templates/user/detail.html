@@ -20,11 +20,11 @@
    -->
         <div>
             <!--이미지 틀-->
-            <div th:if="${user.profileimg!=null}">
+            <div th:if="${user.getProfileImg!=null}">
                 <!--이미지가 존재할 경우-->
-                <img th:src="@{'{path}'(path=${user.profileimg})}" class="img-thumbnail" alt="이미지">
+                <img th:src="@{'{path}'(path=${user.getProfileImg})}" class="img-thumbnail" alt="이미지">
             </div>
-            <div th:if="${user.profileimg==null}">
+            <div th:if="${user.getProfileImg==null}">
                 <img src="/public/icon/usericon.png" alt="기본 아이콘">
                 <!--
                 <i class="fa-solid fa-user"></i>
