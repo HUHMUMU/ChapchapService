@@ -19,4 +19,18 @@ public class ChapStoryController {
     public String list() {
         return "chapstory/write"; // 해당 경로에 대한 뷰 이름 반환
     }
+
+    @GetMapping("/list.do")
+    public String chapList(){
+        return "chapstory/list";
+    }
+
+    @GetMapping("/detail.do")
+    public String chapDetail(){return "chapstory/detail";}
+
+    @GetMapping("/blogMain.do")
+    public String chapMain(){return "chapstory/blogMain";}
+
+    @GetMapping("/register.do")
+    public String register(){return "chapstory/register";}
 }

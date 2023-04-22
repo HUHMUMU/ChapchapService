@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>블로그 리스트</title>
+</head>
+<div layout:fragment="content">
+    <form action="/chapstory/list.do">
+        <h3>리스트다 이건 ....</h3>
+        <div class="card-group">
+            <div class="card">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+            <div class="card">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+            <div class="card">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-5">
+            <a href="/chapstory/blogMain.do" class="btn btn-primary">My 챠압</a>
+            <a href="/chapstory/write.do" class="btn btn-primary">글쓰기</a>
+        </div>
+        <a href="/chapstory/detail.do" style="font-size: 25px;margin-top: 10px">
+            <strong>디테일</strong>
+        </a>
+        <section id="chapstoryListCont">
+            <th:block th:include="/chapstory/includeList"></th:block>
+        </section>
+    </form>
+</div>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>블로그 상세글</title>
+</head>
+<div layout:fragment="content">
+    <form action="/chapstory/detail.do">
+        <h3>디테일이다 이건 ....</h3>
+        <hr>
+        <h3>챱스토리 제목</h3>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+                <div class="border bg-primary rounded-circle me-2" style="height: 50px; width: 50px"></div>
+                <div>
+                    <h4 class="me-2">닉네임</h4>
+                    <p>작성날짜</p>
+                </div>
+                <div>
+                    <div class="d-flex">
+                        <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+                        <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+                        <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+                    </div>
+                    <p class="mt-2">조회수</p>
+                </div>
+            </div>
+            <div>
+                <p>좋아요 : nn</p>
+                <button>공유</button>
+                <button>신고</button>
+                <button>수정</button>
+                <button>삭제</button>
+            </div>
+        </div>
+        <div class="border bg-primary" style="height: 300px;"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8">
+                    <p>안녕하세요! 오늘은 맛집 블로그 글 예시를 써드리겠습니다.</p>
+                    <p>제가 방문한 맛집은 "청담동 차돌박이"입니다. 이곳은 서울 강남구 청담동에 위치한 차돌박이 전문점으로 유명합니다.</p>
+                    <p>저는 이곳에서 주로 차돌박이와 함께 곱창과 마른소주를 즐기는 것을 좋아합니다. 이번에도 역시 차돌박이와 곱창, 마른소주를 시켰는데, 역시나 맛있었습니다.</p>
+                    <p>차돌박이는 탱글탱글하고 부드러운 식감이 특징이며, 곱창은 식감 또한 좋으면서 특유의 풍미와 함께 씹는 맛이 일품입니다. 마른소주는 이곳에서만 즐길 수 있는 특별한 맛으로, 살짝 씁쓸하면서도 깔끔한 느낌이었습니다.</p>
+                    <p>가격대는 조금 비싸지만, 맛과 품질을 고려한다면 충분히 가치있는 가격입니다. 또한, 직원들의 서비스도 매우 친절하고 신속하게 음식을 제공해주어 불편함 없이 식사를 즐길 수 있었습니다.</p>
+                    <p>총평하자면, 청담동 차돌박이는 맛, 서비스, 분위기 등 모든 면에서 만족스러웠으며, 다음에도 꼭 다시 방문하고 싶은 맛집입니다.</p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</html>
