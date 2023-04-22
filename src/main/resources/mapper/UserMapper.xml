@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acorn.chapspring.mapper.UserMapper">
-<!--Users 테이블맵-->
+    <!--Users 테이블맵-->
     <resultMap id="UserMap" type="UserDto">
         <id column="user_id" property="userId"/>
         <result column="nickname" property="nickname"/>
@@ -21,7 +21,7 @@
         <result column="u_rstatus" property="urStatus"/>
         <result column="email_check_code" property="emailCheckCode"/>
     </resultMap>
-<!--visitedStoreList 테이블맵-->
+    <!--visitedStoreList 테이블맵-->
     <resultMap id="VisitedMap" type="VisitedStoreDto">
         <id column="user_id" property="userId"/>
         <result column="visited_store_order" property="visitedStoreOrder"/>
@@ -29,7 +29,7 @@
         <result column="store_name" property="storeName"/>
         <result column="address" property="address"/>
     </resultMap>
-<!--리뷰 테이블맵-->
+    <!--리뷰 테이블맵-->
     <resultMap id="ReviewMap" type="ReviewDto">
         <id column="review_num" property="reviewNum"/>
         <result column="user_id" property="userId"/>
@@ -41,7 +41,7 @@
         <result column="star" property="star"/>
         <result column="r_rstatus" property="rrStatus"/>
     </resultMap>
-<!--추천가게 테이블맵-->
+    <!--추천가게 테이블맵-->
     <resultMap id="RecommendMap" type="RecommendStoreDto">
         <id column="recommend_store_num" property="recommendStoreNum"/>
         <result column="comment" property="comment"/>
@@ -55,20 +55,20 @@
         <result column="user_id" property="userId"/>
         <result column="store_num" property="storeNum"/>
     </resultMap>
-<!--유저방문조회구문-->
+    <!--유저방문조회구문-->
     <select id="findAllVisited" resultMap="VisitedMap">
         select *<!--visited_date,store_name,address--> from visited_store_lists where user_id=#{userId}
     </select>
-<!--리뷰조회구문-->
+    <!--리뷰조회구문-->
     <select id="findAllReviewed" resultMap="ReviewMap">
         select * from reviews where user_id=#{userId}
     </select>
-<!--유저서비스 구문-->
+    <!--유저서비스 구문-->
     <insert id="insertOne" parameterType="UserDto">
         insert into users (user_id, nickname, pw, name, birth, gender, address,postnumber, detail_address, email,u_rstatus,email_check_code)
             VALUE (#{userId}, #{nickname}, #{pw}, #{name}, #{birth}, #{gender}, #{address},#{postnumber}, #{detailAddress}, #{email},#{urStatus}, #{emailCheckCode})
     </insert>
-<!--추천가게 구문-->
+    <!--추천가게 구문-->
     <insert id="insertOneByUserId" useGeneratedKeys="true" keyProperty="recommendStoreNum" parameterType="RecommendStoreDto">
         insert into recommend_stores (comment, user_id, store_num)
             VALUE (#{comment}, #{userId}, #{storeNum})
