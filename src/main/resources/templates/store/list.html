@@ -1,20 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="~{layout}">-->
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>가게 리스트와 지도</title>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=4ikx943fco"></script>
+    <style>
+        .storelist-main{
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: 100vw;
+        <!-- 적용안되는것처럼 보이지만 적용되는 가게리스트 전용 스타일 -->
+        }
+    </style>
+</head>
 
 <body>
-<!--<div layout:fragment="content">-->
-<div id="map" style="width:100%;height:400px;"></div>
-<h2>스프링</h2>
+<div layout:fragment="content">
+    <div class="d-flex">
+        <!-- 리스트와 필터 -->
+        <div class="col-4 d-flex flex-column">
+            <!-- 필터 부분 -->
+            <div style="flex: 4; padding: 1rem; background-color: lightseagreen">
+                <h5>필터</h5>
+                <form>
+                    <!-- 메뉴 종류 -->
+                    <div class="mb-3">
+                        <label for="menuType" class="form-label">메뉴 종류</label>
+                        <select class="form-select" id="menuType">
+                            <option selected>전체</option>
+                            <option value="한식">한식</option>
+                            <option value="일식">일식</option>
+                            <option value="중식">중식</option>
+                            <option value="양식">양식</option>
+                        </select>
+                    </div>
 
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=4ikx943fco"></script>
+                    <!-- 가격대 -->
+                    <div class="mb-3">
+                        <label for="priceRange" class="form-label">가격대</label>
+                        <select class="form-select" id="priceRange">
+                            <option selected>전체</option>
+                            <option value="1">1만원 이하</option>
+                            <option value="2">1만원 ~ 2만원</option>
+                            <option value="3">2만원 ~ 3만원</option>
+                            <option value="4">3만원 이상</option>
+                        </select>
+                    </div>
+
+                    <!-- 상세 지역 -->
+                    <div class="mb-3">
+                        <label for="detailedArea" class="form-label">상세 지역</label>
+                        <input type="text" class="form-control" id="detailedArea" placeholder="지역명을 입력하세요">
+                    </div>
+
+                    <!-- 주차 가능 여부 -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="parkingAvailable">
+                        <label class="form-check-label" for="parkingAvailable">주차 가능</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">적용</button>
+                </form>
+            </div>
+
+            <div style="flex: 8; background-color: lightcoral">
+                <!-- 리스트 부분 -->
+            </div>
+        </div>
+
+        <!-- 지도 -->
+        <div class="col-8"
+                id=""
+                style="height: calc(100vh - 91px); background-color: lightskyblue;"></div>
+    </div>
+</div>
 <script>
     var mapOptions = {
         center: new naver.maps.LatLng(37.3595704, 127.105399),
         zoom: 14
     };
-
     var map = new naver.maps.Map('map', mapOptions);
 </script>
 

@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 public class StoreController {
     @GetMapping("/detail.do")
-    public String list() {
+    public String detail() {
         return "store/detail"; // 해당 경로에 대한 뷰 이름 반환
+    }
+    @GetMapping("/list.do")
+    public String list() {
+        return "store/list"; // 해당 경로에 대한 뷰 이름 반환
     }
 }
