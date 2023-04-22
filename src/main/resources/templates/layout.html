@@ -9,9 +9,10 @@
   <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
   <script src="/webjars/bootstrap/5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body style="background: #FFFAED;">
+<!-- storelist-main 스타일은 store/list.html에서 사용중이니 지우지말것 -->
+<body class="storelist-main" style="background: #FFFAED;">
 <header th:replace="/headerNav"></header>
-<main class="container">
+<main class="container storelist-main">
   <th:block layout:fragment="content"></th:block>
 </main>
 
