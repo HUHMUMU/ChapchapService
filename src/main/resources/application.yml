@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:log4jdbc:mysql://localhost:3306/CHAPCHAP
     username: root
-    password: mysql123
+    password: ${db.password}
     #driver-class-name: com.mysql.cj.jdbc.Driver
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
   devtools:
@@ -20,7 +20,7 @@ spring:
     port: 587
     username: fhrzl55040@gmail.com
     #password : gmail 아이디 비밀번호가 아니라 2차 인증 어플리케이션 인증 받은 번호를 넣어야 한다.
-    password: fbonqozuwpllzqcu
+    password: ${email.password}
     properties:
       mail:
         smtp:

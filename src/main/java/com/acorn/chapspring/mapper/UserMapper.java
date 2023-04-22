@@ -1,6 +1,6 @@
 package com.acorn.chapspring.mapper;
 
-import com.acorn.chapspring.dto.UserDto;
+import com.acorn.chapspring.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.acorn.chapspring.controller;
 
-import com.acorn.chapspring.dto.EmailDto;
-import com.acorn.chapspring.dto.UserDto;
+import com.acorn.chapspring.dto.*;
 import com.acorn.chapspring.lib.AESEncryption;
 import com.acorn.chapspring.service.EmailService;
 import com.acorn.chapspring.service.UserService;
@@ -125,11 +124,7 @@ public class UserController {
         List<ReviewDto> reviewed=userService.reviewed(userId);
         List<UserDto> list=userService.userList();
         List<RecommendStoreDto> recommend=userService.recommendList(userId);
-
         List<JjimManageDto> jjim=userService.jjimList(userId);
-
-
-
 
         modelAndView.setViewName("/user/detail");
         modelAndView.addObject("user",user);

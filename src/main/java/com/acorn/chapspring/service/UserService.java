@@ -1,8 +1,6 @@
 package com.acorn.chapspring.service;
 
-import com.acorn.chapspring.dto.ReviewDto;
-import com.acorn.chapspring.dto.UserDto;
-import com.acorn.chapspring.dto.VisitedStoreDto;
+import com.acorn.chapspring.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

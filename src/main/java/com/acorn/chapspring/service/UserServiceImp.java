@@ -1,8 +1,6 @@
 package com.acorn.chapspring.service;
 
-import com.acorn.chapspring.dto.ReviewDto;
-import com.acorn.chapspring.dto.UserDto;
-import com.acorn.chapspring.dto.VisitedStoreDto;
+import com.acorn.chapspring.dto.*;
 import com.acorn.chapspring.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +30,6 @@ public class UserServiceImp implements UserService{
     public int dropout(UserDto user) {
         return userMapper.deleteByUserIdAndPw(user);
     }
-
-//    @Override
-//    public List<VisitedStoreDto> visited(String loginUserId) {
-//        userMapper.setLoginUserId(loginUserId);
-//        List<VisitedStoreDto> list=userMapper.findAllVisited(loginUserId);
-//        return list;
-//    }
 
     @Override
     public int nickName_Check(String nickname) throws Exception {
@@ -89,9 +80,8 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public int idCheck(String userId) {
-        // 임시 구현해서 return이 없음. 빨간줄 지울라고
-        return 0;
+    public int idCheck(String userId) throws Exception {
+        return userMapper.idCheck(userId);
     }
 
 }
