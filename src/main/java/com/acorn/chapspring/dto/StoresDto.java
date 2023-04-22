@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class StoresDto {
-    private int store_num;
-    private String store_name;
+    private int storeNum;
+    private String storeName;
     private String detailInfo;
     private String shortInfo;
     private String madein;

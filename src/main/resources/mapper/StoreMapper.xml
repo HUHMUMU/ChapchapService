@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.StoreMapper">
+    <resultMap id="StoresMap" type="StoresDto">
+        <id column="store_num" property="storeNum"/>
+        <result column="store_name" property="storeName"/>
+        <result column="detail_info" property="detailInfo"/>
+        <result column="short_info" property="shortInfo"/>
+        <result column="madein" property="madein"/>
+        <result column="address" property="address"/>
+        <result column="main_img" property="mainImg"/>
+        <result column="opentime" property="opentime"/>
+        <result column="lastorder" property="lastorder"/>
+        <result column="waiting_closetime" property="waitingClosetime"/>
+        <result column="blogurl" property="blogurl"/>
+        <result column="youtubeurl" property="youtubeurl"/>
+        <result column="facebookurl" property="facebookurl"/>
+        <result column="instaurl" property="instaurl"/>
+        <result column="tvshow" property="tvshow"/>
+        <result column="s_rstatus" property="sRstatus"/>
+        <result column="parking" property="parking"/>
+        <result column="wifi" property="wifi"/>
+        <result column="toilet" property="toilet"/>
+        <result column="smokingroom" property="smokingroom"/>
+        <result column="babychair" property="babychair"/>
+    </resultMap>
+
+    <select id="findAllStores" resultType="com.acorn.chapspring.dto.StoresDto">
+
+    </select>
+    <select id="findStoresByFilterAndSort" resultType="com.acorn.chapspring.dto.StoresDto">
+
+    </select>
+    <select id="findStoreByStoreNum" resultType="com.acorn.chapspring.dto.StoresDto">
+
+    </select>
+    <select id="findBreaktimesByStoreNum" resultType="com.acorn.chapspring.dto.BreaktimesDto">
+
+    </select>
+    <select id="findMenusByStoreNum" resultType="com.acorn.chapspring.dto.MenuManagesDto">
+
+    </select>
+    <select id="findReviewsByStoreNum" resultType="com.acorn.chapspring.dto.ReviewDto">
+
+    </select>
+    <select id="findJjimByStoreNum" resultType="com.acorn.chapspring.dto.JjimManageDto">
+
+    </select>
+</mapper>
