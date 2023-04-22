@@ -2,12 +2,10 @@ package com.acorn.chapspring.dto;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class UserDto {
     public enum StatusType {
-        공개,심사,비공개,휴먼,탈퇴
+        공개,심사,비공개,휴면,탈퇴,이메일인증중
     }
     private String userId;
     private String nickname;
@@ -21,7 +19,7 @@ public class UserDto {
     private String instaUrl;
     private String faceUrl;
     private String youtubeUrl;
-    private String profileimg;
+    private String profileImg;
     private String introduce;
     private String postnumber;
     private String emailCheckCode;
