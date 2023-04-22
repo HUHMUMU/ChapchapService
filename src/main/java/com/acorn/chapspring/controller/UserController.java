@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -120,9 +121,23 @@ public class UserController {
         }
 
         UserDto user=userService.detail(userId);
+        List<VisitedStoreDto> visited=userService.visited(userId);
+        List<ReviewDto> reviewed=userService.reviewed(userId);
+        List<UserDto> list=userService.userList();
+        List<RecommendStoreDto> recommend=userService.recommendList(userId);
+
+        List<JjimManageDto> jjim=userService.jjimList(userId);
+
+
+
+
         modelAndView.setViewName("/user/detail");
         modelAndView.addObject("user",user);
-
+        modelAndView.addObject("visited",visited);
+        modelAndView.addObject("reviewed",reviewed);
+        modelAndView.addObject("list",list);
+        modelAndView.addObject("recommend",recommend);
+        modelAndView.addObject("jjim",jjim);
 
         return  modelAndView;
     }
@@ -269,6 +284,7 @@ public class UserController {
         redirectAttributes.addFlashAttribute("msg","로그아웃 되었습니다.");
         return "redirect:/";
     }
+
     @GetMapping("/login.do")
     public String loginForm(){
 

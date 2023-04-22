@@ -1,5 +1,36 @@
 <div>
     <h1>테스트 1번</h1>
-    <p>방문가게 리스트</p>
-    <p th:text="${visited}"></p>
+    <p>유저 방문가게 목록</p>
+        <p>필요 테이블 리스트</p>
+    <span>1.번호</span> <span>2.가게 이름</span> <span>3.다녀온 날짜</span>
+    <span>4.정렬</span> <span>5.위치</span>
+    <p th:text="${user.userId}"></p>
+    <div th:each="visited : ${visited}">
+        <p th:text="${visited}"></p>
+
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <td>번호</td>
+            <td>가게 이름</td>
+            <td>위치</td>
+            <td>다녀온 날짜</td>
+            <td>
+                <div>
+                    정렬
+                </div>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="visited : ${visited}">
+                <td th:text="${visited.visitedStoreOrder}"></td>
+                <td th:text="${visited.storeName}"></td>
+                <td th:text="${visited.address}"></td>
+                <td colspan="2" th:text="${visited.visitedDate}"></td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>

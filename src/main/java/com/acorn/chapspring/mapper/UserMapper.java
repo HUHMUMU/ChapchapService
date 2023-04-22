@@ -3,6 +3,8 @@ package com.acorn.chapspring.mapper;
 import com.acorn.chapspring.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
     int updateStatusByUidAndEmailCheckCode(UserDto user); //이메일 인증 코드
@@ -15,6 +17,18 @@ public interface UserMapper {
     int deleteByUserIdAndPw(UserDto user);//유저 삭제
     int setLoginUserId(String userId);
     int setLoginUserIdIsNull();
+    List<VisitedStoreDto> findAllVisited(String userId);
+    List<ReviewDto> findAllReviewed(String userId);
+    List<JjimManageDto> findAllJjim(String userId);
+
+//-------------- 추천가게 데이터 처리문-----------------------------
+    List<RecommendStoreDto> findAllRecommend(String userId);
+
+    int insertOneByUserId(RecommendStoreDto recommendStore);
+    int deleteOneByUserIdAndStoreNum(RecommendStoreDto recommendStore);
+
+//----------------------------------------------------------------
+    List<UserDto> findAllUsers();
     //아이디 중복 검사
     int idCheck(String userId);
     //닉네임 중복 검사

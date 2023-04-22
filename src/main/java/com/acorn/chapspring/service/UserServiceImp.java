@@ -46,6 +46,12 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
+    public List<VisitedStoreDto> visited(String loginUserId) {
+        userMapper.setLoginUserId(loginUserId);
+        List<VisitedStoreDto> list=userMapper.findAllVisited(loginUserId);
+        return list;
+    }
+    @Override
     public int email_Check(String email) throws Exception {
         return userMapper.email_Check(email);
     }
@@ -60,12 +66,27 @@ public class UserServiceImp implements UserService{
     public int modify(UserDto user){
         return userMapper.updateOne(user);
     }
-//    @Override
-//    public List<ReviewDto> reviewed(String loginUserId){
-//        userMapper.setLoginUserId(loginUserId);
-//        List<ReviewDto> list=userMapper.findAllReviewed(loginUserId);
-//        return list;
-//    }
+    @Override
+    public List<ReviewDto> reviewed(String loginUserId){
+        userMapper.setLoginUserId(loginUserId);
+        List<ReviewDto> list=userMapper.findAllReviewed(loginUserId);
+        return list;
+    }
+    @Override
+    public List<UserDto> userList(){
+        List<UserDto> list=userMapper.findAllUsers();
+        return list;
+    }
+    @Override
+    public List<RecommendStoreDto> recommendList(String userId){
+        List<RecommendStoreDto> list=userMapper.findAllRecommend(userId);
+        return list;
+    }
+    @Override
+    public  List<JjimManageDto> jjimList(String userId){
+        List<JjimManageDto> list=userMapper.findAllJjim(userId);
+        return list;
+    }
 
     @Override
     public int idCheck(String userId) {
