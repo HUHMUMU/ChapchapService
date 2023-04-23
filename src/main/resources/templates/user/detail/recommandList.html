@@ -9,6 +9,25 @@
     <button href="#" th:if="${session.loginUser.userId.equals(user.userId)}">DELETE</button>
   </div>
 
+  <div style="display: flex;">
+    <div th:each="recommend2 : ${recommend}" class="card" style="width: 18rem">
+      <img src="..." class="card-img-top" alt="가게 이미지">
+      <div class="card-body">
+        <h5 class="card-title" >가게 이미지</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" th:text="${recommend2.storeName}"></li>
+        <li class="list-group-item">추천 메뉴</li>
+        <li class="list-group-item" >가게 평점</li>
+        <li class="list-group-item" th:text="${recommend2.comment}"></li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="card-link">리스트 삭제</a>
+      </div>
+    </div>
+  </div>
+
+
 
 
 </div>

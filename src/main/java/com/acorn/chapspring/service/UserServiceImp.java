@@ -4,6 +4,7 @@ import com.acorn.chapspring.dto.*;
 import com.acorn.chapspring.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 
 @Service
@@ -31,10 +32,13 @@ public class UserServiceImp implements UserService{
         return userMapper.deleteByUserIdAndPw(user);
     }
 
+
     @Override
     public int nickName_Check(String nickname) throws Exception {
         return userMapper.nickName_Check(nickname);
     }
+
+
 
     @Override
     public List<VisitedStoreDto> visited(String loginUserId) {

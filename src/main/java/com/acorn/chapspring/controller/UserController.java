@@ -126,6 +126,7 @@ public class UserController {
         List<RecommendStoreDto> recommend=userService.recommendList(userId);
         List<JjimManageDto> jjim=userService.jjimList(userId);
 
+
         modelAndView.setViewName("/user/detail");
         modelAndView.addObject("user",user);
         modelAndView.addObject("visited",visited);
