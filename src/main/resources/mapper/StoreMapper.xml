@@ -66,4 +66,7 @@
     <select id="findStoreName" resultType="com.acorn.chapspring.dto.StoresDto">
         SELECT store_name FROM stores WHERE store_num=#{storeNum}
     </select>
+    <select id="findByStoreNum" resultType="com.acorn.chapspring.dto.StoresDto">
+
+    </select>
 </mapper>
