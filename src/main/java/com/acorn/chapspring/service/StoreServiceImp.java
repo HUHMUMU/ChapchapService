@@ -34,10 +34,10 @@ public class StoreServiceImp implements StoreService{
         return null;
     }
 
+    // 주어진 식당 번호에 해당하는 가게 정보
     @Override
-    @Transactional
     public StoresDto getStoreByStoreNum(int storeNum) {
-        StoresDto stores=storeMapper.findByStoreNum(storeNum);
+        StoresDto stores=storeMapper.findStoreByStoreNum(storeNum);
         return stores;
     }
 }

@@ -19,7 +19,7 @@ class UserMapperTest {
     private UserMapper userMapper;
     private static VisitedStoreDto visited;
     private static UserDto user;
-    private static ReviewDto reviewer;
+    private static ReviewsDto reviewer;
     private static RecommendStoreDto recommendstore;
     private static JjimManageDto jjim;
     @Test
@@ -29,7 +29,7 @@ class UserMapperTest {
 //        user.setUserId("user01");
 //        UserDto findUser=userMapper.findByUserId(user.getUserId());
 
-        reviewer=new ReviewDto();
+        reviewer=new ReviewsDto();
         reviewer.setUserId("user01");
         UserDto findUser=userMapper.findByUserId(reviewer.getUserId());
         System.out.println("findUser : "+findUser);

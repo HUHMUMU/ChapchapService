@@ -26,11 +26,10 @@ public interface StoreMapper {
     List<MenuManagesDto> findMenusByStoreNum(int storeNum);
 
     // 주어진 식당 번호에 해당하는 가게의 리뷰 가져오기
-    List<ReviewDto> findReviewsByStoreNum(int storeNum);
+    List<ReviewsDto> findReviewsByStoreNum(int storeNum);
 
     // 주어진 식당 번호에 해당하는 가게의 찜 가져오기
     List<JjimManageDto> findJjimByStoreNum(int storeNum);
 
-    // 주어진 식당의 정보들
-    StoresDto findByStoreNum(int storeNum);
+    StoresDto findStoreName(int storeNum);
 }

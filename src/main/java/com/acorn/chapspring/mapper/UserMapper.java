@@ -18,7 +18,7 @@ public interface UserMapper {
     int setLoginUserId(String userId);
     int setLoginUserIdIsNull();
     List<VisitedStoreDto> findAllVisited(String userId);
-    List<ReviewDto> findAllReviewed(String userId);
+    List<ReviewsDto> findAllReviewed(String userId);
     List<JjimManageDto> findAllJjim(String userId);
 
 //-------------- 추천가게 데이터 처리문-----------------------------

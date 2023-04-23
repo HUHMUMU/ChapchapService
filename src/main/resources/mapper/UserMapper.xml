@@ -30,7 +30,7 @@
         <result column="address" property="address"/>
     </resultMap>
     <!--리뷰 테이블맵-->
-    <resultMap id="ReviewMap" type="ReviewDto">
+    <resultMap id="ReviewMap" type="ReviewsDto">
         <id column="review_num" property="reviewNum"/>
         <result column="user_id" property="userId"/>
         <result column="store_num" property="storeNum"/>
