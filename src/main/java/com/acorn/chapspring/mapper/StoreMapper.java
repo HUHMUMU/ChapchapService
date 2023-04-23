@@ -3,10 +3,12 @@ package com.acorn.chapspring.mapper;
 import com.acorn.chapspring.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface StoreMapper {
     // 모든 가게 리스트 가져오기
     List<StoresDto> findAllStores();
@@ -29,4 +31,6 @@ public interface StoreMapper {
     // 주어진 식당 번호에 해당하는 가게의 찜 가져오기
     List<JjimManageDto> findJjimByStoreNum(int storeNum);
 
+    // 주어진 식당의 정보들
+    StoresDto findByStoreNum(int storeNum);
 }

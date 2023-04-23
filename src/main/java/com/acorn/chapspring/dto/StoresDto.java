@@ -19,7 +19,7 @@ public class StoresDto {
     private String facebookurl;
     private String instaurl;
     private String tvshow;
-    private String sRstatus;
+    private String sRstatus; //enum('공개','심사','비공개')
     private boolean parking;
     private boolean wifi;
     private boolean toilet;

@@ -15,6 +15,7 @@ public class StoreController {
     public String detail() {
         return "store/detail"; // 해당 경로에 대한 뷰 이름 반환
     }
+
     @GetMapping("/list.do")
     public String list() {
         return "store/list"; // 해당 경로에 대한 뷰 이름 반환

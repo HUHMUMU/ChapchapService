@@ -46,4 +46,7 @@
     <select id="findJjimByStoreNum" resultType="com.acorn.chapspring.dto.JjimManageDto">
 
     </select>
+    <select id="findByStoreNum" resultMap="StoresMap">
+        SELECT * FROM stores WHERE store_num=#{storeNum}
+    </select>
 </mapper>
