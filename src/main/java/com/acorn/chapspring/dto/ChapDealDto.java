@@ -15,9 +15,5 @@ public class ChapDealDto {
     private Date eventStart; //이벤트 시작 날짜
     private Date eventEnd; //이벤트 마감 날짜
 
-    private String storeName; //가게 이름
-
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
-    }
+    private String storeName; //가게 이름 (stores)
 }

@@ -14,8 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.security.SecureRandom;
@@ -121,7 +119,7 @@ public class UserController {
 
         UserDto user=userService.detail(userId);
         List<VisitedStoreDto> visited=userService.visited(userId);
-        List<ReviewDto> reviewed=userService.reviewed(userId);
+        List<ReviewsDto> reviewed=userService.reviewed(userId);
         List<UserDto> list=userService.userList();
         List<RecommendStoreDto> recommend=userService.recommendList(userId);
         List<JjimManageDto> jjim=userService.jjimList(userId);

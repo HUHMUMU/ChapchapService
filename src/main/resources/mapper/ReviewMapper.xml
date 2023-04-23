@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.ReviewMapper">
+    <resultMap id="ReviewMap" type="ReviewsDto">
+        <id column="review_num" property="reviewNum"/>
+        <result column="content" property="content"/>
+        <result column="comment" property="comment"/>
+        <result column="img" property="img"/>
+        <result column="date" property="date"/>
+        <result column="star" property="star"/>
+        <result column="r_rstatus" property="rrStatus"/>
+        <result column="user_id" property="userId"/>
+        <result column="store_num" property="storeNum"/>
+        <result column="menu_num" property="menuNum"/>
+    </resultMap>
+    <select id="findReviewByStore" resultMap="ReviewMap">
+        SELECT * FROM reviews WHERE store_num=#{storeNum};
+    </select>
+</mapper>

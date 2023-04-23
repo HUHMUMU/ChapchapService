@@ -62,9 +62,9 @@ public class UserServiceImp implements UserService{
         return userMapper.updateOne(user);
     }
     @Override
-    public List<ReviewDto> reviewed(String loginUserId){
+    public List<ReviewsDto> reviewed(String loginUserId){
         userMapper.setLoginUserId(loginUserId);
-        List<ReviewDto> list=userMapper.findAllReviewed(loginUserId);
+        List<ReviewsDto> list=userMapper.findAllReviewed(loginUserId);
         return list;
     }
     @Override
