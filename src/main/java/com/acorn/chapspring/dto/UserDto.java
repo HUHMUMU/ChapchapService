@@ -24,5 +24,5 @@ public class UserDto {
     private String postnumber;
     private String emailCheckCode;
     private StatusType urStatus;
-
+    private String chapbanner;
 }
