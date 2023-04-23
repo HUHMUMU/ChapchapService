@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <form action="/chapstory/list.do">
         <h3>리스트다 이건 ....</h3>
-        <div class="card-group">
+        <div class="card-group" ht>
             <div class="card">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
@@ -34,12 +34,40 @@
             <a href="/chapstory/blogMain.do" class="btn btn-primary">My 챠압</a>
             <a href="/chapstory/write.do" class="btn btn-primary">글쓰기</a>
         </div>
-        <a href="/chapstory/detail.do" style="font-size: 25px;margin-top: 10px">
-            <strong>디테일</strong>
-        </a>
-        <section id="chapstoryListCont">
-            <th:block th:include="/chapstory/includeList"></th:block>
-        </section>
+        <div>
+            <div class="p-5 border-1" th:each="c:${chapstorys}">
+                <div class="d-flex justify-content-around">
+                    <div class="border bg-primary me-2" style="height: 300px; width: 300px"></div>
+                    <div style="width:60%">
+                        <h3 th:text="${c.title}"></h3>
+                        <div class="d-flex justify-content-between ">
+                            <div class="d-flex align-items-center">
+                                <div class="border bg-primary rounded-circle me-2" style="height: 50px; width: 50px"></div>
+                                <h4 th:text="${c.user.nickname}"></h4>
+                                <div class="d-flex">
+                                    <p>조회수 :</p>
+                                    <p th:text="${c.viewcount}"></p>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="d-flex">
+                                    <p>좋아요 </p>
+                                    <p th:text="${c.likes}"></p>
+                                </div>
+                                <div class="d-flex">
+                                    <p>작성날짜</p>
+                                    <p th:text="${c.date}"></p>
+                                </div>
+                                <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}">상세</a>
+                                <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${c.user.userId})}">블로그</a>
+                            </div>
+                        </div>
+                        <p th:text="${c.content}"></p>
+                        </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 </html>

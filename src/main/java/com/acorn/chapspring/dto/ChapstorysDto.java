@@ -18,4 +18,5 @@ public class ChapstorysDto {
     private Date updateTime;
     private String userId; // FK
     private String chsRstatus;
+    private UserDto user;
 }
