@@ -37,7 +37,7 @@
         <div>
             <div class="p-5 border-1" th:each="c:${chapstorys}">
                 <div class="d-flex justify-content-around">
-                    <div class="border bg-primary me-2" style="height: 300px; width: 300px"></div>
+                    <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="width: 300px; height: 300px; object-fit: cover;" class="img-thumbnail">
                     <div style="width:60%">
                         <h3 th:text="${c.title}"></h3>
                         <div class="d-flex justify-content-between ">
