@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>블로그 리스트</title>
+</head>
+<div layout:fragment="content">
+    <form action="/chapstory/list.do">
+        <h3>리스트다 이건 ....</h3>
+        <div class="card-group" ht>
+            <div class="card">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+            <div class="card">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+            <div class="card">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-5">
+            <a href="/chapstory/blogMain.do" class="btn btn-primary">My 챠압</a>
+            <a href="/chapstory/write.do" class="btn btn-primary">글쓰기</a>
+        </div>
+        <div>
+            <div class="p-5 border-1" th:each="c:${chapstorys}">
+                <div class="d-flex justify-content-around">
+                    <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="width: 300px; height: 300px; object-fit: cover;" class="img-thumbnail">
+                    <div style="width:60%">
+                        <h3 th:text="${c.title}"></h3>
+                        <div class="d-flex justify-content-between ">
+                            <div class="d-flex align-items-center">
+                                <div class="border bg-primary rounded-circle me-2" style="height: 50px; width: 50px"></div>
+                                <h4 th:text="${c.user.nickname}"></h4>
+                                <div class="d-flex">
+                                    <p>조회수 :</p>
+                                    <p th:text="${c.viewcount}"></p>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="d-flex">
+                                    <p>좋아요 </p>
+                                    <p th:text="${c.likes}"></p>
+                                </div>
+                                <div class="d-flex">
+                                    <p>작성날짜</p>
+                                    <p th:text="${c.date}"></p>
+                                </div>
+                                <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}">상세</a>
+                                <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${c.user.userId})}">블로그</a>
+                            </div>
+                        </div>
+                        <p th:text="${c.content}"></p>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</html>

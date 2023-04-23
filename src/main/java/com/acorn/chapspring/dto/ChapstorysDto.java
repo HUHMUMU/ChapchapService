@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ChapstorysDto {
@@ -18,4 +19,6 @@ public class ChapstorysDto {
     private Date updateTime;
     private String userId; // FK
     private String chsRstatus;
+    private UserDto user;
+    private List<ChapstoryimgsDto> chapstoryimgs; // 1:N = chapstory : chapstoryimgs
 }

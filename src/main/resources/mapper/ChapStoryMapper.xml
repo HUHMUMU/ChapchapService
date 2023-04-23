@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.ChapStoryMapper">
+    <resultMap id="ChapstoryMap" type="ChapstorysDto">
+        <id column="chap_num" property="chapNum"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="viewcount" property="viewcount"/>
+        <result column="date" property="date"/>
+        <result column="likes" property="likes"/>
+        <result column="profile" property="profile"/>
+        <result column="main_img" property="mainImg"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="user_id" property="userId"/>
+        <result column="chs_rstatus" property="chsRstatus"/>
+        <association property="user"
+                    select="com.acorn.chapspring.mapper.UserMapper.findByUserId"
+                    column="user_id"
+                    fetchType="lazy"/>
+    </resultMap>
+    <insert useGeneratedKeys="true" keyProperty="chapNum" id="insertOne" parameterType="ChapstorysDto">
+        INSERT INTO chapstorys (user_id, title, content, main_img) VALUE (#{userId}, #{title}, #{content}, #{mainImg})
+    </insert>
+    <update id="updateOne" parameterType="chapstorysDto">
+        UPDATE chapstorys SET title=#{title}, content=#{content}, main_img=#{mainImg} WHERE chap_num=#{chapNum}
+    </update>
+    <delete id="deleteOne">
+        DELETE FROM chapstorys WHERE chap_num=#{chapNum}
+    </delete>
+    <select id="findAll" resultMap="ChapstoryMap">
+        SELECT * FROM chapstorys
+    </select>
+    <select id="findByChapNum" resultMap="ChapstoryMap">
+        SELECT * FROM chapstorys WHERE chap_num=#{chapNum}
+    </select>
+    <select id="findByUserId" resultMap="ChapstoryMap">
+        SELECT * FROM chapstorys WHERE user_id=#{userId}
+    </select>
+</mapper>

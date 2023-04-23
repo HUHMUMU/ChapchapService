@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>블로그 상세글</title>
+</head>
+<div layout:fragment="content">
+    <form action="/chapstory/detail.do">
+        <h3>디테일이다 이건 ....</h3>
+        <hr>
+        <h3 th:text="${c.title}"></h3>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+                <div class="border bg-primary rounded-circle me-2" style="height: 50px; width: 50px"></div>
+                <div>
+                    <h4 class="me-2" th:text="${c.user.nickname}">닉네임</h4>
+                    <p th:text="c.date"></p>
+                </div>
+                <div>
+                    <div class="d-flex">
+                        <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+                        <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+                        <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+                    </div>
+                    <div class="d-flex">
+                        <p class="mt-2" >조회수</p>
+                        <p th:text="${c.viewcount}"></p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p>좋아요 : </p>
+                    <p th:text="${c.likes}"></p>
+                </div>
+                <button>공유</button>
+                <button>신고</button>
+                <button>수정</button>
+                <button>삭제</button>
+            </div>
+        </div>
+        <div class="border bg-primary" style="height: 300px;"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8">
+                    <p th:text="${c.content}"></p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</html>
