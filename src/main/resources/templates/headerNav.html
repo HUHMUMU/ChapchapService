@@ -8,7 +8,7 @@
 <nav class="navbar navbar-expand-sm">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
-    <img src="/public/img/logo.png" alt="" width="160px" height="55px" style="margin-top: 10px; margin-left: 20px">
+      <img src="/public/img/logo.png" alt="" width="160px" height="55px" style="margin-top: 10px; margin-left: 20px">
     </a>
     <div class="collapse navbar-collapse" id="collapsibleNavbar" style="margin-left: 5px; margin-top: 10px">
       <ul class="navbar-nav ">
@@ -29,28 +29,28 @@
         </li>
       </ul>
     </div>
-      <div class="d-flex">
-        <i class="nav-link" href="/user/login.do">
-            <!--로그인 아이디/회원가입 아이디-->
-            <a class="bi bi-person" href="/user/login.do" style="font-size: 27px; color: #757575; margin-right: 15px"></a>
-        </i>
-        <i class="nav-link">
-          <!--로그인 아이디/회원가입 아이디-->
-          <a class="bi bi-person-add" href="/user/signup.do" style="font-size: 27px; color: #757575; margin-right: 15px"></a>
-        </i>
-          <th:block th:if="${session.loginUser!=null}">
-            <li class="breadcrumb-item">
-              <a class="nav-link" th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.userId})}">
-                <span th:text="${session.loginUser.userId}"></span>
-                (<span th:text="${session.loginUser.name}"></span>)
-              </a>
-            </li>
-            <li class="breadcrumb-item">
-              <a class="nav-link" href="/user/logout.do">로그아웃</a>
-            </li>
-          </th:block>
-      </div>
+    <div class="d-flex">
+      <i class="nav-link" href="/user/login.do">
+        <!--로그인 아이디/회원가입 아이디-->
+        <a class="bi bi-person" href="/user/login.do" style="font-size: 27px; color: #757575; margin-right: 15px"></a>
+      </i>
+      <i class="nav-link">
+        <!--로그인 아이디/회원가입 아이디-->
+        <a class="bi bi-person-add" href="/user/signup.do" style="font-size: 27px; color: #757575; margin-right: 15px"></a>
+      </i>
+      <th:block th:if="${session.loginUser!=null}">
+        <li class="breadcrumb-item">
+          <a class="nav-link" th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.userId})}">
+            <span th:text="${session.loginUser.userId}"></span>
+            (<span th:text="${session.loginUser.name}"></span>)
+          </a>
+        </li>
+        <li class="breadcrumb-item">
+          <a class="nav-link" href="/user/logout.do">로그아웃</a>
+        </li>
+      </th:block>
     </div>
+  </div>
   </div>
 </nav>
 

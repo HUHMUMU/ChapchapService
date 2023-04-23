@@ -3,7 +3,386 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<div layout:fragment="content">
-  <h2>스프링</h2>
+<div layout:fragment="content" class="position-relative">
+        <button class="btn btn-warning rounded-circle mx-5 position-sticky top-50 start-100 translate-middle-y" style="height: 80px; width: 80px" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">웨이팅</button>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                ...
+            </div>
+        </div>
+
+    <div id="map" style="width:100%;height:400px;"></div>
+    <script>
+        var mapOptions = {
+            center: new naver.maps.LatLng(37.3595704, 127.105399),
+            zoom: 14
+        };
+
+        var map = new naver.maps.Map('map', mapOptions);
+    </script>
+    <div class="mt-lg-5">
+        <div id="carouselExampleFade" class="carousel slide carousel-fade w-75 mx-auto" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="http://localhost:8080/images/main/볶음밥.jpg" class="d-block w-50 mx-auto"
+                         style="height: 500px" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="http://localhost:8080/images/main/새우튀김초밥.jpg" class="d-block w-50 mx-auto"
+                         style="height: 500px" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="http://localhost:8080/images/main/우동.jpg" class="d-block w-50 mx-auto"
+                         style="height: 500px" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <div class="input-group w-50 mt-sm-5 mx-auto">
+        <label class="input-group-text text-light bg-warning">
+            <i class="bi bi-search"></i>
+        </label>
+        <input type="text" id="searchTagInput" class="form-control" placeholder="검색">
+    </div>
+
+    <div class="mx-auto">
+        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘은 뭘 먹을까?</h1>
+
+        <div class="d-flex justify-content-center mt-5">
+            <div class="dropdown me-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Dropdown
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button class="dropdown-item" type="button">Action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Another action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Something else here</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Dropdown
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button class="dropdown-item" type="button">Action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Another action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Something else here</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between w-50 mt-5 mx-auto">
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">혼밥</p>
+            </div>
+
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">족발</p>
+            </div>
+
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">보쌈</p>
+            </div>
+
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">치킨</p>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between w-50 mt-5 mx-auto">
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">고기</p>
+            </div>
+
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">양식</p>
+            </div>
+
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">백반</p>
+            </div>
+
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">일식</p>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between w-50 mt-5 mx-auto">
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">회</p>
+            </div>
+
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">중식</p>
+            </div>
+
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">아시안</p>
+            </div>
+
+            <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">
+                <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>
+                <p class="text-center" style="height: 10px">패스트푸드</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mx-auto">
+        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 베스트 맛집</h1>
+
+        <div class="d-flex justify-content-center mt-5">
+            <div class="dropdown me-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Dropdown
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button class="dropdown-item" type="button">Action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Another action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Something else here</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Dropdown
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button class="dropdown-item" type="button">Action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Another action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Something else here</button>
+                    </li>
+                </ul>
+            </div>
+
+            <button type="button" class="btn btn-warning ms-3">검색</button>
+        </div>
+
+        <div class="card mt-5 mx-auto w-75">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="http://localhost:8080/images/main/볶음밥.jpg" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card mt-5 mx-auto w-75">
+            <div class="row g-0">
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="http://localhost:8080/images/main/우동.jpg" class="img-fluid rounded-end" alt="...">
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-5 mx-auto w-75">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mx-auto">
+        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 베스트 맛집</h1>
+
+        <div class="d-flex justify-content-center mt-5">
+            <div class="dropdown me-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Dropdown
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button class="dropdown-item" type="button">Action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Another action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Something else here</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="dropdown me-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Dropdown
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button class="dropdown-item" type="button">Action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Another action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Something else here</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="dropdown me-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Dropdown
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button class="dropdown-item" type="button">Action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Another action</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Something else here</button>
+                    </li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-warning ms-3">검색</button>
+        </div>
+    </div>
+
+
+    <div class="card-group w-75 mx-auto mt-5">
+        <div class="card mt-5">
+            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+                    content. This content is a little bit longer.</p>
+                <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+            </div>
+        </div>
+        <div class="card mt-5">
+            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+            </div>
+        </div>
+        <div class="card mt-5">
+            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+                    content. This card has even longer content than the first to show that equal height action.</p>
+                <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer class="w-75 mx-auto mt-5">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h3>(주) 챱챱충</h3>
+                <p>서울특별시 마포구 양화로 122 3층, 4층</p>
+            </div>
+            <div>
+                <h4>챱챱충 회장</h4>
+                <h5>허원준</h5>
+            </div>
+
+        </div>
+
+        <div class="d-flex mt-5">
+            <h5>1.FAQ</h5>
+            <h5 class="ms-5">2.고객센터</h5>
+        </div>
+    </footer>
+    <button type="button" class="btn btn-outline-warning" style="position: fixed; bottom: 20px; right: 130px; width: 100px;" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="채팅내역?">
+        채  팅
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    60
+    <span class="visually-hidden">unread messages</span>
+  </span>
+    </button>
+
+
+
 </div>
 </html>
