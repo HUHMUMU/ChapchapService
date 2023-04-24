@@ -3,11 +3,10 @@
 <mapper namespace="com.acorn.chapspring.mapper.MainSearchMapper">
     <resultMap id="FindByStoreNameMap" type="com.acorn.chapspring.dto.StoresDto">
         <result column="store_name" property="storeName"/>
-
-
     </resultMap>
 
     <select id="findByNameContaining" resultMap="FindByStoreNameMap">
         SELECT * FROM stores WHERE store_name LIKE CONCAT('%',#{storeName},'%')
     </select>
+
 </mapper>
