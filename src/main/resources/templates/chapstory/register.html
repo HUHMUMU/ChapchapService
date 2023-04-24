@@ -1,3 +1,4 @@
+<!-- register.html -->
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
@@ -9,10 +10,24 @@
 </head>
 <div layout:fragment="content">
     <form action="/chapstory/register.do" name="registerForm" enctype="multipart/form-data" method="post">
-    <h3> 이건 작성페이지다 !!!</h3>
-    <p class="form-floating">
-        <input id="titleInput" type="text" name="title" value="" class="form-control" placeholder="??">
-        <label class="">제목을 입력하세요</label>
-    </p>
+        <h3> 이건 작성페이지다 !!!</h3>
+        <p class="form-floating">
+            <input id="titleInput" type="text" name="title" value="" class="form-control" placeholder="??">
+            <label class="">제목을 입력하세요</label>
+<!--            <input type = "file", id="" class="form-control" accept="image/*" onchange="loadFile(this)">-->
+            <th:block th:include="/chapstory/write"></th:block>
+        </p>
+        <button id="resetBtn" class="btn btn-outline-warning me-2" type="button" onclick="resetForm()">초기화</button>
+        <button id="addBtn" class="btn btn-outline-primary" type="submit">등록</button>
     </form>
 </div>
+</html>
+<script>
+    function resetForm() {
+        // 제목 입력 필드 초기화
+        document.getElementById('titleInput').value = '';
+
+        // 스마트 에디터 내용 초기화
+        oEditors.getById["txtContent"].exec("SET_CONTENTS", ['']);
+    }
+</script>

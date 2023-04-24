@@ -33,7 +33,7 @@
         <th:block th:if="${session.loginUser!=null}">
             <div class="d-flex justify-content-end mt-5">
                 <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${session.loginUser.userId})}"  class="btn btn-primary">my챱</a>
-                <a href="/chapstory/write.do" class="btn btn-primary">글쓰기</a>
+                <a href="/chapstory/register.do" class="btn btn-primary">글쓰기</a>
             </div>
         </th:block>
         <div>
@@ -41,11 +41,16 @@
                 <div class="d-flex justify-content-around">
                     <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="width: 300px; height: 300px; object-fit: cover;" class="img-thumbnail">
                     <div style="width:60%">
-                        <h3 th:text="${c.title}"></h3>
+                        <h3>
+                            <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}" th:text="${c.title}" style="text-decoration: none; color: inherit;"></a>
+                        </h3>
                         <div class="d-flex justify-content-between ">
                             <div class="d-flex align-items-center">
                                 <img th:src="@{'{path}'(path=${c.user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle">
-                                <h4 th:text="${c.user.nickname}"></h4>
+
+                                <h4>
+                                    <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}"  th:text="${c.user.nickname}" style="text-decoration: none; color: inherit;"></a>
+                                </h4>
                                 <div class="d-flex">
                                     <p>조회수 :</p>
                                     <p th:text="${c.viewcount}"></p>
@@ -61,8 +66,6 @@
                                     <p>작성날짜</p>
                                     <p th:text="${c.date}"></p>
                                 </div>
-                                <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}">상세</a>
-                                <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${c.user.userId})}">블로그</a>
                             </div>
                         </div>
                         <p th:text="${c.content}"></p>

@@ -4,6 +4,7 @@ import com.acorn.chapspring.dto.ChapDealDto;
 import com.acorn.chapspring.dto.ChapstorysDto;
 import com.acorn.chapspring.dto.UserDto;
 import com.acorn.chapspring.service.ChapStoryService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,15 +47,28 @@ public class ChapStoryController {
         model.addAttribute("c",chaps);
         return "chapstory/detail";}
 
+//    @GetMapping("/{userId}/blogMain.do")
+//    public String chapMain(
+//            Model model,
+//            @PathVariable String userId,
+//            @SessionAttribute UserDto loginUser){
+//        List<ChapstorysDto> chaps;
+//        chaps = chapStoryService.blogMain(userId);
+//        model.addAttribute("chapstorys",chaps);
+//        return "chapstory/blogMain";}
+
     @GetMapping("/{userId}/blogMain.do")
     public String chapMain(
             Model model,
             @PathVariable String userId,
-            @SessionAttribute UserDto loginUser){
+            HttpSession session) {
+        UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+
         List<ChapstorysDto> chaps;
         chaps = chapStoryService.blogMain(userId);
-        model.addAttribute("chapstorys",chaps);
-        return "chapstory/blogMain";}
+        model.addAttribute("chapstorys", chaps);
+        return "chapstory/blogMain";
+    }
 
 
     @GetMapping("/register.do")
