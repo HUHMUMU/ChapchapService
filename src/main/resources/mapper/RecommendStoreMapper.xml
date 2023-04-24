@@ -18,7 +18,7 @@
         delete from recommend_stores where user_id=#{userId} and store_num=#{storeNum}
     </delete>
 <!--추천가게 정보 조회-->
-    <select id="findAllRecommend" resultMap="RecommendMap">
+    <select id="findAllRecommendstoreByUserId" resultMap="RecommendMap">
         select *
         from stores inner join recommend_stores
                                on stores.store_num = recommend_stores.store_num

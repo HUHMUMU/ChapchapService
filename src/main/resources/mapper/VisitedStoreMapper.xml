@@ -9,7 +9,7 @@
         <result column="address" property="address"/>
     </resultMap>
 
-    <select id="findAllVisited" resultMap="VisitedMap">
-        select *<!--visited_date,store_name,address--> from visited_store_lists where user_id=#{userId}
+    <select id="findAllVisitedByUserId" resultMap="VisitedMap">
+        select * from visited_store_lists where user_id=#{userId}
     </select>
 </mapper>
