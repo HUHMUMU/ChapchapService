@@ -36,6 +36,9 @@ class StoreMapperTest {
 
     @Test
     void findStoreByStoreNum() {
+        StoresDto store=storeMapper.findStoreByStoreNum(1);
+        System.out.println("store = " + store);
+        assertNotNull(store);
     }
 
     @Test

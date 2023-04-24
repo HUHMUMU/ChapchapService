@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acorn.chapspring.mapper.ReviewMapper">
-    <resultMap id="ReviewMap" type="ReviewsDto">
+    <resultMap id="ReviewMap" type="com.acorn.chapspring.dto.ReviewsDto">
         <id column="review_num" property="reviewNum"/>
         <result column="content" property="content"/>
         <result column="comment" property="comment"/>
@@ -12,6 +12,10 @@
         <result column="user_id" property="userId"/>
         <result column="store_num" property="storeNum"/>
         <result column="menu_num" property="menuNum"/>
+        <collection property="userInfo"
+                     select="com.acorn.chapspring.mapper.UserMapper.findByUserId"
+                     column="user_id"
+                     fetchType="eager"/>
     </resultMap>
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acorn.chapspring.mapper.StoreMapper">
-    <resultMap id="StoresMap" type="StoresDto">
+    <resultMap id="StoresMap" type="com.acorn.chapspring.dto.StoresDto">
         <id column="store_num" property="storeNum"/>
         <result column="store_name" property="storeName"/>
         <result column="detail_info" property="detailInfo"/>

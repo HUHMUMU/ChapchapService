@@ -20,4 +20,11 @@ class ChapDealMapperTest {
         System.out.println("chapDealList = " + chapDealList);
         assertNotNull(chapDealList);
     }
+
+    @Test
+    void findEventByStore() {
+        List<ChapDealDto> chapDealList=chapDealMapper.findEventByStore(1);
+        System.out.println("chapDealList = " + chapDealList);
+        assertNotNull(chapDealList);
+    }
 }
