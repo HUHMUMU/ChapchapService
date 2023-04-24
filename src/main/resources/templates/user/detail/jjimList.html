@@ -6,7 +6,27 @@
     <span>3.정렬</span> <span>4.위치</span>
     <div th:each="jjim : ${jjim}">
         <span th:text="${jjim}" th:if="${jjim.jjStatus.equals('공개')}"></span>
-        <button href="#" th:if="${session.loginUser.userId.equals(user.userId)}">DELETE</button>
+<!--        <button href="#" th:if="${session.loginUser.userId.equals(user.userId)}">DELETE</button>-->
     </div>
-
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <td>번호</td>
+            <td>가게 이름</td>
+            <td>위치</td>
+            <td>
+                <div>
+                    정렬
+                </div>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="jjim : ${jjim}">
+            <td th:text="${jjim.listNum}" th:if="${jjim.jjStatus.equals('공개')}"></td>
+            <td th:text="${jjim.storeName}" th:if="${jjim.jjStatus.equals('공개')}"></td>
+            <td th:text="${jjim.address}" colspan="2" th:if="${jjim.jjStatus.equals('공개')}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>

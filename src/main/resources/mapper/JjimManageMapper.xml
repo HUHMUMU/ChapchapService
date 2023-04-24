@@ -6,9 +6,13 @@
         <result column="jj_status" property="jjStatus"/>
         <result column="user_id" property="userId"/>
         <result column="store_num" property="storeNum"/>
+        <result column="store_name" property="storeName"/>
+        <result column="address" property="address"/>
     </resultMap>
 
     <select id="findAllJjim" resultMap="JjimMap">
-        select * from jjim_manages where user_id=#{userId};
+        select * from stores inner join jjim_manages
+                 on stores.store_num = jjim_manages.store_num
+                 where user_id=#{userId};
     </select>
 </mapper>
