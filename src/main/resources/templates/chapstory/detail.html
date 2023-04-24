@@ -13,21 +13,23 @@
         <hr>
         <h3 th:text="${c.title}"></h3>
         <div class="d-flex justify-content-between">
-            <div class="d-flex align-items-center">
-                <div class="border bg-primary rounded-circle me-2" style="height: 50px; width: 50px"></div>
-                <div>
-                    <h4 class="me-2" th:text="${c.user.nickname}">닉네임</h4>
-                    <p th:text="c.date"></p>
-                </div>
+            <div class="d-flex">
+                <img th:src="@{'{path}'(path=${c.user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle">
                 <div>
                     <div class="d-flex">
-                        <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
-                        <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
-                        <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+                        <h4 class="me-2" th:text="${c.user.nickname}">닉네임</h4>
+                        <div class="d-flex">
+                            <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+                            <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+                            <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+                        </div>
                     </div>
                     <div class="d-flex">
-                        <p class="mt-2" >조회수</p>
-                        <p th:text="${c.viewcount}"></p>
+                        <p th:text="${c.date}"></p>
+                        <div class="d-flex">
+                            <p class="mt-2" >조회수</p>
+                            <p th:text="${c.viewcount}"></p>
+                        </div>
                     </div>
                 </div>
             </div>
