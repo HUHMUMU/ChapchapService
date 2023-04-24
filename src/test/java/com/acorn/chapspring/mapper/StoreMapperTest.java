@@ -14,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class StoreMapperTest {
     @Autowired
     private StoreMapper storeMapper;
+
+    @Autowired
+    private RecommendStoreMapper recommendStoreMapper;
     @Autowired
     private static UserDto user;
     @Autowired
@@ -56,7 +59,7 @@ class StoreMapperTest {
         user=new UserDto();
         store=new StoresDto();
         user.setUserId("admin");
-        List<RecommendStoreDto> recommend=userMapper.findAllRecommend(user.getUserId());
+        List<RecommendStoreDto> recommend=recommendStoreMapper.findAllRecommend(user.getUserId());
         System.out.println(recommend);
         int myRecommend=0;
         for(RecommendStoreDto stores :recommend){

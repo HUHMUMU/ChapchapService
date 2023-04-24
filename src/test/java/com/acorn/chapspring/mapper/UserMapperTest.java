@@ -15,8 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserMapperTest {
     @Autowired
-
     private UserMapper userMapper;
+    @Autowired
+    private RecommendStoreMapper recommendStoreMapper;
+    @Autowired
+    private JjimManageMapper jjimManageMapper;
+
     private static VisitedStoreDto visited;
     private static UserDto user;
     private static ReviewsDto reviewer;
@@ -143,7 +147,7 @@ class UserMapperTest {
         user=new UserDto();
         user.setUserId("admin");
         recommendstore.setUserId("admin");
-        List<RecommendStoreDto> list=userMapper.findAllRecommend(recommendstore.getUserId());
+        List<RecommendStoreDto> list=recommendStoreMapper.findAllRecommend(recommendstore.getUserId());
         int listNum=0;
         for (RecommendStoreDto recommendList : list){
             listNum++;
@@ -159,13 +163,13 @@ class UserMapperTest {
         recommendstore.setStoreNum(8);
         //---------------------------------------------------
 
-        List<RecommendStoreDto> list=userMapper.findAllRecommend(recommendstore.getUserId());
+        List<RecommendStoreDto> list=recommendStoreMapper.findAllRecommend(recommendstore.getUserId());
         System.out.println(recommendstore.getUserId()+"'s list number : " +list.size());
 
         if(list.size()<3){
-            int insert= userMapper.insertOneByUserId(recommendstore);//성공하면 1 반환
+            int insert= recommendStoreMapper.insertOneByUserId(recommendstore);//성공하면 1 반환
             assertEquals(insert,1);
-            list=userMapper.findAllRecommend(recommendstore.getUserId());
+            list=recommendStoreMapper.findAllRecommend(recommendstore.getUserId());
             int listNum=1;
             for (RecommendStoreDto recommendList : list){
                 System.out.println("number"+listNum+" : "+recommendList);
@@ -195,9 +199,9 @@ class UserMapperTest {
         recommendstore=new RecommendStoreDto();
         recommendstore.setStoreNum(8);
         recommendstore.setUserId("admin");
-        int delete=userMapper.deleteOneByUserIdAndStoreNum(recommendstore);
+        int delete=recommendStoreMapper.deleteOneByUserIdAndStoreNum(recommendstore);
         assertEquals(delete,1);
-        List<RecommendStoreDto> list=userMapper.findAllRecommend(recommendstore.getUserId());
+        List<RecommendStoreDto> list=recommendStoreMapper.findAllRecommend(recommendstore.getUserId());
         int listNum=0;
         for (RecommendStoreDto recommendList : list){
             listNum++;
@@ -209,7 +213,7 @@ class UserMapperTest {
     void findAllJjim(){
         jjim=new JjimManageDto();
         jjim.setUserId("user01");
-        List<JjimManageDto> list=userMapper.findAllJjim(jjim.getUserId());
+        List<JjimManageDto> list=jjimManageMapper.findAllJjim(jjim.getUserId());
         int listnum=0;
         for(JjimManageDto jjimlist : list){
             System.out.println("number"+listnum+" : "+jjimlist);
