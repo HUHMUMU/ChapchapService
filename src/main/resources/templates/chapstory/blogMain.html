@@ -28,8 +28,8 @@
     <h4>인기글</h4>
     <div class="d-flex justify-content-around">
         <div th:each="c:${chapstorys}">
-            <div class = "border bg-primary" style = "height: 100px; width: 100px; position: relative;"></div>
-            <h5 th:text="${c.title}"></h5>
+            <img th:src="@{'{path}'(path=${chapstorys[0].mainImg})}" alt = "챱스 썸네일" style="height: 100px; width:100px; position: relative; object-fit: cover;" class="img-thumbnail">
+            <h5 th:text="${c.title}" style="width: 150px"></h5>
         </div>
     </div>
     <hr>
@@ -38,7 +38,7 @@
         <div class="col">
             <div class="card">
                 <div style="text-align: center;">
-                    <div class="border bg-primary" style="height: 300px;"></div>
+                    <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="height: 300px; width: 100%; position: relative; object-fit: cover;" class="img-thumbnail">
                     <h3 th:text="${c.title}"></h3>
                     <p th:text="${c.content}"></p>
                 </div>
