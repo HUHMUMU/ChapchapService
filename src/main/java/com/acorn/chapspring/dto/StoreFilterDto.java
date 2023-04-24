@@ -10,7 +10,7 @@ public class StoreFilterDto {
     private boolean parking; // 주차가능불가능으로 필터
 
     // 정렬 조건을 위한 필드
-    private String sortBy; // 거리순,별점순,리뷰순,좋아요순 등을 포함
+    private String sortBy; // 거리순,별점순,리뷰순,찜순 등을 포함
 
     // 페이지네이션을 위한 필드
     private int pageNumber; // 페이지 번호를 나타내는 정수값

@@ -31,6 +31,9 @@ public class StoreServiceImp implements StoreService{
 
     @Override
     public List<StoresDto> getFilteredAndSortedStores(StoreFilterDto storeFilterDto) {
+//        List<StoresDto> filteredStores = storeMapper.findStoresByFilter(storeFilterDto);
+//        List<StoresDto> sortedStores = storeMapper.sortFilteredStores(filteredStores, storeFilterDto.getSortCriteria());
+//        return sortedStores;
         return null;
     }
 
