@@ -16,4 +16,6 @@ public class ReviewsDto {
     private String userId;
     private int storeNum;
     private int menuNum;
+
+    private UserDto userInfo; //유저 정보 가져오기
 }
