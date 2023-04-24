@@ -1,21 +1,15 @@
 //package com.acorn.chapspring.service;
 //
-//import com.acorn.chapspring.dto.UserDto;
 //import com.acorn.chapspring.dto.WaitingDto;
 //import com.acorn.chapspring.mapper.WaitingMapper;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
 //
-//import java.util.List;
-//@Service
-//public class WaitingService {
-//    @Autowired
+//public interface WaitingServiceImp implements WaitingService{
+//    @Override
 //    private WaitingMapper waitingMapper;
 //
-//    int addWaiting(WaitingDto waitingDto) {
+//    int modifyWaiting(WaitingDto waitingDto) {
 //        return false;
 //    }
-//    int modify(WaitingDto waitingDto);
 //
 //    public void insertUser(WaitingDto WaitingDto) {
 //        waitingMapper.insertUser(WaitingDto);
@@ -25,6 +19,6 @@
 //        return false;
 //    }
 //}
-//
-//// 보완수정해야함
-// 이거 잘못만듬
+
+
+//잘못 만들어서 수젖ㅇ

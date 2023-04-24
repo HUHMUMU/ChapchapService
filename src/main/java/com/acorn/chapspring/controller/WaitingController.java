@@ -1,16 +1,18 @@
 //package com.acorn.chapspring.controller;
-//import com.acorn.chapspring.dto.UsersWaitingDto;
+//
+//import com.acorn.chapspring.dto.WaitingDto;
 //import com.acorn.chapspring.service.WaitingService;
-//import org.springframework.beans.factory.annotation.Autowired;
+//import lombok.RequiredArgsConstructor;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.*;
 //
 //@Controller
+//@RequiredArgsConstructor
+//public class WaitingController {
+//    private final WaitingService waitingService;
+//    @get
 //
-//public class waitingController {
-//    // 모달창이 열릴 때마다 max_people 값을 가져와서 드롭다운 리스트를 동적으로 생성합니다.
 //    const $('#waitingModal').on('show.bs.modal', function (event) {
 //        var button = $(event.relatedTarget);
 //        var maxPeople = button.data('max-people');
@@ -38,6 +40,9 @@
 //  };
 //
 //        //
+//    }
 //}
+//// 모달창이 열릴 때마다 max_people 값을 가져와서 드롭다운 리스트를 동적으로 생성합니다.
 //
-//// 여기 이어서 보완 수정해야함
+//
+//// 여기 이어서 보완 수정해야함222
