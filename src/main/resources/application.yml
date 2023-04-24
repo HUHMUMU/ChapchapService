@@ -2,7 +2,6 @@ spring:
   datasource:
     url: jdbc:log4jdbc:mysql://localhost:3306/chapchap
     username: root
-#    password: rkd@798546
     password: ${db.password}
 
     #driver-class-name: com.mysql.cj.jdbc.Driver
