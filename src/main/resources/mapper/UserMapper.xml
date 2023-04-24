@@ -63,9 +63,6 @@
     <select id="findByUserIdAndPw" resultMap="UserMap">
         select * from users where user_id=#{userId} and pw=#{pw}
     </select>
-    <select id="findByUserIdByEmailAndName" resultType="java.lang.String">
-        select user_id from users where email=#{email} and name=#{name}
-    </select>
 
 
     <!--아이디 중복 검사-->
@@ -85,4 +82,8 @@
     <select id="email_Check" resultType="int">
         SELECT COUNT(*) FROM users WHERE email=#{email}
     </select>
+    <select id="findUserIdByEmail" resultType="com.acorn.chapspring.dto.UserDto">
+        SELECT user_id FROM users WHERE name=#{name} AND email=#{email}
+    </select>
+
 </mapper>

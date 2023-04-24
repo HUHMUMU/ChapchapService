@@ -10,7 +10,9 @@ public interface UserMapper {
     int updateStatusByUidAndEmailCheckCode(UserDto user); //이메일 인증 코드
     UserDto findByUserId(String userId);//유저 정보
     UserDto findByUserIdAndPw(UserDto user);//로그인 정보 비교
-    String findByUserIdByEmailAndName(UserDto user);//아이디 찾기
+
+    //아이디 찾기
+    UserDto findUserIdByEmail(UserDto user);
 
     int updateOne(UserDto user);//유저정보 수정
     int insertOne(UserDto user);//유저 등록
@@ -25,4 +27,5 @@ public interface UserMapper {
     int nickName_Check(String nickname);
     //이메일 중복 검사
     int email_Check(String email);
+
 }
