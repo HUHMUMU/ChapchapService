@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.WaitingMapper">
+
+    <select id="getWaitingList" resultType="com.acorn.chapspring.dto.WaitingDto">
+        SELECT userswaiting FROM
+    </select>
+    <select id="getWaiting" resultType="com.acorn.chapspring.dto.WaitingDto">
+
+    </select>
+    <insert id="addWaiting">
+        INSERT INTO userswaiting(wait_num, user_id, store_num,user_people,waiting_num,waiting_date,start_time,enter_status)
+        VALUES (#{waitNum}, #{userId},#{storeNum},#{userPeople},#{waitingNum},#{waitingDate},#{startTime},#{enterStatus})
+    </insert>
+    <update id="modifyWaiting">
+        UPDATE userswaiting SET user_people=#{userPeople}
+                            WHERE waiting_num=#{waitingNum} and user_id=#{userId} and store_num=#{storeNum}
+    </update>
+    <delete id="deleteWaiting">
+        delete from userswaiting
+               where wait_num=#{waitNum} and waiting_num=#{waitingNum}
+    </delete>
+</mapper>
+
+<!--하고 있는중-->
