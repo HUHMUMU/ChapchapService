@@ -2,11 +2,12 @@ package com.acorn.chapspring.service;
 
 import com.acorn.chapspring.dto.StoreFilterDto;
 import com.acorn.chapspring.dto.StoresDto;
-import com.acorn.chapspring.dto.StoretypesDto;
+import com.acorn.chapspring.dto.TypeClassesDto;
 import com.acorn.chapspring.mapper.StoreMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,27 +15,17 @@ import java.util.List;
 @AllArgsConstructor
 public class StoreServiceImp implements StoreService{
     private StoreMapper storeMapper;
-    @Override
-    public List<StoresDto> storeList(StoreFilterDto storeFilterDto) {
-        return null;
-    }
 
     @Override
-    public List<StoretypesDto> storeTypesList() {
-        return null;
+    public List<TypeClassesDto> storeTypesList() { // 가게 타입들 조회
+        List<TypeClassesDto> storeTypes=storeMapper.findAllType();
+        return storeTypes;
     }
-
     @Override
-    public StoresDto getStore(int storeId) {
-        return null;
-    }
-
-    @Override
-    public List<StoresDto> getFilteredAndSortedStores(StoreFilterDto storeFilterDto) {
-//        List<StoresDto> filteredStores = storeMapper.findStoresByFilter(storeFilterDto);
-//        List<StoresDto> sortedStores = storeMapper.sortFilteredStores(filteredStores, storeFilterDto.getSortCriteria());
-//        return sortedStores;
-        return null;
+    public PageInfo<StoresDto> getFilteredAndSortedStores(StoreFilterDto storeFilterDto, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<StoresDto> stores = storeMapper.sortFilteredStores(storeFilterDto);
+        return new PageInfo<>(stores);
     }
 
     // 주어진 식당 번호에 해당하는 가게 정보

@@ -33,4 +33,8 @@ class StoreServiceImpTest {
         StoresDto stores=storeService.getStoreByStoreNum(1);
         System.out.println("stores = " + stores);
     }
+
+    @Test
+    void testGetFilteredAndSortedStores() {
+    }
 }

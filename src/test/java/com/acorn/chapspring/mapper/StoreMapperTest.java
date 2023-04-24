@@ -14,24 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class StoreMapperTest {
     @Autowired
     private StoreMapper storeMapper;
-
     @Autowired
     private RecommendStoreMapper recommendStoreMapper;
     @Autowired
-    private static UserDto user;
-    @Autowired
-    private static RecommendStoreDto recommendstore;
-    @Autowired
-    private static StoresDto store;
-    @Autowired
     private UserMapper userMapper;
-
+    StoreFilterDto storeFilterDto = new StoreFilterDto();
     @Test
     void findAllStores() {
-    }
-
-    @Test
-    void findStoresByFilterAndSort() {
     }
 
     @Test
@@ -58,17 +47,30 @@ class StoreMapperTest {
     }
 
     @Test
-    void findByStoreNum() {
-        user=new UserDto();
-        store=new StoresDto();
-        user.setUserId("admin");
-        List<RecommendStoreDto> recommend=recommendStoreMapper.findAllRecommend(user.getUserId());
-        System.out.println(recommend);
-        int myRecommend=0;
-        for(RecommendStoreDto stores :recommend){
-            StoresDto find=storeMapper.findByStoreNum(stores.getStoreNum());
-            System.out.println("recommend store name "+myRecommend+" : "+find.getStoreName());
-            myRecommend++;
-        }
+    void findStoresByFilter() {
+//        storeFilterDto.setMenuType("백반");
+//        storeFilterDto.setPriceRange();
+        storeFilterDto.setDetailArea("역삼동");
+        storeFilterDto.setParking(1);
+        // 아 테스트 실패했네ㅠㅠㅠ
+        List<StoresDto> stores=storeMapper.findStoresByFilter(storeFilterDto);
+
+        System.out.println("stores = " + stores);
+    }
+
+    @Test
+    void sortFilteredStores() {
+    }
+
+    @Test
+    void findAllType() {
+    }
+
+    @Test
+    void countReviewsByStoreNum() {
+    }
+
+    @Test
+    void countJjimByStoreNum() {
     }
 }

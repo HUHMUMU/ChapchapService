@@ -32,4 +32,8 @@ public class StoresDto {
     private List<ChapDealDto> chapDealList; //챱딜 이벤트 가져오기
     private List<ReviewsDto> reviewList; //리뷰들 가져오기
     private StoreManagesDto storeCall; //가게 전화번호 가져오기
+
+    private int jjimCount; // 찜 갯수새기
+    private int reviewCount; // 리뷰 갯수새기
+    private int recommendCount; // 추천 갯수새기
 }

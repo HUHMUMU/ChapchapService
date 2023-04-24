@@ -40,31 +40,73 @@
                     column="store_num"
                     fetchType="eager"/>
     </resultMap>
+    <resultMap id="TypeClassesMap" type="TypeClassesDto">
+        <id column="category_num" property="categoryNum"/>
+        <result column="main_category" property="mainCategory"/>
+        <result column="sub_category" property="subCategory"/>
+    </resultMap>
 
     <select id="findAllStores" resultMap="StoresMap">
         SELECT * FROM stores
     </select>
     <select id="findStoresByFilter" resultMap="StoresMap">
-#         SELECT *
-#         FROM stores
-#                  INNER JOIN storetypes ON stores.store_num = storetypes.store_num
-#                  INNER JOIN type_classes ON storetypes.category_num = type_classes.category_num
-#         WHERE (#{menuType} IS NULL OR type_classes.category_num = #{menuType})
-#           AND (#{region} IS NULL OR stores.address LIKE CONCAT(#{region}, '%'))
-#           AND (#{parkingAvailable} IS NULL OR stores.parking = #{parkingAvailable})
+        SELECT stores.store_num, stores.store_name, stores.main_img, stores.short_info, stores.parking,
+        type_classes.category_num,
+        (SELECT COUNT(*) FROM jjim_manages WHERE store_num = stores.store_num) AS jjim_count,
+        (SELECT COUNT(*) FROM reviews WHERE store_num = stores.store_num) AS review_count,
+        (SELECT COUNT(*) FROM recommend_stores WHERE store_num = stores.store_num) AS recommend_count
+        FROM stores
+        INNER JOIN storetypes ON stores.store_num = storetypes.store_num
+        INNER JOIN type_classes ON storetypes.category_num = type_classes.category_num
+        INNER JOIN menu_manages ON stores.store_num = menu_manages.store_num
+        <trim prefix="WHERE" prefixOverrides="AND |OR">
+            <if test="menuType != null">
+                AND type_classes.category_num = #{menuType}
+            </if>
+            <if test="detailArea != null">
+                AND stores.address LIKE CONCAT('%(', #{detailArea}, ')%')
+            </if>
+            <if test="parking != null">
+                AND stores.parking = #{parking}
+            </if>
+            <if test="priceRange != null">
+                AND (SELECT AVG(price) FROM menu_manages WHERE store_num = stores.store_num) BETWEEN #{priceRange}.min AND #{priceRange}.max
+            </if>
+        </trim>
+        GROUP BY stores.store_num, type_classes.category_num
     </select>
     <select id="sortFilteredStores" resultMap="StoresMap">
-#         SELECT * FROM
-#                      (SELECT *
-#               FROM stores
-#               WHERE store_num IN
-#                     (SELECT store_num FROM findStoresByFilter(#{menuType}, #{region}, #{parkingAvailable})))
-#         ORDER BY CASE
-#                      WHEN #{sortCriteria} = 'reviewCount' THEN review_count
-#                      WHEN #{sortCriteria} = 'rating' THEN rating
-#                      ELSE store_num
-#                      END ASC
+        SELECT * FROM (
+        SELECT stores.store_num, stores.store_name, stores.main_img, stores.short_info, stores.parking,
+        type_classes.category_num,
+        (SELECT COUNT(*) FROM jjim_manages WHERE store_num = stores.store_num) AS jjim_count,
+        (SELECT COUNT(*) FROM reviews WHERE store_num = stores.store_num) AS review_count,
+        (SELECT COUNT(*) FROM recommend_stores WHERE store_num = stores.store_num) AS recommend_count
+        FROM stores
+        INNER JOIN storetypes ON stores.store_num = storetypes.store_num
+        INNER JOIN type_classes ON storetypes.category_num = type_classes.category_num
+        INNER JOIN menu_manages ON stores.store_num = menu_manages.store_num
+        WHERE stores.store_num IN
+        <foreach item="item" index="index" collection="storeNumList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) AS filtered_stores
+        <choose>
+            <when test="sortType == 'recent'">
+                ORDER BY store_num DESC
+            </when>
+            <when test="sortType == 'popular'">
+                ORDER BY jjim_count DESC, store_num DESC
+            </when>
+            <when test="sortType == 'recommended'">
+                ORDER BY recommend_count DESC, store_num DESC
+            </when>
+            <when test="sortType == 'review'">
+                ORDER BY review_count DESC, store_num DESC
+            </when>
+        </choose>
     </select>
+
     <select id="findStoreByStoreNum" resultMap="StoresMap">
         SELECT * FROM stores WHERE store_num=#{storeNum}
     </select>
@@ -89,5 +131,8 @@
     </select>
     <select id="findByStoreNum" resultType="com.acorn.chapspring.dto.StoresDto">
         SELECT * FROM stores WHERE store_num=#{storeNum}
+    </select>
+    <select id="findAllType" resultType="com.acorn.chapspring.dto.TypeClassesDto">
+        SELECT * FROM type_classes
     </select>
 </mapper>

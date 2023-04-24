@@ -3,10 +3,12 @@ package com.acorn.chapspring.mapper;
 import com.acorn.chapspring.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface StoreMapper {
     // 모든 가게 리스트 가져오기
     List<StoresDto> findAllStores();
@@ -15,10 +17,14 @@ public interface StoreMapper {
     List<StoresDto> findStoresByFilter(StoreFilterDto filter);
 
     // 필터링된 결과를 정렬하는 메소드 추가
-    List<StoresDto> sortFilteredStores(@Param("filteredStores") List<StoresDto> filteredStores, @Param("sort") String sort);
+    List<StoresDto> sortFilteredStores(StoreFilterDto storeFilterDto);
+
 
     // 주어진 식당 번호에 해당하는 가게 정보 가져오기
     StoresDto findStoreByStoreNum(int storeNum);
+
+    // 전체 가게 업종 가져오기
+    List<TypeClassesDto> findAllType();
 
     // 주어진 식당 번호에 해당하는 가게의 브레이크 타임 가져오기
     List<BreaktimesDto> findBreaktimesByStoreNum(int storeNum);
