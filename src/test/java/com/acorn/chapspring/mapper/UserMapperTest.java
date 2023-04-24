@@ -8,6 +8,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -142,16 +143,30 @@ class UserMapperTest {
     }
 
     @Test
+
     void findAllRecommend() {
         recommendstore=new RecommendStoreDto();
         user=new UserDto();
         user.setUserId("admin");
         recommendstore.setUserId("admin");
         List<RecommendStoreDto> list=recommendStoreMapper.findAllRecommend(recommendstore.getUserId());
+        //첫 번째 테스트
         int listNum=0;
         for (RecommendStoreDto recommendList : list){
             listNum++;
             System.out.println("number"+listNum+" : "+recommendList);
+        }
+        System.out.println("size : "+list.size());
+
+        //두 번째 테스트 : 리스트에 번호 매기기
+        List<RecommendStoreDto> userRecommendList=new ArrayList<>(list.size());//번호가 추가된 리스트의 사이즈 지정
+        listNum=0;//리스트 초기 번호 0
+        for (RecommendStoreDto recommendList : list){//list 내용을 번호가 추가된 Dto 속성 recommendList에 담기
+            listNum++;//리스트 번호 1씩 추가,초기값 1
+            recommendList.setRecommendNum(listNum);//옮겨담아진 recommendList의 번호 세팅
+            userRecommendList.add(recommendList);//리스트에 추가
+            System.out.println("number"+listNum+" : "+userRecommendList);//출력
+
         }
     }
 

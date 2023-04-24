@@ -54,7 +54,7 @@
 /*유저카드 우특 css*/
 .userCard-right{
     border: 1px solid black;
-    width: 700px;
+    width: 600px;
     display: flex;
     flex-direction: column;
     margin: 20px;
@@ -99,4 +99,8 @@
     padding: 10px;
     text-align: center;
     margin: 10px;
+    width: 600px;
+}
+.userCard-right i{
+    transform: scale(1.5);
 }

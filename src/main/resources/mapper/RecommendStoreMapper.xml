@@ -22,6 +22,6 @@
         select *
         from stores inner join recommend_stores
                                on stores.store_num = recommend_stores.store_num
-        where user_id=#{userId}
+        where user_id=#{userId};
     </select>
 </mapper>

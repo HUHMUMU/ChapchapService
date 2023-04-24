@@ -8,5 +8,10 @@ public class RecommendStoreDto {
     private String comment;
     private String userId;
     private int storeNum;
-    private String storeName;
+
+    private String storeName;//조인용 변수
+
+    //테스트 변수----------------
+    private int recommendNum;
+    //-----------------------
 }
