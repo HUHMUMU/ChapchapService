@@ -2,6 +2,7 @@ package com.acorn.chapspring.controller;
 
 import com.acorn.chapspring.dto.ChapDealDto;
 import com.acorn.chapspring.dto.ChapstorysDto;
+import com.acorn.chapspring.dto.UserDto;
 import com.acorn.chapspring.service.ChapStoryService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.List;
 
@@ -47,11 +49,13 @@ public class ChapStoryController {
     @GetMapping("/{userId}/blogMain.do")
     public String chapMain(
             Model model,
-            @PathVariable String userId){
+            @PathVariable String userId,
+            @SessionAttribute UserDto loginUser){
         List<ChapstorysDto> chaps;
         chaps = chapStoryService.blogMain(userId);
         model.addAttribute("chapstorys",chaps);
         return "chapstory/blogMain";}
+
 
     @GetMapping("/register.do")
     public String register(){return "chapstory/register";}
