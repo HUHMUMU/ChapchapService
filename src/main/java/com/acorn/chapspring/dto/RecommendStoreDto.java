@@ -8,4 +8,5 @@ public class RecommendStoreDto {
     private String comment;
     private String userId;
     private int storeNum;
+    private String storeName;
 }

@@ -23,6 +23,22 @@
         <result column="toilet" property="toilet"/>
         <result column="smokingroom" property="smokingroom"/>
         <result column="babychair" property="babychair"/>
+        <association property="storeCall"
+                    select="com.acorn.chapspring.mapper.StoreManageMapper.findStoreCall"
+                    column="store_num"
+                    fetchType="eager"/>
+        <collection property="menuList"
+                    select="com.acorn.chapspring.mapper.MenuManageMapper.findMenuByStore"
+                    column="store_num"
+                    fetchType="eager"/>
+        <collection property="chapDealList"
+                    select="com.acorn.chapspring.mapper.ChapDealMapper.findEventByStore"
+                    column="store_num"
+                    fetchType="eager"/>
+        <collection property="reviewList"
+                    select="com.acorn.chapspring.mapper.ReviewMapper.findReviewByStore"
+                    column="store_num"
+                    fetchType="eager"/>
     </resultMap>
 
     <select id="findAllStores" resultType="com.acorn.chapspring.dto.StoresDto">
@@ -31,8 +47,8 @@
     <select id="findStoresByFilterAndSort" resultType="com.acorn.chapspring.dto.StoresDto">
 
     </select>
-    <select id="findStoreByStoreNum" resultType="com.acorn.chapspring.dto.StoresDto">
-
+    <select id="findStoreByStoreNum" resultMap="StoresMap">
+        SELECT * FROM stores WHERE store_num=#{storeNum}
     </select>
     <select id="findBreaktimesByStoreNum" resultType="com.acorn.chapspring.dto.BreaktimesDto">
 
@@ -40,10 +56,17 @@
     <select id="findMenusByStoreNum" resultType="com.acorn.chapspring.dto.MenuManagesDto">
 
     </select>
-    <select id="findReviewsByStoreNum" resultType="com.acorn.chapspring.dto.ReviewDto">
+    <select id="findReviewsByStoreNum" resultType="com.acorn.chapspring.dto.ReviewsDto">
 
     </select>
     <select id="findJjimByStoreNum" resultType="com.acorn.chapspring.dto.JjimManageDto">
+
+    </select>
+    <!--  가게 이름 찾기 (챱딜에서 사용)  -->
+    <select id="findStoreName" resultType="com.acorn.chapspring.dto.StoresDto">
+        SELECT store_name FROM stores WHERE store_num=#{storeNum}
+    </select>
+    <select id="findByStoreNum" resultType="com.acorn.chapspring.dto.StoresDto">
 
     </select>
 </mapper>

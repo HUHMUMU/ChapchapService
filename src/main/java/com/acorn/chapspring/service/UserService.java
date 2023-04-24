@@ -12,8 +12,10 @@ public interface UserService {
     int modify(UserDto user);//수정
     int signup(UserDto user);//회원가입
     int dropout(UserDto user);//회원탈퇴
+
+
     List<VisitedStoreDto> visited(String userId);//유저 방문조회
-    List<ReviewDto> reviewed(String userId);//유저 리뷰조회
+    List<ReviewsDto> reviewed(String userId);//유저 리뷰조회
     List<UserDto> userList();
     List<RecommendStoreDto> recommendList(String userId);
     List<JjimManageDto> jjimList(String userId);

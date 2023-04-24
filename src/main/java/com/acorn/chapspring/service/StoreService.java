@@ -13,4 +13,5 @@ public interface StoreService {
     List<StoresDto> getFilteredAndSortedStores(StoreFilterDto storeFilterDto);
     // 가게 리스트를 필터링하고 정렬
 
+    StoresDto getStoreByStoreNum(int storeNum);
 }

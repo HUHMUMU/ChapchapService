@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class ReviewDto {
+public class ReviewsDto {
     private int reviewNum;
     private String content;
     private String comment;
@@ -15,5 +15,5 @@ public class ReviewDto {
     private String rrStatus;
     private String userId;
     private int storeNum;
-
+    private int menuNum;
 }

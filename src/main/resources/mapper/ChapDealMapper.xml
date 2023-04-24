@@ -11,10 +11,17 @@
         <result column="event_start" property="eventStart"/>
         <result column="event_end" property="eventEnd"/>
         <result column="store_name" property="storeName"/>
+        <association property="storeName"
+                     select="com.acorn.chapspring.mapper.StoreMapper.findStoreName"
+                     column="store_num"
+                     fetchType="eager"/>
     </resultMap>
     <select id="findAll" resultMap="ChapDealMap">
         SELECT cd.event_num, cd.store_num, cd.event_title, cd.event_condition, cd.event_reward, cd.event_img, cd.event_start, cd.event_end, s.store_name
         FROM chap_deals cd JOIN stores s ON cd.store_num = s.store_num;
+    </select>
+    <select id="findEventByStore" resultMap="ChapDealMap">
+        SELECT * FROM chap_deals WHERE store_num=#{storeNum};
     </select>
 
 </mapper>

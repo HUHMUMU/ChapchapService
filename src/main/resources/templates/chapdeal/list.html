@@ -9,8 +9,7 @@
 </head>
 <div layout:fragment="content" >
     <div class="d-flex justify-content-center mb-5" th:each="c:${chapDeals}">
-        <!-- th:href="${c.storeNum}/detail.do" -->
-        <a href="#" style="text-decoration:none; color:inherit;">
+        <a th:href="'/store/'+${c.storeNum}+'/detail.do'" style="text-decoration:none; color:inherit;">
             <div class="card">
                 <img th:src="'http://localhost:8088'+${c.eventImg}" class="card-img-top" style="width:800px; height:300px;">
                 <div class="card-img-overlay p-0">

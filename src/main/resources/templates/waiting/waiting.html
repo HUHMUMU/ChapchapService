@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>웨이팅 페이지</title>
+</head>
+<body>
+    <h1>웨이팅 페이지</h1>
+    <!--주의사항 관련 내용 모달-->
+    <div class="modal fade" id="modalWarning" tabindex="-1" role="dialog" aria-labelledby="modalWarning" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">주의사항</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>입장 알림 후 일정 시간을 초과한 경우 입장 강제 취소가 될 수 있습니다.</p>
+                    <p>대기 강제 취소의 누적에 따라 사용자의 사용제한이 될 수 있으니 주의해주세요!</p>
+                    <                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="agreeBtn">주의사항을 읽었습니다</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--대기 등록 선택지 모달-->
+    <div class="modal fade" id="modalWaiting" tabindex="-1" role="dialog" aria-labelledby="modalWaiting" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">대기 등록하기</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>인원 선택</label>
+                                <select class="form-control" id="peopleNumSelect">
+                                    <option selected disabled hidden>인원 선택</option>
+                                    <c:forEach var="i" begin="1" end="${maxPeople}">
+                                        <option value="${i}">${i}명</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnWait">대기 등록</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+<!--보완 수정해야함-->

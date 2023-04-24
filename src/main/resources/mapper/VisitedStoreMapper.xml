@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.VisitedStoreMapper">
+    <resultMap id="VisitedMap" type="VisitedStoreDto">
+        <id column="user_id" property="userId"/>
+        <result column="visited_store_order" property="visitedStoreOrder"/>
+        <result column="visited_date" property="visitedDate"/>
+        <result column="store_name" property="storeName"/>
+        <result column="address" property="address"/>
+    </resultMap>
+
+    <select id="findAllVisited" resultMap="VisitedMap">
+        select *<!--visited_date,store_name,address--> from visited_store_lists where user_id=#{userId}
+    </select>
+</mapper>

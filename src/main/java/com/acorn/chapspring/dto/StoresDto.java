@@ -2,6 +2,8 @@ package com.acorn.chapspring.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class StoresDto {
     private int storeNum;
@@ -19,10 +21,15 @@ public class StoresDto {
     private String facebookurl;
     private String instaurl;
     private String tvshow;
-    private String sRstatus;
+    private String sRstatus; //enum('공개','심사','비공개')
     private boolean parking;
     private boolean wifi;
     private boolean toilet;
     private boolean smokingroom;
     private boolean babychair;
+
+    private List<MenuManagesDto> menuList; //메뉴들 가져오기
+    private List<ChapDealDto> chapDealList; //챱딜 이벤트 가져오기
+    private List<ReviewsDto> reviewList; //리뷰들 가져오기
+    private StoreManagesDto storeCall; //가게 전화번호 가져오기
 }

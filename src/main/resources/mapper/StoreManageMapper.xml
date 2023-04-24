@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.StoreManageMapper">
+    <resultMap id="StoreManageMap" type="StoreManagesDto">
+        <id column="store_id" property="storeId"/>
+        <result column="pw" property="pw"/>
+        <result column="business_num" property="businessNum"/>
+        <result column="store_call" property="storeCall"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="store_num" property="storeNum"/>
+    </resultMap>
+    <!-- 가게 전화번호 받아오기 -->
+    <select id="findStoreCall" resultMap="StoreManageMap">
+        SELECT store_call FROM store_manages WHERE store_num=#{storeNum};
+    </select>
+</mapper>
