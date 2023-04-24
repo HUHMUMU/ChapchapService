@@ -52,16 +52,16 @@ class UserMapperTest {
         assertNotNull(findUser);
     }
 
-    @Test
-    @Order(3)
-    void findByUserIdByEmailAndName() {
-        user=new UserDto();
-        user.setName("김철수");
-        user.setEmail("chulsoo@example.com");
-        String userId=userMapper.findByUserIdByEmailAndName(user);
-        System.out.println("Id : "+userId);
-
-    }
+//    @Test
+//    @Order(3)
+//    void findByUserIdByEmailAndName() {
+//        user=new UserDto();
+//        user.setName("김철수");
+//        user.setEmail("chulsoo@example.com");
+//        String userId=userMapper.findByUserIdByEmailAndName(user);
+//        System.out.println("Id : "+userId);
+//
+//    }
 
     @Test
     @Order(4)

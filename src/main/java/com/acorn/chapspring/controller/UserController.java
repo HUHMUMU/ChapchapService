@@ -31,11 +31,6 @@ public class UserController {
     private UserService userService;
     private EmailService emailService;
 
-//    @Value("${img.upload.path}")
-//    private String uploadPath;
-//
-//    @Value("${static.path}")
-//    private String staticPath;
 
     @GetMapping("/dropout.do")
     public String dropoutForm(
@@ -323,4 +318,23 @@ public class UserController {
             return "redirect:/user/login.do";
         }
     }
+    //아이디 찾기
+    @GetMapping("/findId.do")
+    public String findIdForm() {
+        return "/user/findIdForm";
+    }
+    @PostMapping("/findId.do")
+    public @ResponseBody String findIdAction(UserDto userDto, Model model,RedirectAttributes redirectAttributes) {
+        UserDto user=userService.findUserIdByEmail(userDto);
+        if (user==null) {
+            model.addAttribute("check",1);
+            return "redirect:/user/findId.do";
+        } else {
+            model.addAttribute("check",2);
+            model.addAttribute("userId",user.getUserId());
+            redirectAttributes.addFlashAttribute("findUserId",user.getUserId());
+            return "";
+        }
+    }
+    //ResponseBody : 모달, 텍스트 등으로 받을때 사용한다.
 }

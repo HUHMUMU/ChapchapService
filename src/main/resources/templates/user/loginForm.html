@@ -38,16 +38,16 @@
             <div class="form-outline row" >
                 <button class="button_login btn btn-lg float-end">로그인</button>
             </div>
-        <p class="text-end container-sm login_list d-flex justify-content-center">
-            <button style="opacity: 30%; font-size: 18px" class="list">
-                비밀번호 찾기 |
-            </button>
-            <button style="opacity: 30%; font-size: 18px" class="list">
-                아이디 찾기 |
-            </button>
-            <button style="opacity: 30%; font-size: 18px" class="list" href="/user/signup.do">
+        <p class="text-end container-sm login_list">
+            <a style="opacity: 30%; font-size: 18px" class="list">
+                비밀번호 찾기 |&nbsp;
+            </a>
+            <a style="opacity: 30%; font-size: 18px" class="list" href="/user/findId.do">
+                아이디 찾기 |&nbsp;
+            </a>
+            <a style="opacity: 30%; font-size: 18px" class="list" href="/user/signup.do">
                 회원가입
-            </button>
+            </a>
         </p>
     </form>
 
@@ -97,11 +97,11 @@
     .login_list {
         position: fixed;
         bottom: 23%;
-        right: 12%;
+        right: 42.5%;
     }
     .list {
-        background: #FFFAED;
-        border: none;
+        color: #2c3034;
+        text-decoration: none;
     }
     .image_logo{
         width: 30rem;

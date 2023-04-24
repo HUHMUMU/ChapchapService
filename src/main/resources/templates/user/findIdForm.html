@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>로그인</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<div layout:fragment="content">
+    <form class="mx-auto" action="/user/findId.do" method="post" style="width: 450px;">
+        <div class="findId_Box">
+        <p class="findId_name">이름</p>
+        <p class="form-floating">
+            <input id="userId" type="text" name="userId" value="" class="form-control findId_Name" placeholder="??" style="background: #FFFAED; margin-bottom: 10px">
+            <label class="">이름</label>
+        </p>
+        <p>이메일 인증</p>
+            <div class="">
+            <p class="form-floating d-flex flex-row">
+                <input type="text"
+                       name="postnumber" id="postnumber" value="" class="form-control findId_Email" placeholder="??" style="background: #FFFAED">
+                <label>이메일 인증</label>
+
+                <button type="button" onclick="execPostCode();" class="btn btn-warning findId_Btn"
+                        style="width: 10em; height: 3.5em; background: #FFE3A9; color: #FF5D5D;" >
+                    <a style="font-size: 18px; font-weight: 800">인증번호 받기</a>
+                </button>
+            </p>
+            </div>
+            <p class="form-floating">
+                <input id="emailNum" type="text" name="emailNum" value="" class="form-control findId_Input" placeholder="??" style="background: #FFFAED; margin-bottom: 10px">
+                <label class="">인증번호 입력</label>
+            </p>
+
+            <p class="text-end">
+                <button type="submit" class="btn btn-warning" onsubmit="event.preventDefault(); is_Checked(event);"
+                        style="width: 31.3em; height: 3.5em; background: #FFE3A9; color: #FF5D5D; margin-right: 400px">
+                    <span style="font-size: 25px; font-weight: 800;">아이디 찾기</span>
+                </button>
+            </p>
+        </div>
+    </form>
+
+</div>
+</html>
+
+<style>
+    .findId_Box{
+        width: 40rem;
+        position: absolute;
+        top: 30%;
+        left: 35%;
+    }
+
+    .findId_name {
+        font-size: 15px;
+    }
+    .findId_Name {
+        width: 35rem;
+    }
+    .findId_Email {
+        width: 25rem;
+    }
+    .findId_Input {
+        width: 35rem;
+    }
+    .findId_Btn {
+
+    }
+</style>
+

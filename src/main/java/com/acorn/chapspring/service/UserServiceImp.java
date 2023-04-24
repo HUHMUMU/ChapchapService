@@ -62,6 +62,8 @@ public class UserServiceImp implements UserService{
         int modifyEmailCheck=userMapper.updateStatusByUidAndEmailCheckCode(user);
         return modifyEmailCheck;
     }
+
+
     @Override
     public int idCheck(String userId) throws Exception {
         return userMapper.idCheck(userId);
@@ -99,5 +101,10 @@ public class UserServiceImp implements UserService{
     public  List<JjimManageDto> jjimList(String userId){
         List<JjimManageDto> list=jjimManageMapper.findAllJjim(userId);
         return list;
+    }
+
+    @Override
+    public UserDto findUserIdByEmail(UserDto user) {
+        return userMapper.findUserIdByEmail(user);
     }
 }
