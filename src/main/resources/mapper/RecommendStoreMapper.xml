@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.RecommendStoreMapper">
+    <resultMap id="RecommendMap" type="RecommendStoreDto">
+        <id column="recommend_store_num" property="recommendStoreNum"/>
+        <result column="comment" property="comment"/>
+        <result column="user_id" property="userId"/>
+        <result column="store_num" property="storeNum"/>
+        <result column="store_name" property="storeName"/>
+    </resultMap>
+<!--추천가게 등록-->
+    <insert id="insertOneByUserId" useGeneratedKeys="true" keyProperty="recommendStoreNum" parameterType="RecommendStoreDto">
+        insert into recommend_stores (comment, user_id, store_num)
+            VALUE (#{comment}, #{userId}, #{storeNum})
+    </insert>
+<!--추천가게 삭제-->
+    <delete id="deleteOneByUserIdAndStoreNum" parameterType="recommendStoreDto">
+        delete from recommend_stores where user_id=#{userId} and store_num=#{storeNum}
+    </delete>
+<!--추천가게 정보 조회-->
+    <select id="findAllRecommend" resultMap="RecommendMap">
+        select *
+        from stores inner join recommend_stores
+                               on stores.store_num = recommend_stores.store_num
+        where user_id=#{userId}
+    </select>
+</mapper>
