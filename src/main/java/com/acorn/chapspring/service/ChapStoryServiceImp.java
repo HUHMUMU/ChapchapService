@@ -34,7 +34,8 @@ public class ChapStoryServiceImp implements ChapStoryService{
 
     @Override
     public int register(ChapstorysDto chaps) {
-        return 0;
+        int register = chapStoryMapper.insertOne(chaps);
+        return register;
     }
 
     @Override

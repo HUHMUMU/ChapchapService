@@ -88,8 +88,9 @@ public class ChapStoryController {
             RedirectAttributes redirectAttributes,
             @SessionAttribute UserDto loginUser,
             @ModelAttribute ChapstorysDto chaps,
-            @RequestParam(name = "img", required = false)MultipartFile [] imgs) throws IOException {
-        String redirectPage="redirect:/chapstory/register.do";
+            @RequestParam(name = "img", required = false)MultipartFile [] imgs) throws IOException
+    {
+        String redirectPage="redirect:/register.do";
         if(!loginUser.getUserId().equals(chaps.getUserId())) return redirectPage;
         List<ChapstoryimgsDto> imgDtos=null;
         if(imgs!=null){
@@ -113,6 +114,7 @@ public class ChapStoryController {
         String errorMsg=null;
         try{
             register=chapStoryService.register(chaps);
+            log.info(chaps);
         }catch (Exception e){
             log.error(e.getMessage());
         }
@@ -136,4 +138,8 @@ public class ChapStoryController {
         redirectAttributes.addFlashAttribute("msg","게시글 등록 실패 에러"+errorMsg);
         return redirectPage;
     }
+
+
+
+
 }
