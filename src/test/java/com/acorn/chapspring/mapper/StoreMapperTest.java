@@ -15,6 +15,7 @@ class StoreMapperTest {
     @Autowired
     private StoreMapper storeMapper;
 
+<<<<<<< HEAD
     @Autowired
     private RecommendStoreMapper recommendStoreMapper;
     @Autowired
@@ -23,6 +24,8 @@ class StoreMapperTest {
 
 
 
+=======
+>>>>>>> origin/ksj
     @Test
     void findAllStores() {
     }
@@ -49,6 +52,7 @@ class StoreMapperTest {
     @Test
     void findJjimByStoreNum() {
     }
+<<<<<<< HEAD
 
     @Test
     void findStoresByFilter() {
@@ -78,4 +82,6 @@ class StoreMapperTest {
     void countJjimByStoreNum() {
     }
 
+=======
+>>>>>>> origin/ksj
 }

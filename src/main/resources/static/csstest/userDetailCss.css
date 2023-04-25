@@ -108,6 +108,7 @@
    width: 200px;
 }
 
+
 .userDetailContainer{
     border: 1px solid black;
     width: 800px;
@@ -121,4 +122,3 @@
     cursor: pointer;
     color: #0b5ed7;
 }
-

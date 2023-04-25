@@ -141,7 +141,11 @@
                         </li>
                     </ul>
                 </div>
+
                 <div class="tab-content d-flex justify-content-center" id="pills-tabContent">
+
+                <div class="tab-content" id="pills-tabContent">
+
                     <div th:include="/user/detail/waitingList" class="tab-pane fade show active" id="waitingList" role="tabpanel"
                             aria-labelledby="waitingListTab" tabindex="0">
                     </div>
@@ -173,11 +177,13 @@
 </div>
 </html>
 <script>
+
     //1. 공유버튼 임시 구현
     document.querySelector('#sharelink').setAttribute('data-clipboard-text',window.location.href)
     var clipboard = new ClipboardJS('#sharelink');
     clipboard.on('success', function(e) {
         alert('주소가 복사되었습니다.');
     });
+
 
 </script>
