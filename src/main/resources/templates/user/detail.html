@@ -8,6 +8,8 @@
     <title>유저 상세 페이지</title>
     <link rel="stylesheet" href="/csstest/userDetailCss.css">
     <script src="https://kit.fontawesome.com/ff32a16db2.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+
 </head>
 
 <div layout:fragment="content" >
@@ -86,24 +88,17 @@
                     </span>
                 </li>
                 <li>
-                    <span th:if="${user.faceUrl==null}">
+                    <span th:if="${chapstory.size()<1}">
                         <i class="fa-solid fa-book"></i>
                     </span>
-                    <span th:if="${user.faceUrl!=null}">
-                        <a th:href="${user.faceUrl}">
+                    <span th:if="${chapstory.size()>=1}">
+                        <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${user.userId})}">
                             <i class="fa-solid fa-book"></i>
                         </a>
                     </span>
                 </li>
                 <li>
-                    <span th:if="${user.faceUrl==null}">
-                        <i class="fa-solid fa-share"></i>
-                    </span>
-                    <span th:if="${user.faceUrl!=null}">
-                        <a th:href="${user.faceUrl}">
-                            <i class="fa-solid fa-share"></i>
-                        </a>
-                    </span>
+                    <i class="fa-solid fa-share" id="sharelink" data-clipboard-text=".."></i>
                 </li>
             </ul>
         </div>
@@ -146,7 +141,11 @@
                         </li>
                     </ul>
                 </div>
+
+                <div class="tab-content d-flex justify-content-center" id="pills-tabContent">
+
                 <div class="tab-content" id="pills-tabContent">
+
                     <div th:include="/user/detail/waitingList" class="tab-pane fade show active" id="waitingList" role="tabpanel"
                             aria-labelledby="waitingListTab" tabindex="0">
                     </div>
@@ -178,5 +177,13 @@
 </div>
 </html>
 <script>
+
+    //1. 공유버튼 임시 구현
+    document.querySelector('#sharelink').setAttribute('data-clipboard-text',window.location.href)
+    var clipboard = new ClipboardJS('#sharelink');
+    clipboard.on('success', function(e) {
+        alert('주소가 복사되었습니다.');
+    });
+
 
 </script>

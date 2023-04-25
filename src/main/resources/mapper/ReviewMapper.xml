@@ -12,6 +12,8 @@
         <result column="user_id" property="userId"/>
         <result column="store_num" property="storeNum"/>
         <result column="menu_num" property="menuNum"/>
+        <result column="store_name" property="storeName"/>
+        <result column="main_img" property="mainImg"/>
         <collection property="userInfo"
                      select="com.acorn.chapspring.mapper.UserMapper.findByUserId"
                      column="user_id"
@@ -25,6 +27,8 @@
 
 <!--    리뷰작성 리스트 출력용-->
     <select id="findAllReviewed" resultMap="ReviewMap">
-        select * from reviews where user_id=#{userId};
+        select * from reviews inner join stores
+            on reviews.store_num = stores.store_num
+                where user_id=#{userId};
     </select>
 </mapper>

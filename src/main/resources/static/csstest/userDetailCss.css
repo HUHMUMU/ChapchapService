@@ -107,3 +107,18 @@
 .listbutton button{
    width: 200px;
 }
+
+
+.userDetailContainer{
+    border: 1px solid black;
+    width: 800px;
+    height: 50vh;
+    overflow-y: auto;
+}
+#sharelink{
+    color: #4477f9;
+}
+#sharelink:hover{
+    cursor: pointer;
+    color: #0b5ed7;
+}

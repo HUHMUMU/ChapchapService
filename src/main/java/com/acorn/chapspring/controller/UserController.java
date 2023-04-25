@@ -2,6 +2,7 @@ package com.acorn.chapspring.controller;
 
 import com.acorn.chapspring.dto.*;
 import com.acorn.chapspring.lib.AESEncryption;
+import com.acorn.chapspring.service.ChapStoryService;
 import com.acorn.chapspring.service.EmailService;
 import com.acorn.chapspring.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -30,6 +31,7 @@ public class UserController {
 
     private UserService userService;
     private EmailService emailService;
+    private ChapStoryService chapStoryService;
 
 
     @GetMapping("/dropout.do")
@@ -118,8 +120,9 @@ public class UserController {
         List<UserDto> list=userService.userList();
         List<RecommendStoreDto> recommend=userService.recommendList(userId);
         List<JjimManageDto> jjim=userService.jjimList(userId);
+        List<ChapstorysDto> chapstory=chapStoryService.blogMain(userId);
 
-
+        modelAndView.addObject("chapstory",chapstory);
         modelAndView.setViewName("/user/detail");
         modelAndView.addObject("user",user);
         modelAndView.addObject("visited",visited);
