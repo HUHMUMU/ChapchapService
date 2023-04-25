@@ -21,7 +21,9 @@ public interface UserService {
     List<JjimManageDto> jjimList(String userId);
 
     //아이디 찾기
-    UserDto findUserIdByEmail(UserDto user);
+    UserDto findByNameByEmail(UserDto user);
+    //비밀번호 찾기
+    UserDto findByUserIdAndEmail(UserDto user);
 
     int idCheck(String userId) throws Exception; //아이디 중복 체크
     int nickName_Check(String nickname) throws Exception; //닉네임 중복 체크

@@ -324,17 +324,32 @@ public class UserController {
         return "/user/findIdForm";
     }
     @PostMapping("/findId.do")
-    public @ResponseBody String findIdAction(UserDto userDto, Model model,RedirectAttributes redirectAttributes) {
-        UserDto user=userService.findUserIdByEmail(userDto);
+    public String findIdAction(UserDto userDto,RedirectAttributes redirectAttributes) {
+        UserDto user=userService.findByNameByEmail(userDto);
         if (user==null) {
-            model.addAttribute("check",1);
-            return "redirect:/user/findId.do";
+            redirectAttributes.addFlashAttribute("check",0);
         } else {
-            model.addAttribute("check",2);
-            model.addAttribute("userId",user.getUserId());
+            redirectAttributes.addFlashAttribute("check",1);
             redirectAttributes.addFlashAttribute("findUserId",user.getUserId());
-            return "";
         }
+        return "redirect:/user/findId.do";
     }
     //ResponseBody : 모달, 텍스트 등으로 받을때 사용한다.
+
+    //비밀번호 찾기
+    @GetMapping("/findPw.do")
+    public String findPwForm() {
+        return "/user/findPwForm";
+    }
+    @PostMapping("/findPw.do")
+    public String findPwAction(UserDto userDto, RedirectAttributes redirectAttributes) {
+        UserDto user=userService.findByUserIdAndEmail(userDto);
+        if (user==null) {
+            redirectAttributes.addFlashAttribute("check",0);
+        } else {
+            redirectAttributes.addFlashAttribute("check",1);
+            redirectAttributes.addFlashAttribute("findPw",user.getPw());
+        }
+        return "redirect:/user/findPw.do";
+    }
 }
