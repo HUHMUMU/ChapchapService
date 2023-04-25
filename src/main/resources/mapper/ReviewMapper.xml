@@ -16,6 +16,14 @@
                      select="com.acorn.chapspring.mapper.UserMapper.findByUserId"
                      column="user_id"
                      fetchType="eager"/>
+        <collection property="countReview"
+                    select="com.acorn.chapspring.mapper.UserMapper.countReviewByUser"
+                    column="user_id"
+                    fetchType="eager"/>
+        <collection property="rReplies"
+                    select="com.acorn.chapspring.mapper.ReviewRepliesMapper.findByReview"
+                    column="review_num"
+                    fetchType="eager"/>
     </resultMap>
 
 
@@ -26,5 +34,9 @@
 <!--    리뷰작성 리스트 출력용-->
     <select id="findAllReviewed" resultMap="ReviewMap">
         select * from reviews where user_id=#{userId};
+    </select>
+    <!-- 가게별 리뷰수 -->
+    <select id="countReviewByStore" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM reviews WHERE store_num=#{storeNum};
     </select>
 </mapper>

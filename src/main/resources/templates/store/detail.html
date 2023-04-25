@@ -22,8 +22,8 @@
     <a class="btn btn-secondary btn-sm mt-3">추천</a>
   </div>
   <div class="store">
-    <span class="starPoint">★4.45</span>
-    <span class="starReview">/방문자리뷰 132</span>
+<!--    <span class="starPoint">★4.45/</span>-->
+    <span th:text="'방문자리뷰 '+${s.reviewCount}" class="starReview"></span>
   </div>
   <div class="store">
     <span class="starHashTag1 me-2">#해시태그1</span>
@@ -64,12 +64,15 @@
       <p th:text="${s.detailInfo}"></p>
     </div>
   </div>
-  <div class="menuBar store">
-    <a href="#menu">메뉴</a>
-    <a href="#review">리뷰</a>
-    <a href="#map">지도</a>
-  </div>
+  <nav class="navbar sticky-top bg-light">
+    <div class="container-fluid d-flex justify-content-center">
+      <a class="navbar-brand" href="#menu">메뉴</a>
+      <a class="navbar-brand" href="#review">리뷰</a>
+      <a class="navbar-brand" href="#map">지도</a>
+    </div>
+  </nav>
 
+  <!-- 챱딜 리스트 -->
   <div class="store mt-2" th:each="cd:${s.chapDealList}">
     <div class="chapDeal card" style="width:600px;">
       <img th:src="'http://localhost:8088'+${cd.eventImg}" class="card-img-top" style="height:250px;">
@@ -87,93 +90,120 @@
   </div>
 
   <div id="menu">
-
     <h5 class="store mt-3">신메뉴</h5>
-    <div class="store newMenu mt-3">
-      <div class="col-md-2" th:each="m:${s.menuList}">
-        <div th:if="${m.menuType == '신메뉴'}">
-          <img th:src="'http://localhost:8088'+${m.img}" style="width: 150px; height: 150px;">
-          <details>
-            <summary class="mb-0" th:text="${m.name}+' '+${m.price}+'원'"></summary>
-            <p th:text="${m.info}"></p>
-          </details>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"th:each="m:${s.menuList}">
+      <div class="col mb-5" th:if="${m.menuType == '신메뉴'}">
+        <div class="card h-100">
+          <img class="card-img-top" th:src="'http://localhost:8088'+${m.img}" alt="...">
+          <div class="card-body p-4">
+            <div class="text-center">
+              <details>
+                <summary class="fw-bolder mb-0" th:text="${m.name}"></summary>
+                <p th:text="${m.info}"></p>
+              </details>
+              <span th:text="${m.price}+'원'"></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <h5 class="store mt-3">대표메뉴</h5>
-    <div class="store newMenu mt-3">
-      <div class="col-md-2" th:each="m:${s.menuList}">
-        <div th:if="${m.menuType == '대표메뉴'}">
-          <img th:src="'http://localhost:8088'+${m.img}" style="width: 150px; height: 150px;">
-          <details>
-            <summary class="mb-0" th:text="${m.name}+' '+${m.price}+'원'"></summary>
-            <p th:text="${m.info}"></p>
-          </details>
-        </div>
-      </div>
-    </div>
-
-    <div class="store mt-3">
-      <div class="menuBoard row">
-        <div class="col-md-6" th:each="m:${s.menuList}" style="width: 350px;">
-          <img th:src="'http://localhost:8088'+${m.img}" style="width: 100px; height: 100px;">
-          <h2 class="accordion-header" id="flush-heading1">
-            <button class="accordion-button collapsed" th:text="${m.name}+' '+${m.price}+'원'"
-                    type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapse1"></button>
-          </h2>
-          <div id="flush-collapse1" class="accordion-collapse collapse" aria-labelledby="flush-heading1" data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body" th:text="${m.info}"></div>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" th:each="m:${s.menuList}">
+      <div class="col mb-5" th:if="${m.menuType == '대표메뉴'}">
+        <div class="card h-100">
+          <img class="card-img-top" th:src="'http://localhost:8088'+${m.img}" alt="...">
+          <div class="card-body p-4">
+            <div class="text-center">
+              <details>
+                <summary class="fw-bolder mb-0" th:text="${m.name}"></summary>
+                <p th:text="${m.info}"></p>
+              </details>
+              <span th:text="${m.price}+'원'"></span>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
+    <h5 class="store mt-3">메뉴판</h5>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div class="col mb-5" th:each="m:${s.menuList}">
+        <div class="card h-100">
+          <img class="card-img-top" th:src="'http://localhost:8088'+${m.img}" alt="...">
+          <div class="card-body p-4">
+            <div class="text-center">
+              <details>
+                <summary class="fw-bolder mb-0" th:text="${m.name}"></summary>
+                <p th:text="${m.info}"></p>
+              </details>
+              <span th:text="${m.price}+'원'"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <h5 class="store mt-3">리뷰</h5>
   <div id="review">
-    <div class="store" th:each="r,iter:${s.reviewList}">
-      <!-- 리뷰 목록 -->
-
-      <div class="reviews" style="width: 600px; height: 400px; border: #222 solid 1px;" th:classappend="${iter.index >= 3} ? 'hide' : ''">
-        <!-- 상단 -->
-        <div class="review-container d-flex justify-content-between">
-          <!-- 상단 왼쪽 영역 -->
-          <div class="user-info d-flex">
+    <div th:each="r,iter:${s.reviewList}" class="store mb-2">
+      <div class="card" th:classappend="${iter.index >= 3} ? 'hide' : ''">
+        <div class="card-header d-flex justify-content-between">
+          <div class="d-flex">
             <img th:src="${r.userInfo.profileImg}" style="width: 50px; height: 50px; border-radius: 50%; border: #222 solid 1px" >
-            <p class="user-name" th:text="${r.userInfo.nickname}"></p>
-            <a class="btn btn-outline-dark" style="height: 30px; padding: 5px;">팔로우</a>
-            <p class="review-count">리뷰개수:3</p>
+            <div>
+              <div class="d-flex">
+                <p class="user-name" th:text="${r.userInfo.nickname}"></p>
+                <a class="btn btn-outline-dark pt-0" style="height: 25px;">팔로우</a>
+              </div>
+              <div class="d-flex">
+                <p class="review-count" th:text="'작성리뷰 '+${r.countReview}"></p>
+                <p><i class="bi bi-dot m-2"></i></p>
+                <p th:text="${#dates.format(r.date,'yyyy-MM-dd')}"></p>
+              </div>
+            </div>
           </div>
-          <!-- 상단 오른쪽 영역 -->
-          <div class="review-info">
+          <div class="d-flex">
             <div class="d-flex">
               <p th:text="'★'+${r.star}" class="rating-value"></p>
               <i class="bi bi-hand-thumbs-up"></i>
               <i class="bi bi-hand-thumbs-down"></i>
             </div>
-            <a class="btn btn-outline-dark btn-sm">신고하기</a>
+            <a class="btn btn-outline-dark pt-0" style="height: 25px;">신고하기</a>
             <!--          <button class="btn btn-dark float-right">삭제</button>-->
           </div>
         </div>
-
-        <!-- 중앙 영역 -->
-        <div class="review-content d-flex mt-3">
+        <div class="card-body d-flex">
           <img th:src="'http://localhost:8088'+${r.img}" style="width: 150px; height: 150px;">
           <div class="review-text">
             <p th:text="${r.content}" class="review-description m-0" style="border: #222 solid 1px; width: 440px; height: 100px;"></p>
             <p th:text="${r.comment}" class="menu-comment" style="border: #222 solid 1px; width: 440px; height: 50px;"></p>
           </div>
         </div>
-        <div class="review-comment d-flex">
-          <p class="review-description ms-5" style="border: #222 solid 1px; width: 540px; height: 100px;">저희 가게를 이용해주셔서 감사합니다</p>
+        <div class="card-body">
+          <div th:if="${not #lists.isEmpty(r.rReplies)}" class="d-flex" th:each="rr:${r.rReplies}">
+            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+            <div class="ms-3" >
+              <div class="d-flex">
+                <div class="fw-bold">사장님</div>
+                <small><i class="bi bi-dot m-2"></i></small>
+                <small th:text="${#dates.format(rr.postDate,'yyyy-MM-dd')}"></small>
+              </div>
+              <div th:text="${rr.content}"></div>
+            </div>
+          </div>
+          <div th:unless="${not #lists.isEmpty(r.rReplies)}">
+            <form class="mb-4"><textarea class="form-control" rows="3" placeholder="리뷰에 대한 댓글을 달아주세요"></textarea></form>
+          </div>
         </div>
       </div>
     </div>
     <div class="store">
-      <a class="btn btn-dark" id="show-more">더보기</a>
+      <a class="btn btn-dark m-0" id="show-more">더보기</a>
     </div>
   </div>
+
 
   <div id="map" class="store mt-4">
     <div style="width: 600px; height: 400px; border: #222 solid 1px;">
@@ -185,12 +215,14 @@
 </html>
 
 <script>
+  //공유 버튼 클릭시 클립보드에 주소 복사
   document.querySelector('[data-clipboard-text]').setAttribute('data-clipboard-text', window.location.href);
   var clipboard = new ClipboardJS('#share-btn');
   clipboard.on('success', function(e) {
     alert('주소가 복사되었습니다.');
   });
 
+  //리뷰 더보기 클릭시 리뷰 3개씩 더 보여줌
   const button = document.getElementById('show-more');
   const hiddenItems = document.querySelectorAll('.hide');
   let currentIdx = 0;
@@ -210,6 +242,10 @@
 <style>
   img{
     object-fit: cover;
+  }
+
+  p{
+    margin: 0;
   }
 
   .hide {
@@ -245,7 +281,6 @@
   .store {
     display: flex;
     justify-content: center;
-    /*align-items: center;*/
   }
 
   .storeName {

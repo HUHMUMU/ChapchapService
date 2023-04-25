@@ -24,4 +24,10 @@ class ReviewMapperTest {
     @Test
     void findAllReviewed() {
     }
+
+    @Test
+    void countReviewByStore() {
+        int count=reviewMapper.countReviewByStore(1);
+        System.out.println("count = " + count);
+    }
 }
