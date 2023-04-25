@@ -17,7 +17,10 @@
                 <img th:src="@{'{path}'(path=${c.user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle">
                 <div>
                     <div class="d-flex">
-                        <h4 class="me-2" th:text="${c.user.nickname}">닉네임</h4>
+<!--                        <h4 class="me-2" th:text="${c.user.nickname}">닉네임</h4>-->
+                        <h4>
+                            <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${c.user.userId})}"  th:text="${c.user.nickname}" style="text-decoration: none; color: inherit;"></a>
+                        </h4>
                         <div class="d-flex">
                             <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
                             <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
@@ -25,7 +28,7 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <p th:text="${c.date}"></p>
+                        <p th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}"></p>
                         <div class="d-flex">
                             <p class="mt-2" >조회수</p>
                             <p th:text="${c.viewcount}"></p>
@@ -40,8 +43,12 @@
                 </div>
                 <button>공유</button>
                 <button>신고</button>
-                <button>수정</button>
-                <button>삭제</button>
+                <th:block th:if="${session.loginUser.userId==c.userId}">
+                    <div class="d-flex justify-content-end">
+                        <a th:href="@{'/chapstory/{chapNum}/modify.do'(chapNum=${c.chapNum})}" class="btn btn-primary">수정</a>
+                        <button>삭제</button>
+                    </div>
+                </th:block>
             </div>
         </div>
         <div class="border bg-primary" style="height: 300px;"></div>

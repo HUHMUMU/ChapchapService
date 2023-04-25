@@ -49,22 +49,22 @@
                                 <img th:src="@{'{path}'(path=${c.user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle">
 
                                 <h4>
-                                    <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}"  th:text="${c.user.nickname}" style="text-decoration: none; color: inherit;"></a>
+                                    <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${c.user.userId})}"  th:text="${c.user.nickname}" style="text-decoration: none; color: inherit;"></a>
                                 </h4>
                                 <div class="d-flex">
                                     <p>조회수 :</p>
-                                    <p th:text="${c.viewcount}"></p>
+                                    <small th:text="${c.viewcount}"></small>
                                 </div>
 
                             </div>
                             <div>
                                 <div class="d-flex">
                                     <p>좋아요 </p>
-                                    <p th:text="${c.likes}"></p>
+                                    <small th:text="${c.likes}"></small>
                                 </div>
                                 <div class="d-flex">
                                     <p>작성날짜</p>
-                                    <p th:text="${c.date}"></p>
+                                    <small th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
                                 </div>
                             </div>
                         </div>

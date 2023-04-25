@@ -6,8 +6,9 @@
 <script type="text/javascript" src="/libs/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <!-- 2.10.0 버전엔 js 파일 일부분이 없어 오류 발생 ! -->
-<label for="txtContent" class="form-label"></label>
-<textarea class="form-control" name="content" id="txtContent" rows="10" cols="100" style="width: 100%; background-color: white"></textarea>
+<label for="txtContent" class="form-label">글 내용</label>
+<textarea class="form-control" name="content" id="txtContent" th:text="${c.content}" rows="10" cols="100" style="width: 100%; background-color: white">
+</textarea>
 <div id="se2_sample" style="margin:10px 0;">
     <input type="button" onclick="save();" value="본문 내용 가져오기">
 </div>
