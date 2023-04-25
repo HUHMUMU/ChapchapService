@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,6 +85,7 @@ public class ChapStoryController {
 
     @PostMapping("/register.do")
     public String registerAction(
+            RedirectAttributes redirectAttributes,
             @SessionAttribute UserDto loginUser,
             @ModelAttribute ChapstorysDto chaps,
             @RequestParam(name = "img", required = false)MultipartFile [] imgs) throws IOException {
@@ -108,23 +110,30 @@ public class ChapStoryController {
         }
         chaps.setChapstoryimgs(imgDtos);
         int register=0;
+        String errorMsg=null;
         try{
             register=chapStoryService.register(chaps);
         }catch (Exception e){
             log.error(e.getMessage());
         }
-        if(register>0){
-            redirectPage="redirect:/chapstory/register.do";
-        }else{
-            //등록 실패시 저장했던 파일 삭제
-            if(imgDtos!=null){
-                for(ChapstoryimgsDto i : imgDtos){
-                    File imgFile=new File(staticPath+i.getImg());
-                    if(imgFile.exists())imgFile.delete();
+        try{
+            if(register>0){
+                redirectAttributes.addAttribute("chapNum", chaps.getChapNum());
+                redirectPage="redirect:/chapstory/list.do";
+            }else{
+                //등록 실패시 저장했던 파일 삭제
+                if(imgDtos!=null){
+                    for(ChapstoryimgsDto i : imgDtos){
+                        File imgFile=new File(staticPath+i.getImg());
+                        if(imgFile.exists())imgFile.delete();
+                    }
                 }
             }
+        }catch (Exception e){
+            log.error(e);
+            errorMsg=e.getMessage();
         }
-
+        redirectAttributes.addFlashAttribute("msg","게시글 등록 실패 에러"+errorMsg);
         return redirectPage;
     }
 }
