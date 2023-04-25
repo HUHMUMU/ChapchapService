@@ -104,3 +104,6 @@
 .userCard-right i{
     transform: scale(1.5);
 }
+.listbutton button{
+   width: 200px;
+}

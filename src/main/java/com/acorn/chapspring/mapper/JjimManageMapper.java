@@ -7,5 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface JjimManageMapper {
-    List<JjimManageDto> findAllJjim(String userId);
+    List<JjimManageDto> findAllJjimByUserId(String userId);
+
+    int insertOneByUserId(JjimManageDto jjim);
+
+    int deleteOneByUserIdAndStoreNum(JjimManageDto jjim);
 }
