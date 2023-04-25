@@ -115,8 +115,15 @@ public class UserServiceImp implements UserService{
         return list;
     }
 
+    //아이디 찾기
     @Override
-    public UserDto findUserIdByEmail(UserDto user) {
-        return userMapper.findUserIdByEmail(user);
+    public UserDto findByNameByEmail(UserDto user) {
+        return userMapper.findByNameByEmail(user);
+    }
+
+    //비밀번호 찾기
+    @Override
+    public UserDto findByUserIdAndEmail(UserDto user) {
+        return userMapper.findByUserIdAndEmail(user);
     }
 }

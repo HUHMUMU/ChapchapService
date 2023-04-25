@@ -18,7 +18,6 @@ class StoreMapperTest {
     private RecommendStoreMapper recommendStoreMapper;
     @Autowired
     private UserMapper userMapper;
-    StoreFilterDto storeFilterDto = new StoreFilterDto();
 
     @Test
     void findAllStores() {
@@ -48,16 +47,26 @@ class StoreMapperTest {
     }
 
     @Test
-    void findStoresByFilter() {
-//        storeFilterDto.setMenuType("백반");
-//        storeFilterDto.setPriceRange();
-        storeFilterDto.setDetailArea("역삼동");
-        storeFilterDto.setParking(1);
-        // 아 테스트 실패했네ㅠㅠㅠ
-        List<StoresDto> stores=storeMapper.findStoresByFilter(storeFilterDto);
+    void findAndSortStoresByFilter() {
+        StoreFilterDto storeFilterDto = new StoreFilterDto();
 
+        // 아래의 필터조건 0개~4개 활성화 가능
+//        storeFilterDto.setMenuType(7);
+        storeFilterDto.setPriceRange("0-10000");
+//        storeFilterDto.setDetailArea("역삼동"); // address에 () 속에 동이름이 들어가야함.
+//        storeFilterDto.setParking(1);
+
+        // 정렬조건 4개중 1개
+        storeFilterDto.setSortBy("recommended");
+//        storeFilterDto.setSortBy("jjim");
+//        storeFilterDto.setSortBy("review");
+        // 거리순은 아직 미구현
+//        storeFilterDto.setSortBy("distance");
+
+        List<StoresDto> stores=storeMapper.findStoresByFilter(storeFilterDto);
         System.out.println("stores = " + stores);
     }
+
     @Test
     void findByStoreNum() {
 //        user=new UserDto();
@@ -72,10 +81,6 @@ class StoreMapperTest {
 //            myRecommend++;
 //        }
         // 석정씨 user , store 가 빨간줄떠서 주석처리해놨어요
-    }
-
-    @Test
-    void sortFilteredStores() {
     }
 
     @Test

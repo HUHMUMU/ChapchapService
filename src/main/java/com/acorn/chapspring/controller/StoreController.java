@@ -1,14 +1,15 @@
 package com.acorn.chapspring.controller;
 
+import com.acorn.chapspring.dto.StoreFilterDto;
 import com.acorn.chapspring.dto.StoresDto;
 import com.acorn.chapspring.service.StoreService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor //모든 필드를 pojo 형식의 생성자로 자동 생성
 @Controller //< @Component 요청과 응답을 처리 가능
@@ -25,7 +26,13 @@ public class StoreController {
     }
 
     @GetMapping("/list.do")
-    public String list() {
-        return "store/list"; // 해당 경로에 대한 뷰 이름 반환
+    public String list(Model model,
+                       @ModelAttribute StoreFilterDto storeFilterDto) {
+        PageHelper.startPage(storeFilterDto.getPageNumber(), storeFilterDto.getPageSize(), storeFilterDto.getOrderBy());
+        PageInfo<StoresDto> pageInfo = storeService.getFilteredStores(storeFilterDto);
+
+        model.addAttribute("pageInfo", pageInfo);
+        model.addAttribute("storeFilter", storeFilterDto);
+        return "store/list";
     }
 }

@@ -16,10 +16,6 @@ public interface StoreMapper {
     // 필터링된 결과를 반환하는 메소드 추가
     List<StoresDto> findStoresByFilter(StoreFilterDto filter);
 
-    // 필터링된 결과를 정렬하는 메소드 추가
-    List<StoresDto> sortFilteredStores(StoreFilterDto storeFilterDto);
-
-
     // 주어진 식당 번호에 해당하는 가게 정보 가져오기
     StoresDto findStoreByStoreNum(int storeNum);
 
@@ -40,6 +36,10 @@ public interface StoreMapper {
 
     // 주어진 식당 번호에 해당하는 가게의 찜 갯수 새기
     int countJjimByStoreNum(int storeNum);
+    List<ReviewsCountDto> findReviewsCountByStoreNum(int storeNum);
+
+    // 주어진 식당 번호에 해당하는 가게의 찜 가져오기
+    List<JjimManageDto> findJjimByStoreNum(int storeNum);
 
     StoresDto findByStoreNum(int storeNum);
     StoresDto findStoreName(int storeNum);

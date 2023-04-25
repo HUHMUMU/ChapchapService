@@ -12,7 +12,9 @@ public interface UserMapper {
     UserDto findByUserIdAndPw(UserDto user);//로그인 정보 비교
 
     //아이디 찾기
-    UserDto findUserIdByEmail(UserDto user);
+    UserDto findByNameByEmail(UserDto user);
+    //비밀번호 찾기
+    UserDto findByUserIdAndEmail(UserDto user);
 
     int updateOne(UserDto user);//유저정보 수정
     int insertOne(UserDto user);//유저 등록
@@ -28,4 +30,5 @@ public interface UserMapper {
     //이메일 중복 검사
     int email_Check(String email);
 
+    int countReviewByUser(String userId); //유저별 리뷰수
 }

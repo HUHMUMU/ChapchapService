@@ -1,4 +1,4 @@
-<div>
+<div class="userDetailContainer rounded-3">
     <h1>테스트 3번</h1>
     <p>리뷰작성 리스트</p>
     <p>필요 카트 내부 항목 리스트</p>
@@ -7,6 +7,33 @@
     <span>7. 리뷰 코멘트</span> <span>8.메뉴 한줄명</span>
     <div th:each="reviewed : ${reviewed}">
         <p th:text="${reviewed}"></p>
+    </div>
+
+    <div class="reviewCard" style="border: 1px solid black;" th:each="reviewed2 : ${reviewed}">
+        <div class="reviewCard-top d-flex">
+            <div class="storeProfileimgBox" style="border: 1px solid black;width: 50px; height: 50px; border-radius:25px; overflow: hidden;" >
+                <img th:src="${reviewed2.mainImg}" alt="가게 프사">
+            </div>
+            <div>
+                <div>
+                    <a th:text="${reviewed2.storeName}" th:href="@{'/store/{storeNum}/detail.do'(storeNum=${reviewed2.storeNum})}"></a>
+                    <span>평점</span>
+                    <span>따봉맨</span>
+                </div>
+                <div>뱃지</div>
+            </div>
+        </div>
+
+        <div class="reviewCard-bottom d-flex">
+            <div class="reviewimgBox" style="border: 1px solid black; height: 150px; width: 150px;">
+                <img src="" alt="리뷰 사진" >
+            </div>
+
+            <div class="d-flex flex-column" style="width: 500px">
+                <span style="height: 100px; border: 1px solid black;" th:text="${reviewed2.content}">리뷰내용</span>
+                <span style="height: 50px; border: 1px solid black;" th:text="${reviewed2.comment}">메뉴 코멘트</span>
+            </div>
+        </div>
     </div>
 
 </div>

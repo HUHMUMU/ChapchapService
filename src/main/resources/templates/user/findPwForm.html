@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <div layout:fragment="content">
-    <form class="mx-auto" action="/user/findId.do" method="post" style="width: 450px;" name="findform">
+    <form class="mx-auto" action="/user/findPw.do" method="post" style="width: 450px;" name="findform">
         <div class="findId_Box">
-        <h1 style="margin-left: 5%;">아이디 찾기</h1>
-        <p class="findId_name mb-1">이름</p>
+        <h1 style="margin-left: 5%;">비밀번호 찾기</h1>
+        <p class="findId_name mb-1">아이디</p>
         <p class="form-floating">
-            <input id="userId" type="text" name="name" value="" class="form-control name_Box" placeholder="??" style=" background-color: #FFFAED;
+            <input id="userId" type="text" name="userId" value="" class="form-control name_Box" placeholder="??" style=" background-color: #FFFAED;
         width: 35rem;">
-            <label style="margin-left: 5%">이름</label>
+            <label style="margin-left: 5%">아이디</label>
         </p>
         <p class="mb-1 findId_email">이메일</p>
 
@@ -25,26 +25,16 @@
             </p>
 
             <p class="text-end">
-                <button type="submit" class="btn btn-warning btn_FindId"
-                        style="">
-                    <span style="font-size: 25px; font-weight: 800;">아이디 찾기</span>
+                <button type="submit" class="btn btn-warning btn_FindId">
+                    <span style="font-size: 25px; font-weight: 800;">비밀번호 찾기</span>
                 </button>
             </p>
-            <!--이름과 이메일의 정보가 일치하지 않을때-->
-
-<!--                <script>-->
-<!--                    const findform=document.forms.findform;-->
-<!--                    document.forms.findform.userId.value="";-->
-<!--                    document.forms.findform.emailNum.value="";-->
-<!--                </script>-->
-
-
-            <div th:if="${check == 1}" class="find_id">
-                <label th:text="'찾으시는 아이디는 ' + ${findUserId} + ' 입니다.'"></label>
+            <div th:if="${check == 1}" class="find_pw">
+                <label th:text="'찾으시는 비밀번호는 ' + ${findPw} + ' 입니다.'"></label>
             </div>
 
-            <div th:if="${check == 0}" class="find_id">
-                <label th:text="'찾으시는 아이디가 없습니다.'"></label>
+            <div th:if="${check == 0}" class="find_pw">
+                <label th:text="'찾으시는 비밀번호가 없습니다.'"></label>
             </div>
         </div>
     </form>
@@ -92,7 +82,7 @@
         color: #FFC3C3;
         border: none;
     }
-    .find_id {
+    .find_pw {
         text-align: center;
     }
 </style>

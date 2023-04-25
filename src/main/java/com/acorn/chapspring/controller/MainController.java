@@ -1,6 +1,8 @@
 package com.acorn.chapspring.controller;
 
 import com.acorn.chapspring.dto.ChapDealDto;
+import com.acorn.chapspring.dto.StoresDto;
+import com.acorn.chapspring.service.StoreService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -15,5 +17,5 @@ import java.util.List;
 @RequestMapping("/mainPage")
 @Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 public class MainController {
-
+    private StoreService storeService;
 }

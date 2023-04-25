@@ -11,13 +11,29 @@
         style="width: 450px; position: relative; top: calc((100vh - 450px) / 2)">
     <input type="hidden" name="userId" th:value="${param.userId}">
     <h1 class="my-4">이메일 체크 폼</h1>
-    <div class="input-group">
+    <p class="input-group">
       <div class="form-floating">
         <input type="text" name="emailCheckCode" value="" class="form-control" placeholder="이메일 체크 코드">
         <label>이메일 체크 코드</label>
       </div>
-      <button class="btn btn-primary">이메일 확인</button>
+    <p class="text-end">
+      <button type="submit" class="btn btn-warning btn_FindId">
+        <span style="font-size: 25px; font-weight: 800;">아이디 찾기</span>
+      </button>
+    </p>
       </p>
   </form>
 </div>
 </html>
+
+<style>
+  .btn_FindId {
+    width: 28em;
+    height: 3.5em;
+    background: #FFE3A9;
+    color: #FF5D5D;
+    margin-right: 400px;
+    margin-top: 7%;
+    border:none;
+  }
+</style>
