@@ -24,7 +24,7 @@
     <update id="updateOne" parameterType="chapstorysDto">
         UPDATE chapstorys SET title=#{title}, content=#{content}, main_img=#{mainImg} WHERE chap_num=#{chapNum}
     </update>
-    <delete id="deleteOne">
+    <delete id="deleteByChapsNum">
         DELETE FROM chapstorys WHERE chap_num=#{chapNum}
     </delete>
     <select id="findAll" resultMap="ChapstoryMap">

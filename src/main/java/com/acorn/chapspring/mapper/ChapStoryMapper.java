@@ -16,6 +16,6 @@ public interface ChapStoryMapper {
     List<ChapstorysDto> findByUserId(String userId);
     int insertOne(ChapstorysDto chaps);
     int updateOne(ChapstorysDto chpas);
-    int deleteOne(int CSNum);
+    int deleteByChapsNum(int chapNum);
 
 }
