@@ -36,6 +36,10 @@ public interface StoreMapper {
 
     // 주어진 식당 번호에 해당하는 가게의 찜 갯수 새기
     int countJjimByStoreNum(int storeNum);
+    List<ReviewsCountDto> findReviewsCountByStoreNum(int storeNum);
+
+    // 주어진 식당 번호에 해당하는 가게의 찜 가져오기
+    List<JjimManageDto> findJjimByStoreNum(int storeNum);
 
     StoresDto findByStoreNum(int storeNum);
     StoresDto findStoreName(int storeNum);

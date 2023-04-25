@@ -7,6 +7,7 @@ import java.util.List;
 
 @Service
 public interface MainService {
-    List<StoresDto> searchName(String storeName);
+    StoreServiceImp findByReviewsCount(String storeName);
+
 
 }

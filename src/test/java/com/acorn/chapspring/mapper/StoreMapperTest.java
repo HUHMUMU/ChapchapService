@@ -94,4 +94,9 @@ class StoreMapperTest {
     @Test
     void countJjimByStoreNum() {
     }
+
+    @Test
+    void findReviewsCountByStoreNum() {
+
+    }
 }

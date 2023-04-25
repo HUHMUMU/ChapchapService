@@ -127,4 +127,8 @@
     <select id="findAllType" resultType="com.acorn.chapspring.dto.TypeClassesDto">
         SELECT * FROM type_classes
     </select>
+    <select id="findReviewsCountByStoreNum" resultType="com.acorn.chapspring.dto.ReviewsCountDto">
+
+    </select>
+
 </mapper>
