@@ -6,7 +6,7 @@
         <result column="title" property="title"/>
         <result column="content" property="content"/>
         <result column="viewcount" property="viewcount"/>
-        <result column="date" property="date"/>
+        <result column="post_time" property="postTime"/>
         <result column="likes" property="likes"/>
         <result column="profile" property="profile"/>
         <result column="main_img" property="mainImg"/>

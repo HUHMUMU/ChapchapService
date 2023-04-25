@@ -8,6 +8,7 @@ import com.acorn.chapspring.service.ChapStoryService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +23,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//@AllArgsConstructor
 @Controller //< @Component 요청과 응답을 처리 가능
 @RequestMapping("/chapstory")
 @Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 public class ChapStoryController {
+
+
     private ChapStoryService chapStoryService;
     @Value("${img.upload.path}")
     private String uploadPath; //등록 (프로젝트위치+/static/public/img/chapstory
@@ -139,6 +142,30 @@ public class ChapStoryController {
         return redirectPage;
     }
 
+    @GetMapping("/{chapNum}/modify.do")
+    public String modifyForm(
+            Model model,
+            @PathVariable int chapNum,
+            @SessionAttribute UserDto loginUser){
+        ChapstorysDto chaps = chapStoryService.detail(chapNum);
+        model.addAttribute("c",chaps);
+        return "chapstory/modify";}
+
+    @PostMapping("/modify.do")
+    public String modifyAction(
+            @ModelAttribute ChapstorysDto chaps){
+        String redirectPath="redirect:/chapstory/"+chaps.getChapNum()+"/modify.do";
+        int modify=0;
+        try{
+            modify=chapStoryService.modify(chaps);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        if(modify>0){
+            redirectPath="redirect:/chapstory/list.do";
+        }
+        return redirectPath;
+    }
 
 
 

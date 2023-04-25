@@ -1,11 +1,8 @@
 package com.acorn.chapspring.service;
 
 import com.acorn.chapspring.dto.ChapstorysDto;
-import com.acorn.chapspring.dto.UserDto;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
-@Component
 
 public interface ChapStoryService {
     List<ChapstorysDto> list(); //챱스토리 게시글 조회

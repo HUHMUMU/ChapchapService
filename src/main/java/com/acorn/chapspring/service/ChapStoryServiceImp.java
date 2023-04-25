@@ -4,15 +4,18 @@ import com.acorn.chapspring.dto.ChapstorysDto;
 import com.acorn.chapspring.dto.UserDto;
 import com.acorn.chapspring.mapper.ChapStoryMapper;
 import com.acorn.chapspring.mapper.UserMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ChapStoryServiceImp implements ChapStoryService{
     private ChapStoryMapper chapStoryMapper;
     private UserMapper userMapper;
-    public ChapStoryServiceImp(ChapStoryMapper chapStoryMapper){this.chapStoryMapper=chapStoryMapper;}
+//    public ChapStoryServiceImp(ChapStoryMapper chapStoryMapper){this.chapStoryMapper=chapStoryMapper;}
 
     @Override
     public List<ChapstorysDto> list() {
@@ -21,6 +24,7 @@ public class ChapStoryServiceImp implements ChapStoryService{
     }
 
     @Override
+    @Transactional
     public ChapstorysDto detail(int chapNum) {
         ChapstorysDto detail = chapStoryMapper.findByChapNum(chapNum);
         return detail;
@@ -33,14 +37,17 @@ public class ChapStoryServiceImp implements ChapStoryService{
     }
 
     @Override
+    @Transactional
     public int register(ChapstorysDto chaps) {
         int register = chapStoryMapper.insertOne(chaps);
         return register;
     }
 
     @Override
+    @Transactional
     public int modify(ChapstorysDto chaps) {
-        return 0;
+        int modify=chapStoryMapper.updateOne(chaps);
+        return modify;
     }
 
     @Override

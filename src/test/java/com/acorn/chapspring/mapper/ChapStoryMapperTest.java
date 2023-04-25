@@ -49,7 +49,7 @@ class ChapStoryMapperTest {
     @Test
     void updateOne() {
         chaps=new ChapstorysDto();
-        chaps.setChapNum(19);
+        chaps.setChapNum(1);
         chaps.setTitle("수정 테스트");
         chaps.setContent("수정 테스트");
         chaps.setMainImg("/public/img/chapstory/chapstory1-2.jpg");
