@@ -28,10 +28,14 @@
         <result column="jjim_count" property="jjimCount"/>
         <result column="review_count" property="reviewCount"/>
         <result column="averageStar" property="averageStar"/>
-        <association property="storeCall"
-                    select="com.acorn.chapspring.mapper.StoreManageMapper.findStoreCall"
+        <association property="reviewCount"
+                    select="com.acorn.chapspring.mapper.ReviewMapper.countReviewByStore"
                     column="store_num"
                     fetchType="eager"/>
+        <association property="storeCall"
+                     select="com.acorn.chapspring.mapper.StoreManageMapper.findStoreCall"
+                     column="store_num"
+                     fetchType="eager"/>
         <collection property="menuList"
                     select="com.acorn.chapspring.mapper.MenuManageMapper.findMenuByStore"
                     column="store_num"

@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class ChapDealDto {
-    private int eventNum; //pk 
+    private int eventNum; //pk (auto increment)
     private int storeNum; //fk 가게 번호
     private String eventTitle; //이벤트 제목
     private String eventCondition; //이벤트 조건
@@ -15,5 +15,5 @@ public class ChapDealDto {
     private Date eventStart; //이벤트 시작 날짜
     private Date eventEnd; //이벤트 마감 날짜
 
-    private String storeName; //가게 이름 (stores)
+    private String storeName; //가게 이름 가져오기 (stores)
 }

@@ -123,4 +123,11 @@ class UserMapperTest {
         }
 
     }
+
+
+    @Test //유저별 리뷰수
+    void countReviewByUser(){
+        int count=userMapper.countReviewByUser("user01");
+        System.out.println("count = " + count);
+    }
 }

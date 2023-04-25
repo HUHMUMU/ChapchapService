@@ -6,8 +6,8 @@ import java.util.Date;
 
 @Data
 public class ReviewRepliesDto {
-    private int rrNum;
-    private int reviewNum;
-    private Date postDate;
-    private String content;
+    private int rrNum; //PK (auto increment) 대댓글 번호
+    private int reviewNum; //FK 리뷰 번호
+    private Date postDate; //작성날짜
+    private String content; //작성내용
 }

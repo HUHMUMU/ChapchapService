@@ -28,4 +28,5 @@ public interface UserMapper {
     //이메일 중복 검사
     int email_Check(String email);
 
+    int countReviewByUser(String userId); //유저별 리뷰수
 }
