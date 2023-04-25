@@ -30,24 +30,36 @@
       </ul>
     </div>
     <div class="d-flex">
-      <i class="nav-link" href="/user/login.do">
-        <!--로그인 아이디/회원가입 아이디-->
-        <a class="bi bi-person" href="/user/login.do" style="font-size: 27px; color: #757575; margin-right: 15px"></a>
-      </i>
-      <i class="nav-link">
-        <!--로그인 아이디/회원가입 아이디-->
-        <a class="bi bi-person-add" href="/user/signup.do" style="font-size: 27px; color: #757575; margin-right: 15px"></a>
-      </i>
+<!-- 로그인 상태가 아닐 경우 표시     -->
+      <th:block th:if="${session.loginUser==null}">
+        <i class="nav-link" href="/user/login.do">
+          <!--로그인 아이디/회원가입 아이디-->
+          <a class="bi bi-person" href="/user/login.do" style="font-size: 27px; color: #757575; margin-right: 15px"></a>
+        </i>
+        <i class="nav-link">
+          <!--로그인 아이디/회원가입 아이디-->
+          <a class="bi bi-person-add" href="/user/signup.do" style="font-size: 27px; color: #757575; margin-right: 15px"></a>
+        </i>
+      </th:block>
+<!-- 로그인 상태일 경우 표시  -->
       <th:block th:if="${session.loginUser!=null}">
-        <li class="breadcrumb-item">
-          <a class="nav-link" th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.userId})}">
-            <span th:text="${session.loginUser.userId}"></span>
-            (<span th:text="${session.loginUser.name}"></span>)
-          </a>
-        </li>
-        <li class="breadcrumb-item">
-          <a class="nav-link" href="/user/logout.do">로그아웃</a>
-        </li>
+<!--        <li class="breadcrumb-item">-->
+<!--          <a class="nav-link" th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.userId})}">-->
+<!--            <span th:text="${session.loginUser.userId}"></span>-->
+<!--            (<span th:text="${session.loginUser.name}"></span>)-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li class="breadcrumb-item">-->
+<!--          <a class="nav-link" href="/user/logout.do">로그아웃</a>-->
+<!--        </li>-->
+        <i class="nav-link" href="/user/login.do">
+          <!--로그인 유저 마이페이지로 이동-->
+          <a class="bi bi-person" th:href="@{'/user/{uId}/detail.do'(uId=${session.loginUser.userId})}" style="font-size: 27px; color: #757575; margin-right: 15px"></a>
+        </i>
+        <i class="nav-link">
+          <!--로그아웃-->
+          <a class="bi bi-box-arrow-right" href="/user/logout.do" style="font-size: 27px; color: #757575; margin-right: 15px"></a>
+        </i>
       </th:block>
     </div>
   </div>

@@ -17,26 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserMapperTest {
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private RecommendStoreMapper recommendStoreMapper;
-    @Autowired
-    private JjimManageMapper jjimManageMapper;
 
-    private static VisitedStoreDto visited;
     private static UserDto user;
-    private static ReviewsDto reviewer;
-    private static RecommendStoreDto recommendstore;
-    private static JjimManageDto jjim;
     @Test
     @Order(1)
     void findByUserId() {
-//        user=new UserDto();//user 데이터를 UserDto에서 조회라는 느낌
-//        user.setUserId("user01");
-//        UserDto findUser=userMapper.findByUserId(user.getUserId());
-
-        reviewer=new ReviewsDto();
-        reviewer.setUserId("user01");
-        UserDto findUser=userMapper.findByUserId(reviewer.getUserId());
+        user=new UserDto();
+        user.setUserId("user01");
+        UserDto findUser=userMapper.findByUserId(user.getUserId());
         System.out.println("findUser : "+findUser);
         assertNotNull(findUser);
     }
@@ -108,13 +96,7 @@ class UserMapperTest {
         int delete= userMapper.deleteByUserIdAndPw(user);
         assertEquals(delete,1);
     }
-//    @Test
-//    void findAll() {
-//        visited=new VisitedStoreDto();
-//        visited.setUserId("admin");
-//        List<VisitedStoreDto> find=userMapper.findAllVisited(visited.getUserId());
-//        System.out.println(find);
-//    }
+
     @Test
     public void nickNameChk() throws Exception {
         String nick="밀다라심경"; //존재하는 아이디
@@ -138,101 +120,6 @@ class UserMapperTest {
         for(UserDto userList : list){
             System.out.println("userNumber"+userNumber+" : "+userList.getUserId());
             userNumber++;
-        }
-
-    }
-
-    @Test
-
-    void findAllRecommend() {
-        recommendstore=new RecommendStoreDto();
-        user=new UserDto();
-        user.setUserId("admin");
-        recommendstore.setUserId("admin");
-        List<RecommendStoreDto> list=recommendStoreMapper.findAllRecommend(recommendstore.getUserId());
-        //첫 번째 테스트
-        int listNum=0;
-        for (RecommendStoreDto recommendList : list){
-            listNum++;
-            System.out.println("number"+listNum+" : "+recommendList);
-        }
-        System.out.println("size : "+list.size());
-
-        //두 번째 테스트 : 리스트에 번호 매기기
-        List<RecommendStoreDto> userRecommendList=new ArrayList<>(list.size());//번호가 추가된 리스트의 사이즈 지정
-        listNum=0;//리스트 초기 번호 0
-        for (RecommendStoreDto recommendList : list){//list 내용을 번호가 추가된 Dto 속성 recommendList에 담기
-            listNum++;//리스트 번호 1씩 추가,초기값 1
-            recommendList.setRecommendNum(listNum);//옮겨담아진 recommendList의 번호 세팅
-            userRecommendList.add(recommendList);//리스트에 추가
-            System.out.println("number"+listNum+" : "+userRecommendList);//출력
-
-        }
-    }
-
-    @Test
-    void insertOneByUserId() {
-        recommendstore=new RecommendStoreDto();
-        recommendstore.setUserId("admin");
-        recommendstore.setComment("맛있어요!");
-        recommendstore.setStoreNum(8);
-        //---------------------------------------------------
-
-        List<RecommendStoreDto> list=recommendStoreMapper.findAllRecommend(recommendstore.getUserId());
-        System.out.println(recommendstore.getUserId()+"'s list number : " +list.size());
-
-        if(list.size()<3){
-            int insert= recommendStoreMapper.insertOneByUserId(recommendstore);//성공하면 1 반환
-            assertEquals(insert,1);
-            list=recommendStoreMapper.findAllRecommend(recommendstore.getUserId());
-            int listNum=1;
-            for (RecommendStoreDto recommendList : list){
-                System.out.println("number"+listNum+" : "+recommendList);
-                listNum++;
-            }
-        }else{
-            System.out.println("store can't recommend over 3!");
-        }
-//-------------------------------------------------------------------
-
-//        int insert= userMapper.insertOneByUserId(recommendstore);//성공하면 1 반환
-//        assertEquals(insert,1);
-
-        //--------------------------------------------------------------------------
-
-//        List<RecommendStoreDto> list=userMapper.findAllRecommend(recommendstore.getUserId());
-//        int listNum=0;
-//        for (RecommendStoreDto recommendList : list){
-//            listNum++;
-//            System.out.println("number"+listNum+" : "+recommendList);
-//        }
-
-    }
-
-    @Test
-    void deleteOneByUserIdAndStoreNum() {
-        recommendstore=new RecommendStoreDto();
-        recommendstore.setStoreNum(8);
-        recommendstore.setUserId("admin");
-        int delete=recommendStoreMapper.deleteOneByUserIdAndStoreNum(recommendstore);
-        assertEquals(delete,1);
-        List<RecommendStoreDto> list=recommendStoreMapper.findAllRecommend(recommendstore.getUserId());
-        int listNum=0;
-        for (RecommendStoreDto recommendList : list){
-            listNum++;
-            System.out.println("number"+listNum+" : "+recommendList);
-        }
-    }
-
-    @Test
-    void findAllJjim(){
-        jjim=new JjimManageDto();
-        jjim.setUserId("user01");
-        List<JjimManageDto> list=jjimManageMapper.findAllJjim(jjim.getUserId());
-        int listnum=0;
-        for(JjimManageDto jjimlist : list){
-            System.out.println("number"+listnum+" : "+jjimlist);
-            listnum++;
         }
 
     }

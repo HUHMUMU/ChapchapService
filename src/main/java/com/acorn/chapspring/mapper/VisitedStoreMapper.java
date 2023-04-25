@@ -7,5 +7,5 @@ import java.util.List;
 
 @Mapper
 public interface VisitedStoreMapper {
-    List<VisitedStoreDto> findAllVisited(String userId);
+    List<VisitedStoreDto> findAllVisitedByUserId(String userId);
 }

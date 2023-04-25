@@ -10,7 +10,16 @@
         <result column="address" property="address"/>
     </resultMap>
 
-    <select id="findAllJjim" resultMap="JjimMap">
+    <insert id="insertOneByUserId" parameterType="jjimManageDto">
+        insert into jjim_manages (jj_status, user_id, store_num)
+            value (#{jjStatus},#{userId},#{storeNum});
+    </insert>
+
+    <delete id="deleteOneByUserIdAndStoreNum" parameterType="jjimManageDto">
+        delete from jjim_manages where user_id=#{userId} and store_num=#{storeNum};
+    </delete>
+
+    <select id="findAllJjimByUserId" resultMap="JjimMap">
         select * from stores inner join jjim_manages
                  on stores.store_num = jjim_manages.store_num
                  where user_id=#{userId};

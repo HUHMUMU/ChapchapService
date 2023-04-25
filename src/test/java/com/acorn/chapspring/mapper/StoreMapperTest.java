@@ -19,6 +19,7 @@ class StoreMapperTest {
     @Autowired
     private UserMapper userMapper;
     StoreFilterDto storeFilterDto = new StoreFilterDto();
+
     @Test
     void findAllStores() {
     }
@@ -56,6 +57,20 @@ class StoreMapperTest {
         List<StoresDto> stores=storeMapper.findStoresByFilter(storeFilterDto);
 
         System.out.println("stores = " + stores);
+    }
+    @Test
+    void findByStoreNum() {
+        user=new UserDto();
+        store=new StoresDto();
+        user.setUserId("admin");
+        List<RecommendStoreDto> recommend=recommendStoreMapper.findAllRecommend(user.getUserId());
+        System.out.println(recommend);
+        int myRecommend=0;
+        for(RecommendStoreDto stores :recommend){
+            StoresDto find=storeMapper.findByStoreNum(stores.getStoreNum());
+            System.out.println("recommend store name "+myRecommend+" : "+find.getStoreName());
+            myRecommend++;
+        }
     }
 
     @Test

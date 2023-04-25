@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 @Mapper
 public interface RecommendStoreMapper {
-    List<RecommendStoreDto> findAllRecommend(String userId);
+    List<RecommendStoreDto> findAllRecommendstoreByUserId(String userId);
 
-    int insertOneByUserId(RecommendStoreDto recommendStore);
-    int deleteOneByUserIdAndStoreNum(RecommendStoreDto recommendStore);
+    int insertOneByUserId(RecommendStoreDto recommendstore);
+    int deleteOneByUserIdAndStoreNum(RecommendStoreDto recommendstore);
 }
