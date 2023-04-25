@@ -64,7 +64,7 @@
       <p th:text="${s.detailInfo}"></p>
     </div>
   </div>
-  <div class="store">
+  <div class="menuBar store">
     <a href="#menu">메뉴</a>
     <a href="#review">리뷰</a>
     <a href="#map">지도</a>
@@ -116,12 +116,15 @@
 
     <div class="store mt-3">
       <div class="menuBoard row">
-        <div class="col-md-6" th:each="m:${s.menuList}">
+        <div class="col-md-6" th:each="m:${s.menuList}" style="width: 350px;">
           <img th:src="'http://localhost:8088'+${m.img}" style="width: 100px; height: 100px;">
-          <details>
-            <summary class="mb-0" th:text="${m.name}+' '+${m.price}+'원'"></summary>
-            <p th:text="${m.info}"></p>
-          </details>
+          <h2 class="accordion-header" id="flush-heading1">
+            <button class="accordion-button collapsed" th:text="${m.name}+' '+${m.price}+'원'"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapse1"></button>
+          </h2>
+          <div id="flush-collapse1" class="accordion-collapse collapse" aria-labelledby="flush-heading1" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body" th:text="${m.info}"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -287,5 +290,12 @@
   .reward{
     color: #FF5D5D;
     font-weight: bold;
+  }
+
+  .menuBar{
+    position:-webkit-sticky;
+    position:sticky;
+    top:0;
+    z-index: 999;
   }
 </style>
