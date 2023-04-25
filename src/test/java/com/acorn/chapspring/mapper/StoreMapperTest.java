@@ -14,15 +14,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class StoreMapperTest {
     @Autowired
     private StoreMapper storeMapper;
-<<<<<<< HEAD
+
     @Autowired
     private RecommendStoreMapper recommendStoreMapper;
     @Autowired
     private UserMapper userMapper;
     StoreFilterDto storeFilterDto = new StoreFilterDto();
-=======
 
->>>>>>> 7284ff5 (일부 코드 수정)
+
+
     @Test
     void findAllStores() {
     }
@@ -49,7 +49,6 @@ class StoreMapperTest {
     @Test
     void findJjimByStoreNum() {
     }
-<<<<<<< HEAD
 
     @Test
     void findStoresByFilter() {
@@ -78,6 +77,5 @@ class StoreMapperTest {
     @Test
     void countJjimByStoreNum() {
     }
-=======
->>>>>>> 7284ff5 (일부 코드 수정)
+
 }
