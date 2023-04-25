@@ -33,7 +33,9 @@ public class StoresDto {
     private List<ReviewsDto> reviewList; //리뷰들 가져오기
     private StoreManagesDto storeCall; //가게 전화번호 가져오기
 
-    private int jjimCount; // 찜 갯수새기
-    private int reviewCount; // 리뷰 갯수새기
-    private int recommendCount; // 추천 갯수새기
+    private int categoryNum; // 카테고리 번호
+    private int jjimCount; // 찜 갯수
+    private int reviewCount; // 리뷰 갯수
+    private double averageStar; // 평균 별점
+
 }

@@ -1,6 +1,8 @@
 package com.acorn.chapspring.service;
 
+import com.acorn.chapspring.dto.StoreFilterDto;
 import com.acorn.chapspring.dto.StoresDto;
+import com.github.pagehelper.PageHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,16 +27,9 @@ class StoreServiceImpTest {
     }
 
     @Test
-    void getFilteredAndSortedStores() {
-    }
-
-    @Test
     void getStoreByStoreNum() {
         StoresDto stores=storeService.getStoreByStoreNum(1);
         System.out.println("stores = " + stores);
     }
 
-    @Test
-    void testGetFilteredAndSortedStores() {
-    }
 }

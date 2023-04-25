@@ -23,6 +23,11 @@
         <result column="toilet" property="toilet"/>
         <result column="smokingroom" property="smokingroom"/>
         <result column="babychair" property="babychair"/>
+        <!-- DB에는 없지만 쿼리를 위해 Dto에 추가한 부분 -->
+        <result column="category_num" property="categoryNum"/>
+        <result column="jjim_count" property="jjimCount"/>
+        <result column="review_count" property="reviewCount"/>
+        <result column="averageStar" property="averageStar"/>
         <association property="storeCall"
                     select="com.acorn.chapspring.mapper.StoreManageMapper.findStoreCall"
                     column="store_num"
@@ -54,11 +59,11 @@
         type_classes.category_num,
         (SELECT COUNT(*) FROM jjim_manages WHERE store_num = stores.store_num) AS jjim_count,
         (SELECT COUNT(*) FROM reviews WHERE store_num = stores.store_num) AS review_count,
-        (SELECT COUNT(*) FROM recommend_stores WHERE store_num = stores.store_num) AS recommend_count
+        (SELECT AVG(star) FROM reviews WHERE store_num = stores.store_num) AS averageStar
         FROM stores
-        INNER JOIN storetypes ON stores.store_num = storetypes.store_num
-        INNER JOIN type_classes ON storetypes.category_num = type_classes.category_num
-        INNER JOIN menu_manages ON stores.store_num = menu_manages.store_num
+        LEFT JOIN storetypes ON stores.store_num = storetypes.store_num
+        LEFT JOIN type_classes ON storetypes.category_num = type_classes.category_num
+        LEFT JOIN menu_manages ON stores.store_num = menu_manages.store_num
         <trim prefix="WHERE" prefixOverrides="AND |OR">
             <if test="menuType != null">
                 AND type_classes.category_num = #{menuType}
@@ -70,41 +75,28 @@
                 AND stores.parking = #{parking}
             </if>
             <if test="priceRange != null">
-                AND (SELECT AVG(price) FROM menu_manages WHERE store_num = stores.store_num) BETWEEN #{priceRange}.min AND #{priceRange}.max
+                AND (SELECT AVG(price) FROM menu_manages WHERE store_num = stores.store_num) BETWEEN
+                SUBSTRING_INDEX(#{priceRange}, '-', 1) AND SUBSTRING_INDEX(#{priceRange}, '-', -1)
             </if>
         </trim>
         GROUP BY stores.store_num, type_classes.category_num
-    </select>
-    <select id="sortFilteredStores" resultMap="StoresMap">
-        SELECT * FROM (
-        SELECT stores.store_num, stores.store_name, stores.main_img, stores.short_info, stores.parking,
-        type_classes.category_num,
-        (SELECT COUNT(*) FROM jjim_manages WHERE store_num = stores.store_num) AS jjim_count,
-        (SELECT COUNT(*) FROM reviews WHERE store_num = stores.store_num) AS review_count,
-        (SELECT COUNT(*) FROM recommend_stores WHERE store_num = stores.store_num) AS recommend_count
-        FROM stores
-        INNER JOIN storetypes ON stores.store_num = storetypes.store_num
-        INNER JOIN type_classes ON storetypes.category_num = type_classes.category_num
-        INNER JOIN menu_manages ON stores.store_num = menu_manages.store_num
-        WHERE stores.store_num IN
-        <foreach item="item" index="index" collection="storeNumList" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-        ) AS filtered_stores
-        <choose>
-            <when test="sortType == 'recent'">
-                ORDER BY store_num DESC
-            </when>
-            <when test="sortType == 'popular'">
-                ORDER BY jjim_count DESC, store_num DESC
-            </when>
-            <when test="sortType == 'recommended'">
-                ORDER BY recommend_count DESC, store_num DESC
-            </when>
-            <when test="sortType == 'review'">
-                ORDER BY review_count DESC, store_num DESC
-            </when>
-        </choose>
+<!--        <choose>-->
+<!--            <when test="sortBy == 'distance'">-->
+<!--                ORDER BY [거리 계산 로직, 예: (stores.latitude - #{userLatitude})^2 + (stores.longitude - #{userLongitude})^2] ASC-->
+<!--            </when>-->
+<!--            <when test="sortBy == 'recommended'">-->
+<!--                ORDER BY recommend_count DESC, store_num DESC-->
+<!--            </when>-->
+<!--            <when test="sortBy == 'review'">-->
+<!--                ORDER BY review_count DESC, store_num DESC-->
+<!--            </when>-->
+<!--            <when test="sortBy == 'jjim'">-->
+<!--                ORDER BY jjim_count DESC, store_num DESC-->
+<!--            </when>-->
+<!--            <otherwise>-->
+<!--                ORDER BY store_num DESC-->
+<!--            </otherwise>-->
+<!--        </choose>-->
     </select>
 
     <select id="findStoreByStoreNum" resultMap="StoresMap">
