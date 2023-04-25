@@ -51,8 +51,9 @@ public class ChapStoryServiceImp implements ChapStoryService{
     }
 
     @Override
-    public int remove() {
-        return 0;
+    public int remove(int chapNum) {
+        int remove=chapStoryMapper.deleteByChapsNum(chapNum);
+        return remove;
     }
 
 }

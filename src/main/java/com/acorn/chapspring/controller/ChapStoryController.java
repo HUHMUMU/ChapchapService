@@ -167,6 +167,29 @@ public class ChapStoryController {
         return redirectPath;
     }
 
+    @GetMapping("{chapNum}/remove.do")
+    public String removeAction(
+            @PathVariable int chapNum,
+            @SessionAttribute UserDto loginUser,
+            RedirectAttributes redirectAttributes){
+        String redirectPath="redirect:/chapstory/"+chapNum+"/modify.do";
+        String msg="삭제 실패";
+        ChapstorysDto chaps=null;
+        int remove = 0;
+        try{
+            chaps=chapStoryService.detail(chapNum);
+            remove=chapStoryService.remove(chapNum);
+        }catch (Exception e){
+            log.error(e);
+        }
+        if(remove>0){
+            msg="삭제 성공!";
+            redirectPath="redirect:/chapstory/list.do";
+        }
+        redirectAttributes.addFlashAttribute("msg",msg);
+        return redirectPath;
+    }
+
 
 
 }

@@ -46,6 +46,7 @@
                 <th:block th:if="${session.loginUser.userId==c.userId}">
                     <div class="d-flex justify-content-end">
                         <a th:href="@{'/chapstory/{chapNum}/modify.do'(chapNum=${c.chapNum})}" class="btn btn-primary">수정</a>
+                        <a th:href="@{'/chapstory/{chapNum}/remove.do'(chapNum=${c.chapNum})}" class="btn btn-danger">삭제 </a>
                         <button>삭제</button>
                     </div>
                 </th:block>
