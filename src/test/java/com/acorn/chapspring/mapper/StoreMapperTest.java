@@ -68,4 +68,9 @@ class StoreMapperTest {
             myRecommend++;
         }
     }
+
+    @Test
+    void findReviewsCountByStoreNum() {
+
+    }
 }

@@ -69,4 +69,8 @@
     <select id="findByStoreNum" resultType="com.acorn.chapspring.dto.StoresDto">
 
     </select>
+    <select id="findReviewsCountByStoreNum" resultType="com.acorn.chapspring.dto.ReviewsCountDto">
+
+    </select>
+
 </mapper>
