@@ -16,11 +16,33 @@ function setOrder(order) {
 
 function applySort() {
     if (selectedOrder) {
-    location.href = `?order=${selectedOrder}&direct=${selectedDirect}`;
+        let searchParams = new URLSearchParams(window.location.search);
+        searchParams.set('order', selectedOrder);
+        searchParams.set('direct', selectedDirect);
+        location.href = '?' + searchParams.toString();
     }
 }
 
 function setMenuType(menuType, menuTypeText) {
-    document.getElementById('menuType').innerText = '메뉴 종류: ' + menuTypeText;
-    location.href = `?menuType=${menuType}`;
+    document.getElementById('menuType').innerText = menuTypeText;
+    let searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('menuType', menuType);
+    searchParams.set('menuName', menuTypeText);
+    location.href = '?' + searchParams.toString();
+}
+
+function setPriceRange(priceRangeValue, priceRangeText) {
+    document.getElementById('menuType').innerText = priceRangeText;
+    let priceRangeFilter = priceRangeValue;
+    let searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('priceRange', priceRangeFilter);
+    location.href = '?' + searchParams.toString();
+}
+
+function setParking(parkingValue, parkingText){
+    document.getElementById('menuType').innerText = parkingText;
+    let parkingValueFilter = parkingValue;
+    let searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('parking', parkingValueFilter);
+    location.href = '?' + searchParams.toString();
 }

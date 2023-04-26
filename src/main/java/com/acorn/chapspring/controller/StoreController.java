@@ -35,7 +35,7 @@ public class StoreController {
 
         model.addAttribute("page", pageInfo);
         // 수업자료의 page에 해당
-        model.addAttribute("stores", storeFilterDto);
+        model.addAttribute("filter", storeFilterDto);
         // 수업자료의 boards에 해당
         return "store/list";
     }

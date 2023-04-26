@@ -30,7 +30,7 @@
                     <!-- 메뉴 종류 -->
                     <div class="mb-2 d-flex" style="width: 90%;">
                         <div class="dropdown" style="width: 100%;">
-                            <button class="btn btn-outline-secondary dropdown-toggle btn-sm" style="width: 100%; height:30px;" type="button" id="menuType" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-outline-secondary dropdown-toggle btn-sm" style="width: 100%; height:30px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 메뉴 종류
                             </button>
                             <!-- 디자인 수정 필요한 부분 -->
@@ -69,10 +69,10 @@
                     <!-- 가격대 -->
                     <div class="mb-2 d-flex justify-content-between align-items-center" style="width: 90%; height: 30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
                         <label class="form-label m-0" style="font-weight: 400; font-size: 0.875rem;">가격대</label>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-0">1만대</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-0">2만대</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-0">3만대</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-0 me-1">그이상</button>
+                        <a type="button" class="btn btn-outline-secondary btn-sm p-0 m-0" onclick="setPriceRange('0-19999', '1만대')">1만대</a>
+                        <a type="button" class="btn btn-outline-secondary btn-sm p-0 m-0" onclick="setPriceRange('20000-29999', '2만대')">2만대</a>
+                        <a type="button" class="btn btn-outline-secondary btn-sm p-0 m-0" onclick="setPriceRange('30000-39999', '3만대')">3만대</a>
+                        <a type="button" class="btn btn-outline-secondary btn-sm p-0 m-0 me-1" onclick="setPriceRange('40000-99999999', '그이상')">그이상</a>
                     </div>
                     <!-- 상세 지역 -->
                     <div class="mb-2 d-flex" style="width: 90%;">
@@ -90,12 +90,14 @@
                     </div>
                     <!-- 주차 가능 여부 -->
                     <div class="d-flex justify-content-center align-items-center" style="width:90%; height:30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
-                        <label class="form-label me-2 ms-1 mb-0" style="font-weight: 400; font-size: 0.875rem;">주차 가능</label>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" style="width:50px;">가능</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" style="width:50px;">불가능</button>
+                        <label class="form-label me-2 ms-1 mb-0" style="font-weight: 400; font-size: 0.875rem;">주차 여부</label>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" style="width:50px;" onclick="setParking('1', '가능')">가능</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" style="width:50px;" onclick="setParking('2', '불가능')">불가능</button>
                     </div>
-                    <!-- 필터 검색 버튼 -->
-                    <button class="btn btn-outline-secondary btn-sm mt-2" style="width:90%; height: 30px;">검색</button>
+                    <!-- 필터 적용된 사항 표시 -->
+                    <div class="d-flex justify-content-center align-items-center mt-2" id="menuType" style="width:90%; height:30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
+                        <span th:text="${param.menuName}" style="font-weight: 400; font-size: 0.875rem;"></span>
+                    </div>
                 </div>
                 <!-- 정렬 부분 -->
                 <div class="d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
@@ -105,7 +107,7 @@
                         <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="averageStar" onclick="setOrder('averageStar')" style="height: 30px;">별점순<i class="bi bi-arrow-down-up"></i></button>
                         <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 pe-1 ps-1" id="review_count" onclick="setOrder('review_count')" style="height: 30px;">리뷰개수순<i class="bi bi-arrow-down-up"></i></button>
                         <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="jjim_count" onclick="setOrder('jjim_count')" style="height: 30px;">찜순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mb-0" onclick="applySort()" style="height: 30px;">정렬<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mb-0" onclick="applySort()" style="height: 30px;">정렬하기</button>
                     </div>
                 </div>
             </div>
