@@ -5,8 +5,8 @@
       layout:decorate="~{layout}">
 <head>
     <title>로그인</title>
+    <script src="/public/js/naverLogin.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">-->
 </head>
 <div layout:fragment="content">
     <form class="mx-auto" action="/user/login.do" method="post" style="width: 450px;">
@@ -48,6 +48,10 @@
                 회원가입
             </a>
         </p>
+
+         <a type="button" class="kakaoBox" id="naverIdLogin">
+             <p class="bi bi-chat-fill kakaoText">&nbsp 네이버로 간편 로그인</p>
+         </a>
       </div>
     </form>
 
@@ -107,5 +111,21 @@
         width: 30rem;
         position: absolute;
         bottom: 65%;
+    }
+    .kakaoBox {
+        width: 28rem;
+        border: 1px none;
+        text-align: center;
+        position: fixed;
+        top: 82%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        background-color: #FFE15D;
+        color: black;
+        text-decoration: none;
+    }
+    .kakaoText{
+        margin-top: 3%;
     }
 </style>
