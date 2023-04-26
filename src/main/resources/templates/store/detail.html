@@ -45,12 +45,18 @@
   </div>
   <div class="store">
     <div class="storeDetail">
-      <p>패스트 푸드</p>
+      <span th:text="${s.storeType.typeByStore.mainCategory}"></span>
+      <span><i class="bi bi-dot m-0"></i></span>
+      <span th:text="${s.storeType.typeByStore.subCategory}"></span>
       <p th:text="${s.address}"></p>
       <details>
         <summary>영업시간</summary>
         <p th:text="'영업시간 : '+${s.opentime}"></p>
         <p>브레이크 타임</p>
+        <div th:each="bt:${s.breaktimes}" class="d-flex">
+          <i class="bi bi-dot m-0"></i>
+          <p th:text="${bt.restStartTime}+'~'+${bt.restStartTime}"></p>
+        </div>
         <p th:text="'주문 마감시간 : '+${s.lastorder}"></p>
         <p th:text="'웨이팅 마감시간 : '+${s.waitingClosetime}"></p>
       </details>
