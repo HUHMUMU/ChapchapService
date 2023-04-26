@@ -30,6 +30,7 @@ public class StoreController {
             Model model,
            @ModelAttribute StoreFilterDto storeFilterDto) {
 //        PageHelper.startPage(storeFilterDto.getPageNumber(), storeFilterDto.getPageSize(), storeFilterDto.getOrderBy());
+        // 위의 주석은 중복일거같아서 일단 주석처리하고 테스트
         PageInfo<StoresDto> pageInfo = storeService.getFilteredStores(storeFilterDto);
 
         model.addAttribute("page", pageInfo);

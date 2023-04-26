@@ -5,6 +5,7 @@
       layout:decorate="~{layout}">
 <head>
     <title>가게 리스트와 지도</title>
+    <script src="/public/js/StoreList.js" defer></script>
     <style>
         .storelist-main{
             margin: 0 !important;
@@ -34,34 +35,34 @@
                             </button>
                             <!-- 디자인 수정 필요한 부분 -->
                             <ul class="dropdown-menu" aria-labelledby="menuType">
-                                <li><a class="dropdown-item" href="#">혼밥</a></li>
-                                <li><a class="dropdown-item" href="#">족발</a></li>
-                                <li><a class="dropdown-item" href="#">보쌈</a></li>
-                                <li><a class="dropdown-item" href="#">치킨</a></li>
-                                <li><a class="dropdown-item" href="#">고기</a></li>
-                                <li><a class="dropdown-item" href="#">양식</a></li>
-                                <li><a class="dropdown-item" href="#">백반</a></li>
-                                <li><a class="dropdown-item" href="#">일식</a></li>
-                                <li><a class="dropdown-item" href="#">회</a></li>
-                                <li><a class="dropdown-item" href="#">중식</a></li>
-                                <li><a class="dropdown-item" href="#">아시안</a></li>
-                                <li><a class="dropdown-item" href="#">패스트푸드</a></li>
-                                <li><a class="dropdown-item" href="#">찜</a></li>
-                                <li><a class="dropdown-item" href="#">해물</a></li>
-                                <li><a class="dropdown-item" href="#">고기</a></li>
-                                <li><a class="dropdown-item" href="#">돈까스</a></li>
-                                <li><a class="dropdown-item" href="#">탕,찌개</a></li>
-                                <li><a class="dropdown-item" href="#">국수</a></li>
-                                <li><a class="dropdown-item" href="#">분식</a></li>
-                                <li><a class="dropdown-item" href="#">호프집</a></li>
-                                <li><a class="dropdown-item" href="#">바</a></li>
-                                <li><a class="dropdown-item" href="#">이자카야</a></li>
-                                <li><a class="dropdown-item" href="#">포차</a></li>
-                                <li><a class="dropdown-item" href="#">와인바</a></li>
-                                <li><a class="dropdown-item" href="#">커피전문점</a></li>
-                                <li><a class="dropdown-item" href="#">디저트카페</a></li>
-                                <li><a class="dropdown-item" href="#">차전문점</a></li>
-                                <li><a class="dropdown-item" href="#">베이커리카페</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('1', '혼밥')">혼밥</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('2', '족발')">족발</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('3', '보쌈')">보쌈</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('4', '치킨')">치킨</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('5', '고기')">고기</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('6', '양식')">양식</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('7', '백반')">백반</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('8', '일식')">일식</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('9', '회')">회</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('10', '중식')">중식</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('11', '아시안')">아시안</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('12', '패스트푸드')">패스트푸드</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('13', '찜')">찜</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('14', '해물')">해물</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('15', '고기')">고기</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('16', '돈까스')">돈까스</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('17', '탕,찌개')">탕,찌개</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('20', '국수')">국수</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('21', '분식')">분식</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('23', '호프집')">호프집</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('24', '바')">바</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('25', '이자카야')">이자카야</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('26', '포차')">포차</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('27', '와인바')">와인바</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('29', '커피전문점')">커피전문점</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('30', '디저트카페')">디저트카페</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('31', '차전문점')">차전문점</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setMenuType('32', '베이커리카페')">베이커리카페</a></li>
                             </ul>
                         </div>
                     </div>
@@ -100,60 +101,84 @@
                 <div class="d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
                     <h5>정렬</h5>
                     <div class="d-flex flex-column" name="order">
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mt-0" id="distance" style="height: 30px;">거리순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="rating" style="height: 30px;">별점순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 pe-1 ps-1" id="review" style="height: 30px;">리뷰개수순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="likes" style="height: 30px;">찜순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mb-0" id="" style="height: 30px;">정렬<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mt-0" id="distance" onclick="setOrder('distance')" style="height: 30px;">거리순<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="averageStar" onclick="setOrder('averageStar')" style="height: 30px;">별점순<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 pe-1 ps-1" id="review_count" onclick="setOrder('review_count')" style="height: 30px;">리뷰개수순<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="jjim_count" onclick="setOrder('jjim_count')" style="height: 30px;">찜순<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mb-0" onclick="applySort()" style="height: 30px;">정렬<i class="bi bi-arrow-down-up"></i></button>
                     </div>
                 </div>
             </div>
             <!-- 식당 리스트 -->
-            <div style="flex: 8; border:1px solid lightgray;">
-                <div class="d-flex justify-content-center align-items-center" style="border:1px solid gray; min-width: 342px; max-width: 432px;">
-                    <div class="col-4">
-                        <img src="#" alt="식당 대표 이미지" class="img-fluid rounded ps-1" style="min-width: 97px; max-width:127px; background-color: darkgray;"/>
-                    </div>
-                    <div class="col-5">
-                        <div class="mt-2 mb-2 d-inline">
-                            <h5 class="d-inline">구구당</h5>
-                            <i class="bi bi-hand-thumbs-up"></i>
-                            <span>256</span>
+            <section style="flex: 8; border:1px solid lightgray;">
+                <th:block>
+                    <div class="d-flex justify-content-center align-items-center" th:each="p:${page.list}" style="border:1px solid gray; min-width: 342px; max-width: 432px;">
+                        <div class="col-4">
+                            <img th:src="@{'{path}'(path=${p.mainImg})}" alt="식당 대표 이미지" class="img-fluid rounded ps-1" style="min-width: 97px; max-width:127px; background-color: darkgray;"/>
                         </div>
-                        <p class="m-0" style="font-size: 0.875rem;">홍콩 파스타와 멘보샤가 맛있는 퓨전 아시안 레스토랑</p>
-                        <p class="mt-2 mb-2">
-                            <i class="bi bi-chat-square-text"></i>
-                            <span>999+</span>
-                            <i class="bi bi-heart ms-3"></i>
-                            <span>778</span>
-                        </p>
+                        <div class="col-5">
+                            <div class="mt-2 mb-2 d-inline">
+                                <h5 class="d-inline" th:text="${p.storeName}"></h5>
+                                <i class="bi bi-star-fill"></i>
+                                <span th:text="${#numbers.formatDecimal(p.averageStar, 1, 2)}"></span>
+                            </div>
+                            <p class="m-0" th:text="${p.shortInfo}" style="font-size: 0.875rem;"></p>
+                            <p class="mt-2 mb-2">
+                                <i class="bi bi-chat-square-text"></i>
+                                <span th:text="${p.reviewCount}"></span>
+                                <i class="bi bi-heart ms-3"></i>
+                                <span th:text="${p.jjimCount}"></span>
+                            </p>
+                        </div>
+                        <div class="col-3 d-flex flex-column justify-content-center align-items-center">
+                            <p class="d-flex rounded border border-secondary justify-content-center p-1 m-0 mb-2" style="width: 80px;">
+                                <span style="font-size: 0.875rem;">Waiting</span>
+                                <span style="font-size: 0.875rem;">14</span>
+                            </p>
+                            <p class="d-flex rounded border border-secondary justify-content-center p-1 m-0" style="width: 80px;">
+                                <span th:if="${p.categoryNum == 1}" style="font-size: 0.875rem;">혼밥</span>
+                                <span th:if="${p.categoryNum == 2}" style="font-size: 0.875rem;">족발</span>
+                                <span th:if="${p.categoryNum == 3}" style="font-size: 0.875rem;">보쌈</span>
+                                <span th:if="${p.categoryNum == 4}" style="font-size: 0.875rem;">치킨</span>
+                                <span th:if="${p.categoryNum == 5}" style="font-size: 0.875rem;">고기</span>
+                                <span th:if="${p.categoryNum == 6}" style="font-size: 0.875rem;">양식</span>
+                                <span th:if="${p.categoryNum == 7}" style="font-size: 0.875rem;">백반</span>
+                                <span th:if="${p.categoryNum == 8}" style="font-size: 0.875rem;">일식</span>
+                                <span th:if="${p.categoryNum == 9}" style="font-size: 0.875rem;">회</span>
+                                <span th:if="${p.categoryNum == 10}" style="font-size: 0.875rem;">중식</span>
+                                <span th:if="${p.categoryNum == 11}" style="font-size: 0.875rem;">아시안</span>
+                                <span th:if="${p.categoryNum == 12}" style="font-size: 0.875rem;">패스트푸드</span>
+                                <span th:if="${p.categoryNum == 13}" style="font-size: 0.875rem;">찜</span>
+                                <span th:if="${p.categoryNum == 14}" style="font-size: 0.875rem;">해물</span>
+                                <span th:if="${p.categoryNum == 15}" style="font-size: 0.875rem;">고기</span>
+                                <span th:if="${p.categoryNum == 16}" style="font-size: 0.875rem;">돈까스</span>
+                                <span th:if="${p.categoryNum == 17}" style="font-size: 0.875rem;">탕,찌개</span>
+                                <span th:if="${p.categoryNum == 20}" style="font-size: 0.875rem;">국수</span>
+                                <span th:if="${p.categoryNum == 21}" style="font-size: 0.875rem;">분식</span>
+                                <span th:if="${p.categoryNum == 23}" style="font-size: 0.875rem;">호프집</span>
+                                <span th:if="${p.categoryNum == 24}" style="font-size: 0.875rem;">바</span>
+                                <span th:if="${p.categoryNum == 25}" style="font-size: 0.875rem;">이자카야</span>
+                                <span th:if="${p.categoryNum == 26}" style="font-size: 0.875rem;">포차</span>
+                                <span th:if="${p.categoryNum == 27}" style="font-size: 0.875rem;">와인바</span>
+                                <span th:if="${p.categoryNum == 29}" style="font-size: 0.875rem;">커피전문점</span>
+                                <span th:if="${p.categoryNum == 30}" style="font-size: 0.875rem;">디저트카페</span>
+                                <span th:if="${p.categoryNum == 31}" style="font-size: 0.875rem;">차전문점</span>
+                                <span th:if="${p.categoryNum == 32}" style="font-size: 0.875rem;">베이커리카페</span>
+                            </p>
+                            <p class="d-flex rounded border border-secondary justify-content-center p-1 m-0 mt-2" style="width: 80px;">
+                                <span th:if="${p.parking}" style="font-size: 0.875rem;">주차가능</span>
+                                <span th:unless="${p.parking}" style="font-size: 0.875rem;">주차불가</span>
+                            </p>
+                        </div>
                     </div>
-                    <div class="col-3 d-flex flex-column justify-content-center align-items-center">
-                        <p class="d-flex rounded border border-secondary justify-content-center p-1 m-0 mb-2" style="width: 80px;">
-                            <span style="font-size: 0.875rem;">Waiting</span>
-                            <span style="font-size: 0.875rem;">14</span>
-                        </p>
-                        <p class="d-flex rounded border border-secondary justify-content-center p-1 m-0" style="width: 80px;">
-                            <span style="font-size: 0.875rem;">아시안</span>
-                        </p>
-                        <p class="d-flex rounded border border-secondary justify-content-center p-1 m-0 mt-2" style="width: 80px;">
-                            <span style="font-size: 0.875rem;">주차 가능</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+                </th:block>
+            </section>
         </div>
         <!-- 지도 -->
         <div class="col-8"
              id="map"
-             style="height: calc(100vh - 91px);"></div>
-        <script>
-            var mapOptions = {
-                center: new naver.maps.LatLng(37.3595704, 127.105399),
-                zoom: 14
-            };
-            var map = new naver.maps.Map('map', mapOptions);
-        </script>
+             style="height: calc(100vh - 91px);">
+        </div>
     </div>
 </div>
 
