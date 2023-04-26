@@ -15,4 +15,7 @@
     <select id="findMenuByStore" resultMap="MenuManageMap">
         SELECT * FROM menu_manages WHERE store_num=#{storeNum}
     </select>
+    <select id="findMenuNameByNum" resultMap="MenuManageMap">
+        SELECT name FROM menu_manages WHERE menu_num=#{menuNum}
+    </select>
 </mapper>

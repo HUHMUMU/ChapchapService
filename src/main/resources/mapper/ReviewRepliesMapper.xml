@@ -7,6 +7,13 @@
         <result column="post_date" property="postDate"/>
         <result column="content" property="content"/>
     </resultMap>
+    <insert id="insertReply">
+        INSERT INTO review_replies (review_num,post_date,content)
+        VALUE (#{reviewNum},#{postDate},#{content})
+    </insert>
+    <delete id="deleteReply">
+        DELETE FROM review_replies WHERE rr_num=#{rrNum};
+    </delete>
     <select id="findByReview" resultMap="ReviewRepliesMap">
         SELECT * FROM review_replies WHERE review_num=#{reviewNum};
     </select>
