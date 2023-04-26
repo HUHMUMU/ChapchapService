@@ -1,9 +1,11 @@
 package com.acorn.chapspring.service;
 
+import com.acorn.chapspring.dto.ChapstoryPageDto;
 import com.acorn.chapspring.dto.ChapstorysDto;
 import com.acorn.chapspring.dto.UserDto;
 import com.acorn.chapspring.mapper.ChapStoryMapper;
 import com.acorn.chapspring.mapper.UserMapper;
+import com.github.pagehelper.PageHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,8 @@ public class ChapStoryServiceImp implements ChapStoryService{
 //    public ChapStoryServiceImp(ChapStoryMapper chapStoryMapper){this.chapStoryMapper=chapStoryMapper;}
 
     @Override
-    public List<ChapstorysDto> list() {
+    public List<ChapstorysDto> list(ChapstoryPageDto pageDto) {
+        PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrderBy());
         List<ChapstorysDto> list=chapStoryMapper.findAll();
         return list;
     }
