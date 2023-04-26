@@ -5,7 +5,7 @@
       layout:decorate="~{layout}">
 <head>
     <title>가게 리스트와 지도</title>
-    <script src="/public/js/StoreList.js" defer></script>
+    <script src="/public/js/StoreList.js" defer th:inline="javascript"></script>
     <style>
         .storelist-main{
             margin: 0 !important;
@@ -92,22 +92,23 @@
                     <div class="d-flex justify-content-center align-items-center" style="width:90%; height:30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
                         <label class="form-label me-2 ms-1 mb-0" style="font-weight: 400; font-size: 0.875rem;">주차 여부</label>
                         <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" style="width:50px;" onclick="setParking('1', '가능')">가능</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" style="width:50px;" onclick="setParking('2', '불가능')">불가능</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" style="width:50px;" onclick="setParking('0', '불가능')">불가능</button>
                     </div>
                     <!-- 필터 적용된 사항 표시 -->
-                    <div class="d-flex justify-content-center align-items-center mt-2" id="menuType" style="width:90%; height:30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
-                        <span th:text="${param.menuName}" style="font-weight: 400; font-size: 0.875rem;"></span>
+                    <div class="d-flex justify-content-center align-items-center mt-2" style="width:90%; height:30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
+                        <button th:if="${param.menuName}" th:text="${param.menuName}" type="button" class="btn btn-secondary btn-sm p-0 me-1 ms-1" style="width:50px;"></button>
+                        <button th:if="${param.priceType}" th:text="${param.priceType}" type="button" class="btn btn-secondary btn-sm p-0 me-1 ms-1" style="width:50px;"></button>
+                        <button th:if="${param.parkingType}" th:text="${param.parkingType}" type="button" class="btn btn-secondary btn-sm p-0 me-1 ms-1" style="width:50px;"></button>
                     </div>
                 </div>
                 <!-- 정렬 부분 -->
                 <div class="d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
                     <h5>정렬</h5>
                     <div class="d-flex flex-column" name="order">
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mt-0" id="distance" onclick="setOrder('distance')" style="height: 30px;">거리순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="averageStar" onclick="setOrder('averageStar')" style="height: 30px;">별점순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 pe-1 ps-1" id="review_count" onclick="setOrder('review_count')" style="height: 30px;">리뷰개수순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="jjim_count" onclick="setOrder('jjim_count')" style="height: 30px;">찜순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mb-0" onclick="applySort()" style="height: 30px;">정렬하기</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mt-0" id="distance" th:onclick="setOrder('distance', [[${param.direct!=null?param.direct[0]:''}]] )" style="height: 30px;">거리순<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="averageStar" th:onclick="setOrder('averageStar', [[${param.direct!=null?param.direct[0]:''}]] )" style="height: 30px;">별점순<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 pe-1 ps-1" id="review_count" th:onclick="setOrder('review_count', [[${param.direct!=null?param.direct[0]:''}]] )" style="height: 30px;">리뷰개수순<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="jjim_count" th:onclick="setOrder('jjim_count', [[${param.direct!=null?param.direct[0]:''}]] )" style="height: 30px;">찜순<i class="bi bi-arrow-down-up"></i></button>
                     </div>
                 </div>
             </div>

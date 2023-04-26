@@ -7,14 +7,19 @@ var mapOptions = {
 var map = new naver.maps.Map('map', mapOptions);
 
 let selectedOrder = "";
-let selectedDirect = "ASC";
+function setOrder(order, selectedDirect="ASC") {
+    if(!selectedDirect)selectedDirect="ASC";
+    if (selectedDirect === "ASC"){
+        selectedDirect = "DESC";
 
-function setOrder(order) {
-    selectedOrder = order;
-    selectedDirect = (selectedDirect === "ASC") ? "DESC" : "ASC";
-}
+    }else if(selectedDirect === "DESC"){
+        selectedDirect = "ASC";
+    }
+    if (selectedOrder === order) {
+    } else {
+        selectedOrder = order;
+    }
 
-function applySort() {
     if (selectedOrder) {
         let searchParams = new URLSearchParams(window.location.search);
         searchParams.set('order', selectedOrder);
@@ -24,7 +29,6 @@ function applySort() {
 }
 
 function setMenuType(menuType, menuTypeText) {
-    document.getElementById('menuType').innerText = menuTypeText;
     let searchParams = new URLSearchParams(window.location.search);
     searchParams.set('menuType', menuType);
     searchParams.set('menuName', menuTypeText);
@@ -32,17 +36,17 @@ function setMenuType(menuType, menuTypeText) {
 }
 
 function setPriceRange(priceRangeValue, priceRangeText) {
-    document.getElementById('menuType').innerText = priceRangeText;
     let priceRangeFilter = priceRangeValue;
     let searchParams = new URLSearchParams(window.location.search);
     searchParams.set('priceRange', priceRangeFilter);
+    searchParams.set('priceType', priceRangeText);
     location.href = '?' + searchParams.toString();
 }
 
 function setParking(parkingValue, parkingText){
-    document.getElementById('menuType').innerText = parkingText;
     let parkingValueFilter = parkingValue;
     let searchParams = new URLSearchParams(window.location.search);
     searchParams.set('parking', parkingValueFilter);
+    searchParams.set('parkingType', parkingText);
     location.href = '?' + searchParams.toString();
 }
