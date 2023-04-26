@@ -18,4 +18,6 @@ public interface ChapStoryMapper {
     int updateOne(ChapstorysDto chpas);
     int deleteByChapsNum(int chapNum);
 
+    int updateIncrementViewCountChapNum(int ChapNum);
+//    int updateIncrementLikeChapNum(int ChapNum);
 }

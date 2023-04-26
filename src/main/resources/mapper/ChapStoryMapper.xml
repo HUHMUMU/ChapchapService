@@ -7,7 +7,6 @@
         <result column="content" property="content"/>
         <result column="viewcount" property="viewcount"/>
         <result column="post_time" property="postTime"/>
-        <result column="likes" property="likes"/>
         <result column="profile" property="profile"/>
         <result column="main_img" property="mainImg"/>
         <result column="update_time" property="updateTime"/>
@@ -24,6 +23,12 @@
     <update id="updateOne" parameterType="chapstorysDto">
         UPDATE chapstorys SET title=#{title}, content=#{content}, main_img=#{mainImg} WHERE chap_num=#{chapNum}
     </update>
+    <update id="updateIncrementViewCountChapNum">
+        UPDATE chapstorys SET viewcount=(viewcount+1) WHERE chap_num=#{chapNum}
+    </update>
+<!--    <update id="updateIncrementLikeChapNum">-->
+<!--        UPDATE chapstorys SET likes=(likes+1) WHERE chap_num=#{chapNum}-->
+<!--    </update>-->
     <delete id="deleteByChapsNum">
         DELETE FROM chapstorys WHERE chap_num=#{chapNum}
     </delete>
