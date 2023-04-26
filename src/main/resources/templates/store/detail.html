@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <title>가게 상세 페이지</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+
 </head>
 <div layout:fragment="content" th:each="s:${stores}">
   <div class="image-container">
@@ -19,7 +20,7 @@
   </div>
   <div class="store">
     <p class="storeName d-flex justify-content-center mt-4" th:text="${s.storeName}"></p>
-    <a class="btn btn-secondary btn-sm mt-3">추천</a>
+    <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="toggleRecommend([[${s.storeNum}]],this)">추천</button>
   </div>
   <div class="store">
 <!--    <span class="starPoint">★4.45/</span>-->
