@@ -20,7 +20,7 @@ public class StoreFilterDto {
         DESC,ASC
     }
     enum StoresListType {
-        recommend_count,review_count,jjim_count,distance
+        averageStar,review_count,jjim_count,distance
     }
     private StoresListType order= StoresListType.review_count;
     private DirectType direct=DirectType.DESC;

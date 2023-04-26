@@ -26,13 +26,16 @@ public class StoreController {
     }
 
     @GetMapping("/list.do")
-    public String list(Model model,
-                       @ModelAttribute StoreFilterDto storeFilterDto) {
-        PageHelper.startPage(storeFilterDto.getPageNumber(), storeFilterDto.getPageSize(), storeFilterDto.getOrderBy());
+    public String list(
+            Model model,
+           @ModelAttribute StoreFilterDto storeFilterDto) {
+//        PageHelper.startPage(storeFilterDto.getPageNumber(), storeFilterDto.getPageSize(), storeFilterDto.getOrderBy());
         PageInfo<StoresDto> pageInfo = storeService.getFilteredStores(storeFilterDto);
 
-        model.addAttribute("pageInfo", pageInfo);
-        model.addAttribute("storeFilter", storeFilterDto);
+        model.addAttribute("page", pageInfo);
+        // 수업자료의 page에 해당
+        model.addAttribute("stores", storeFilterDto);
+        // 수업자료의 boards에 해당
         return "store/list";
     }
 }
