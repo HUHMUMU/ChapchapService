@@ -56,6 +56,10 @@
                      select="com.acorn.chapspring.mapper.StoretypeMapper.findByStoreType"
                      column="store_num"
                      fetchType="eager"/>
+        <collection property="holiday"
+                    select="com.acorn.chapspring.mapper.HolidayMapper.findHoliByStore"
+                    column="store_num"
+                    fetchType="eager"/>
     </resultMap>
     <resultMap id="TypeClassesMap" type="TypeClassesDto">
         <id column="category_num" property="categoryNum"/>

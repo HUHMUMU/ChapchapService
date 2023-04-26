@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.HolidayMapper">
+    <resultMap id="HolidayMap" type="com.acorn.chapspring.dto.HolidaysDto">
+        <id column="holi_num" property="holiNum"/>
+        <result column="store_num" property="storeNum"/>
+        <result column="week" property="week"/>
+        <result column="date" property="date"/>
+        <result column="regular" property="regular"/>
+    </resultMap>
+    <select id="findHoliByStore" resultMap="HolidayMap">
+        SELECT * FROM holidays WHERE store_num=#{storeNum};
+    </select>
+</mapper>
