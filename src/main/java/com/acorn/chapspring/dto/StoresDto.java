@@ -31,7 +31,10 @@ public class StoresDto {
     private List<MenuManagesDto> menuList; //메뉴들 가져오기
     private List<ChapDealDto> chapDealList; //챱딜 이벤트 가져오기
     private List<ReviewsDto> reviewList; //리뷰들 가져오기
+    private List<BreaktimesDto> breaktimes; //브레이크타임 가져오기
     private StoreManagesDto storeCall; //가게 전화번호 가져오기
+    private StoretypesDto storeType; //가게 업종 가져오기
+    private List<HolidaysDto> holiday; //휴무일 가져오기
 
     private int categoryNum; // 카테고리 번호
     private int jjimCount; // 찜 갯수

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.BreaktimeMapper">
+    <resultMap id="BreaktimesMap" type="com.acorn.chapspring.dto.BreaktimesDto">
+        <id column="rest_num" property="restNum"/>
+        <result column="rest_start_time" property="restStartTime"/>
+        <result column="rest_end_time" property="restEndTime"/>
+        <result column="store_num" property="storeNum"/>
+    </resultMap>
+    <select id="findByStore" resultMap="BreaktimesMap">
+        SELECT * FROM breaktimes WHERE store_num=#{storeNum};
+    </select>
+</mapper>

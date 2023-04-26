@@ -24,5 +24,4 @@ public class ChapDealController {
         // list.do에 대한 로직 구현
         return "chapdeal/list"; // 해당 경로에 대한 뷰 이름 반환
     }
-
 }

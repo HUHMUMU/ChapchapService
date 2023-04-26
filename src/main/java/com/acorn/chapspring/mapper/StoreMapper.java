@@ -2,7 +2,6 @@ package com.acorn.chapspring.mapper;
 
 import com.acorn.chapspring.dto.*;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public interface StoreMapper {
     List<TypeClassesDto> findAllType();
 
     // 주어진 식당 번호에 해당하는 가게의 브레이크 타임 가져오기
-    List<BreaktimesDto> findBreaktimesByStoreNum(int storeNum);
+    List<BreaktimeMapper> findBreaktimesByStoreNum(int storeNum);
 
     // 주어진 식당 번호에 해당하는 가게의 메뉴 가져오기
     List<MenuManagesDto> findMenusByStoreNum(int storeNum);

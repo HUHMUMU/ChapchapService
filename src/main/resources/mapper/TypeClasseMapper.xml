@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.TypeClasseMapper">
+    <resultMap id="TypeClasseMap" type="com.acorn.chapspring.dto.TypeClassesDto">
+        <id column="category_num" property="categoryNum"/>
+        <result column="main_category" property="mainCategory"/>
+        <result column="sub_category" property="subCategory"/>
+    </resultMap>
+    <select id="findByStoreType" resultMap="TypeClasseMap">
+        SELECT * FROM type_classes WHERE category_num=#{categoryNum};
+    </select>
+</mapper>

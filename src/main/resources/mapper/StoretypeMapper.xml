@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.StoretypeMapper">
+    <resultMap id="StoretypeMap" type="com.acorn.chapspring.dto.StoretypesDto">
+        <id column="storetype_id" property="storetypeId"/>
+        <result column="store_num" property="storeNum"/>
+        <result column="category_num" property="categoryNum"/>
+        <association property="typeByStore"
+                     select="com.acorn.chapspring.mapper.TypeClasseMapper.findByStoreType"
+                     column="store_num"
+                     fetchType="eager"/>
+    </resultMap>
+    <select id="findByStoreType" resultMap="StoretypeMap">
+        SELECT * FROM storetypes WHERE store_num=#{storeNum};
+    </select>
+</mapper>
