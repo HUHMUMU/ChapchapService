@@ -1,10 +1,8 @@
 package com.acorn.chapspring.controller;
 
-import com.acorn.chapspring.dto.ChapDealDto;
-import com.acorn.chapspring.dto.ChapstoryimgsDto;
-import com.acorn.chapspring.dto.ChapstorysDto;
-import com.acorn.chapspring.dto.UserDto;
+import com.acorn.chapspring.dto.*;
 import com.acorn.chapspring.service.ChapStoryService;
+import com.github.pagehelper.PageInfo;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -44,9 +42,12 @@ public class ChapStoryController {
 
     @GetMapping("/list.do")
     public String chapList(
-            Model model){
+            Model model,
+            @ModelAttribute ChapstoryPageDto pageDto){
         List<ChapstorysDto> chaps;
-        chaps= chapStoryService.list();
+        chaps= chapStoryService.list(pageDto);
+        PageInfo<ChapstorysDto> pageBoards=new PageInfo<>(chaps);
+        model.addAttribute("page",pageBoards);
         model.addAttribute("chapstorys",chaps);
         return "chapstory/list";
     }
