@@ -20,7 +20,7 @@
   </div>
   <div class="store">
     <p class="storeName d-flex justify-content-center mt-4" th:text="${s.storeName}"></p>
-    <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="toggleRecommend([[${s.storeNum}]],this)">추천</button>
+    <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="addRecommend([[${session.loginUser.userId}]])">추천</button>
   </div>
   <div class="store">
 <!--    <span class="starPoint">★4.45/</span>-->

@@ -4,6 +4,7 @@ import com.acorn.chapspring.dto.ReviewsDto;
 import com.acorn.chapspring.dto.StoreFilterDto;
 import com.acorn.chapspring.dto.StoresDto;
 import com.acorn.chapspring.service.ReviewService;
+import com.acorn.chapspring.dto.UserDto;
 import com.acorn.chapspring.service.StoreService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -22,6 +23,7 @@ public class StoreController {
     private ReviewService reviewService;
     @GetMapping("/{storeNum}/detail.do")
     public String detail(Model model,
+                        @SessionAttribute UserDto loginUser,
                         @PathVariable int storeNum) {
         StoresDto stores=storeService.getStoreByStoreNum(storeNum);
         model.addAttribute("stores",stores);
