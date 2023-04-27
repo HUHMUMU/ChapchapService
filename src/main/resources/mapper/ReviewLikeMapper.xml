@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.ReviewLikeMapper">
+    <resultMap id="ReviewLikeMap" type="com.acorn.chapspring.dto.ReviewLikesDto">
+        <id column="rl_id" property="rlId"/>
+        <result column="rl_status" property="rlStatus"/>
+        <result column="user_id" property="userId"/>
+        <result column="review_num" property="reviewNum"/>
+    </resultMap>
+    <select id="countLikeByReview" resultMap="ReviewLikeMap">
+        SELECT
+            COUNT(CASE WHEN rl_status='LIKE' THEN 1 END ) 'like',
+            COUNT(CASE WHEN rl_status='BAD' THEN 1 END ) 'bad'
+        FROM reviewlikes WHERE review_num=#{reviewNum};
+    </select>
+</mapper>

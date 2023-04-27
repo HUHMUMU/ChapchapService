@@ -1,5 +1,6 @@
 package com.acorn.chapspring.service;
 
+import com.acorn.chapspring.dto.ReviewsDto;
 import com.acorn.chapspring.dto.StoreFilterDto;
 import com.acorn.chapspring.dto.StoresDto;
 import com.acorn.chapspring.dto.TypeClassesDto;
