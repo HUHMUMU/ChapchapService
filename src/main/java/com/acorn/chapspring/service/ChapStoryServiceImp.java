@@ -22,7 +22,7 @@ public class ChapStoryServiceImp implements ChapStoryService{
     @Override
     public List<ChapstorysDto> list(ChapstoryPageDto pageDto) {
         PageHelper.startPage(pageDto.getPageNum(),pageDto.getPageSize(),pageDto.getOrderBy());
-        List<ChapstorysDto> list=chapStoryMapper.findAll();
+        List<ChapstorysDto> list=chapStoryMapper.findAll(pageDto);
         return list;
     }
 

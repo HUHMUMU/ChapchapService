@@ -21,6 +21,10 @@
                     select="com.acorn.chapspring.mapper.UserMapper.findByUserId"
                     column="user_id"
                     fetchType="lazy"/>
+        <association property="user"
+                     select="com.acorn.chapspring.mapper.UserMapper.findByUserNickname"
+                     column="nickname"
+                     fetchType="lazy"/>
     </resultMap>
     <insert useGeneratedKeys="true" keyProperty="chapNum" id="insertOne" parameterType="ChapstorysDto">
         INSERT INTO chapstorys (user_id, title, content, main_img) VALUE (#{userId}, #{title}, #{content}, #{mainImg})
@@ -43,7 +47,13 @@
     <select id="findByUserId" resultMap="ChapstoryMap">
         SELECT * FROM chapstorys WHERE user_id=#{userId}
     </select>
-    <select id="findAll" resultMap="ChapstoryMap">
-        SELECT *,(SELECT COUNT(*) FROM chapstorylikes WHERE chap_num=chapstorys.chap_num) FROM chapstorys
+    <select id="findAll" resultMap="ChapstoryMap" parameterType="ChapStoryPageDto">
+        SELECT *,
+               (SELECT COUNT(*) FROM chapstorylikes WHERE chap_num=chapstorys.chap_num),
+               (SELECT nickname FROM users WHERE chapstorys.user_id=users.user_id)
+        FROM chapstorys
+        <if test="searchField!=null">
+            WHERE ${searchField}=#{searchValue}
+        </if>
     </select>
 </mapper>

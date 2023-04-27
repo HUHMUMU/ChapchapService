@@ -16,7 +16,9 @@
     <delete id="deleteByLikeno">
         DELETE FROM chapstorylikes WHERE user_id=#{userId} AND chap_num=#{chapNum};
     </delete>
-    <select id="findByCNumAndUId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
+    <select id="findByCNumAndUId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto">
+        SELECT * FROM chapstorylikes  WHERE user_id=#{uId} AND chap_num=#{cNum};
+    </select>
     <select id="findByCNumAndUIdIsLoginUserId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
     <select id="countLikeByCNum" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
     <select id="countByCnum" resultType="int" parameterType="int">

@@ -10,7 +10,7 @@ public interface ChapstorylikeMapper {
     // 게시글에 좋아요 수 반환
     // 게시글에서
 
-    ChapstorylikesDto findByCNumAndUId(@Param("CNum")int CNum, @Param("UId")String UId);
+    ChapstorylikesDto findByCNumAndUId(@Param("cNum")int CNum, @Param("uId")String UId);
     ChapstorylikesDto findByCNumAndUIdIsLoginUserId(@Param("CNum")int CNum);
     int countByCnum(int Cnum);
     int insertOne(ChapstorylikesDto chapLike);
