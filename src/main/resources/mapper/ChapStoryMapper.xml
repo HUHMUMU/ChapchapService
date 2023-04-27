@@ -12,6 +12,11 @@
         <result column="update_time" property="updateTime"/>
         <result column="user_id" property="userId"/>
         <result column="chs_rstatus" property="chsRstatus"/>
+        <association
+                property="likeCnt"
+                select="com.acorn.chapspring.mapper.ChapstorylikeMapper.countByCnum"
+                column="chap_num"
+                fetchType="eager"/>
         <association property="user"
                     select="com.acorn.chapspring.mapper.UserMapper.findByUserId"
                     column="user_id"

@@ -46,6 +46,10 @@
 <!--                    <i class="bi bi-hand-thumbs-up"></i>-->
 <!--                    <span th:text="${c.likes}"></span>-->
 <!--                </a>-->
+                <div class="likeCont" th:id="'likeCont'+${c.chapNum}">
+                    <th:block th:if="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/loginLikes"></th:block>
+                    <th:block th:unless="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/likes"></th:block>
+                </div>
                 <button>공유</button>
                 <button>신고</button>
 <!--                <th:block th:if="${session.loginUser.userId==c.userId}">-->

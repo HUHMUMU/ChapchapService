@@ -26,6 +26,7 @@ class ChapStoryMapperTest {
 
     @Test
     void findByChapNum() {
+        chapStoryMapper.findByChapNum(1);
     }
 
     @Test
