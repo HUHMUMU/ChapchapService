@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acorn.chapspring.mapper.UserMapper">
     <!--Users 테이블맵-->
-    <resultMap id="UserMap" type="UserDto">
+    <resultMap id="UserMap" type="com.acorn.chapspring.dto.UserDto">
         <id column="user_id" property="userId"/>
         <result column="nickname" property="nickname"/>
         <result column="pw" property="pw"/>
@@ -23,12 +23,12 @@
     </resultMap>
 
     <!--유저서비스 구문-->
-    <insert id="insertOne" parameterType="UserDto">
+    <insert id="insertOne" parameterType="com.acorn.chapspring.dto.UserDto">
         insert into users (user_id, nickname, pw, name, birth, gender, address,postnumber, detail_address, email,u_rstatus,email_check_code)
             VALUE (#{userId}, #{nickname}, #{pw}, #{name}, #{birth}, #{gender}, #{address},#{postnumber}, #{detailAddress}, #{email},#{urStatus}, #{emailCheckCode})
     </insert>
 
-    <update id="updateOne" parameterType="UserDto">
+    <update id="updateOne" parameterType="com.acorn.chapspring.dto.UserDto">
         update users set
                          nickname=#{nickname},
                          pw=#{pw},
@@ -54,7 +54,7 @@
     <update id="updateStatusByUidAndEmailCheckCode">
         UPDATE users SET u_rstatus=#{urStatus} WHERE user_id=#{userId} AND email_check_code=#{emailCheckCode}
     </update>
-    <delete id="deleteByUserIdAndPw" parameterType="UserDto">
+    <delete id="deleteByUserIdAndPw" parameterType="com.acorn.chapspring.dto.UserDto">
         delete from users where user_id=#{userId} and pw=#{pw}
     </delete>
     <select id="findByUserId" resultMap="UserMap">
@@ -70,7 +70,7 @@
         SELECT COUNT(*) FROM users WHERE user_id=#{userId}
     </select>
     <select id="findAllUsers" resultMap="UserMap">
-        select * from users;
+        select * from users
     </select>
 
     <!--닉네임 중복 검사-->
@@ -93,5 +93,8 @@
     <!-- 유저별 리뷰수 -->
     <select id="countReviewByUser" resultType="int">
         SELECT COUNT(*) FROM reviews WHERE user_id=#{userId};
+    </select>
+    <select id="findByUserNickname" resultType="com.acorn.chapspring.dto.UserDto">
+        select * from users where nickname=#{nickname}
     </select>
 </mapper>

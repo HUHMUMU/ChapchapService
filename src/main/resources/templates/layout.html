@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
     <script src="/webjars/bootstrap/5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/public/js/Recommend.js"></script>
+    <script th:src="@{/public/js/Recommend.js}"></script>
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=4ikx943fco&submodules=geocoder"></script>
 </head>
 <!-- storelist-main 스타일은 store/list.html에서 사용중이니 지우지말것 -->
 <body class="storelist-main" style="background: #FFFAED;">
-    <header th:replace="/headerNav"></header>
+    <header th:replace="~{headerNav}"></header>
     <main class="container storelist-main">
         <th:block layout:fragment="content"></th:block>
     </main>

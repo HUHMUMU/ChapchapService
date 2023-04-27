@@ -3,7 +3,7 @@ spring:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:log4jdbc:mysql://localhost:3306/chapchap
     username: root
-    password: ${db.password}
+    password: mysql123
 
     #driver-class-name: com.mysql.cj.jdbc.Driver
   devtools:
@@ -21,7 +21,7 @@ spring:
     port: 587
     username: fhrzl55040@gmail.com
     #password : gmail 아이디 비밀번호가 아니라 2차 인증 어플리케이션 인증 받은 번호를 넣어야 한다.
-    password: ${email.password}
+    password: fbonqozuwpllzqcu
     properties:
       mail:
         smtp:

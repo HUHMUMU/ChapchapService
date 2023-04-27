@@ -100,7 +100,6 @@ CREATE TABLE chapstorys
     content     VARCHAR(255)                   NOT NULL COMMENT '내용',
     viewcount   INT  UNSIGNED                  NULL DEFAULT 0 COMMENT '조회수',
     post_time   TIMESTAMP                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성날짜',
-    likes       INT                            NULL DEFAULT 0 COMMENT '좋아요',
     profile     VARCHAR(255)                   NULL COMMENT '프로필',
     main_img    VARCHAR(255)                   NULL COMMENT '대표사진',
     update_time TIMESTAMP                      NULL     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜',
@@ -108,6 +107,15 @@ CREATE TABLE chapstorys
     chs_rstatus ENUM ('공개', '심사', '비공개')   NOT NULL DEFAULT '공개' COMMENT '신고상태',
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+CREATE TABLE chapstoryLikes
+(
+    likeno   INT auto_increment NOT NULL PRIMARY KEY COMMENT '좋아요고유번호',
+    chap_num INT                NOT NULL COMMENT '챱스토리번호',
+    user_id  VARCHAR(255)       NOT NULL COMMENT '유저아이디',
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (chap_num) REFERENCES chapstorys (chap_num)
+);
+
 
 CREATE TABLE grades
 (
@@ -358,25 +366,25 @@ INSERT INTO users (user_id, nickname, pw, name, birth, gender, address, detail_a
    ('user19', '진수', 'password123', '박진수', '1993-07-01', 'MALE', '서울특별시 동작구', '오피스텔 201호', 'jinsu@example.com', NULL, 'https://www.facebook.com/jinsu', NULL, NULL, '안녕하세요, 박진수입니다.', '공개'),
    ('user20', '은지', 'password123', '김은지', '1995-11-20', 'FEMALE', '인천광역시 서구', '아파트 601호', 'eunji_kim@example.com', NULL, NULL, 'https://www.youtube.com/eunji_kim', NULL, '안녕하세요, 김은지입니다.', '심사');
 
-INSERT INTO chapstorys (title, content, viewcount, post_time, likes, profile, main_img, update_time, user_id, chs_rstatus)
-VALUES ('The best sushi in town', 'I have tried sushi in many places, but this restaurant truly stands out. The quality of the fish is amazing.', 170, '2023-04-11', 32, 'profile11.jpg', 'main_img11.jpg', '2023-04-11 13:00:00', 'user01', '공개'),
-       ('A wonderful bakery', 'This bakery offers a wide variety of breads and pastries, all of them fresh and delicious.', 160, '2023-04-12', 31, 'profile12.jpg', 'main_img12.jpg', '2023-04-12 14:00:00', 'user02', '공개'),
-       ('A delightful tea house', 'I visited this tea house with my friends and we had a great time trying out different teas and snacks.', 140, '2023-04-13', 29, 'profile13.jpg', 'main_img13.jpg', '2023-04-13 15:00:00', 'user03', '공개'),
-       ('A vegan paradise', 'I am a vegan and this restaurant offers a fantastic selection of plant-based dishes. I will definitely be coming back!', 190, '2023-04-14', 36, 'profile14.jpg', 'main_img14.jpg', '2023-04-14 16:00:00', 'user04', '공개'),
-       ('A fantastic burger joint', 'This place serves some of the juiciest and most flavorful burgers I have ever had. Don\'t miss out!', 210, '2023-04-15', 42, 'profile15.jpg', 'main_img15.jpg', '2023-04-15 17:00:00', 'user05', '공개'),
-       ('An authentic Italian experience', 'This restaurant transports you straight to Italy with its amazing pasta dishes and warm atmosphere.', 220, '2023-04-16', 45, 'profile16.jpg', 'main_img16.jpg', '2023-04-16 18:00:00', 'user06', '공개'),
-       ('A great place for desserts', 'If you have a sweet tooth, this place is a must-visit. The selection of desserts is amazing.', 240, '2023-04-17', 48, 'profile17.jpg', 'main_img17.jpg', '2023-04-17 19:00:00', 'user07', '공개'),
-       ('A cozy and friendly pub', 'This pub has a great selection of beers and a warm atmosphere. I always have a great time here.', 230, '2023-04-18', 46, 'profile18.jpg', 'main_img18.jpg', '2023-04-18 20:00:00', 'user08', '공개'),
-       ('A fantastic seafood restaurant', 'The seafood at this restaurant is incredibly fresh and the dishes are expertly prepared.', 250, '2023-04-19', 50, 'profile19.jpg', 'main_img19.jpg', '2023-04-19 21:00:00', 'user09', '공개'),
-       ('A wonderful dining experience', 'I had an amazing time at this restaurant. The food was fantastic and the atmosphere was perfect.', 100, '2023-04-01', 25, 'profile1.jpg', 'main_img1.jpg', '2023-04-01 12:00:00', 'user01', '공개'),
-       ('A cozy little cafe', 'I found this hidden gem of a cafe in my neighborhood. Great coffee and delicious pastries!', 80, '2023-04-02', 15, 'profile2.jpg', 'main_img2.jpg', '2023-04-02 14:00:00', 'user02', '공개'),
-       ('Amazing cocktails', 'This bar serves the best cocktails in town. The bartenders are very skilled and friendly.', 120, '2023-04-03', 20, 'profile3.jpg', 'main_img3.jpg', '2023-04-03 18:00:00', 'user03', '공개'),
-       ('A disappointing experience', 'I had high expectations for this restaurant, but the food was bland and the service was slow.', 60, '2023-04-04', 5, 'profile4.jpg', 'main_img4.jpg', '2023-04-04 19:00:00', 'user04', '공개'),
-       ('A great spot for brunch', 'I love coming to this place for brunch with my friends. The food is delicious and the atmosphere is relaxed.', 150, '2023-04-05', 30, 'profile5.jpg', 'main_img5.jpg', '2023-04-05 20:00:00', 'user05', '공개'),
-       ('Delicious street food', 'I stumbled upon this street food vendor and was blown away by the taste and quality of their food.', 200, '2023-04-06', 40, 'profile6.jpg', 'main_img6.jpg', '2023-04-06 21:00:00', 'user06', '공개'),
-       ('A hidden gem', 'This small restaurant offers some of the best food I have ever tasted. The service is also impeccable.', 180, '2023-04-07', 35, 'profile7.jpg', 'main_img7.jpg', '2023-04-07 22:00:00', 'user07', '공개'),
-       ('A unique dining experience', 'I had a truly unique and memorable dining experience at this restaurant. The chef is very creative.', 90, '2023-04-08', 10, 'profile8.jpg', 'main_img8.jpg', '2023-04-08 23:00:00', 'user08', '공개'),
-       ('A great place for a date', 'I took my date to this restaurant and we both loved the food and the romantic atmosphere.', 110, '2023-04-09', 22, 'profile9.jpg', 'main_img9.jpg', '2023-04-09 12:00:00', 'user09', '공개');
+INSERT INTO chapstorys (title, content, viewcount, post_time,  profile, main_img, update_time, user_id, chs_rstatus)
+VALUES ('The best sushi in town', 'I have tried sushi in many places, but this restaurant truly stands out. The quality of the fish is amazing.', 170, '2023-04-11', 'profile11.jpg', 'main_img11.jpg', '2023-04-11 13:00:00', 'user01', '공개'),
+       ('A wonderful bakery', 'This bakery offers a wide variety of breads and pastries, all of them fresh and delicious.', 160, '2023-04-12', 'profile12.jpg', 'main_img12.jpg', '2023-04-12 14:00:00', 'user02', '공개'),
+       ('A delightful tea house', 'I visited this tea house with my friends and we had a great time trying out different teas and snacks.', 140, '2023-04-13', 'profile13.jpg', 'main_img13.jpg', '2023-04-13 15:00:00', 'user03', '공개'),
+       ('A vegan paradise', 'I am a vegan and this restaurant offers a fantastic selection of plant-based dishes. I will definitely be coming back!', 190, '2023-04-14', 'profile14.jpg', 'main_img14.jpg', '2023-04-14 16:00:00', 'user04', '공개'),
+       ('A fantastic burger joint', 'This place serves some of the juiciest and most flavorful burgers I have ever had. Don\'t miss out!', 210, '2023-04-15', 'profile15.jpg', 'main_img15.jpg', '2023-04-15 17:00:00', 'user05', '공개'),
+       ('An authentic Italian experience', 'This restaurant transports you straight to Italy with its amazing pasta dishes and warm atmosphere.', 220, '2023-04-16', 'profile16.jpg', 'main_img16.jpg', '2023-04-16 18:00:00', 'user06', '공개'),
+       ('A great place for desserts', 'If you have a sweet tooth, this place is a must-visit. The selection of desserts is amazing.', 240, '2023-04-17', 'profile17.jpg', 'main_img17.jpg', '2023-04-17 19:00:00', 'user07', '공개'),
+       ('A cozy and friendly pub', 'This pub has a great selection of beers and a warm atmosphere. I always have a great time here.', 230, '2023-04-18', 'profile18.jpg', 'main_img18.jpg', '2023-04-18 20:00:00', 'user08', '공개'),
+       ('A fantastic seafood restaurant', 'The seafood at this restaurant is incredibly fresh and the dishes are expertly prepared.', 250, '2023-04-19', 'profile19.jpg', 'main_img19.jpg', '2023-04-19 21:00:00', 'user09', '공개'),
+       ('A wonderful dining experience', 'I had an amazing time at this restaurant. The food was fantastic and the atmosphere was perfect.', 100, '2023-04-01', 'profile1.jpg', 'main_img1.jpg', '2023-04-01 12:00:00', 'user01', '공개'),
+       ('A cozy little cafe', 'I found this hidden gem of a cafe in my neighborhood. Great coffee and delicious pastries!', 80, '2023-04-02', 'profile2.jpg', 'main_img2.jpg', '2023-04-02 14:00:00', 'user02', '공개'),
+       ('Amazing cocktails', 'This bar serves the best cocktails in town. The bartenders are very skilled and friendly.', 120, '2023-04-03', 'profile3.jpg', 'main_img3.jpg', '2023-04-03 18:00:00', 'user03', '공개'),
+       ('A disappointing experience', 'I had high expectations for this restaurant, but the food was bland and the service was slow.', 60, '2023-04-04', 'profile4.jpg', 'main_img4.jpg', '2023-04-04 19:00:00', 'user04', '공개'),
+       ('A great spot for brunch', 'I love coming to this place for brunch with my friends. The food is delicious and the atmosphere is relaxed.', 150, '2023-04-05', 'profile5.jpg', 'main_img5.jpg', '2023-04-05 20:00:00', 'user05', '공개'),
+       ('Delicious street food', 'I stumbled upon this street food vendor and was blown away by the taste and quality of their food.', 200, '2023-04-06', 'profile6.jpg', 'main_img6.jpg', '2023-04-06 21:00:00', 'user06', '공개'),
+       ('A hidden gem', 'This small restaurant offers some of the best food I have ever tasted. The service is also impeccable.', 180, '2023-04-07', 'profile7.jpg', 'main_img7.jpg', '2023-04-07 22:00:00', 'user07', '공개'),
+       ('A unique dining experience', 'I had a truly unique and memorable dining experience at this restaurant. The chef is very creative.', 90, '2023-04-08', 'profile8.jpg', 'main_img8.jpg', '2023-04-08 23:00:00', 'user08', '공개'),
+       ('A great place for a date', 'I took my date to this restaurant and we both loved the food and the romantic atmosphere.', 110, '2023-04-09', 'profile9.jpg', 'main_img9.jpg', '2023-04-09 12:00:00', 'user09', '공개');
 
 INSERT INTO type_classes (category_num,main_category, sub_category)
 VALUES
@@ -736,4 +744,40 @@ VALUES
     (1, 'user01', '다시 돌아왔습니다.', 'CHAT'),
     (1, 'user02', '어떤 문서 작업을 하고 있었나요?', 'CHAT'),
     (1, 'user01', '저희 회사의 신제품 출시 계획서를 작성하고 있었습니다.', 'CHAT'),
-    (1, 'user02', '그런가요? 대단하십니다!', 'CHAT')
+    (1, 'user02', '그런가요? 대단하십니다!', 'CHAT');
+
+INSERT INTO chapstoryLikes (chap_num, user_id)
+VALUES (1, 'user01'),
+       (1, 'user02'),
+       (1, 'user03'),
+       (1, 'user04'),
+       (1, 'user05'),
+       (1, 'user06'),
+       (2, 'user07'),
+       (2, 'user01'),
+       (2, 'user02'),
+       (2, 'user03'),
+       (2, 'user04'),
+       (2, 'user05'),
+       (2, 'user06'),
+       (2, 'user07'),
+       (2, 'user08'),
+       (2, 'user09'),
+       (2, 'user10'),
+       (3, 'user03'),
+       (4, 'user04'),
+       (5, 'user05'),
+       (6, 'user06'),
+       (7, 'user07'),
+       (8, 'user08'),
+       (9, 'user09'),
+       (10, 'user10'),
+       (11, 'user11'),
+       (12, 'user12'),
+       (14, 'user14'),
+       (15, 'user15'),
+       (16, 'user16'),
+       (17, 'user17'),
+       (18, 'user18'),
+       (19, 'user19'),
+       (20, 'user20');

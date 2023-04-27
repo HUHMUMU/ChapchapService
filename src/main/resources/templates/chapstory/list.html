@@ -42,12 +42,13 @@
                     <label class="input-group-text bi bi-list-columns"></label>
                     <select name="order" class="form-control">
                         <option value="">칼럼</option>
-                        <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">글쓴이</option>
-                        <option th:selected="(${#strings.equals(param.order,'post_time')})"value="post_time">작성일</option>
+                        <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">아이디</option>
+                        <option th:selected="(${#strings.equals(param.order,'chap_num')})"value="chap_num">게시글번호</option>
+<!--                        <option th:selected="(${#strings.equals(param.order,'nickname')})"value="nickname">닉네임</option>-->
                         <option th:selected="(${#strings.equals(param.order,'title')})"value="title">제목</option>
                         <option th:selected="(${#strings.equals(param.order,'content')})"value="content">내용</option>
-                        <option th:selected="(${#strings.equals(param.order,'view_count')})"value="view_count">조회수</option>
-                        <option th:selected="(${#strings.equals(param.order,'likes')})"value="likes">좋아요수</option>
+                        <option th:selected="(${#strings.equals(param.order,'viewcount')})"value="viewcount">조회수</option>
+<!--                        <option th:selected="(${#strings.equals(param.order,'likeCnt')})"value="likeCnt">좋아요수</option>-->
                     </select>
                     <select name="direct" class="form-control">
                         <option value="">방향</option>
@@ -64,12 +65,9 @@
                     <label class="input-group-text bi bi-search"></label>
                     <select name="searchField" class="form-control">
                         <option value="">칼럼</option>
-                        <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">글쓴이</option>
-                        <option th:selected="(${#strings.equals(param.order,'post_time')})"value="post_time">작성일</option>
-                        <option th:selected="(${#strings.equals(param.order,'title')})"value="title">제목</option>
-                        <option th:selected="(${#strings.equals(param.order,'content')})"value="content">내용</option>
-                        <option th:selected="(${#strings.equals(param.order,'view_count')})"value="view_count">조회수</option>
-                        <option th:selected="(${#strings.equals(param.order,'likes')})"value="likes">좋아요수</option>
+                        <option th:selected="(${#strings.equals(param.searchField,'user_id')})"value="user_id">글쓴이</option>
+                        <option th:selected="(${#strings.equals(param.searchField,'title')})"value="title">제목</option>
+                        <option th:selected="(${#strings.equals(param.searchField,'content')})"value="content">내용</option>
                     </select>
                     <input type="text" class="form-control" name="searchValue" placeholder="검색어 입력"
                            th:value="${param.searchValue}">
@@ -99,10 +97,10 @@
 
                             </div>
                             <div>
-<!--                                <div class="d-flex">-->
-<!--                                    <p>좋아요 </p>-->
-<!--                                    <small th:text="${c.likes}"></small>-->
-<!--                                </div>-->
+                                <div class="d-flex">
+                                    <p>좋아요 </p>
+                                    <small th:text="${c.likeCnt}"></small>
+                                </div>
                                 <div class="d-flex">
                                     <p>작성날짜</p>
                                     <small th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
