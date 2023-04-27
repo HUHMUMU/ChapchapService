@@ -54,6 +54,7 @@ public class ReviewController {
 //                reviews.setImg("/public/img/review/"+fileName);
 //            }
 //        }
+        //안녕
         try{
             register=reviewService.register(reviews);
         }catch (Exception e){
