@@ -19,5 +19,6 @@ public class ChapstorysDto {
     private String userId; // FK
     private String chsRstatus; // 공개상태
     private UserDto user;
+    private int likeCnt;//해당 게시글에 라이크를 한 수
     private List<ChapstoryimgsDto> chapstoryimgs; // 1:N = chapstory : chapstoryimgs
 }

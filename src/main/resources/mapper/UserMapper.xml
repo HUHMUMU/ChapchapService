@@ -94,4 +94,7 @@
     <select id="countReviewByUser" resultType="int">
         SELECT COUNT(*) FROM reviews WHERE user_id=#{userId};
     </select>
+    <select id="findByUserNickname" resultType="com.acorn.chapspring.dto.UserDto">
+        select * from users where nickname=#{nickname}
+    </select>
 </mapper>
