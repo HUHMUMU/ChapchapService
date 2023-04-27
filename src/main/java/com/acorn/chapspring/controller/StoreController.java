@@ -1,7 +1,9 @@
 package com.acorn.chapspring.controller;
 
+import com.acorn.chapspring.dto.ReviewsDto;
 import com.acorn.chapspring.dto.StoreFilterDto;
 import com.acorn.chapspring.dto.StoresDto;
+import com.acorn.chapspring.service.ReviewService;
 import com.acorn.chapspring.service.StoreService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -17,16 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 public class StoreController {
     private StoreService storeService;
+    private ReviewService reviewService;
     @GetMapping("/{storeNum}/detail.do")
     public String detail(Model model,
                         @PathVariable int storeNum) {
         StoresDto stores=storeService.getStoreByStoreNum(storeNum);
         model.addAttribute("stores",stores);
         return "store/detail"; // 해당 경로에 대한 뷰 이름 반환
-    }
-    @PostMapping("/{storeNum}/detail.do")
-    public String register(){
-        return "redirect:/store/detail.do";
     }
 
     @GetMapping("/list.do")

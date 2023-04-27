@@ -183,12 +183,13 @@
     이 식당 예약하러 가기
   </div>
   <h5 class="store mt-3">리뷰</h5>
+  <a th:href="'/review/'+${s.storeNum}+'/register.do'" class="btn btn-secondary btn-sm">리뷰쓰기</a>
   <div id="review">
     <div th:each="r,iter:${s.reviewList}" class="store mb-2">
       <div class="card" th:classappend="${iter.index >= 3} ? 'hide' : ''">
         <div class="card-header d-flex justify-content-between">
           <div class="d-flex">
-            <a th:href="'http://localhost:9090/user/'+${r.userInfo.userId}+'/detail.do'">
+            <a th:href="'/user/'+${r.userInfo.userId}+'/detail.do'">
               <img th:src="${r.userInfo.profileImg}" style="width: 50px; height: 50px; border-radius: 50%; border: #222 solid 1px; cursor: pointer;" >
             </a>
             <div>

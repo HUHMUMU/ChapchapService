@@ -19,6 +19,13 @@ public class ReviewServiceImp implements ReviewService{
         return list;
     }
 
+
+    @Override
+    public List<ReviewsDto> menuNames(int storeNum) {
+        List<ReviewsDto> menuList=reviewMapper.findReviewByStore(storeNum);
+        return menuList;
+    }
+
     @Override
     @Transactional
     public int register(ReviewsDto reviews) {
