@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acorn.chapspring.mapper.WaitingMapper">
-
+    <!--  이건 대기등록할때 보여지는 거  -->
     <select id="getWaitingList" resultType="com.acorn.chapspring.dto.WaitingDto">
-        SELECT userswaiting FROM
+        SELECT userswaiting FROM userswaiting WHERE store_num=#{storeNum} and wait_num=#{waitNum}
     </select>
-    <select id="getWaiting" resultType="com.acorn.chapspring.dto.WaitingDto">
-
+    <!--  대기 등록 하고 나면 보일 거   -->
+    <select id="getFastWaiting" resultType="com.acorn.chapspring.dto.WaitingDto">
+        SELECT userswaiting From where wait_num=#{waitNum} and store_num=#{storeNum}
     </select>
+    <!-- 대기 등록   -->
     <insert id="addWaiting">
         INSERT INTO userswaiting(wait_num, user_id, store_num,user_people,waiting_num,waiting_date,start_time,enter_status)
         VALUES (#{waitNum}, #{userId},#{storeNum},#{userPeople},#{waitingNum},#{waitingDate},#{startTime},#{enterStatus})
     </insert>
+    <!-- 대기 인원 수정   -->
     <update id="modifyWaiting">
         UPDATE userswaiting SET user_people=#{userPeople}
-                            WHERE waiting_num=#{waitingNum} and user_id=#{userId} and store_num=#{storeNum}
+        WHERE waiting_num=#{waitingNum} and user_id=#{userId} and store_num=#{storeNum}
     </update>
+    <!-- 대기 삭제   -->
     <delete id="deleteWaiting">
         delete from userswaiting
-               where wait_num=#{waitNum} and waiting_num=#{waitingNum}
+        where wait_num=#{waitNum} and waiting_num=#{waitingNum}
     </delete>
 </mapper>
 
-<!--하고 있는중-->
+        <!--하고 있는중-->

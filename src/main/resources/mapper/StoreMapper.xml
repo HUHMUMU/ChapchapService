@@ -96,23 +96,6 @@
             </if>
         </trim>
         GROUP BY stores.store_num, type_classes.category_num
-<!--        <choose>-->
-<!--            <when test="sortBy == 'distance'">-->
-<!--                ORDER BY [거리 계산 로직, 예: (stores.latitude - #{userLatitude})^2 + (stores.longitude - #{userLongitude})^2] ASC-->
-<!--            </when>-->
-<!--            <when test="sortBy == 'recommended'">-->
-<!--                ORDER BY recommend_count DESC, store_num DESC-->
-<!--            </when>-->
-<!--            <when test="sortBy == 'review'">-->
-<!--                ORDER BY review_count DESC, store_num DESC-->
-<!--            </when>-->
-<!--            <when test="sortBy == 'jjim'">-->
-<!--                ORDER BY jjim_count DESC, store_num DESC-->
-<!--            </when>-->
-<!--            <otherwise>-->
-<!--                ORDER BY store_num DESC-->
-<!--            </otherwise>-->
-<!--        </choose>-->
     </select>
 
     <select id="findStoreByStoreNum" resultMap="StoresMap">
