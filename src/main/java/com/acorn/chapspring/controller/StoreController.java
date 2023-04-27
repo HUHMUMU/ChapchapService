@@ -24,6 +24,10 @@ public class StoreController {
         model.addAttribute("stores",stores);
         return "store/detail"; // 해당 경로에 대한 뷰 이름 반환
     }
+    @PostMapping("/{storeNum}/detail.do")
+    public String register(){
+        return "redirect:/store/detail.do";
+    }
 
     @GetMapping("/list.do")
     public String list(
