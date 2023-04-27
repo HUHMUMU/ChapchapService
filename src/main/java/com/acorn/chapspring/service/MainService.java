@@ -7,7 +7,5 @@ import java.util.List;
 
 @Service
 public interface MainService {
-    StoreServiceImp findByReviewsCount(String storeName);
-
-
+    StoresDto getStoreByAddressReviews(String siAdd,String guAdd);
 }
