@@ -16,9 +16,12 @@ public class ReviewsDto {
     private String userId; //FK 유저 아이디
     private int storeNum; //FK 가게 고유번호
     private int menuNum; //FK 메뉴 번호
+    
     private String storeName; //가게 이름 끌어오기
     private String mainImg;// 가게 대표 사진 끌어오기
     private UserDto userInfo; //유저 정보 가져오기
     private int countReview; //유저별 리뷰수
     private ReviewRepliesDto rReplies; //리뷰의 사장님 댓글정보 가져오기
+    private MenuManagesDto menuName; //메뉴 이름 가져오기
+    private ReviewLikesDto countLike; //리뷰의 좋아요 싫어요
 }

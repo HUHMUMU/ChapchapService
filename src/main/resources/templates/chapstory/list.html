@@ -36,48 +36,47 @@
                 <a href="/chapstory/register.do" class="btn btn-primary">글쓰기</a>
             </div>
         </th:block>
-<!--        <nav aria-label="Page navigation example">-->
-<!--            <form action="" class="mx-auto" style="width: 450px">-->
-<!--                <div class="input-group">-->
-<!--                    <label class="input-group-text bi bi-list-columns"></label>-->
-<!--                    <select name="order" class="form-control">-->
-<!--                        <option value="">칼럼</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.order,'b_id')})" value="b_id">글번호</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.order,'u_id')})"value="u_id">글쓴이</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.order,'post_time')})"value="post_time">작성일</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.order,'update_time')})"value="update_time">수정일</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.order,'title')})"value="title">제목</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.order,'view_count')})"value="view_count">조회수</option>-->
-<!--                    </select>-->
-<!--                    <select name="direct" class="form-control">-->
-<!--                        <option value="">방향</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.direct,'DESC')})" value="DESC">-->
-<!--                            내림차순-->
-<!--                        </option>-->
-<!--                        <option th:selected="(${#strings.equals(param.direct,'ASC')})" value="ASC">-->
-<!--                            오름차순-->
-<!--                        </option>-->
-<!--                    </select>-->
-<!--                    <button class="btn btn-primary">정렬</button>-->
-<!--                </div>-->
-<!--                <div class="input-group my-3">-->
-<!--                    <label class="input-group-text bi bi-search"></label>-->
-<!--                    <select name="searchField" class="form-control">-->
-<!--                        <option value="">칼럼</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.searchField,'b_id')})" value="b_id">글번호</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.searchField,'u_id')})"value="u_id">글쓴이</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.searchField,'post_time')})"value="post_time">작성일</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.searchField,'update_time')})"value="update_time">수정일</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.searchField,'title')})"value="title">제목</option>-->
-<!--                        <option th:selected="(${#strings.equals(param.searchField,'content')})"value="content">내용</option>-->
-<!--                    </select>-->
-<!--                    <input type="text" class="form-control" name="searchValue" placeholder="검색어 입력"-->
-<!--                           th:value="${param.searchValue}">-->
-<!--                    <button class="btn btn-primary">검색</button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--            <th:block th:include="/chapstory/pageNav"></th:block>-->
-<!--        </nav>-->
+        <nav aria-label="Page navigation example">
+            <form action="" class="mx-auto" style="width: 450px">
+                <div class="input-group">
+                    <label class="input-group-text bi bi-list-columns"></label>
+                    <select name="order" class="form-control">
+                        <option value="">칼럼</option>
+                        <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">글쓴이</option>
+                        <option th:selected="(${#strings.equals(param.order,'post_time')})"value="post_time">작성일</option>
+                        <option th:selected="(${#strings.equals(param.order,'title')})"value="title">제목</option>
+                        <option th:selected="(${#strings.equals(param.order,'content')})"value="content">내용</option>
+                        <option th:selected="(${#strings.equals(param.order,'view_count')})"value="view_count">조회수</option>
+                        <option th:selected="(${#strings.equals(param.order,'likes')})"value="likes">좋아요수</option>
+                    </select>
+                    <select name="direct" class="form-control">
+                        <option value="">방향</option>
+                        <option th:selected="(${#strings.equals(param.direct,'DESC')})" value="DESC">
+                            내림차순
+                        </option>
+                        <option th:selected="(${#strings.equals(param.direct,'ASC')})" value="ASC">
+                            오름차순
+                        </option>
+                    </select>
+                    <button class="btn btn-primary">정렬</button>
+                </div>
+                <div class="input-group my-3">
+                    <label class="input-group-text bi bi-search"></label>
+                    <select name="searchField" class="form-control">
+                        <option value="">칼럼</option>
+                        <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">글쓴이</option>
+                        <option th:selected="(${#strings.equals(param.order,'post_time')})"value="post_time">작성일</option>
+                        <option th:selected="(${#strings.equals(param.order,'title')})"value="title">제목</option>
+                        <option th:selected="(${#strings.equals(param.order,'content')})"value="content">내용</option>
+                        <option th:selected="(${#strings.equals(param.order,'view_count')})"value="view_count">조회수</option>
+                        <option th:selected="(${#strings.equals(param.order,'likes')})"value="likes">좋아요수</option>
+                    </select>
+                    <input type="text" class="form-control" name="searchValue" placeholder="검색어 입력"
+                           th:value="${param.searchValue}">
+                    <button class="btn btn-primary">검색</button>
+                </div>
+            </form>
+        </nav>
         <div>
             <div class="p-5 border-1" th:each="c:${chapstorys}">
                 <div class="d-flex justify-content-around">
@@ -100,10 +99,10 @@
 
                             </div>
                             <div>
-                                <div class="d-flex">
-                                    <p>좋아요 </p>
-                                    <small th:text="${c.likes}"></small>
-                                </div>
+<!--                                <div class="d-flex">-->
+<!--                                    <p>좋아요 </p>-->
+<!--                                    <small th:text="${c.likes}"></small>-->
+<!--                                </div>-->
                                 <div class="d-flex">
                                     <p>작성날짜</p>
                                     <small th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
@@ -116,5 +115,6 @@
             </div>
         </div>
     </form>
+    <th:block th:include="/chapstory/pageNav"></th:block>
 </div>
 </html>

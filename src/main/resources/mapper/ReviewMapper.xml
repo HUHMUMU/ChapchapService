@@ -14,6 +14,14 @@
         <result column="menu_num" property="menuNum"/>
         <result column="store_name" property="storeName"/>
         <result column="main_img" property="mainImg"/>
+        <association property="menuName"
+                    select="com.acorn.chapspring.mapper.MenuManageMapper.findMenuNameByNum"
+                    column="menu_num"
+                    fetchType="eager"/>
+        <association property="countLike"
+                    select="com.acorn.chapspring.mapper.ReviewLikeMapper.countLikeByReview"
+                    column="review_num"
+                    fetchType="eager"/>
         <collection property="userInfo"
                      select="com.acorn.chapspring.mapper.UserMapper.findByUserId"
                      column="user_id"
@@ -27,7 +35,13 @@
                     column="review_num"
                     fetchType="eager"/>
     </resultMap>
-
+    <insert id="insertReview">
+        INSERT INTO reviews (content,comment,img,date,star,r_rstatus,user_id,store_num,menu_num)
+        VALUE (#{content},#{comment},#{img},#{date},#{star},#{rrStatus},#{userId},#{storeNum},#{menuNum});
+    </insert>
+    <delete id="deleteReview">
+        DELETE FROM reviews WHERE review_num=#{reviewNum}
+    </delete>
 
     <select id="findReviewByStore" resultMap="ReviewMap">
         SELECT * FROM reviews WHERE store_num=#{storeNum};

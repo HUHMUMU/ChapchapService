@@ -52,7 +52,7 @@ static:
   path: ${user.dir}/ChapChapServiceProject/src/main/resources/static
 img:
   upload:
-    path: ${user.dir}/ChapchapServiceProject/src/main/resources/static/public/img
+    path: ${user.dir}/ChapChapServiceProject/src/main/resources/static/public/img
 server:
   port: 9090
 mybatis:

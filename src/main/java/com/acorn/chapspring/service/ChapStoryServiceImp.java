@@ -29,6 +29,8 @@ public class ChapStoryServiceImp implements ChapStoryService{
     @Override
     @Transactional
     public ChapstorysDto detail(int chapNum) {
+        chapStoryMapper.updateIncrementViewCountChapNum(chapNum);
+//        chapStoryMapper.updateIncrementLikeChapNum(chapNum);
         ChapstorysDto detail = chapStoryMapper.findByChapNum(chapNum);
         return detail;
     }

@@ -19,4 +19,10 @@ class MenuManageMapperTest {
         System.out.println("menu = " + menu);
         assertNotNull(menu);
     }
+
+    @Test
+    void findMenuNameByNum() {
+        MenuManagesDto menuName=menuManageMapper.findMenuNameByNum(1);
+        System.out.println("menuName = " + menuName);
+    }
 }
