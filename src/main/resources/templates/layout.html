@@ -14,7 +14,7 @@
 </head>
 <!-- storelist-main 스타일은 store/list.html에서 사용중이니 지우지말것 -->
 <body class="storelist-main" style="background: #FFFAED;">
-    <header th:replace="/headerNav"></header>
+    <header th:replace="~{headerNav}"></header>
     <main class="container storelist-main">
         <th:block layout:fragment="content"></th:block>
     </main>
