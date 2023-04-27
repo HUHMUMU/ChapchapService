@@ -19,7 +19,7 @@
     <select id="findByCNumAndUId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
     <select id="findByCNumAndUIdIsLoginUserId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
     <select id="countLikeByCNum" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
-    <select id="countByCnum" resultType="int">
+    <select id="countByCnum" resultType="int" parameterType="int">
         SELECT COUNT(*) likeCnt FROM chapstorylikes WHERE chap_num=#{chapNum}
     </select>
     <update id="likeCheck" parameterType="ChapstorylikesDto">

@@ -1,5 +1,6 @@
 package com.acorn.chapspring.mapper;
 
+import com.acorn.chapspring.dto.ChapstorylikesDto;
 import com.acorn.chapspring.dto.ChapstorysDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

@@ -37,13 +37,13 @@
     <delete id="deleteByChapsNum">
         DELETE FROM chapstorys WHERE chap_num=#{chapNum}
     </delete>
-    <select id="findAll" resultMap="ChapstoryMap">
-        SELECT * FROM chapstorys
-    </select>
     <select id="findByChapNum" resultMap="ChapstoryMap">
         SELECT * FROM chapstorys WHERE chap_num=#{chapNum}
     </select>
     <select id="findByUserId" resultMap="ChapstoryMap">
         SELECT * FROM chapstorys WHERE user_id=#{userId}
+    </select>
+    <select id="findAll" resultMap="ChapstoryMap">
+        SELECT *,(SELECT COUNT(*) FROM chapstorylikes WHERE chap_num=chapstorys.chap_num) FROM chapstorys
     </select>
 </mapper>

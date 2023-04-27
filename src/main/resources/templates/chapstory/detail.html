@@ -47,11 +47,12 @@
 <!--                    <span th:text="${c.likes}"></span>-->
 <!--                </a>-->
                 <div class="likeCont" th:id="'likeCont'+${c.chapNum}">
-                    <th:block th:if="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/loginLikes"></th:block>
-                    <th:block th:unless="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/likes"></th:block>
+                    <th:block th:if="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/loginLike"></th:block>
+                    <th:block th:unless="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/like"></th:block>
                 </div>
                 <button>공유</button>
                 <button>신고</button>
+<!--                <div th:text="${c}"></div>-->
 <!--                <th:block th:if="${session.loginUser.userId==c.userId}">-->
                 <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,c.user.userId)}">
                     <div class="d-flex justify-content-end">
