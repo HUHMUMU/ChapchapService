@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.chapstorylikeMapper">
+    <resultMap id="ChapstorylikesMap" type="ChapstorylikesDto">
+        <result property="likeno" column="likeno"/>
+        <result property="chapNum" column="chap_num"/>
+        <result property="userId" column="user_id"/>
+        <result property="likeCheck" column="like_check"/>
+    </resultMap>
+    <insert id="insertOne">
+        INSERT INTO chapstorylikes (chap_num, user_id) VALUE (#{chapNum}, #{userId});
+    </insert>
+    <delete id="deleteOne"></delete>
+    <select id="findByCNumAndUId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
+    <select id="findByCNumAndUIdIsLoginUserId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
+    <select id="countLikeByCNum" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
+    <update id="likeCheck" parameterType="HashMap">
+        UPDATE chapstorylikes
+        SET like_check = like_check + 1
+        WHERE chap_num=#{chap_num} AND user_id=#{user_id}
+    </update>
+
+    <update id="likeCheckCancel" parameterType="HashMap">
+        UPDATE chapstorylikes
+        SET like_check = 0
+        WHERE user_id=#{user_id} AND chap_num=#{chap_num}
+    </update>
+
+</mapper>

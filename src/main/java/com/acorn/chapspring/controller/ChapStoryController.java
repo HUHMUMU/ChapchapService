@@ -2,6 +2,7 @@ package com.acorn.chapspring.controller;
 
 import com.acorn.chapspring.dto.*;
 import com.acorn.chapspring.service.ChapStoryService;
+import com.acorn.chapspring.service.UserService;
 import com.github.pagehelper.PageInfo;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class ChapStoryController {
 
 
     private ChapStoryService chapStoryService;
+    private UserService userService;
     @Value("${img.upload.path}")
     private String uploadPath; //등록 (프로젝트위치+/static/public/img/chapstory
     @Value("${static.path}")
@@ -81,6 +83,22 @@ public class ChapStoryController {
         chaps = chapStoryService.blogMain(userId);
         model.addAttribute("chapstorys", chaps);
         return "chapstory/blogMain";
+    }
+
+    @PostMapping("/blogMain.do")
+    public String modifyBanner(
+            @ModelAttribute UserDto user){
+        String redirectPath="redirect:/chapstory/"+user.getUserId()+"blogMain.do";
+        int modify=0;
+        try{
+            modify=userService.modify(user);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        if(modify>0){
+            redirectPath="redirect:/chapstory/blogMain";
+        }
+        return redirectPath;
     }
 
 
