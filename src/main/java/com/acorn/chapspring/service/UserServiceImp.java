@@ -11,19 +11,15 @@ import java.util.List;
 @Service
 public class UserServiceImp implements UserService{
     private UserMapper userMapper;
-    private RecommendStoreMapper recommendStoreMapper;
-    private VisitedStoreMapper visitedStoreMapper;
     private ReviewMapper reviewMapper;
     private JjimManageMapper jjimManageMapper;
 
     public UserServiceImp(
-            UserMapper userMapper, RecommendStoreMapper recommendStoreMapper,
-            VisitedStoreMapper visitedStoreMapper, ReviewMapper reviewMapper,
+            UserMapper userMapper,
+            ReviewMapper reviewMapper,
             JjimManageMapper jjimManageMapper
     ){
         this.userMapper=userMapper;
-        this.recommendStoreMapper=recommendStoreMapper;
-        this.visitedStoreMapper=visitedStoreMapper;
         this.reviewMapper=reviewMapper;
         this.jjimManageMapper=jjimManageMapper;
     }
@@ -67,48 +63,13 @@ public class UserServiceImp implements UserService{
     public int idCheck(String userId) throws Exception {
         return userMapper.idCheck(userId);
     }
-    //유저 마이페이지 정보 조회 부분---------------------------------------------------------------
+
     @Override//유저 정보
     public UserDto detail(String userId) {
         return userMapper.findByUserId(userId);
     }
 
-    @Override//1.유저 방문 가게 리스트 **유저 고유 리스트 번호 속성 추가
-    public List<VisitedStoreDto> visited(String userId) {
-//        userMapper.setLoginUserId(loginUserId);
-        List<VisitedStoreDto> list=visitedStoreMapper.findAllVisitedByUserId(userId);
-        List<VisitedStoreDto> userVisitedList=new ArrayList<>(list.size());
-        int listNum=0;
-        for(VisitedStoreDto visitedList : list){
-            listNum++;
-            visitedList.setListNum(listNum);
-            userVisitedList.add(visitedList);
-        }
-        return userVisitedList;
-    }
-    @Override//2.유저 찜목록 부분
-    public  List<JjimManageDto> jjimList(String userId){
-        List<JjimManageDto> list=jjimManageMapper.findAllJjimByUserId(userId);
-        List<JjimManageDto> userJjimList=new ArrayList<>(list.size());
-        int listNum=0;
-        for(JjimManageDto jjim : list){
-            listNum++;
-            jjim.setListNum(listNum);
-            userJjimList.add(jjim);
-        }
-        return userJjimList;
-    }
-    @Override//3.유저 작성 리뷰 리스트
-    public List<ReviewsDto> reviewed(String loginUserId){
-        userMapper.setLoginUserId(loginUserId);
-        List<ReviewsDto> list=reviewMapper.findAllReviewed(loginUserId);
-        return list;
-    }
-    @Override//4.유저 추천가게 부분
-    public List<RecommendStoreDto> recommendList(String userId){
-        List<RecommendStoreDto> list=recommendStoreMapper.findAllRecommendstoreByUserId(userId);
-        return list;
-    }
+
     @Override//유저 상세페이지 링크 임시 구현 부분
     public List<UserDto> userList(){
         List<UserDto> list=userMapper.findAllUsers();
