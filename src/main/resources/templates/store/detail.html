@@ -180,7 +180,7 @@
   </div>
   <h5>예약</h5>
   <div id="waiting">
-    이 식당 예약하러 가기
+    <a th:href="'/waiting/'+${s.storeNum}+'/waitingAdd.do'">이 식당 예약하러 가기</a>
   </div>
   <h5 class="store mt-3">리뷰</h5>
   <th:block th:if="${session.loginUser!=null}">
