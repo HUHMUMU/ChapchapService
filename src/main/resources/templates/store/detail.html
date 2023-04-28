@@ -20,7 +20,21 @@
   </div>
   <div class="store">
     <p class="storeName d-flex justify-content-center mt-4" th:text="${s.storeName}"></p>
-    <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]])">추천</button>
+<!-- 추천 버튼 기능 구현-->
+    <th:block th:if="${recommending!=null && s.storeNum==recommending.storeNum}">
+      <button type="button" class="btn btn-secondary btn-sm mt-3 active" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">
+        추천
+      </button>
+    </th:block>
+    <th:block th:if="${recommending==null || recommending!=null && s.storeNum!=recommending.storeNum}">
+      <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">
+        추천
+      </button>
+    </th:block>
+<!---------------------->
+
+
+
   </div>
   <div class="store">
     <span class="starPoint">★4.45/</span>

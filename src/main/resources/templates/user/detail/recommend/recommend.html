@@ -1,23 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-
-<p th:text="${recommend}"></p>
 <!--카드 스타일-->
-<div class="card" style="width: 18rem">
-    <img src="..." class="card-img-top" alt="가게 이미지">
-    <div class="card-body">
-        <h5 class="card-title" >가게 이미지</h5>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item" th:text="${recommend.storeName}"></li>
-        <li class="list-group-item">추천 메뉴</li>
-        <li class="list-group-item" >가게 평점</li>
-        <li class="list-group-item" th:text="${recommend.comment}"></li>
+<div class="card" style="width: 12rem">
+    <img src="/public/img/store/cafe.jpg" alt="...">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <i class="bi bi-shop"></i>
+            <span th:text="${recommend.storeName}"></span>
+        </li>
+        <li class="list-group-item">
+            <i class="bi bi-pin-angle"></i>
+            <span>추천메뉴</span>
+        </li>
+        <li class="list-group-item">
+            <i class="bi bi-star-fill"></i>
+            <span>가게 평점</span>
+        </li>
+        <li class="list-group-item">
+            <i class="bi bi-megaphone"></i>
+            <span th:text="${recommend.comment}"></span>
+            <span th:if="${recommend.comment==null}">코멘트</span>
+        </li>
+        <li class="list-group-item">
+            <button th:onclick="removeRecommend([[${recommend.userId}]],[[${recommend.storeNum}]])" class="btn btn-primary">
+                삭제
+            </button>
+        </li>
     </ul>
-    <div class="card-body">
-        <button type="button" th:onclick="removeRecommend([[${recommend.userId}]],[[${recommend.storeNum}]])" th:text="${recommend.userId} +'-'+${recommend.storeNum}">리스트 삭제</button>
-    </div>
+
+
+
+<!--    <img src="..." class="card-img-top" alt="가게 이미지">-->
+<!--    <div class="card-body">-->
+<!--        <h5 class="card-title" >가게 이미지</h5>-->
+<!--    </div>-->
+<!--    <ul class="list-group list-group-flush">-->
+<!--        <li class="list-group-item" th:text="${recommend.storeName}"></li>-->
+<!--        <li class="list-group-item">추천 메뉴</li>-->
+<!--        <li class="list-group-item" >가게 평점</li>-->
+<!--        <li class="list-group-item" th:text="${recommend.comment}"></li>-->
+<!--    </ul>-->
+<!--    <div class="card-body">-->
+<!--        <button type="button" th:onclick="removeRecommend([[${recommend.userId}]],[[${recommend.storeNum}]])" th:text="${recommend.userId} +'-'+${recommend.storeNum}">리스트 삭제</button>-->
+<!--    </div>-->
+
 </div>
 
 

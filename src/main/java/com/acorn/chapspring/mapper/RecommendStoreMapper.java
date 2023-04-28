@@ -10,4 +10,6 @@ public interface RecommendStoreMapper {
 
     int insertOneByUserId(RecommendStoreDto recommendstore);
     int deleteOneByUserIdAndStoreNum(RecommendStoreDto recommendstore);
+
+    RecommendStoreDto findOneByUserIdAndStoreNum(String userId,int storeNum);
 }

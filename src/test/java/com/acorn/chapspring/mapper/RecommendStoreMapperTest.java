@@ -45,4 +45,13 @@ class RecommendStoreMapperTest {
         int delete=recommendStoreMapper.deleteOneByUserIdAndStoreNum(recommendstore);
         assertEquals(delete,1);
     }
+
+    @Test
+    void findOneByUserIdAndStoreNum() {
+        recommendstore=new RecommendStoreDto();
+        recommendstore.setUserId("admin");
+        recommendstore.setStoreNum(1);
+        RecommendStoreDto findOne=recommendStoreMapper.findOneByUserIdAndStoreNum(recommendstore.getUserId(),recommendstore.getStoreNum());
+        System.out.println(findOne);
+    }
 }
