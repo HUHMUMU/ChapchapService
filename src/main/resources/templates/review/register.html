@@ -9,7 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 </head>
 <div layout:fragment="content">
-  <form name="registerForm" id="registerForm" enctype="multipart/form-data" method="post" action="/review/register.do">
+  <form name="registerForm" id="registerForm" method="post" action="/review/register.do">
     <input type = "text" name="storeNum" th:value="${stores.storeNum}" hidden>
     <input id="user_id" type="text" name="userId" th:value="${session.loginUser.userId}" readonly class="form-control" hidden>
     <input name="rrStatus" value="공개" hidden>
