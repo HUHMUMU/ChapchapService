@@ -48,10 +48,7 @@ spring:
               - nickname
 
 static:
-  path: ${user.dir}/ChapChapServiceProject/src/main/resources/static
-img:
-  upload:
-    path: ${user.dir}/ChapChapServiceProject/src/main/resources/static/public/img
+  path: ${user.dir}/ChapChapService/src/main/resources/static
 server:
   port: 9090
 mybatis:

@@ -5,9 +5,10 @@ import java.util.List;
 @Service
 public interface WaitingService {
     List<WaitingDto> getWaitingList(int waitNum, int storeNum);
-    WaitingDto getFastWaiting(int storeNum, int waitNum);
+
     int addWaiting(WaitingDto waitingDto);
     int modifyWaiting(WaitingDto waitingDto);
     int deleteWaiting(int waitNum, int waitingNum);
 
+    WaitingDto getFastWaiting(int storeNum);
 }

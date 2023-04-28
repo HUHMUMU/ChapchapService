@@ -11,35 +11,12 @@
           crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <style>
-        #div21, #div22, #div23{
-            height: 50vh;
-            text-align: center;
-            text-size-adjust: auto;
 
-        }
-        #alertModal{
-            margin: auto;
-            text-align: center;
-            justify-content: center;
-            height: 50vh;
-            width: 50vh;
-            display: block;
-        }
-        .container{
-            display: block;
-            margin: auto;
-        }
-
-        .card-body{
-            height: 10vh;
-        }
-    </style>
 </head>
 <body>
 <div layout:fragment="content">
 <div class="container" >
-    <div class="row justify-content-center">
+    <div class="d-flex justify-content-center mb-5">
         <!--  2-1 div-->
         <div class="col-4">
             <div class="card" id="div21">
@@ -102,8 +79,32 @@
     alertModal.style.textAlign = "center";
 
 </script>
-
+</div>
 </body>
 </html>
+<style>
+    #div21, #div22, #div23{
+        height: 50vh;
+        text-align: center;
+        text-size-adjust: auto;
+
+    }
+    #alertModal{
+        margin: auto;
+        text-align: center;
+        justify-content: center;
+        height: 50vh;
+        width: 50vh;
+        display: block;
+    }
+    .container{
+        display: block;
+        margin: auto;
+    }
+
+    .card-body{
+        height: 10vh;
+    }
+</style>
 
 <!-- 이것도 일단 확정-->

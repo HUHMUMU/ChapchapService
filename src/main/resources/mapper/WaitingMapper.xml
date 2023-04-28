@@ -13,11 +13,11 @@
     </resultMap>
 
     <!--  이건 대기등록할때 보여지는 거  -->
-    <select id="getWaitingList" resultType="com.acorn.chapspring.dto.WaitingDto">
+    <select id="getWaitingList" resultType="com.acorn.chapspring.dto.UsersWaitingDto">
         SELECT userswaiting FROM userswaiting WHERE store_num=#{storeNum} and wait_num=#{waitNum}
     </select>
     <!--  대기 등록 하고 나면 보일 거 등록한 사람보다 대기 번호가 빠른 팀의 수   -->
-    <select id="getFastWaiting" resultType="com.acorn.chapspring.dto.WaitingDto">
+    <select id="getFastWaiting" resultType="com.acorn.chapspring.dto.UsersWaitingDto">
         SELECT userswaiting From where wait_num=#{waitNum} and store_num=#{storeNum}
     </select>
     <!-- 대기 등록 추가   -->

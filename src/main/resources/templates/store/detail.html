@@ -112,7 +112,7 @@
   </div>
   <nav class="navbar sticky-top" style="background-color:#fdf9ec">
     <div class="container-fluid d-flex justify-content-center">
-      <a class="navbar-brand m-0" href="#waiting">예약</a>
+      <a class="navbar-brand m-0" th:href="'/waiting/'+${s.storeNum}+'/waitingAdd.do'">예약</a>
       <span class="m-2">|</span>
       <a class="navbar-brand m-0" href="#event">이벤트</a>
       <span class="m-2">|</span>
@@ -126,7 +126,7 @@
 
   <!-- 예약 -->
   <div class="waiting d-grid gap-2 col-6 mx-auto">
-    <a class="btn btn-warning" href="#" type="button">
+    <a class="btn btn-warning" th:href="'/waiting/'+${s.storeNum}+'/waitingAdd.do'" type="button">
       <i class="bi bi-shop"></i>
       예약하러 가기
     </a>
@@ -258,7 +258,7 @@
           <img th:src="'http://localhost:8088'+${r.img}" style="width: 150px; height: 150px;">
           <div class="review-text" style="border: #222 solid 1px; width: 440px; height: 150px;">
             <p th:text="${r.content}" class="review-description m-0"></p>
-            <small th:text="${r.menuName.name}+' : '+${r.comment}"></small>
+<!--            <small th:text="${r.menuName.name}+' : '+${r.comment}"></small>-->
           </div>
         </div>
         <div class="card-body">

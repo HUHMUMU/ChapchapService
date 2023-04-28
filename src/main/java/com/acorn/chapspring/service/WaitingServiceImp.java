@@ -14,21 +14,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WaitingServiceImp implements WaitingService {
     private final WaitingMapper waitingMapper;
+
+
     // 대기 중인 팀 조회
     @Override
     public List<WaitingDto> getWaitingList(int waitNum, int storeNum) {
         return waitingMapper.getWaitingList(waitNum, storeNum);
     }
     // 대기 중인 팀 중 가장 빠른 팀 조회
-    public WaitingDto getFastWaiting(int storeNum, int waitNum) {
-        return waitingMapper.getFastWaiting(storeNum, waitNum);
-    }
+//    @Override
+//    public WaitingDto getFastWaiting(int storeNum) {
+//        return waitingMapper.getFastWaiting(storeNum);
+//    } 여기 오류
 
     // 대기 등록
     @Override
     @Transactional
-    public int addWaiting(WaitingDto waitingDto) {
-        int result = waitingMapper.addWaiting(waitingDto);
+    public int addWaiting(WaitingDto waitingUsers) {
+        int result = waitingMapper.addWaiting(waitingUsers);
+        System.out.println(result);
         if (result > 0) {
             log.info("웨이팅 등록 완료 했습니다.");
         } else {
@@ -40,8 +44,8 @@ public class WaitingServiceImp implements WaitingService {
     // 대기 수정
     @Override
     @Transactional
-    public int modifyWaiting(WaitingDto waitingDto) {
-        int result = waitingMapper.modifyWaiting(waitingDto);
+    public int modifyWaiting(WaitingDto waitingUsers) {
+        int result = waitingMapper.modifyWaiting(waitingUsers);
         if (result > 0) {
             log.info("인원 수정 성공");
         } else {
@@ -61,5 +65,10 @@ public class WaitingServiceImp implements WaitingService {
             log.error("웨이팅 취소 실패");
         }
         return result;
+    }
+
+    @Override
+    public WaitingDto getFastWaiting(int storeNum) {
+        return null;
     }
 }
