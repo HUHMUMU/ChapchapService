@@ -14,19 +14,19 @@ class ChatMsgMapperTest {
     void insertOne() {
         ChatMsgDto chatMsgDto=new ChatMsgDto();
         chatMsgDto.setCrId(2);
-        chatMsgDto.setUserId("user05");
-        chatMsgDto.setContent("자~ 들어와랑~ ");
-        chatMsgDto.setStatus(ChatMsgDto.Status.CHAT);
+        chatMsgDto.setUserId("user09");
+        chatMsgDto.setContent("닉네임 가져와 진다~ ");
+        chatMsgDto.setStatus(ChatMsgDto.Status.ENTER);
         chatMsgMapper.insertOne(chatMsgDto);
     }
 
     @Test
     void findByCrId() {
-        chatMsgMapper.findByCrId(2);
+        chatMsgMapper.findByCrId(5);
     }
 
     @Test
     void findByCrIdAndGraterThanPostTime() {
-        chatMsgMapper.findByCrIdAndGraterThanPostTime(2,"2023-04-26 15:25:00");
+        chatMsgMapper.findByCrIdAndGraterThanPostTime(5,"2023-04-26 15:25:00");
     }
 }

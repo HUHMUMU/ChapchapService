@@ -8,15 +8,19 @@
         <result property="status" column="status"/>
         <result property="content" column="content"/>
         <result property="postTime" column="post_time"/>
+        <association property="userDto" javaType="com.acorn.chapspring.dto.UserDto">
+        <id property="userId" column="user_id"/>
+        <result property="nickname" column="nickname"/>
+        </association>
     </resultMap>
     <insert id="insertOne">
         INSERT INTO chat_messages(cr_id, user_id, content, status)
         VALUES (#{crId}, #{userId},#{content},#{status})
     </insert>
     <select id="findByCrId" resultMap="ChatMsgMap">
-        SELECT chat_messages.*, (SELECT nickname FROM users WHERE user_id = chat_messages.user_id) AS nickname
-        FROM chat_messages
-        WHERE cr_id = #{crId}
+        SELECT cm_id, cr_id, cm.user_id, (SELECT nickname FROM users WHERE user_id = cm.user_id) AS nickname, content, status, post_time
+        FROM chat_messages cm
+        WHERE cr_id = #{crId};
 
     </select>
     <select id="findByCrIdAndGraterThanPostTime" resultMap="ChatMsgMap">
