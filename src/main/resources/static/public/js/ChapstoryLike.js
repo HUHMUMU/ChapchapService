@@ -2,17 +2,13 @@ async function chapLikeHandler(cNum){
     const likeCont=document.getElementById("likeCont"+cNum);
     console.log(likeCont);
     let url=`/chapstory/like/${cNum}/handler.do`
+    let url2=`/chapstory/like/${cNum}/read.do`;
     const resp=await fetch(url);
     if(resp.status===200){
         const json=await resp.json();
-        if(json.handler>0){
-            let html=await readLike(cNum);
-            if(html){
-                likeCont.innerHTML=html;
-                alert(json.status+" " +json.handlerType+" 성공");
-            }else{
-                alert(json.status+" "+json.handlerType+" 성공(불러오기 실패 새로고침)")
-            }
+        if(!json.handler){
+            alert("성공")
+            return resp;
         }else{
             alert(json.status+" "+json.handlerType+" 실패")
         }
@@ -23,11 +19,11 @@ async function chapLikeHandler(cNum){
     }
 }
 
-async function readLike(cNum){
-    let url=`/chapstory/like/${cNum}/read.do`;
-    const resp=await fetch(url);
-    if(resp.status===200){
-        const html=await resp.text();
-        return html;
-    }
-}
+// async function readLike(cNum){
+//     let url=`/chapstory/like/${cNum}/read.do`;
+//     const resp=await fetch(url);
+//     if(resp.status===200){
+//         const html=await resp.text();
+//         return html;
+//     }
+// }
