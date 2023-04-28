@@ -1,5 +1,6 @@
 package com.acorn.chapspring.controller;
 
+import com.acorn.chapspring.dto.ChapstorysDto;
 import com.acorn.chapspring.dto.ReviewsDto;
 import com.acorn.chapspring.dto.StoresDto;
 import com.acorn.chapspring.dto.UserDto;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -63,6 +65,26 @@ public class ReviewController {
         if(register>0) {// 리뷰 등록 성공
             redirectPath="redirect:/store/"+reviews.getStoreNum()+"/detail.do";
         }
+        return redirectPath;
+    }
+
+    @GetMapping("/{reviewNum}/remove.do")
+    public String removeAction(@PathVariable int reviewNum,
+                               @ModelAttribute ReviewsDto reviews,
+                               @SessionAttribute UserDto loginUser,
+                               RedirectAttributes redirectAttributes){
+        String redirectPath="redirect:/store/"+reviews.getStoreNum()+"/detail.do";
+        String msg="삭제 실패";
+        int remove = 0;
+        try{
+            remove=reviewService.remove(reviewNum);
+        }catch (Exception e){
+            log.error(e);
+        }
+        if(remove>0){
+            msg="삭제 성공!";
+        }
+        redirectAttributes.addFlashAttribute("msg",msg);
         return redirectPath;
     }
 }

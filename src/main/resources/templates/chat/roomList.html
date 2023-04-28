@@ -6,9 +6,10 @@
 <div layout:fragment="content">
   <h1 class="my-4">채팅방 리스트</h1>
   <ul class="list-group">
+    <!--여기서 rooms 는 무엇을 뜻하는 건지 물어보기-->
     <li th:each="r:${rooms}" class="list-group-item">
       <a class="link-secondary"
-         th:href="@{'/chat/room/{crId}/detail.do'(crId=${r.crId})}">
+         th:href="@{'/chat/room/{crId}/detail.do'(crId=${r.crId})}"><!--채팅하는 방으로 넘어가는 URL 과 파라미터-->
         <p>
           <strong th:text="${r.name}"></strong>
           <i class="bi bi-dot"></i>

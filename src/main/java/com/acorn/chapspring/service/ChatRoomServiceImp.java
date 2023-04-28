@@ -15,7 +15,7 @@ public class ChatRoomServiceImp implements ChatRoomService{
     @Override
     public List<ChatRoomDto> list() {
         List<ChatRoomDto> list = chatRoomMapper.findAll();
-        return null;
+        return list;
     }
 
     //채팅방 등록

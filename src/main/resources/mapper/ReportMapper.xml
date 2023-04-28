@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.ReportMapper">
+    <resultMap id="ReportMap" type="com.acorn.chapspring.dto.ReportsDto">
+        <id column="report_num" property="reportNum"/>
+        <result column="report_store_id" property="reportStoreId"/>
+        <result column="report_user_id" property="reportUserId"/>
+        <result column="report_content" property="reportContent"/>
+        <result column="review_num" property="reviewNum"/>
+        <result column="user_id" property="userId"/>
+        <result column="chap_num" property="chapNum"/>
+        <result column="store_num" property="storeNum"/>
+    </resultMap>
+    <insert id="insertReportByReview">
+        INSERT INTO reports (report_store_id,report_user_id,report_content,review_num)
+        VALUES (#{reportStoreId}, #{reportUserId}, #{reportContent}, #{reviewNum})
+    </insert>
+</mapper>
