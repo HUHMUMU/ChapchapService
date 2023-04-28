@@ -38,7 +38,7 @@
         <h4 style="font-size: 40px; margin-bottom: 40px">인기글</h4>
         <div class="d-flex justify-content-between" style=" margin-bottom: 70px">
             <div th:each="c:${chapstorys}">
-                <img th:src="@{'{path}'(path=${chapstorys[0].mainImg})}" alt = "챱스 썸네일" style="height: 100px; width:100px; position: relative; object-fit: cover;" class="img-thumbnail">
+                <img th:src="@{'{path}'(path=${chapstorys[0].mainImg})}" alt = "챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
                 <h5>
                     <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}" th:text="${c.title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                 </h5>

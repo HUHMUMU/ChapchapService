@@ -40,7 +40,7 @@
                 <div class="input-group">
                     <label class="input-group-text bi bi-list-columns"></label>
                     <select name="order" class="form-control">
-                        <option value="">칼럼</option>
+                        <option value="">정렬기준</option>
                         <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">아이디</option>
                         <option th:selected="(${#strings.equals(param.order,'chap_num')})"value="chap_num">게시글번호</option>
 <!--                        <option th:selected="(${#strings.equals(param.order,'nickname')})"value="nickname">닉네임</option>-->
@@ -62,13 +62,13 @@
                 </div>
                 <div class="input-group my-3">
                     <label class="input-group-text bi bi-search"></label>
-                    <select name="searchField" class="form-control ">
+                    <select name="searchField" class="form-control">
                         <option th:selected="(${#strings.equals(param.searchField,'user_id')})"value="user_id">글쓴이</option>
                         <option th:selected="(${#strings.equals(param.searchField,'title')})"value="title">제목</option>
                         <option th:selected="(${#strings.equals(param.searchField,'content')})"value="content">내용</option>
                     </select>
                     <input type="text" class="form-control " name="searchValue" placeholder="검색어 입력"
-                           th:value="${param.searchValue}">
+                           th:value="${param.searchValue}" style="width : 70%">
                     <button class="btn btn-primary">검색</button>
                 </div>
             </form>
