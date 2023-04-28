@@ -9,28 +9,26 @@
     <script src="/public/js/ChapstoryLike.js" defer></script>
 </head>
 <div layout:fragment="content">
-    <form action="/chapstory/detail.do">
-        <h3>디테일이다 이건 ....</h3>
-        <hr>
-        <h3 th:text="${c.title}"></h3>
+    <form action="/chapstory/detail.do" style="margin-top: 50px">
+        <h3 th:text="${c.title}" style="font-size: 50px"></h3>
         <div class="d-flex justify-content-between">
             <div class="d-flex">
-                <img th:src="@{'{path}'(path=${c.user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle">
+                <img th:src="@{'{path}'(path=${c.user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle me-3">
                 <div>
                     <div class="d-flex">
 <!--                        <h4 class="me-2" th:text="${c.user.nickname}">닉네임</h4>-->
-                        <h4>
-                            <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${c.user.userId})}"  th:text="${c.user.nickname}" style="text-decoration: none; color: inherit;"></a>
-                        </h4>
+                        <h3>
+                            <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${c.user.userId})}"  th:text="${c.user.nickname}" style="text-decoration: none; color: inherit; margin-right: 10px"></a>
+                        </h3>
                         <div class="d-flex">
                             <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
                             <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
                             <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
                         </div>
                     </div>
-                    <div class="d-flex">
-                        <p th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}"></p>
-                        <div class="d-flex">
+                    <div class="d-flex align-items-start">
+                        <p th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}" style="margin-right: 20px"></p>
+                        <div class="d-flex align-items-start">
                             <p class="mt-2" >조회수</p>
                             <p th:text="${c.viewcount}"></p>
                         </div>
@@ -47,19 +45,20 @@
 <!--                    <i class="bi bi-hand-thumbs-up"></i>-->
 <!--                    <span th:text="${c.likes}"></span>-->
 <!--                </a>-->
-                <div class="likeCont" th:id="'likeCont'+${c.chapNum}">
-                    <th:block th:if="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/loginLike"></th:block>
-                    <th:block th:unless="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/like"></th:block>
+                <div class="d-flex">
+                    <div class="likeCont" th:id="'likeCont'+${c.chapNum}">
+                        <th:block th:if="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/loginLike"></th:block>
+                        <th:block th:unless="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/like"></th:block>
+                    </div>
+                    <button>공유</button>
+                    <button>신고</button>
                 </div>
-                <button>공유</button>
-                <button>신고</button>
 <!--                <div th:text="${c}"></div>-->
 <!--                <th:block th:if="${session.loginUser.userId==c.userId}">-->
                 <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,c.user.userId)}">
                     <div class="d-flex justify-content-end">
                         <a th:href="@{'/chapstory/{chapNum}/modify.do'(chapNum=${c.chapNum})}" class="btn btn-primary">수정</a>
                         <a th:href="@{'/chapstory/{chapNum}/remove.do'(chapNum=${c.chapNum})}" class="btn btn-danger">삭제 </a>
-                        <button>삭제</button>
                     </div>
                 </th:block>
             </div>
@@ -74,4 +73,9 @@
         </div>
     </form>
 </div>
+<style>
+    p{
+        margin: 0;
+    }
+</style>
 </html>
