@@ -10,7 +10,7 @@
 <div layout:fragment = "content">
     <div>
         <div class="border bg-primary" style="height: 300px; position: relative;">
-            <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,c.user.userId)}">
+            <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,chapstorys[0].user.userId)}">
                 <div class="input-group" style="width: 50%;float:right">
                     <label class="input-group-text">베너 이미지 변경</label>
                     <input class="form-control" type="file" name="chapbanner">
