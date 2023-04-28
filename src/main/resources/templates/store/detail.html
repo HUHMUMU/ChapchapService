@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <title>가게 상세 페이지</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <div layout:fragment="content" th:each="s:${stores}">
   <div class="image-container">
@@ -20,7 +20,7 @@
   </div>
   <div class="store">
     <p class="storeName d-flex justify-content-center mt-4" th:text="${s.storeName}"></p>
-    <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="toggleRecommend([[${s.storeNum}]],this)">추천</button>
+    <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]])">추천</button>
   </div>
   <div class="store">
 <!--    <span class="starPoint">★4.45/</span>-->
@@ -183,12 +183,18 @@
     이 식당 예약하러 가기
   </div>
   <h5 class="store mt-3">리뷰</h5>
+  <th:block th:if="${session.loginUser!=null}">
+    <div class="d-flex justify-content-end">
+      <a th:href="'/review/'+${s.storeNum}+'/register.do'" class="btn btn-secondary btn-sm">리뷰쓰기</a>
+    </div>
+  </th:block>
+
   <div id="review">
     <div th:each="r,iter:${s.reviewList}" class="store mb-2">
       <div class="card" th:classappend="${iter.index >= 3} ? 'hide' : ''">
         <div class="card-header d-flex justify-content-between">
           <div class="d-flex">
-            <a th:href="'http://localhost:9090/user/'+${r.userInfo.userId}+'/detail.do'">
+            <a th:href="'/user/'+${r.userInfo.userId}+'/detail.do'">
               <img th:src="${r.userInfo.profileImg}" style="width: 50px; height: 50px; border-radius: 50%; border: #222 solid 1px; cursor: pointer;" >
             </a>
             <div>
@@ -210,8 +216,14 @@
               <p th:text="${r.countLike}"></p>
               <i class="bi bi-hand-thumbs-down"></i>
             </div>
-            <a class="btn btn-outline-dark pt-0" style="height: 25px;">신고하기</a>
-            <!--          <button class="btn btn-dark float-right">삭제</button>-->
+            <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,r.userId)}">
+              <div class="d-flex justify-content-end">
+                <a th:href="'/review/'+${r.reviewNum}+'/remove.do'" class="btn btn-outline-danger p-0" style="height: 25px;">삭제하기</a>
+              </div>
+            </th:block>
+            <th:block th:unless="${session.loginUser!=null && #strings.equals(session.loginUser.userId,r.userId)}">
+              <th:block th:include="/store/report"></th:block>
+            </th:block>
           </div>
         </div>
         <div class="card-body d-flex">
@@ -232,9 +244,6 @@
               </div>
               <div th:text="${rr.content}"></div>
             </div>
-          </div>
-          <div th:unless="${not #lists.isEmpty(r.rReplies)}">
-            <form class="mb-4"><textarea class="form-control" rows="3" placeholder="리뷰에 대한 댓글을 달아주세요"></textarea></form>
           </div>
         </div>
       </div>
@@ -367,10 +376,4 @@
     font-weight: bold;
   }
 
-  .menuBar{
-    position:-webkit-sticky;
-    position:sticky;
-    top:0;
-    z-index: 999;
-  }
 </style>

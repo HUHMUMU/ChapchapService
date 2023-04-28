@@ -85,7 +85,7 @@
                 AND type_classes.category_num = #{menuType}
             </if>
             <if test="detailArea != null">
-                AND stores.address LIKE CONCAT('%(', #{detailArea}, ')%')
+                AND stores.address LIKE CONCAT('%', #{detailArea}, '%')
             </if>
             <if test="parking != null">
                 AND stores.parking = #{parking}

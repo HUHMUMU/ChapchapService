@@ -1,8 +1,8 @@
 package com.acorn.chapspring.mapper;
 
 import com.acorn.chapspring.dto.ChatMsgDto;
-import com.acorn.chapspring.dto.ChatRoomDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ import java.util.List;
 public interface ChatMsgMapper {
     //메세지 보낸다(insert)
     int insertOne(ChatMsgDto chatMsgDto);
-    List<ChatRoomDto> findBycrId(int crId);
-    List<ChatRoomDto> findByCrIdAndGraterThanPostTime(int crId, String postTime);
+    List<ChatMsgDto> findByCrId(int crId);
+    List<ChatMsgDto> findByCrIdAndGraterThanPostTime(@Param("crId") int crId, @Param("postTime") String postTime);
 }

@@ -40,8 +40,6 @@ class ReviewMapperTest {
         reviews.setContent("테스트 리뷰 내용");
         reviews.setComment("테스트 한줄평");
         reviews.setImg("test.jpg");
-        Date LocalDate = new Date();
-        reviews.setDate(LocalDate);
         reviews.setStar(4);
         reviews.setRrStatus("공개");
         reviews.setUserId("user10");

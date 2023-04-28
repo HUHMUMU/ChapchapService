@@ -133,9 +133,9 @@
                         </li>
                         <li class="nav-item listbutton" role="presentation">
                             <button
-                                    class="nav-link" id="recommandListTab" data-bs-toggle="pill"
-                                    data-bs-target="#recommandList" type="button" role="tab"
-                                    aria-controls="recommandList" aria-selected="false">
+                                    class="nav-link" id="recommendListTab" data-bs-toggle="pill"
+                                    data-bs-target="#recommendList" type="button" role="tab"
+                                    aria-controls="recommendList" aria-selected="false">
                                 추천 가게
                             </button>
                         </li>
@@ -143,18 +143,30 @@
                 </div>
 
                 <div class="tab-content d-flex justify-content-center" id="pills-tabContent">
-                    <div th:include="/user/detail/waitingList" class="tab-pane fade show active" id="waitingList" role="tabpanel"
+                    <div class="tab-pane fade show active" id="waitingList" role="tabpanel"
                             aria-labelledby="waitingListTab" tabindex="0">
+                        <th:block th:include="/user/detail/waiting/waiting"></th:block>
                     </div>
-                    <div th:include="/user/detail/jjimList" class="tab-pane fade" id="jjimList" role="tabpanel"
+                    <div class="tab-pane fade" id="jjimList" role="tabpanel"
                             aria-labelledby="jjimListTab" tabindex="0">
+                        <th:block th:include="/user/detail/jjim/jjim"></th:block>
                     </div>
-                    <div th:include="/user/detail/reviewList" class="tab-pane fade" id="reviewList" role="tabpanel"
+                    <div class="tab-pane fade" id="reviewList" role="tabpanel"
                          aria-labelledby="reviewListTab" tabindex="0">
+                        <th:block th:include="/user/detail/review/review"></th:block>
                     </div>
-                    <div th:include="/user/detail/recommandList" class="tab-pane fade" id="recommandList" role="tabpanel"
+
+                    <div class="tab-pane fade" id="recommendList" role="tabpanel"
                          aria-labelledby="recommandListTab" tabindex="0">
+                        <div class="userDetailContainer rounded-3" id="Recommend" style="display: flex;">
+                            <ul class="card-group">
+                                <li class="card-group-item" th:each="recommend: ${recommend}">
+                                    <th:block th:insert="/user/detail/recommend/recommend"></th:block>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+
                 </div>
             </nav>
             <div style="border: 1px solid red;">
@@ -173,8 +185,7 @@
     </div>
 </div>
 </html>
-<script>
-
+<script >
     //1. 공유버튼 임시 구현
     document.querySelector('#sharelink').setAttribute('data-clipboard-text',window.location.href)
     var clipboard = new ClipboardJS('#sharelink');

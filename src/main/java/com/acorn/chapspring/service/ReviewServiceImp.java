@@ -4,6 +4,7 @@ import com.acorn.chapspring.dto.ReviewsDto;
 import com.acorn.chapspring.mapper.ReviewMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,4 +19,24 @@ public class ReviewServiceImp implements ReviewService{
         return list;
     }
 
+
+    @Override
+    public List<ReviewsDto> menuNames(int storeNum) {
+        List<ReviewsDto> menuList=reviewMapper.findReviewByStore(storeNum);
+        return menuList;
+    }
+
+    @Override
+    @Transactional
+    public int register(ReviewsDto reviews) {
+        int register=reviewMapper.insertReview(reviews);
+        return register;
+    }
+
+    @Override
+    @Transactional
+    public int remove(int reviewNum) {
+        int remove=reviewMapper.deleteReview(reviewNum);
+        return remove;
+    }
 }
