@@ -42,4 +42,10 @@ public class StoreController {
         // 수업자료의 boards에 해당
         return "store/list";
     }
+    @GetMapping("/ajaxList.do")
+    public @ResponseBody PageInfo list(
+           @ModelAttribute StoreFilterDto storeFilterDto) {
+        PageInfo<StoresDto> ajaxAddress = storeService.getFilteredStores(storeFilterDto);
+        return ajaxAddress;
+    }
 }

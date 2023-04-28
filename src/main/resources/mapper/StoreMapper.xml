@@ -71,7 +71,7 @@
         SELECT * FROM stores
     </select>
     <select id="findStoresByFilter" resultMap="StoresMap">
-        SELECT stores.store_num, stores.store_name, stores.main_img, stores.short_info, stores.parking,
+        SELECT stores.store_num, stores.store_name, stores.main_img, stores.short_info, stores.parking, stores.address,
         type_classes.category_num,
         (SELECT COUNT(*) FROM jjim_manages WHERE store_num = stores.store_num) AS jjim_count,
         (SELECT COUNT(*) FROM reviews WHERE store_num = stores.store_num) AS review_count,
@@ -81,16 +81,16 @@
         LEFT JOIN type_classes ON storetypes.category_num = type_classes.category_num
         LEFT JOIN menu_manages ON stores.store_num = menu_manages.store_num
         <trim prefix="WHERE" prefixOverrides="AND |OR">
-            <if test="menuType != null">
+            <if test="menuType != null and !menuType.equals('')">
                 AND type_classes.category_num = #{menuType}
             </if>
-            <if test="detailArea != null">
+            <if test="detailArea != null and !detailArea.equals('')">
                 AND stores.address LIKE CONCAT('%', #{detailArea}, '%')
             </if>
-            <if test="parking != null">
+            <if test="parking != null and !parking.equals('')">
                 AND stores.parking = #{parking}
             </if>
-            <if test="priceRange != null">
+            <if test="priceRange != null and !priceRange.equals('')">
                 AND (SELECT AVG(price) FROM menu_manages WHERE store_num = stores.store_num) BETWEEN
                 SUBSTRING_INDEX(#{priceRange}, '-', 1) AND SUBSTRING_INDEX(#{priceRange}, '-', -1)
             </if>
