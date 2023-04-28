@@ -158,9 +158,9 @@
 
                     <div class="tab-pane fade" id="recommendList" role="tabpanel"
                          aria-labelledby="recommandListTab" tabindex="0">
-                        <div class="userDetailContainer rounded-3" id="Recommend" style="display: flex;">
-                            <ul class="card-group">
-                                <li class="card-group-item" th:each="recommend: ${recommend}">
+                        <div class="userDetailContainer rounded-3" id="Recommend" style="display: flex;justify-content: space-around">
+                            <ul class="recommendCard-group">
+                                <li class="recommendCard-group-item" th:each="recommend: ${recommend}">
                                     <th:block th:insert="/user/detail/recommend/recommend"></th:block>
                                 </li>
                             </ul>

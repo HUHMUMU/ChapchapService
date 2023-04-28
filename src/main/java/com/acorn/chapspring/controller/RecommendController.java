@@ -47,9 +47,16 @@ public class RecommendController {
             @SessionAttribute UserDto loginUser
         )throws IOException {
         HandlerDto handler=new HandlerDto();
-        int add=recommendService.add(recommendstore);
-        handler.setAdd(add);
-        return handler;
+        List<RecommendStoreDto> list=recommendService.recommendList(loginUser.getUserId());
+        if(list.size()<3){
+            int add=recommendService.add(recommendstore);
+            handler.setAdd(add);
+            return handler;
+        }
+        else {
+            handler.setAdd(0);
+            return handler;
+        }
     }
 
     @DeleteMapping("/handler.do")
