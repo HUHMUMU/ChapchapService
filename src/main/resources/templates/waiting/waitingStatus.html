@@ -26,89 +26,18 @@
             width: 50vh;
             display: block;
         }
-        #waitingSubmit, #waitingCancel{
-            text-align: center;
-            display: inline;
-            justify-content: center;
-            align-items: center;
-            margin: auto;
-        }
         .container{
             display: block;
             margin: auto;
         }
 
-        .modal-content{
-            text-align: center;
-            display: block;
-            margin: auto;
-        }
         .card-body{
             height: 10vh;
         }
-        #card
     </style>
 </head>
 <body>
-<h1 th:text="${user_name} + '님, ' + ${store_name} + '에 대한 웨이팅 등록하기'"></h1>
-
-<div class="alert alert-warning" role="alert">
-    <p><strong>주의사항:</strong> 이 부분에 경고 내용을 작성해 주세요.</p>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">동의하겠습니다</button>
-</div>
-
-<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">주의사항</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>주의하시오 알겠소?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="goToNextStep()">동의합니다</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<!--대기 등록 선택지 모달-->
-<div class="modal fade" id="waiting-modal" tabindex="-1" role="dialog" aria-labelledby="waiting-modal-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="waiting-modal-label">웨이팅 대기 등록</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form th:action="@{/templates/waiting/waitingStatus.html}" method="post" th:object="${WaitingDto}">
-                    <!-- 대기 인원 선택 -->
-                    <div class="form-group">
-                        <label for="user-people">대기인원</label>
-                        <select class="form-control" id="user-people" th:field="*{WaitingDto.userPeople}">
-                            <option th:each="i : ${#numbers.sequence(1, WaitingDto.maxPeople)}" th:value="${i}"
-                                    th:text="${i}명"></option>
-                        </select>
-                    </div>
-
-                    <!-- 대기 등록 버튼 -->
-                    <button type="submit" class="btn btn-primary">등록</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+<div layout:fragment="content">
 <div class="container" >
     <div class="row justify-content-center">
         <!--  2-1 div-->
@@ -118,7 +47,7 @@
                     <h5 class="card-title">현재 대기팀</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text"><strong><span th:text="${userId}"></span></strong></p>
+                    <p class="card-text"><strong><span th:text="${userswaiting.waitNum}"></span></strong></p>
                 </div>
             </div>
         </div>
@@ -129,9 +58,9 @@
                     <h5 class="card-title">대기 번호</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">대기 번호 : <strong><span th:text="${waitNum}"></span></strong></p>
-                    <p class="card-text">웨이팅 등록 시간 : <strong><span th:text="${startTime}"></span></strong></p>
-                    <p class="card-text">예상 대기 시간 : <strong><span th:text="${timeSetup}"></span></strong> 분</p>
+                    <p class="card-text">대기 번호 : <strong><span th:text="${userswaiting.waitNum}"></span></strong></p>
+                    <p class="card-text">웨이팅 등록 시간 : <strong><span th:text="${userswaiting.startTime}"></span></strong></p>
+                    <p class="card-text">예상 대기 시간 : <strong><span th:text="${storeswaiting.timeSetup}"></span></strong> 분</p>
                 </div>
             </div>
         </div>
@@ -152,15 +81,12 @@
     </div>
 </div>
 <br>
-<div style="display: flex">
-    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="deleteWaiting">
+<div style="display: flex; text-align: center; margin: auto; height: auto;justify-content: center">
+    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="deleteWaiting" onclick="'/'">
         대기 취소하기
     </button>
-    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="modifyWaiting">
-        인원 수정하기
-    </button>
-    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="waitingSubmit">
-        대기 등록하기
+    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="modifyWaiting" onclick="'/waiting/Modify.do'">
+        <a href=""></a>인원 수정하기
     </button>
 </div>
 
@@ -180,8 +106,4 @@
 </body>
 </html>
 
-<!--뷰만 나옴-->
-<!--밑에 버튼 건드려야하고-->
-<!--여기 이상함 ㅇㅇ-->
-<!--등록버튼 제외하고 기능 연결하면 될듯?
-    모달 굳이 써야하나 싶기도 하고 alert로 사용하자-->
+<!-- 이것도 일단 확정-->
