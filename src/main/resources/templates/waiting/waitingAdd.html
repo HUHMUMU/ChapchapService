@@ -87,7 +87,7 @@
   minusBtn.addEventListener('click', function() {
     const value = parseInt(peopleInput.value);
     if (value > 1) {
-      peopleInput.value = value - 1;
+      peopleInput.value = value - 2;
     }
   });
 
@@ -95,7 +95,7 @@
     const max = parseInt(peopleInput.getAttribute('max'));
     const value = parseInt(peopleInput.value);
     if (value < max) {
-      peopleInput.value = value + 1;
+      peopleInput.value = value + 2;
     }
   });
 </script>

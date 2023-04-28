@@ -10,27 +10,32 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-@AllArgsConstructor //모든 필드를 pojo 형식의 생성자로 자동 생성
-@Controller //< @Component 요청과 응답을 처리 가능
+@AllArgsConstructor
+@Controller
 @RequestMapping("/")
-@Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
+@Log4j2
 public class MainController {
     private MainService mainService;
 
-    @GetMapping("/searchStore.do")
-    public String searchStoreFrom(){
-        return "/"; //렌더할 뷰
-    }
+
+
     @PostMapping("/searchStore.do")
     public String searchBestStore(
-            @RequestParam("siAddress") String siAdd,
-            @RequestParam("guAddress") String guAdd,
-            Model model){
+            String siAdd,
+            String guAdd,
+            Model model,
+            RedirectAttributes redirectAttributes) {
         StoresDto store = mainService.getStoreByAddressReviews(siAdd, guAdd);
-        model.addAttribute("store",store);
+        if (store != null) {
+            System.out.println(store);
+            model.addAttribute("store", store);
+            return "/";
+        }
+        redirectAttributes.addFlashAttribute("msg", "검색 결과가 없습니다.");
         return "redirect:/";
     }
 }
