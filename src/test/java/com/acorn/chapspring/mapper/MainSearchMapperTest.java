@@ -1,5 +1,6 @@
 package com.acorn.chapspring.mapper;
 
+import com.acorn.chapspring.dto.MenuManagesDto;
 import com.acorn.chapspring.dto.StoresDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,9 @@ class MainSearchMapperTest {
     private MainSearchMapper mainSearchMapper;
 
     @Test
-    void findByName(){
-        List<StoresDto> storeList = mainSearchMapper.findByNameContaining("햄");
-        assertNotNull(storeList);
-        System.out.println("storeList = " + storeList);
+    void findStore() {
+        StoresDto store= mainSearchMapper.findByAddressReviewsOne("서울", "강남구");
+        System.out.println("store = " + store);
+        assertNotNull(store);
     }
 }

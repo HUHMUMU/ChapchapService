@@ -8,7 +8,6 @@ async function chapLikeHandler(cNum){
         const json=await resp.json();
         if(!json.handler){
             alert("성공")
-            return resp;
         }else{
             alert(json.status+" "+json.handlerType+" 실패")
         }

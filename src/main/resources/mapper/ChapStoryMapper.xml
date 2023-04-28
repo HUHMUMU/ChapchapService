@@ -45,7 +45,7 @@
         SELECT * FROM chapstorys WHERE chap_num=#{chapNum}
     </select>
     <select id="findByUserId" resultMap="ChapstoryMap">
-        SELECT * FROM chapstorys WHERE user_id=#{userId}
+        SELECT * FROM chapstorys WHERE user_id=#{userId} ORDER BY post_time desc
     </select>
     <select id="findAll" resultMap="ChapstoryMap" parameterType="ChapStoryPageDto">
         SELECT *,
@@ -55,5 +55,11 @@
         <if test="searchField!=null">
             WHERE ${searchField}=#{searchValue}
         </if>
+    </select>
+    <select id="bestList" resultMap="ChapstoryMap">
+        SELECT chap_num, title, viewcount, main_img FROM  chapstorys where post_time >= DATE_FORMAT(now()-7,'%Y%m%d') ORDER BY viewcount desc
+    </select>
+    <select id="bestListFindByUserId" resultMap="ChapstoryMap">
+        SELECT  chap_num, title, viewcount, main_img FROM  chapstorys where user_id=#{userId} ORDER BY viewcount desc
     </select>
 </mapper>

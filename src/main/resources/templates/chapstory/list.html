@@ -9,38 +9,44 @@
 </head>
 <div layout:fragment="content">
     <form action="/chapstory/list.do">
-        <div class="card-group mt-xxl-5" >
-            <div class="card">
-                <img src="..." class="card-img-top" alt="...">
+        <div class="card-group mt-xxl-5 m-5 p-5" >
+            <div class="card m-1">
+                <img th:src="@{'{path}'(path=${bestList[0].mainImg})}" class="card-img-top" alt="챱스인기글썸네일">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
+                    <h3 class="card-title">
+                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestList[0].chapNum})}" th:text="${bestList[0].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                    </h3>
                 </div>
             </div>
-            <div class="card">
-                <img src="..." class="card-img-top" alt="...">
+            <div class="card m-1">
+                <img th:src="@{'{path}'(path=${bestList[1].mainImg})}" class="card-img-top" alt="챱스인기글썸네일">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
+                    <h3 class="card-title">
+                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestList[1].chapNum})}" th:text="${bestList[1].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                    </h3>
                 </div>
             </div>
-            <div class="card">
-                <img src="..." class="card-img-top" alt="...">
+            <div class="card m-1">
+                <img th:src="@{'{path}'(path=${bestList[2].mainImg})}" class="card-img-top" alt="챱스인기글썸네일">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
+                    <h3 class="card-title">
+                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestList[1].chapNum})}" th:text="${bestList[1].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                    </h3>
                 </div>
             </div>
         </div>
         <th:block th:if="${session.loginUser!=null}">
             <div class="d-flex justify-content-end mt-5 mb-5">
-                <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${session.loginUser.userId})}"  class="btn btn-primary">my챱</a>
-                <a href="/chapstory/register.do" class="btn btn-primary">글쓰기</a>
+                <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${session.loginUser.userId})}"  class="btn btn-warning me-2">my챱</a>
+                <a href="/chapstory/register.do" class="btn btn-warning">글쓰기</a>
             </div>
         </th:block>
         <nav aria-label="Page navigation example" style="width: 70%; margin:auto" class="mt-lg-5 mb-lg-5">
             <form action="" class="mx-auto" >
                 <div class="input-group">
-                    <label class="input-group-text bi bi-list-columns"></label>
+                    <label class="input-group-text bi bi-list-columns" style="background-color: #ffeeba;"></label>
                     <select name="order" class="form-control">
-                        <option value="">칼럼</option>
+                        <option value="">정렬기준</option>
                         <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">아이디</option>
                         <option th:selected="(${#strings.equals(param.order,'chap_num')})"value="chap_num">게시글번호</option>
 <!--                        <option th:selected="(${#strings.equals(param.order,'nickname')})"value="nickname">닉네임</option>-->
@@ -58,22 +64,22 @@
                             오름차순
                         </option>
                     </select>
-                    <button class="btn btn-primary">정렬</button>
+                    <button class="btn btn-warning">정렬</button>
                 </div>
                 <div class="input-group my-3">
-                    <label class="input-group-text bi bi-search"></label>
-                    <select name="searchField" class="form-control ">
+                    <label class="input-group-text bi bi-search" style="background-color: #ffeeba;"></label>
+                    <select name="searchField" class="form-control">
                         <option th:selected="(${#strings.equals(param.searchField,'user_id')})"value="user_id">글쓴이</option>
                         <option th:selected="(${#strings.equals(param.searchField,'title')})"value="title">제목</option>
                         <option th:selected="(${#strings.equals(param.searchField,'content')})"value="content">내용</option>
                     </select>
                     <input type="text" class="form-control " name="searchValue" placeholder="검색어 입력"
-                           th:value="${param.searchValue}">
-                    <button class="btn btn-primary">검색</button>
+                           th:value="${param.searchValue}" style="width : 70%">
+                    <button class="btn btn-warning">검색</button>
                 </div>
             </form>
         </nav>
-        <div>
+        <div style="margin-bottom: 100px">
             <div class="p-4 border-1 bg-white mb-4" th:each="c:${chapstorys}">
                 <div class="d-flex justify-content-around">
                     <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="width: 200px; height: 200px; object-fit: cover;" class="img-thumbnail">
@@ -86,7 +92,7 @@
                                 </h4>
                                 <div class="d-flex end">
                                     <p>조회수 </p>
-                                    <small class="ms-2" th:text="${c.viewcount}"></small>
+                                    <p class="ms-2" th:text="${c.viewcount}"></p>
                                 </div>
                             </div>
                             <div>
@@ -100,7 +106,7 @@
                         <h3>
                             <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}" th:text="${c.title}" style="text-decoration: none; color: inherit;"></a>
                         </h3>
-                        <p th:text="${c.content}"></p>
+                        <p class="content" th:text="${c.content}"></p>
                         </div>
                 </div>
             </div>
@@ -113,5 +119,11 @@
     p, small{
         color : #636363;
         margin : 0;
+    }
+    .content{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        height: 100px;
     }
 </style>

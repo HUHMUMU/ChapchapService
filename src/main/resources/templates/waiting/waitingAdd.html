@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
   <meta charset="UTF-8">
   <title>Waiting</title>
@@ -10,90 +13,94 @@
   <link rel="stylesheet" href="css/waiting.css">
 </head>
 <body>
-<div class="container">
-  <h1 th:text="${user_name} + '님, ' + ${store_name} + '안녕하세요? '></h1>
-
-  <div class="alert alert-warning" role="alert">
-    <p><strong>주의사항:</strong> 이 부분에 경고 내용을 작성해 주세요.</p>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">동의하겠습니다</button>ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ
-  </div>
-
-  <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="confirmModalLabel">주의사항</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>이 부분에 경고 내용을 상세히 작성해 주세요.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="goToNextStep()">동의합니다</button>
-        </div>
+<div layout:fragment="content">
+  <div class="container">
+    <div class="alert alert-warning" role="alert">
+      <div style="align-content: center; text-align: center">
+        <p ><strong>주의사항</strong> <br>
+          입장 알림 후 일정시간을 초과한 경우 강제 취소가 될 수 있습니다.
+          <br>
+          대기 강제 취소의 누적에 따라 사용자의 사용제한이 될 수 있으니 주의해주세요!
+          <br>
+          가게 사정에 따라 예약 인원 수에 따라 입장 순서가 달라질 수 있으므로, 사장님께 문의하세요.
+        </p>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal" id="confirmBtn">확인했습니다</button>
       </div>
     </div>
-  </div>
 
-  <div class="waiting-container">
-    <div class="store-image">
-      <img th:src="${store_image}" alt="
+        <div class="row">
+          <div class="col-lg-8 col-md-12">
+            <!-- 가게 정보? -->
+            <div class="card store-info">
+              <div class="card-body">
+                <h2 class="card-title" th:text="${stores.store_name}"></h2>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <img th:src="@{/static/images/store_img.jpg}" class="store-img">
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="waiting-input">
+                      <h4>Waiting 등록</h4>
+                      <form th:action="@{/waiting/waitingStatus.html}" method="get">
 
-
-
-
-
-
-
-
-      <div class="row">
-        <div class="col-lg-8 col-md-12">
-          <!-- store information -->
-          <div class="card store-info">
-            <div class="card-body">
-              <h2 class="card-title" th:text="${store.store_name}"></h2>
-              <div class="row">
-                <div class="col-sm-6">
-                  <img th:src="@{/static/images/store_img.jpg}" class="store-img">
-                </div>
-                <div class="col-sm-6">
-                  <div class="waiting-input">
-                    <h4>Waiting 등록</h4>
-                    <form th:action="@{/waiting}" method="post">
-                      <div class="form-group">
-                        <label for="people-input">인원 수</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary" type="button" id="minus-btn">-</button>
+                        <div class="form-group">
+                          <label for="people-input">인원 수</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <button class="btn btn-outline-secondary" type="button" id="minusBtn">-</button>
+                            </div>
+                            <input type="number" class="form-control" id="people-input" name="user_people"
+                                   placeholder="인원 수를 입력하세요." th:max="${storeswaiting.max_people}" min="1">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" id="plusBtn">+</button>
+                            </div>
                           </div>
-                          <input type="text" class="form-control" id="people-input" name="user_people"
-                                 placeholder="인원 수를 입력하세요." th:max="${store.max_people}">
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="plus-btn">+</button>
+                          <small class="form-text text-muted" th:text="${'최대 '+storeswaiting.max_people+'명까지 가능합니다.'}"></small>
+                        </div>
+                        <div class="form-group">
+                          <div class="form-check">
                           </div>
                         </div>
-                        <small class="form-text text-muted" th:text="${'최대 '+store.max_people+'명까지 가능합니다.'}"></small>
-                      </div>
-                      <div class="form-group">
-                        <div class="form-check">
-                        </div>
-                      </div>
-                      <button type="submit" class="btn btn-primary btn-block">등록하기</button>
-                    </form>
+                        <button type="submit" class="btn btn-primary btn-block">등록하기</a></button>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
+      </div>
     </div>
   </div>
-</div>
+<script>
+  const confirmBtn = document.getElementById('confirmBtn');
+  confirmBtn.addEventListener('click', function() {
+    const warningMsg = document.querySelector('.alert-warning');
+    warningMsg.style.display = 'none';
+  });
 
-<!--취소 버튼 만들어야함-->
+  const minusBtn = document.getElementById('minusBtn');
+  const plusBtn = document.getElementById('plusBtn');
+  const peopleInput = document.getElementById('people-input');
 
-<!--웨이팅 @@ 팀 대기중 내용도 추가해야함-->
+  minusBtn.addEventListener('click', function() {
+    const value = parseInt(peopleInput.value);
+    if (value > 1) {
+      peopleInput.value = value - 2;
+    }
+  });
+
+  plusBtn.addEventListener('click', function() {
+    const max = parseInt(peopleInput.getAttribute('max'));
+    const value = parseInt(peopleInput.value);
+    if (value < max) {
+      peopleInput.value = value + 2;
+    }
+  });
+</script>
+  </body>
+
+
+
+</html>

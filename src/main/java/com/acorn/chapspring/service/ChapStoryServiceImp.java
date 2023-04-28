@@ -27,6 +27,18 @@ public class ChapStoryServiceImp implements ChapStoryService{
     }
 
     @Override
+    public List<ChapstorysDto> bestList() {
+        List<ChapstorysDto> bestList = chapStoryMapper.bestList();
+        return bestList;
+    }
+
+    @Override
+    public List<ChapstorysDto> bestListFindByUserId(String userId) {
+        List<ChapstorysDto> bestListFindByUserId = chapStoryMapper.bestListFindByUserId(userId);
+        return bestListFindByUserId;
+    }
+
+    @Override
     @Transactional
     public ChapstorysDto detail(int chapNum) {
         chapStoryMapper.updateIncrementViewCountChapNum(chapNum);

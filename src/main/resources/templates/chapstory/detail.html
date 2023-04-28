@@ -7,10 +7,11 @@
     <meta charset="UTF-8">
     <title>블로그 상세글</title>
     <script src="/public/js/ChapstoryLike.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 </head>
 <div layout:fragment="content">
     <form action="/chapstory/detail.do" style="margin-top: 50px">
-        <h3 th:text="${c.title}" style="font-size: 50px"></h3>
+        <h3 th:text="${c.title}" style="font-size: 50px; margin-bottom: 20px"></h3>
         <div class="d-flex justify-content-between">
             <div class="d-flex">
                 <img th:src="@{'{path}'(path=${c.user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle me-3">
@@ -20,11 +21,11 @@
                         <h3>
                             <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${c.user.userId})}"  th:text="${c.user.nickname}" style="text-decoration: none; color: inherit; margin-right: 10px"></a>
                         </h3>
-                        <div class="d-flex">
-                            <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
-                            <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
-                            <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
-                        </div>
+<!--                        <div class="d-flex">-->
+<!--                            <div class="border bg-warning rounded-circle me-2" style="height: 30px; width: 30px"></div>-->
+<!--                            <div class="border bg-warning rounded-circle me-2" style="height: 30px; width: 30px"></div>-->
+<!--                            <div class="border bg-warning rounded-circle me-2" style="height: 30px; width: 30px"></div>-->
+<!--                        </div>-->
                     </div>
                     <div class="d-flex align-items-start">
                         <p th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}" style="margin-right: 20px"></p>
@@ -45,26 +46,30 @@
 <!--                    <i class="bi bi-hand-thumbs-up"></i>-->
 <!--                    <span th:text="${c.likes}"></span>-->
 <!--                </a>-->
-                <div class="d-flex">
-                    <div class="likeCont" th:id="'likeCont'+${c.chapNum}">
+                <div class="d-flex align-items-center">
+                    <div class="likeCont me-2" th:id="'likeCont'+${c.chapNum}">
                         <th:block th:if="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/loginLike"></th:block>
                         <th:block th:unless="${session.loginUser!=null}" th:with="likes=${c.likeCnt},id=${c.chapNum}" th:include="/chapstory/like"></th:block>
                     </div>
-                    <button>공유</button>
-                    <button>신고</button>
+                    <a id="share-btn" class="btn btn-outline-warning btn-sm me-2" data-clipboard-text="https://example.com">공유</a>
+                    <th:block th:unless="${session.loginUser!=null && #strings.equals(session.loginUser.userId,c.userId)}">
+                        <th:block th:include="/chapstory/report"></th:block>
+                    </th:block>
                 </div>
 <!--                <div th:text="${c}"></div>-->
 <!--                <th:block th:if="${session.loginUser.userId==c.userId}">-->
                 <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,c.user.userId)}">
                     <div class="d-flex justify-content-end">
-                        <a th:href="@{'/chapstory/{chapNum}/modify.do'(chapNum=${c.chapNum})}" class="btn btn-primary">수정</a>
-                        <a th:href="@{'/chapstory/{chapNum}/remove.do'(chapNum=${c.chapNum})}" class="btn btn-danger">삭제 </a>
+                        <a th:href="@{'/chapstory/{chapNum}/modify.do'(chapNum=${c.chapNum})}" class="btn btn-warning me-2">수정</a>
+                        <a th:href="@{'/chapstory/{chapNum}/remove.do'(chapNum=${c.chapNum})}" class="btn btn-warning me-2">삭제 </a>
                     </div>
                 </th:block>
             </div>
         </div>
-        <div class="border bg-primary" style="height: 300px;"></div>
-        <div class="container">
+        <hr>
+        <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="height: 300px; object-fit: cover; margin-top: 50px; justify-self: center; display: block;" class="img-thumbnail mx-auto">
+<!--        <div class="border bg-primary" style="height: 300px; margin-top: 50px"></div>-->
+        <div class="container" style="margin-top: 50px;">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <p th:text="${c.content}"></p>
@@ -79,3 +84,10 @@
     }
 </style>
 </html>
+<script>
+    document.querySelector('[data-clipboard-text]').setAttribute('data-clipboard-text', window.location.href);
+    var clipboard = new ClipboardJS('#share-btn');
+    clipboard.on('success', function(e) {
+        alert('주소가 복사되었습니다.');
+    });
+</script>

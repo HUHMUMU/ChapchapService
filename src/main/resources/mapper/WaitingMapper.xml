@@ -1,29 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acorn.chapspring.mapper.WaitingMapper">
+    <resultMap id="waitingMap" type="waitingDto">
+        <id column="waiting_num" property="waitingNum"/>
+        <result column="wait_num" property="waitNum"/>
+        <result column="user_id" property="userId"/>
+        <result column="store_num" property="storeNum"/>
+        <result column="user_people" property="userPeople"/>
+        <result column="waiting_date" property="waitingDate"/>
+        <result column="start_time" property="startTime"/>
+        <result column="enter_status" property="enterStatus"/>
+    </resultMap>
+
     <!--  이건 대기등록할때 보여지는 거  -->
     <select id="getWaitingList" resultType="com.acorn.chapspring.dto.WaitingDto">
         SELECT userswaiting FROM userswaiting WHERE store_num=#{storeNum} and wait_num=#{waitNum}
     </select>
-    <!--  대기 등록 하고 나면 보일 거   -->
+    <!--  대기 등록 하고 나면 보일 거 등록한 사람보다 대기 번호가 빠른 팀의 수   -->
     <select id="getFastWaiting" resultType="com.acorn.chapspring.dto.WaitingDto">
         SELECT userswaiting From where wait_num=#{waitNum} and store_num=#{storeNum}
     </select>
-    <!-- 대기 등록   -->
+    <!-- 대기 등록 추가   -->
     <insert id="addWaiting">
         INSERT INTO userswaiting(wait_num, user_id, store_num,user_people,waiting_num,waiting_date,start_time,enter_status)
         VALUES (#{waitNum}, #{userId},#{storeNum},#{userPeople},#{waitingNum},#{waitingDate},#{startTime},#{enterStatus})
     </insert>
-    <!-- 대기 인원 수정   -->
+    <!-- 대기 등록한 유저의 인원 수정   -->
     <update id="modifyWaiting">
         UPDATE userswaiting SET user_people=#{userPeople}
         WHERE waiting_num=#{waitingNum} and user_id=#{userId} and store_num=#{storeNum}
     </update>
-    <!-- 대기 삭제   -->
+    <!-- 대기 등록한 유저의 대기 삭제   -->
     <delete id="deleteWaiting">
         delete from userswaiting
         where wait_num=#{waitNum} and waiting_num=#{waitingNum}
     </delete>
 </mapper>
-
-        <!--하고 있는중-->

@@ -1,33 +1,39 @@
-<ul class="pagination justify-content-center">
+<ul class="pagination justify-content-center" style="margin-bottom: 50px">
     <li class="page-item">
-        <a class="page-link"
+        <a class="page-link text-warning"
            th:classappend="${!page.isFirstPage ? '' : 'disabled'}"
            th:href="@{''(pageNum=1,pageSize=10,order=${param.order},direct=${param.direct},searchField=${param.searchField},searchValue=${param.searchValue})}"
         >First</a>
     </li>
     <li class="page-item">
-        <a class="page-link"
+        <a class="page-link text-warning"
            th:classappend="${page.isHasPreviousPage ? '' : 'disabled'}"
            th:href="@{''(pageNum=${page.prePage},pageSize=10,order=${param.order},direct=${param.direct},searchField=${param.searchField},searchValue=${param.searchValue})}"
         >Prev</a>
     </li>
     <li th:each="p:${page.navigatepageNums}" class="page-item">
-        <a class="page-link"
+        <a class="page-link text-warning"
            th:classappend="${p==page.pageNum ? 'active' : ''}"
            th:href="@{''(pageNum=${p},pageSize=10,order=${param.order},direct=${param.direct},searchField=${param.searchField},searchValue=${param.searchValue})}"
            th:text="${p}">
         </a>
     </li>
     <li class="page-item">
-        <a class="page-link"
+        <a class="page-link text-warning"
            th:classappend="${page.isHasNextPage ? '' : 'disabled'}"
            th:href="@{''(pageNum=${page.nextPage},pageSize=10,order=${param.order},direct=${param.direct},searchField=${param.searchField},searchValue=${param.searchValue})}"
         >Next</a>
     </li>
     <li class="page-item">
-        <a class="page-link"
+        <a class="page-link text-warning"
            th:classappend="${!page.isLastPage ? '' : 'disabled'}"
            th:href="@{''(pageNum=${page.pages},pageSize=10,order=${param.order},direct=${param.direct},searchField=${param.searchField},searchValue=${param.searchValue})}"
         >Last</a>
     </li>
 </ul>
+<style>
+    .pagination .page-link.active {
+        background-color: #ffe69c;
+        border-color: #ffc954;
+    }
+</style>

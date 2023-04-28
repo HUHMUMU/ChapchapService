@@ -32,7 +32,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/emailCheck.do")
                 .addPathPatterns("/board/**")
                 .excludePathPatterns("/board/list.do")
-                .excludePathPatterns("/board/*/detail.do");
+                .excludePathPatterns("/board/*/detail.do")
+                .excludePathPatterns("/waiting/waitingAdd.do")
+                .excludePathPatterns("/waiting/waitingModify.do")
+                .excludePathPatterns("/waiting/waitingStatus.do");
+
         registry.addInterceptor(msgRemoveInterceptor).order(3)
                 .addPathPatterns("/**");
     }

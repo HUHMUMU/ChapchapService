@@ -3,6 +3,10 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>메인 페이지</title>
+</head>
 <div layout:fragment="content" class="position-relative">
     <button class="btn btn-warning rounded-circle mx-5 position-sticky top-50 start-100 translate-middle-y"
             style="height: 80px; width: 80px" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
@@ -231,12 +235,9 @@
 
     <div class="mx-auto">
         <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 베스트 맛집</h1>
-        <form action="">
-
-
             <div class="d-flex justify-content-center mt-5">
                 <div class="search_box me-3">
-                    <select class="form-select border-warning" name="" onchange="categoryChange2(this)">
+                    <select class="form-select border-warning" name="siAddress" onchange="categoryChange2(this)">
                         <option value>시/도 선택</option>
                         <option value="general01">강원</option>
                         <option value="general02">경기</option>
@@ -258,7 +259,7 @@
                 </div>
 
                 <div class="search_box mx ms-3">
-                    <select class="form-select border-warning" name="" id="state2">
+                    <select class="form-select border-warning" name="guAddress" id="state2">
                         <option>군/구 선택</option>
                     </select>
                 </div>
@@ -331,26 +332,24 @@
                     }
                 </script>
 
-                <button type="button" class="btn btn-warning ms-3">검색</button>
+                <button type="submit" class="btn btn-warning ms-3" th:onclick="loadBestStore()">검색</button>
             </div>
-        </form>
     </div>
 
-    <div class="card mt-5 mx-auto w-75">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="http://localhost:8080/images/main/볶음밥.jpg" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <div class="card mt-5 mx-auto w-75" id="bestStoreCont">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="http://localhost:8080/images/main/볶음밥.jpg" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text">맛집 이 나와야 해 !!!!!!!</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
     <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 베스트 카페</h1>
@@ -462,9 +461,8 @@
         <div class="row g-0">
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
+                    <h5 class="card-title">오늘의 추천 가게는!!</h5>
+                    <p class="card-text">추천가게에 대한 설명</p>
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
             </div>
@@ -718,5 +716,22 @@
     <span class="visually-hidden">unread messages</span>
     </span>
     </button>
+
+    <script th:inline="javascript">
+        const bestStoreCont=document.getElementById("bestStoreCont");
+        async function loadBestStore(){
+            let url = `/main/searchStore.do`
+            const resp= await fetch(url);
+            let text = await resp.text();
+
+            if(resp.status===200){
+                bestStoreCont.innerHTML="<h1>리로드</h1>"+text;
+
+            }
+
+        }
+
+
+    </script>
 </div>
 </html>
