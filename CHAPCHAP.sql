@@ -31,7 +31,7 @@ CREATE TABLE stores
     facebookurl       VARCHAR(255)           NULL COMMENT '페북url',
     instaurl          VARCHAR(255)           NULL COMMENT '인스타url',
     tvshow            VARCHAR(255)           NULL COMMENT '방송출연정보직접입력',
-    s_rstatus         ENUM ('공개','심사','비공개') NOT NULL COMMENT '신고상태',
+    s_rstatus         ENUM ('공개','심사','비공개') NOT NULL DEFAULT '공개' COMMENT '신고상태',
     parking           BOOLEAN                NOT NULL COMMENT '주차장',
     wifi              BOOLEAN                NOT NULL COMMENT '와이파이',
     toilet            BOOLEAN                NOT NULL COMMENT '화장실구분',
@@ -317,7 +317,7 @@ CREATE TABLE chat_messages
 );
 
 
-#여기부터 더미데이터
+#여기부터 더미데이터 / store_manages 는 1000개 더미데이터 따로있음
 INSERT INTO store_manages (store_id, pw, business_num, store_call, phone, email) VALUES
  ('store001', 'pw123456', '1234567890', '02-1234-5678', '010-1111-2222', 'store001_owner@email.com'),
  ('store002', 'pw234567', '2345678901', '02-2345-6789', '010-2222-3333', 'store002_owner@email.com'),
@@ -329,7 +329,7 @@ INSERT INTO store_manages (store_id, pw, business_num, store_call, phone, email)
  ('store008', 'pw890123', '8901234567', '02-8901-2345', '010-8888-9999', 'store008_owner@email.com'),
  ('store009', 'pw901234', '9012345678', '02-9012-3456', '010-9999-0000', 'store009_owner@email.com'),
  ('store010', 'pw012345', '0123456789', '02-0123-4567', '010-0000-1111', 'store010_owner@email.com');
-
+# stores도 1000개 더미데이터 따로있음
 INSERT INTO stores (store_num, store_name, detail_info, short_info, madein, address, main_img, opentime, lastorder, waiting_closetime, blogurl, youtubeurl, facebookurl, instaurl, s_rstatus, parking, wifi, toilet, smokingroom, babychair) VALUES
     (1, '맛있는 햄버거집', '다양한 햄버거와 사이드 메뉴를 즐길 수 있는 가게입니다.', '햄버거 천국', '미국', '서울시 강남구 역삼동 123-45', 'logo.png', '10:00 - 22:00', '21:30', '21:00', 'http://burger-blog.com', NULL, 'http://facebook.com/burger', 'http://instagram.com/burger', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
     (2, '닭갈비 전문점', '신선한 닭고기와 야채로 만든 맛있는 닭갈비를 즐길 수 있는 곳입니다.', '닭갈비의 정석', '한국', '서울시 강남구 역삼동 234-56', 'logo.png', '11:00 - 23:00', '22:30', '22:00', 'http://dakgalbi-blog.com', NULL, 'http://facebook.com/dakgalbi', 'http://instagram.com/dakgalbi', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
@@ -778,6 +778,4 @@ VALUES (1, 'user01'),
        (15, 'user15'),
        (16, 'user16'),
        (17, 'user17'),
-       (18, 'user18'),
-       (19, 'user19'),
-       (20, 'user20');
+       (18, 'user18');
