@@ -20,7 +20,7 @@
   </div>
   <div class="store">
     <p class="storeName d-flex justify-content-center mt-4" th:text="${s.storeName}"></p>
-    <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="addRecommend([[${session.loginUser.userId}]])">추천</button>
+    <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]])">추천</button>
   </div>
   <div class="store">
 <!--    <span class="starPoint">★4.45/</span>-->
@@ -180,7 +180,7 @@
   </div>
   <h5>예약</h5>
   <div id="waiting">
-    이 식당 예약하러 가기
+    <a th:href="'/waiting/'+${s.storeNum}+'/waitingAdd.do'">이 식당 예약하러 가기</a>
   </div>
   <h5 class="store mt-3">리뷰</h5>
   <th:block th:if="${session.loginUser!=null}">
