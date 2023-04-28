@@ -17,6 +17,7 @@ function loadStoreList(params){
         .then(data => {
             let stores = data.list;
             storeListCont.innerHTML="";
+
             for (const store of stores){
                 console.log(store);
                 geocoder.addressSearch(store.address, callback);
