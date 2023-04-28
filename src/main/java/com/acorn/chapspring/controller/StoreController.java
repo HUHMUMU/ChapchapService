@@ -1,10 +1,8 @@
 package com.acorn.chapspring.controller;
 
-import com.acorn.chapspring.dto.ReviewsDto;
-import com.acorn.chapspring.dto.StoreFilterDto;
-import com.acorn.chapspring.dto.StoresDto;
+import com.acorn.chapspring.dto.*;
+import com.acorn.chapspring.service.ReportService;
 import com.acorn.chapspring.service.ReviewService;
-import com.acorn.chapspring.dto.UserDto;
 import com.acorn.chapspring.service.StoreService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class StoreController {
     private StoreService storeService;
     private ReviewService reviewService;
+    private ReportService reportService;
+
     @GetMapping("/{storeNum}/detail.do")
     public String detail(Model model,
                         @SessionAttribute UserDto loginUser,
@@ -29,6 +29,23 @@ public class StoreController {
         model.addAttribute("stores",stores);
         return "store/detail"; // 해당 경로에 대한 뷰 이름 반환
     }
+    @PostMapping("/detail.do")
+    public String registerReport(@SessionAttribute UserDto loginUser,
+                                 @PathVariable int storeNum,
+                                 @RequestBody ReportsDto reports) {
+        String redirectPath="redirect:/store/"+storeNum+"/detail.do";
+        int register=0;
+        try{
+            register=reportService.registerReportByReview(reports);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        if(register>0) {// 신고 성공
+            redirectPath="redirect:/store/"+storeNum+"/detail.do";
+        }
+        return redirectPath;
+    }
+
 
     @GetMapping("/list.do")
     public String list(
