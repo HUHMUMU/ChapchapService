@@ -37,7 +37,7 @@
     </resultMap>
     <insert id="insertReview">
         INSERT INTO reviews (content,comment,img,date,star,r_rstatus,user_id,store_num,menu_num)
-        VALUE (#{content},#{comment},#{img},#{date},#{star},#{rrStatus},#{userId},#{storeNum},#{menuNum});
+        VALUE (#{content},#{comment},#{img},DATE(NOW()),#{star},#{rrStatus},#{userId},#{storeNum},#{menuNum});
     </insert>
     <delete id="deleteReview">
         DELETE FROM reviews WHERE review_num=#{reviewNum}

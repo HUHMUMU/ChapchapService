@@ -12,10 +12,19 @@
         <result column="update_time" property="updateTime"/>
         <result column="user_id" property="userId"/>
         <result column="chs_rstatus" property="chsRstatus"/>
+        <association
+                property="likeCnt"
+                select="com.acorn.chapspring.mapper.ChapstorylikeMapper.countByCnum"
+                column="chap_num"
+                fetchType="eager"/>
         <association property="user"
                     select="com.acorn.chapspring.mapper.UserMapper.findByUserId"
                     column="user_id"
                     fetchType="lazy"/>
+        <association property="user"
+                     select="com.acorn.chapspring.mapper.UserMapper.findByUserNickname"
+                     column="nickname"
+                     fetchType="lazy"/>
     </resultMap>
     <insert useGeneratedKeys="true" keyProperty="chapNum" id="insertOne" parameterType="ChapstorysDto">
         INSERT INTO chapstorys (user_id, title, content, main_img) VALUE (#{userId}, #{title}, #{content}, #{mainImg})
@@ -32,13 +41,19 @@
     <delete id="deleteByChapsNum">
         DELETE FROM chapstorys WHERE chap_num=#{chapNum}
     </delete>
-    <select id="findAll" resultMap="ChapstoryMap">
-        SELECT * FROM chapstorys
-    </select>
     <select id="findByChapNum" resultMap="ChapstoryMap">
         SELECT * FROM chapstorys WHERE chap_num=#{chapNum}
     </select>
     <select id="findByUserId" resultMap="ChapstoryMap">
         SELECT * FROM chapstorys WHERE user_id=#{userId}
+    </select>
+    <select id="findAll" resultMap="ChapstoryMap" parameterType="ChapStoryPageDto">
+        SELECT *,
+               (SELECT COUNT(*) FROM chapstorylikes WHERE chap_num=chapstorys.chap_num),
+               (SELECT nickname FROM users WHERE chapstorys.user_id=users.user_id)
+        FROM chapstorys
+        <if test="searchField!=null">
+            WHERE ${searchField}=#{searchValue}
+        </if>
     </select>
 </mapper>

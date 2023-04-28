@@ -1,7 +1,10 @@
 package com.acorn.chapspring.controller;
 
+import com.acorn.chapspring.dto.ReviewsDto;
 import com.acorn.chapspring.dto.StoreFilterDto;
 import com.acorn.chapspring.dto.StoresDto;
+import com.acorn.chapspring.service.ReviewService;
+import com.acorn.chapspring.dto.UserDto;
 import com.acorn.chapspring.service.StoreService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -17,8 +20,10 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 public class StoreController {
     private StoreService storeService;
+    private ReviewService reviewService;
     @GetMapping("/{storeNum}/detail.do")
     public String detail(Model model,
+                        @SessionAttribute UserDto loginUser,
                         @PathVariable int storeNum) {
         StoresDto stores=storeService.getStoreByStoreNum(storeNum);
         model.addAttribute("stores",stores);
@@ -29,8 +34,6 @@ public class StoreController {
     public String list(
             Model model,
            @ModelAttribute StoreFilterDto storeFilterDto) {
-//        PageHelper.startPage(storeFilterDto.getPageNumber(), storeFilterDto.getPageSize(), storeFilterDto.getOrderBy());
-        // 위의 주석은 중복일거같아서 일단 주석처리하고 테스트
         PageInfo<StoresDto> pageInfo = storeService.getFilteredStores(storeFilterDto);
 
         model.addAttribute("page", pageInfo);
