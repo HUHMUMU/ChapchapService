@@ -22,4 +22,10 @@ class ReportMapperTest {
         int registerOne=reportMapper.insertReportByReview(report);
         System.out.println("registerOne = " + registerOne);
     }
+
+    @Test
+    void testFindReportByReview() {
+        List<ReportsDto> reports=reportMapper.findReportByReview(1);
+        System.out.println("reports = " + reports);
+    }
 }

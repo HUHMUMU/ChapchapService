@@ -3,6 +3,7 @@ package com.acorn.chapspring.dto;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ReviewsDto {
@@ -24,4 +25,5 @@ public class ReviewsDto {
     private ReviewRepliesDto rReplies; //리뷰의 사장님 댓글정보 가져오기
     private MenuManagesDto menuName; //메뉴 이름 가져오기
     private ReviewLikesDto countLike; //리뷰의 좋아요 싫어요
+    private List<ReportsDto> reportReview; //리뷰 신고
 }

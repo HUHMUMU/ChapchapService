@@ -10,7 +10,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <div layout:fragment="content" th:each="s:${stores}">
-  <div class="image-container">
+  <div class="image-container store">
     <img th:src="'http://localhost:8088'+${s.mainImg}" alt="대표 이미지">
     <img src="/public/img/store/dog.jpg" alt="이미지 설명">
     <div class="last-column">
@@ -23,7 +23,7 @@
     <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]])">추천</button>
   </div>
   <div class="store">
-<!--    <span class="starPoint">★4.45/</span>-->
+    <span class="starPoint">★4.45/</span>
     <span th:text="'방문자리뷰 '+${s.reviewCount}" class="starReview"></span>
   </div>
   <div class="store">
@@ -34,18 +34,20 @@
     <span class="starHashTag5 me-2">#해시태그5</span>
   </div>
   <div class="store">
-    <p class="waitingTeam">현재 10팀 대기중입니다.</p>
-  </div>
-  <div class="store">
-    <a class="btn btn-outline-dark btn-sm">찜</a>
-    <a id="share-btn" class="btn btn-outline-dark btn-sm" data-clipboard-text="https://example.com">공유</a>
-    <a class="btn btn-outline-dark btn-sm" th:href="${s.instaurl}">인스타</a>
-    <a class="btn btn-outline-dark btn-sm" th:href="${s.facebookurl}">페이스북</a>
-    <a class="btn btn-outline-dark btn-sm" th:href="${s.youtubeurl}">유튜브</a>
-    <a class="btn btn-outline-dark btn-sm" th:href="${s.blogurl}">블로그</a>
+    <p class="badge text-bg-warning waitingTeam">현재 10팀 대기중입니다.</p>
   </div>
   <div class="store">
     <ul class="list-group">
+      <li style="list-style:none;">
+        <div class="btn-group store linkBtn">
+          <a class="btn btn-outline-dark btn-sm">찜</a>
+          <a class="btn btn-outline-dark btn-sm" id="share-btn" data-clipboard-text="https://example.com">공유</a>
+          <a class="btn btn-outline-dark btn-sm" th:href="${s.instaurl}">인스타</a>
+          <a class="btn btn-outline-dark btn-sm" th:href="${s.facebookurl}">페이스북</a>
+          <a class="btn btn-outline-dark btn-sm" th:href="${s.youtubeurl}">유튜브</a>
+          <a class="btn btn-outline-dark btn-sm" th:href="${s.blogurl}">블로그</a>
+        </div>
+      </li>
       <li class="list-group-item">
         <span th:text="${s.storeType.typeByStore.mainCategory}"></span>
         <span><i class="bi bi-dot m-0"></i></span>
@@ -94,15 +96,27 @@
       </li>
     </ul>
   </div>
-  <nav class="navbar sticky-top bg-light">
+  <nav class="navbar sticky-top" style="background-color:#fdf9ec">
     <div class="container-fluid d-flex justify-content-center">
-      <a class="navbar-brand" href="#event">이벤트</a>
-      <a class="navbar-brand" href="#menu">메뉴</a>
-      <a class="navbar-brand" href="#waiting">예약</a>
-      <a class="navbar-brand" href="#review">리뷰</a>
-      <a class="navbar-brand" href="#map">지도</a>
+      <a class="navbar-brand m-0" href="#waiting">예약</a>
+      <span class="m-2">|</span>
+      <a class="navbar-brand m-0" href="#event">이벤트</a>
+      <span class="m-2">|</span>
+      <a class="navbar-brand m-0" href="#menu">메뉴</a>
+      <span class="m-2">|</span>
+      <a class="navbar-brand m-0" href="#review">리뷰</a>
+      <span class="m-2">|</span>
+      <a class="navbar-brand m-0" href="#map">지도</a>
     </div>
   </nav>
+
+  <!-- 예약 -->
+  <div class="waiting d-grid gap-2 col-6 mx-auto">
+    <a class="btn btn-warning" href="#" type="button">
+      <i class="bi bi-shop"></i>
+      예약하러 가기
+    </a>
+  </div>
 
   <!-- 챱딜 리스트 -->
   <div id="event">
@@ -178,19 +192,19 @@
       </div>
     </div>
   </div>
-  <h5>예약</h5>
-  <div id="waiting">
-    <a th:href="'/waiting/'+${s.storeNum}+'/waitingAdd.do'">이 식당 예약하러 가기</a>
-  </div>
+
   <h5 class="store mt-3">리뷰</h5>
   <th:block th:if="${session.loginUser!=null}">
-    <div class="d-flex justify-content-end">
-      <a th:href="'/review/'+${s.storeNum}+'/register.do'" class="btn btn-secondary btn-sm">리뷰쓰기</a>
+    <div class="reviewWrite d-grid gap-2 col-5 mx-auto">
+      <a th:href="'/review/'+${s.storeNum}+'/register.do'" class="btn btn-outline-light">
+        <i class="bi bi-pencil-fill"></i>
+        리뷰쓰기
+      </a>
     </div>
   </th:block>
 
   <div id="review">
-    <div th:each="r,iter:${s.reviewList}" class="store mb-2">
+    <div th:each="r,iter:${s.reviewList}" class="store mt-2">
       <div class="card" th:classappend="${iter.index >= 3} ? 'hide' : ''">
         <div class="card-header d-flex justify-content-between">
           <div class="d-flex">
@@ -222,7 +236,7 @@
               </div>
             </th:block>
             <th:block th:unless="${session.loginUser!=null && #strings.equals(session.loginUser.userId,r.userId)}">
-              <th:block th:include="/store/report"></th:block>
+              <th:block th:include="/report/reportReview"></th:block>
             </th:block>
           </div>
         </div>
@@ -289,18 +303,42 @@
   });
 </script>
 <style>
-  img{
+  .store img{
     object-fit: cover;
   }
-
   p{
     margin: 0;
+  }
+  .linkBtn a{
+    background-color: #FFE3A9;
+  }
+  .waiting a{
+    color: #222;
+    background-color: #FFE3A9;
+    font-size: x-large;
+    font-weight: bold;
+  }
+  .waiting a:hover{
+    color: #fff;
+    background-color: #ffc954;
+  }
+  .reviewWrite a{
+    color: #222;
+    background-color: #FFE3A9;
+  }
+  .reviewWrite a:hover{
+    color: #fff;
+    background-color: #ffc954;
   }
 
   .hide {
     display: none; /*리뷰 숨기기*/
   }
 
+  .container-fluid a:hover{
+    color: #FF5D5D;
+    font-weight: bold;
+  }
   .image-container {
     display: flex;
     justify-content: center; /* 수평 중앙 정렬 */
