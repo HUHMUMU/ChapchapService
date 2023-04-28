@@ -9,6 +9,7 @@ import java.util.List;
 public interface UserMapper {
     int updateStatusByUidAndEmailCheckCode(UserDto user); //이메일 인증 코드
     UserDto findByUserId(String userId);//유저 정보
+    UserDto findByUserNickname(String userNickname);//유저 정보
     UserDto findByUserIdAndPw(UserDto user);//로그인 정보 비교
 
     //아이디 찾기

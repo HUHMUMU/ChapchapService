@@ -25,8 +25,9 @@ public class StoreFilterDto {
     private StoresListType order= StoresListType.review_count;
     private DirectType direct=DirectType.DESC;
     private StoresListType searchField;
-
+    private String searchValue;
     private String orderBy;
+
     public String getOrderBy(){
         if(this.order!=null && this.direct!=null){
             return this.order+" "+this.direct;

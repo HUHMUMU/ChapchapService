@@ -5,7 +5,6 @@ spring:
     username: root
     password: ${db.password}
 
-    #driver-class-name: com.mysql.cj.jdbc.Driver
   devtools:
     livereload:
       enabled: true

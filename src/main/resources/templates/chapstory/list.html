@@ -9,8 +9,7 @@
 </head>
 <div layout:fragment="content">
     <form action="/chapstory/list.do">
-        <h3>리스트다 이건 ....</h3>
-        <div class="card-group" ht>
+        <div class="card-group mt-xxl-5" >
             <div class="card">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
@@ -31,23 +30,24 @@
             </div>
         </div>
         <th:block th:if="${session.loginUser!=null}">
-            <div class="d-flex justify-content-end mt-5">
+            <div class="d-flex justify-content-end mt-5 mb-5">
                 <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${session.loginUser.userId})}"  class="btn btn-primary">my챱</a>
                 <a href="/chapstory/register.do" class="btn btn-primary">글쓰기</a>
             </div>
         </th:block>
-        <nav aria-label="Page navigation example">
-            <form action="" class="mx-auto" style="width: 450px">
+        <nav aria-label="Page navigation example" style="width: 70%; margin:auto" class="mt-lg-5 mb-lg-5">
+            <form action="" class="mx-auto" >
                 <div class="input-group">
                     <label class="input-group-text bi bi-list-columns"></label>
                     <select name="order" class="form-control">
                         <option value="">칼럼</option>
-                        <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">글쓴이</option>
-                        <option th:selected="(${#strings.equals(param.order,'post_time')})"value="post_time">작성일</option>
+                        <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">아이디</option>
+                        <option th:selected="(${#strings.equals(param.order,'chap_num')})"value="chap_num">게시글번호</option>
+<!--                        <option th:selected="(${#strings.equals(param.order,'nickname')})"value="nickname">닉네임</option>-->
                         <option th:selected="(${#strings.equals(param.order,'title')})"value="title">제목</option>
                         <option th:selected="(${#strings.equals(param.order,'content')})"value="content">내용</option>
-                        <option th:selected="(${#strings.equals(param.order,'view_count')})"value="view_count">조회수</option>
-                        <option th:selected="(${#strings.equals(param.order,'likes')})"value="likes">좋아요수</option>
+                        <option th:selected="(${#strings.equals(param.order,'viewcount')})"value="viewcount">조회수</option>
+<!--                        <option th:selected="(${#strings.equals(param.order,'likeCnt')})"value="likeCnt">좋아요수</option>-->
                     </select>
                     <select name="direct" class="form-control">
                         <option value="">방향</option>
@@ -62,53 +62,44 @@
                 </div>
                 <div class="input-group my-3">
                     <label class="input-group-text bi bi-search"></label>
-                    <select name="searchField" class="form-control">
-                        <option value="">칼럼</option>
-                        <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">글쓴이</option>
-                        <option th:selected="(${#strings.equals(param.order,'post_time')})"value="post_time">작성일</option>
-                        <option th:selected="(${#strings.equals(param.order,'title')})"value="title">제목</option>
-                        <option th:selected="(${#strings.equals(param.order,'content')})"value="content">내용</option>
-                        <option th:selected="(${#strings.equals(param.order,'view_count')})"value="view_count">조회수</option>
-                        <option th:selected="(${#strings.equals(param.order,'likes')})"value="likes">좋아요수</option>
+                    <select name="searchField" class="form-control ">
+                        <option th:selected="(${#strings.equals(param.searchField,'user_id')})"value="user_id">글쓴이</option>
+                        <option th:selected="(${#strings.equals(param.searchField,'title')})"value="title">제목</option>
+                        <option th:selected="(${#strings.equals(param.searchField,'content')})"value="content">내용</option>
                     </select>
-                    <input type="text" class="form-control" name="searchValue" placeholder="검색어 입력"
+                    <input type="text" class="form-control " name="searchValue" placeholder="검색어 입력"
                            th:value="${param.searchValue}">
                     <button class="btn btn-primary">검색</button>
                 </div>
             </form>
         </nav>
         <div>
-            <div class="p-5 border-1" th:each="c:${chapstorys}">
+            <div class="p-4 border-1 bg-white mb-4" th:each="c:${chapstorys}">
                 <div class="d-flex justify-content-around">
-                    <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="width: 300px; height: 300px; object-fit: cover;" class="img-thumbnail">
-                    <div style="width:60%">
+                    <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="width: 200px; height: 200px; object-fit: cover;" class="img-thumbnail">
+                    <div style="width:70%">
+                        <div class="d-flex justify-content-between ">
+                            <div class="d-flex align-items-center mb-2">
+                                <img th:src="@{'{path}'(path=${c.user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle me-2">
+                                <h4>
+                                    <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${c.user.userId})}"  th:text="${c.user.nickname}" style="text-decoration: none; color: inherit;" class="me-3"></a>
+                                </h4>
+                                <div class="d-flex end">
+                                    <p>조회수 </p>
+                                    <small class="ms-2" th:text="${c.viewcount}"></small>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <p>좋아요</p>
+                                    <small class="ms-2 mt" th:text="${c.likeCnt}"></small>
+                                </div>
+                                <small th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
+                            </div>
+                        </div>
                         <h3>
                             <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}" th:text="${c.title}" style="text-decoration: none; color: inherit;"></a>
                         </h3>
-                        <div class="d-flex justify-content-between ">
-                            <div class="d-flex align-items-center">
-                                <img th:src="@{'{path}'(path=${c.user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle">
-
-                                <h4>
-                                    <a th:href="@{'/chapstory/{userId}/blogMain.do'(userId=${c.user.userId})}"  th:text="${c.user.nickname}" style="text-decoration: none; color: inherit;"></a>
-                                </h4>
-                                <div class="d-flex">
-                                    <p>조회수 :</p>
-                                    <small th:text="${c.viewcount}"></small>
-                                </div>
-
-                            </div>
-                            <div>
-<!--                                <div class="d-flex">-->
-<!--                                    <p>좋아요 </p>-->
-<!--                                    <small th:text="${c.likes}"></small>-->
-<!--                                </div>-->
-                                <div class="d-flex">
-                                    <p>작성날짜</p>
-                                    <small th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}"></small>
-                                </div>
-                            </div>
-                        </div>
                         <p th:text="${c.content}"></p>
                         </div>
                 </div>
@@ -118,3 +109,9 @@
     <th:block th:include="/chapstory/pageNav"></th:block>
 </div>
 </html>
+<style>
+    p, small{
+        color : #636363;
+        margin : 0;
+    }
+</style>

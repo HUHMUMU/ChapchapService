@@ -1,0 +1,8 @@
+<div>
+    <a href="javascript:void(0)"
+       th:onclick="chapLikeHandler([[${id}]])"
+       class="btn btn-sm btn-light text-danger" data-bs-toggle="tooltip" data-bs-title="좋아요" data-bs-placement="top">
+        <i class="bi fs-4 bi-hand-thumbs-up"></i>
+        <span th:text="${likes}"></span>
+    </a>
+</div>

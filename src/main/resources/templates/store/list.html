@@ -20,7 +20,7 @@
     <div class="d-flex">
         <!-- 리스트와 필터 -->
         <div class="col-4 d-flex flex-column text-secondary" style="min-width: 344px; max-width: 434px; min-height: 278px;">
-            <div style="display: flex; flex: 4;">
+            <div style="display: flex; flex: 4; max-height: 240px;">
                 <!-- 필터 부분 -->
                 <div class="d-flex flex-column justify-content-center align-items-center" style="flex: 2;">
                     <div class="d-flex flex-row">
@@ -113,7 +113,7 @@
                 </div>
             </div>
             <!-- 식당 리스트 -->
-            <section style="flex: 8; border:1px solid lightgray;">
+            <section style="flex: 8; border:1px solid lightgray; overflow-y: auto; max-height: 595px;">
                 <th:block>
                     <div class="d-flex justify-content-center align-items-center" th:each="p:${page.list}" style="border:1px solid gray; min-width: 342px; max-width: 432px;">
                         <div class="col-4">
@@ -175,12 +175,13 @@
                         </div>
                     </div>
                 </th:block>
+                <th:block th:include="/pageNav"></th:block>
             </section>
         </div>
         <!-- 지도 -->
         <div class="col-8"
              id="map"
-             style="height: calc(100vh - 91px);">
+             style="height: calc(100vh - 91px); ">
         </div>
     </div>
 </div>

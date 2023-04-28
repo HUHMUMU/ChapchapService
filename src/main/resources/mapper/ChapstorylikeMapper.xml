@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.acorn.chapspring.mapper.chapstorylikeMapper">
+<mapper namespace="com.acorn.chapspring.mapper.ChapstorylikeMapper">
     <resultMap id="ChapstorylikesMap" type="ChapstorylikesDto">
         <result property="likeno" column="likeno"/>
         <result property="chapNum" column="chap_num"/>
         <result property="userId" column="user_id"/>
         <result property="likeCheck" column="like_check"/>
     </resultMap>
-    <insert id="insertOne">
+    <insert id="insertOne" parameterType="ChapstorylikesDto">
         INSERT INTO chapstorylikes (chap_num, user_id) VALUE (#{chapNum}, #{userId});
     </insert>
-    <delete id="deleteOne"></delete>
-    <select id="findByCNumAndUId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
+    <delete id="deleteOne" parameterType="ChapstorylikesDto">
+        DELETE FROM chapstorylikes WHERE user_id=#{userId} AND chap_num=#{chapNum};
+    </delete>
+    <delete id="deleteByLikeno">
+        DELETE FROM chapstorylikes WHERE user_id=#{userId} AND chap_num=#{chapNum};
+    </delete>
+    <select id="findByCNumAndUId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto">
+        SELECT * FROM chapstorylikes  WHERE user_id=#{uId} AND chap_num=#{cNum};
+    </select>
     <select id="findByCNumAndUIdIsLoginUserId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
     <select id="countLikeByCNum" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
-    <update id="likeCheck" parameterType="HashMap">
+    <select id="countByCnum" resultType="int" parameterType="int">
+        SELECT COUNT(*) likeCnt FROM chapstorylikes WHERE chap_num=#{chapNum}
+    </select>
+    <update id="likeCheck" parameterType="ChapstorylikesDto">
         UPDATE chapstorylikes
         SET like_check = like_check + 1
         WHERE chap_num=#{chap_num} AND user_id=#{user_id}
     </update>
 
-    <update id="likeCheckCancel" parameterType="HashMap">
+    <update id="likeCheckCancel" parameterType="ChapstorylikesDto">
         UPDATE chapstorylikes
         SET like_check = 0
         WHERE user_id=#{user_id} AND chap_num=#{chap_num}
