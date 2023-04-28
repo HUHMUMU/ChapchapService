@@ -48,9 +48,12 @@ public class ChapStoryController {
             @ModelAttribute ChapstoryPageDto pageDto){
         List<ChapstorysDto> chaps;
         chaps= chapStoryService.list(pageDto);
+        List<ChapstorysDto> bestList;
+        bestList = chapStoryService.bestList();
         PageInfo<ChapstorysDto> pageBoards=new PageInfo<>(chaps);
         model.addAttribute("page",pageBoards);
         model.addAttribute("chapstorys",chaps);
+        model.addAttribute("bestList",bestList);
         return "chapstory/list";
     }
 
@@ -78,10 +81,12 @@ public class ChapStoryController {
             @PathVariable String userId,
             HttpSession session) {
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
-
         List<ChapstorysDto> chaps;
         chaps = chapStoryService.blogMain(userId);
+        List<ChapstorysDto> bestChaps;
+        bestChaps = chapStoryService.bestListFindByUserId(userId);
         model.addAttribute("chapstorys", chaps);
+        model.addAttribute("bestChaps", bestChaps);
         return "chapstory/blogMain";
     }
 

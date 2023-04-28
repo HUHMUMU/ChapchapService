@@ -14,8 +14,10 @@ public interface ChapStoryMapper {
     // 리스트, 상세, 등록, 수정, 삭제, 신고
     // 상세보기시 조회수 올리기
     List<ChapstorysDto> findAll(ChapstoryPageDto pageDto);
+    List<ChapstorysDto> bestList();
     ChapstorysDto findByChapNum(int chapNum);
     List<ChapstorysDto> findByUserId(String userId);
+    List<ChapstorysDto> bestListFindByUserId(String userId);
     int insertOne(ChapstorysDto chaps);
     int updateOne(ChapstorysDto chpas);
     int deleteByChapsNum(int chapNum);

@@ -6,60 +6,105 @@
 <head>
     <meta charset = "UTF-8">
     <title>블로그 메인</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 </head>
-<div layout:fragment = "content">
-    <div>
-        <div class="border bg-primary" style="height: 300px; position: relative;">
-            <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,chapstorys[0].user.userId)}">
-                <div class="input-group" style="width: 50%;float:right">
-                    <label class="input-group-text">베너 이미지 변경</label>
-                    <input class="form-control" type="file" name="chapbanner">
+<body>
+    <div layout:fragment = "content">
+        <div>
+            <div style="height: 300px; position: relative; background-color: #ffeeba;">
+                <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,chapstorys[0].user.userId)}">
+                    <div class="input-group" style="width: 50%;float:right">
+                        <label class="input-group-text">베너 이미지 변경</label>
+                        <input class="form-control" type="file" name="chapbanner">
+                    </div>
+                </th:block>
+                <div class="d-flex justify-content-between p-4 align-items-end" id="box" style="position: absolute; bottom: 0; width: 100%;">
+                    <div class="d-flex">
+                        <img th:src="@{'{path}'(path=${chapstorys[0].user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle me-3">
+                        <div class="d-flex align-items-center">
+                            <h2 class="me-2" th:text="${chapstorys[0].user.nickname}"></h2>
+<!--                            <div class="d-flex">-->
+<!--                                <div class="border bg-warning rounded-circle me-2" style="height: 30px; width: 30px"></div>-->
+<!--                                <div class="border bg-warning rounded-circle me-2" style="height: 30px; width: 30px"></div>-->
+<!--                                <div class="border bg-warning rounded-circle me-2" style="height: 30px; width: 30px"></div>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                    <a id="share-btn" class="btn btn-outline-dark btn-sm" data-clipboard-text="https://example.com">공유</a>
                 </div>
-            </th:block>
-            <div class="d-flex justify-content-between p-4 align-items-end" id="box" style="position: absolute; bottom: 0; width: 100%;">
-                <div class="d-flex">
-                    <img th:src="@{'{path}'(path=${chapstorys[0].user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle me-3">
-                    <div class="d-flex align-items-center">
-                        <h2 class="me-2" th:text="${chapstorys[0].user.nickname}"></h2>
-                        <div class="d-flex">
-                            <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
-                            <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
-                            <div class="border bg-primary rounded-circle me-2" style="height: 30px; width: 30px"></div>
+            </div>
+        </div>
+        <div style="margin-top: 70px">
+            <h4 style="font-size: 40px; margin-bottom: 40px">인기글</h4>
+            <div class="d-flex justify-content-between" style=" margin-bottom: 70px">
+                <div>
+                    <img th:src="@{'{path}'(path=${bestChaps[0].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    <h5>
+                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[0].chapNum})}" th:text="${bestChaps[0].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                    </h5>
+                </div>
+                <div>
+                    <img th:src="@{'{path}'(path=${bestChaps[1].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    <h5>
+                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[1].chapNum})}" th:text="${bestChaps[1].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                    </h5>
+                </div>
+                <div>
+                    <img th:src="@{'{path}'(path=${bestChaps[2].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    <h5>
+                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[2].chapNum})}" th:text="${bestChaps[2].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                    </h5>
+                </div>
+                <div>
+                    <img th:src="@{'{path}'(path=${bestChaps[3].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    <h5>
+                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[3].chapNum})}" th:text="${bestChaps[3].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                    </h5>
+                </div>
+                <div>
+                    <img th:src="@{'{path}'(path=${bestChaps[4].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    <h5>
+                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[4].chapNum})}" th:text="${bestChaps[4].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                    </h5>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div style="margin-top: 70px; margin-bottom: 70px">
+            <h4 style="font-size: 40px; margin-bottom: 40px">전체글</h4>
+            <div th:each="c:${chapstorys}">
+                <div class="col">
+                    <div class="card mb-4">
+                        <div style="text-align: center; position: relative;">
+                            <small th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}" class="justify-content-end" style="position: absolute; right: 0;"></small>
+                            <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="height: 300px; width: 100%; position: relative; object-fit: cover;" class="img-thumbnail">
+                            <h3 style="margin: 20px">
+                                <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}" th:text="${c.title}" style="text-decoration: none; color: inherit; width: 150px"></a>
+                            </h3>
+                            <p style="text-align:center" class="content" th:text="${c.content}"></p>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <button style="float: right">공유</button>
-                </div>
             </div>
         </div>
     </div>
-    <div style="margin-top: 70px">
-        <h4 style="font-size: 40px; margin-bottom: 40px">인기글</h4>
-        <div class="d-flex justify-content-between" style=" margin-bottom: 70px">
-            <div th:each="c:${chapstorys}">
-                <img th:src="@{'{path}'(path=${chapstorys[0].mainImg})}" alt = "챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
-                <h5>
-                    <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}" th:text="${c.title}" style="text-decoration: none; color: inherit; width: 100px"></a>
-                </h5>
-            </div>
-        </div>
-        <hr>
-    </div>
-    <div style="margin-top: 70px; margin-bottom: 70px">
-        <h4 style="font-size: 40px; margin-bottom: 40px">전체글</h4>
-        <div th:each="c:${chapstorys}">
-            <div class="col">
-                <div class="card mb-4">
-                    <div style="text-align: center;">
-                        <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="height: 300px; width: 100%; position: relative; object-fit: cover;" class="img-thumbnail">
-                        <h3>
-                            <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}" th:text="${c.title}" style="text-decoration: none; color: inherit; width: 150px"></a>
-                        </h3>
-                        <p th:text="${c.content}"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</body>
+</html>
+<style>
+    .content{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        height: 100px;
+        text-align: center;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+</style>
+<script>
+    document.querySelector('[data-clipboard-text]').setAttribute('data-clipboard-text', window.location.href);
+    var clipboard = new ClipboardJS('#share-btn');
+    clipboard.on('success', function(e) {
+        alert('주소가 복사되었습니다.');
+    });
+</script>
