@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acorn.chapspring.mapper.WaitingMapper">
-    <resultMap id="waitingMap" type="waitingDto">
+    <resultMap id="waitingMap" type="usersWaitingDto">
         <id column="waiting_num" property="waitingNum"/>
-        <result column="wait_num" property="waitNum"/>
         <result column="user_id" property="userId"/>
         <result column="store_num" property="storeNum"/>
         <result column="user_people" property="userPeople"/>
@@ -12,27 +11,35 @@
         <result column="enter_status" property="enterStatus"/>
     </resultMap>
 
-    <!--  이건 대기등록할때 보여지는 거  -->
-    <select id="getWaitingList" resultType="com.acorn.chapspring.dto.UsersWaitingDto">
-        SELECT userswaiting FROM userswaiting WHERE store_num=#{storeNum} and wait_num=#{waitNum}
+    <select id="findByWaitNum" resultMap="waitingMap">
+        SELECT * FROM userswaiting WHERE wait_num = #{waitNum}
     </select>
-    <!--  대기 등록 하고 나면 보일 거 등록한 사람보다 대기 번호가 빠른 팀의 수   -->
-    <select id="getFastWaiting" resultType="com.acorn.chapspring.dto.UsersWaitingDto">
-        SELECT userswaiting From where wait_num=#{waitNum} and store_num=#{storeNum}
+    <select id="findOne" resultMap="waitingMap">
+        SELECT * FROM userswaiting WHERE store_num=#{storeNum} AND user_id=#{userId} AND waiting_date=CURDATE()
+    </select>
+    <!--  이건 대기등록할때 보여지는 거  -->
+    <select id="getWaitingList" resultMap="waitingMap">
+        SELECT *
+        FROM userswaiting
+        WHERE store_num=#{storeNum}
+        AND  enter_status='대기'
+        AND waiting_date=CURDATE()
+        AND start_time &lt;=
+            (SELECT start_time FROM userswaiting WHERE store_num=#{storeNum} AND user_id=#{userId} AND waiting_date=CURDATE())
     </select>
     <!-- 대기 등록 추가   -->
     <insert id="addWaiting">
-        INSERT INTO userswaiting(wait_num, user_id, store_num,user_people,waiting_num,waiting_date,start_time,enter_status)
-        VALUES (#{waitNum}, #{userId},#{storeNum},#{userPeople},#{waitingNum},#{waitingDate},#{startTime},#{enterStatus})
+        INSERT INTO userswaiting( user_id, store_num,user_people,waiting_date,start_time,enter_status)
+        VALUES ( #{userId},#{storeNum},#{userPeople},CURDATE(),CURRENT_TIME(),'대기')
     </insert>
     <!-- 대기 등록한 유저의 인원 수정   -->
-    <update id="modifyWaiting">
+    <update id="updateOne" parameterType="usersWaitingDto">
         UPDATE userswaiting SET user_people=#{userPeople}
-        WHERE waiting_num=#{waitingNum} and user_id=#{userId} and store_num=#{storeNum}
+        WHERE waiting_num=#{waitingNum}
     </update>
     <!-- 대기 등록한 유저의 대기 삭제   -->
-    <delete id="deleteWaiting">
-        delete from userswaiting
-        where wait_num=#{waitNum} and waiting_num=#{waitingNum}
+    <delete id="deleteByWaitingNum">
+        DELETE FROM userswaiting
+        WHERE store_num=#{storeNum} AND  user_id=#{userId} AND waiting_date=CURDATE()
     </delete>
 </mapper>

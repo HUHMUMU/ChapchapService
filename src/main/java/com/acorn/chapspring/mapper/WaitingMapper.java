@@ -1,7 +1,7 @@
 package com.acorn.chapspring.mapper;
 import com.acorn.chapspring.dto.UsersWaitingDto;
-import com.acorn.chapspring.dto.WaitingDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,11 +10,13 @@ import java.util.List;
 @Repository
 public interface WaitingMapper {
 
-    List<WaitingDto> getWaitingList(); // 가게에 현재 등록된 모든 웨이팅 리스트
-    WaitingDto getFastWaiting(int id, int waitNum); // 등록한 유저보다 빠른 대기순서를 가진 유저의 팀 목록 보여줄 용도
-    int addWaiting(WaitingDto waitingDto); // 웨이팅 등록 시 대기열에 추가 및 대기 번호 생성
-    int modifyWaiting(UsersWaitingDto usersWaitingDto); // 웨이팅 등록 후 유저가 인원 수정
-    int deleteWaiting(int id, int waitingNum); // 웨이팅 등록 후 유저가 취소
+    UsersWaitingDto findByWaitNum(int waitNum );
+    UsersWaitingDto findOne(@Param("storeNum") int storeNum,@Param("userId")String userId );
 
-    List<WaitingDto> getWaitingList(int waitNum, int storeNum);
+    List<UsersWaitingDto> getWaitingList(@Param("storeNum") int storeNum,@Param("userId")String userId); // 가게에 현재 등록된 모든 웨이팅 리스트
+    int addWaiting(UsersWaitingDto usersWaitingDto); // 웨이팅 등록 시 대기열에 추가 및 대기 번호 생성
+    int updateOne(UsersWaitingDto usersWaitingDto); // 웨이팅 등록 후 유저가 인원 수정
+    int deleteByWaitingNum(int waitingNum, String userId); // 웨이팅 등록 후 유저가 취소
+
+
 }

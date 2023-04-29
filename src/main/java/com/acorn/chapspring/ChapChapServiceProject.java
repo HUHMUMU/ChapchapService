@@ -9,6 +9,8 @@ import org.springframework.context.annotation.PropertySources;
 @PropertySources(@PropertySource("classpath:/env.properties"))
 public class ChapChapServiceProject {
 
+
+    
     public static void main(String[] args) {
         SpringApplication.run(ChapChapServiceProject.class, args);
     }

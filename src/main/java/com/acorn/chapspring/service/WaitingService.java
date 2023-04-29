@@ -1,14 +1,19 @@
 package com.acorn.chapspring.service;
-import com.acorn.chapspring.dto.WaitingDto;
+import com.acorn.chapspring.dto.UsersWaitingDto;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 @Service
 public interface WaitingService {
-    List<WaitingDto> getWaitingList(int waitNum, int storeNum);
 
-    int addWaiting(WaitingDto waitingDto);
-    int modifyWaiting(WaitingDto waitingDto);
-    int deleteWaiting(int waitNum, int waitingNum);
+    //List<UsersWaitingDto> findByStoreNumByWaitNumAsc(int storeNum, int waitNum);
 
-    WaitingDto getFastWaiting(int storeNum);
+    UsersWaitingDto detail(int storeNum,String userId);
+    List<UsersWaitingDto> getWaitingByWaitNum( int storeNum,String userId);
+
+    int addWaiting(UsersWaitingDto usersWaitingDto);
+    int remove(int storeNum, String userId);
+
+    int modify(UsersWaitingDto usersWaitingDto);
+
 }

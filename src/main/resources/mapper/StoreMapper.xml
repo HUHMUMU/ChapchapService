@@ -28,6 +28,10 @@
         <result column="jjim_count" property="jjimCount"/>
         <result column="review_count" property="reviewCount"/>
         <result column="averageStar" property="averageStar"/>
+        <association property="waiting"
+                     select="com.acorn.chapspring.mapper.StoresWaitingMapper.getStoreWaitingByStoreNum"
+                     column="store_num"
+                     fetchType="lazy"/>
         <association property="reviewCount"
                     select="com.acorn.chapspring.mapper.ReviewMapper.countReviewByStore"
                     column="store_num"

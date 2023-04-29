@@ -19,7 +19,7 @@ public interface ChapStoryMapper {
     List<ChapstorysDto> findByUserId(String userId);
     List<ChapstorysDto> bestListFindByUserId(String userId);
     int insertOne(ChapstorysDto chaps);
-    int updateOne(ChapstorysDto chpas);
+    int updateOne(ChapstorysDto chaps);
     int deleteByChapsNum(int chapNum);
 
     int updateIncrementViewCountChapNum(int ChapNum);

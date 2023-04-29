@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="css/waiting.css">
+
+  <script src="/public/js/waitingAdd.js" defer th:inline="javascript"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -30,28 +32,28 @@
           <!-- store information -->
           <div class="card store-info">
             <div class="card-body">
-              <h2 class="card-title" th:text="${store.store_name}"></h2>
+              <h2 class="card-title"></h2>
               <div class="row">
                 <div class="col-sm-6">
-                  <img th:src="@{/static/images/store_img.jpg}" class="store-img">
+<!--                  <img th:src="@{/static/images/store_img.jpg}" class="store-img">-->
                 </div>
                 <div class="col-sm-6">
                   <div class="waiting-input">
                     <h4>인원 변경</h4>
-                    <form th:action="@{/waiting}" method="post">
+                    <form name="modifyForm" id="modifyForm" method="post" action="waiting/waitingModify.do">
                       <div class="form-group">
                         <label for="people-input">인원 수</label>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <button class="btn btn-outline-secondary" type="button" id="minus-btn">-</button>
                           </div>
-                          <input type="number" class="form-control" id="people-input" name="user_people"
-                                 placeholder="인원 수를 입력하세요." th:max="${store.max_people}">
+                          <input style="width: 55px;" type="number" class="form-control" id="people-input" name="user_people" th:value="${userWaiting.userPeople}"
+                                 placeholder="인원 수를 입력하세요." th:max="${stores.waiting.maxPeople}" min="1">
                           <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="plus-btn">+</button>
                           </div>
                         </div>
-                        <small class="form-text text-muted" th:text="${'최대 '+store.max_people+'명까지 가능합니다.'}"></small>
+                        <small class="form-text text-muted" th:text="${'최대 '+stores.waiting.maxPeople+'명까지 가능합니다.'}"></small>
                       </div>
                       <div class="form-group">
                         <div class="form-check">
@@ -72,14 +74,32 @@
 </body>
 
 <script>
+
   const confirmBtn = document.getElementById('confirmBtn');
   confirmBtn.addEventListener('click', function() {
+    alert(confirmBtn);
     const warningMsg = document.querySelector('.alert-warning');
     warningMsg.style.display = 'none';
   });
 
+  const minusBtn = document.getElementById('minusBtn');
+  const plusBtn = document.getElementById('plusBtn');
+  const peopleInput = document.getElementById('people-input');
+
+  minusBtn.addEventListener('click', function() {
+    const value = parseInt(peopleInput.value);
+    if (value > 1) {
+      peopleInput.value = value - 1;
+    }
+  });
+
+  plusBtn.addEventListener('click', function() {
+    const max = parseInt(peopleInput.getAttribute('max'));
+    const value = parseInt(peopleInput.value);
+    if (value < max) {
+      peopleInput.value = value + 1;
+    }
+  });
 </script>
 </html>
-
-<!-- 이건 확정인듯? -->
 

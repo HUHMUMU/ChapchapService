@@ -2,6 +2,7 @@ package com.acorn.chapspring.mapper;
 
 import com.acorn.chapspring.dto.RecommendStoreDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 @Mapper
@@ -11,5 +12,5 @@ public interface RecommendStoreMapper {
     int insertOneByUserId(RecommendStoreDto recommendstore);
     int deleteOneByUserIdAndStoreNum(RecommendStoreDto recommendstore);
 
-    RecommendStoreDto findOneByUserIdAndStoreNum(String userId,int storeNum);
+    RecommendStoreDto findOneByUserIdAndStoreNum(@Param("userId") String userId, @Param("storeNum") int storeNum);
 }
