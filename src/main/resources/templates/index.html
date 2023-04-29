@@ -231,7 +231,7 @@
 
     <div class="mx-auto">
         <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 베스트 맛집</h1>
-        <form action="./searchStore.do" method="post" name="searchStoreForm">
+        <form action="./searchStore.do" method="GET" name="searchStoreForm">
             <div class="d-flex justify-content-center mt-5">
                 <div class="search_box me-3">
                     <select class="form-select border-warning" name="siAddress" onchange="categoryChange2(this)">
@@ -329,26 +329,57 @@
                     }
                 </script>
 
-                <button type="submit" class="btn btn-warning ms-3" >검색</button>
+                <button type="submit" class="btn btn-warning ms-3">검색</button>
             </div>
         </form>
     </div>
+    <div th:if="${store}">
+        <h2 th:text="${store.name}"></h2>
+        <p th:text="${store.address}"></p>
+        <!-- 기타 store 정보 출력 -->
+    </div>
 
-    <div class="card mt-5 mx-auto w-75">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="http://localhost:8080/images/main/볶음밥.jpg" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${store.storeName}">Card title</h5>
-                    <p class="card-text">맛집 이 나와야 해 !!!!!!!</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    <!-- store 정보가 없는 경우 -->
+    <div th:unless="${store}">
+        <h2 th:text="${storeTitle}"></h2>
+        <p th:text="${storeText}"></p>
+        <img th:src="${storeImageUrl}" />
+    </div>
+
+
+<!--    <th:block th:if="${store}==null">-->
+<!--        <div class="card mt-5 mx-auto w-75" id="findBestStore">-->
+<!--            <div class="row g-0">-->
+<!--                <div class="col-md-4">-->
+<!--                    <img src="http://localhost:8080/images/main/볶음밥.jpg" class="img-fluid rounded-start" alt="...">-->
+<!--                </div>-->
+<!--                <div class="col-md-8">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">Card title</h5>-->
+<!--                        <p class="card-text">맛집 이 나와야 해 !!!!!!!</p>-->
+<!--                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </th:block>-->
+
+    <th:block th:if="${store}!=null">
+        <div class="card mt-5 mx-auto w-75" id="">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="http://localhost:8080/images/main/볶음밥.jpg" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${store.storeName}">Card title</h5>
+                        <p class="card-text">맛집 이 나와야 해 !!!!!!!</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </th:block>
 
     <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 베스트 카페</h1>
     <form action="">
