@@ -8,9 +8,10 @@
         <result property="description" column="description"/>
         <result property="postTime" column="post_time"/>
         <result property="updateTime" column="update_time"/>
+        <result property="profileImg" column="profile_img"/>
     </resultMap>
     <insert id="insertOne">
-        INSERT INTO chat_rooms(user_id, name, description) VALUES (#{userId}, #{name}, #{description})
+        INSERT INTO chat_rooms(user_id, name, description, profile_img) VALUES (#{userId}, #{name}, #{description}, #{profileImg})
     </insert>
     <select id="findAll" resultMap="ChatRoomMap">
         SELECT * FROM chat_rooms

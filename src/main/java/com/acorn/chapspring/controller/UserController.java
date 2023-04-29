@@ -299,6 +299,7 @@ public class UserController {
             log.error(e.getMessage());
         }
         if(loginUser!=null){
+            log.info(autoLogin);
             if(autoLogin!=null && autoLogin==1){
                 String encryptIdValue = AESEncryption.encryptValue(loginUser.getUserId());
                 String encryptPwValue = AESEncryption.encryptValue(loginUser.getPw());
@@ -310,6 +311,8 @@ public class UserController {
                 loginPw.setMaxAge(7*24*60*60);
                 resp.addCookie(loginId);
                 resp.addCookie(loginPw);
+                log.info(loginId);
+                log.info(loginPw);
             }
             redirectAttributes.addFlashAttribute("msg","로그인 성공");
             session.setAttribute("loginUser",loginUser);

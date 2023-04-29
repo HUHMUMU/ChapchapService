@@ -19,7 +19,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
     //addInterceptors : 인터셉터 설정
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(autoLoginInterceptor).order(1)
-                .addPathPatterns("/**");
+                .addPathPatterns("/")
+                .addPathPatterns("/**/*.do");
         registry.addInterceptor(loginCheckInterceptor).order(2)
                 .addPathPatterns("/user/**")
                 .excludePathPatterns("/user/login.do")
@@ -34,6 +35,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/board/list.do")
                 .excludePathPatterns("/board/*/detail.do");
         registry.addInterceptor(msgRemoveInterceptor).order(3)
-                .addPathPatterns("/**");
+                .addPathPatterns("/")
+                .addPathPatterns("/**/*.do");
     }
 }
