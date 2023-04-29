@@ -10,9 +10,9 @@
 <div layout:fragment="content">
     <form action="/chapstory/list.do">
         <div class="card-group mt-xxl-5 m-5 p-5" >
-            <div class="card m-1">
-                <div th:if="${bestList[0].chapstoryimgs!=null}">
-<!--                    <img th:src="@{'{path}'(path=${bestList[0].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일">-->
+            <div class="card m-1" >
+                <div th:if="${bestList[0].chapstoryimgs != null and not #lists.isEmpty(bestList[0].chapstoryimgs)}">
+                    <img th:src="@{'{path}'(path=${bestList[0].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일" style="object-fit: cover; width: 100%; height: 100%;">
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">
@@ -20,9 +20,9 @@
                     </h3>
                 </div>
             </div>
-            <div class="card m-1">
-                <div th:if="${bestList[1].chapstoryimgs!=null}">
-<!--                    <img th:src="@{'{path}'(path=${bestList[1].chapstoryimgs[1].img})}" class="card-img-top" alt="챱스인기글썸네일">-->
+            <div class="card m-1" >
+                <div th:if="${bestList[1].chapstoryimgs != null and not #lists.isEmpty(bestList[1].chapstoryimgs)}">
+                    <img th:src="@{'{path}'(path=${bestList[1].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일" style="object-fit: cover; width: 100%; height: 100%;">
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">
@@ -30,9 +30,9 @@
                     </h3>
                 </div>
             </div>
-            <div class="card m-1">
-                <div th:if="${bestList[2].chapstoryimgs!=null}">
-<!--                    <img th:src="@{'{path}'(path=${bestList[2].chapstoryimgs[2].img})}" class="card-img-top" alt="챱스인기글썸네일">-->
+            <div class="card m-1" >
+                <div th:if="${bestList[2].chapstoryimgs != null and not #lists.isEmpty(bestList[2].chapstoryimgs)}">
+                    <img th:src="@{'{path}'(path=${bestList[2].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일" style="object-fit: contain; width: 100%; height: 100%;">
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">
@@ -87,11 +87,8 @@
         <div style="margin-bottom: 100px">
             <div class="p-4 border-1 bg-white mb-4" th:each="c:${chapstorys}">
                 <div class="d-flex justify-content-around">
-                    <p>이건 th 밖입니다</p>
-                    <div th:if="${c.chapstoryimgs==null}">
-                        <p th:text="${c.chapstoryimgs}"></p>
-                        <p>이건 th 안입니다</p>
-<!--                        <img th:src="@{'{path}'(path=${c.chapstoryimgs[0].img})}" alt = "챱스 썸네일" style="width: 200px; height: 200px; object-fit: cover;" class="img-thumbnail">-->
+                    <div th:if="${c.chapstoryimgs != null and not #lists.isEmpty(c.chapstoryimgs)}">
+                        <img th:src="@{'{path}'(path=${c.chapstoryimgs[0].img})}" alt="챱스 썸네일" style="width: 200px; height: 200px; object-fit: cover;" class="img-thumbnail">
                     </div>
                     <div style="width:70%">
                         <div class="d-flex justify-content-between ">
