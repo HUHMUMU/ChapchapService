@@ -26,4 +26,5 @@ public class ReviewsDto {
     private MenuManagesDto menuName; //메뉴 이름 가져오기
     private ReviewLikesDto countLike; //리뷰의 좋아요 싫어요
     private List<ReportsDto> reportReview; //리뷰 신고
+    private List<ReviewLikesDto> reviewLikes; //리뷰의 좋아요들
 }

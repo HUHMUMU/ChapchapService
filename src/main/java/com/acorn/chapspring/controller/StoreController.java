@@ -26,10 +26,10 @@ public class StoreController {
                         @PathVariable int storeNum) {
         StoresDto stores=storeService.getStoreByStoreNum(storeNum);
 //추천버든 기능구현
-        if (loginUser != null) {
-            RecommendStoreDto recommending=recommendService.recommendCheck(loginUser.getUserId(), storeNum);
-            model.addAttribute("recommending",recommending);
-        }
+//        if (loginUser != null) {
+//            RecommendStoreDto recommending=recommendService.recommendCheck(loginUser.getUserId(), storeNum);
+//            model.addAttribute("recommending",recommending);
+//        }
 //----------------
         model.addAttribute("stores",stores);
         return "store/detail"; // 해당 경로에 대한 뷰 이름 반환

@@ -7,6 +7,8 @@ public interface ReviewLikeService {
     //좋아요 누르기
     //좋아요 취소
     ReviewLikesDto checkLikeByUser(int reviewNum, String userId);
-    int insertReviewLike(ReviewLikesDto reviewLikes);
-    int deleteReviewLike(int reviewNum, String userId);
+    ReviewLikesDto checkLike(int reviewNum);
+    int registerLike(ReviewLikesDto reviewLikes);
+    int modifyLike(ReviewLikesDto reviewLikes);
+    int removeLike(ReviewLikesDto reviewLikes);
 }

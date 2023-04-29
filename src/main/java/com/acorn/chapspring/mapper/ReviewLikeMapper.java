@@ -11,7 +11,9 @@ import java.util.List;
 @Repository
 public interface ReviewLikeMapper {
     ReviewLikesDto countLikeByReview(int reviewNum); //리뷰당 좋아요 수
-    ReviewLikesDto checkLikeByUser(@Param("reviewNum") int reviewNum, @Param("userId") String userId);
+    ReviewLikesDto findByReviewAndUId(@Param("reviewNum") int reviewNum, @Param("userId") String userId);
+    List<ReviewLikesDto> findLikeByReview(int reviewNum);
     int insertReviewLike(ReviewLikesDto reviewLikes);
-    int deleteReviewLike(@Param("reviewNum") int reviewNum, @Param("userId") String userId);
+    int updateReviewLike(ReviewLikesDto reviewLikes);
+    int deleteReviewLike(ReviewLikesDto reviewLikes);
 }

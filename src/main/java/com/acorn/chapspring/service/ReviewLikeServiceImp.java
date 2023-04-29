@@ -12,15 +12,24 @@ public class ReviewLikeServiceImp implements ReviewLikeService{
     private ReviewLikeMapper reviewLikeMapper;
     @Override
     public ReviewLikesDto checkLikeByUser(int reviewNum, String userId) {
-        return reviewLikeMapper.checkLikeByUser(reviewNum, userId);
+        return reviewLikeMapper.findByReviewAndUId(reviewNum, userId);
     }
     @Override
-    public int insertReviewLike(ReviewLikesDto reviewLikes) {
+    public ReviewLikesDto checkLike(int reviewNum) {
+        return reviewLikeMapper.countLikeByReview(reviewNum);
+    }
+
+    @Override
+    public int registerLike(ReviewLikesDto reviewLikes) {
         return reviewLikeMapper.insertReviewLike(reviewLikes);
     }
     @Override
-    public int deleteReviewLike(int reviewNum, String userId) {
-        return reviewLikeMapper.deleteReviewLike(reviewNum, userId);
+    public int modifyLike(ReviewLikesDto reviewLikes) {
+        return reviewLikeMapper.updateReviewLike(reviewLikes);
+    }
+    @Override
+    public int removeLike(ReviewLikesDto reviewLikes) {
+        return reviewLikeMapper.deleteReviewLike(reviewLikes);
     }
 
 }

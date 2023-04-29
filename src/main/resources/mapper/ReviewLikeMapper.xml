@@ -9,19 +9,26 @@
         <result column="like" property="likeCount"/>
         <result column="bad" property="badCount"/>
     </resultMap>
+    <select id="findByReviewAndUId" resultMap="ReviewLikeMap">
+        SELECT * FROM reviewlikes WHERE review_num=#{reviewNum} AND user_id=#{userId};
+    </select>
     <insert id="insertReviewLike">
-        INSERT INTO reviewlikes (rl_status, user_id, review_num) VALUES (#{rlStatus}, #{userId}, #{reviewNum});
+        INSERT INTO reviewlikes (rl_status, user_id, review_num) VALUE (#{rlStatus}, #{userId}, #{reviewNum});
     </insert>
+    <update id="updateReviewLike">
+        UPDATE reviewlikes SET rl_status=#{rlStatus} WHERE review_num=#{reviewNum} AND user_id=#{userId};
+    </update>
     <delete id="deleteReviewLike">
         DELETE FROM reviewlikes WHERE review_num=#{reviewNum} AND user_id=#{userId};
     </delete>
+
     <select id="countLikeByReview" resultMap="ReviewLikeMap">
         SELECT
             COUNT(CASE WHEN rl_status='LIKE' THEN 1 END ) 'like',
             COUNT(CASE WHEN rl_status='BAD' THEN 1 END ) 'bad'
         FROM reviewlikes WHERE review_num=#{reviewNum};
     </select>
-    <select id="checkLikeByUser" resultMap="ReviewLikeMap">
-        SELECT * FROM reviewlikes WHERE review_num=#{reviewNum} AND user_id=#{userId};
+    <select id="findLikeByReview" resultMap="ReviewLikeMap">
+        SELECT * FROM reviewlikes WHERE review_num=#{reviewNum}
     </select>
 </mapper>
