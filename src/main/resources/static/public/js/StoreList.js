@@ -261,11 +261,9 @@ function setOrder(order, selectedDirect) {
     if(!selectedDirect) {
         if(allParam.direct==="ASC"){
             allParam.direct="DESC";
-            console.log("A");
         }
         else {
             allParam.direct="ASC";
-            console.log("B");
         }
     }
 
