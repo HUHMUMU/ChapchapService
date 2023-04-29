@@ -239,7 +239,7 @@
             </div>
             <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,r.userId)}">
               <div class="d-flex justify-content-end">
-                <a th:href="'/review/'+${r.reviewNum}+'/remove.do'" class="btn btn-outline-danger p-0" style="height: 25px;">삭제하기</a>
+                <a th:href="'/review/'+${r.reviewNum}+'/remove.do'" class="btn btn-outline-danger px-1 pt-0" style="height: 25px;">삭제하기</a>
               </div>
             </th:block>
             <th:block th:unless="${session.loginUser!=null && #strings.equals(session.loginUser.userId,r.userId)}">
@@ -256,7 +256,7 @@
         </div>
         <div class="card-body">
           <div th:if="${not #lists.isEmpty(r.rReplies)}" class="d-flex" th:each="rr:${r.rReplies}">
-            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+            <div class="flex-shrink-0"><img class="rounded-circle" th:src="'http://localhost:8088'+${s.mainImg}" alt="..." /></div>
             <div class="ms-3" >
               <div class="d-flex">
                 <div class="fw-bold">사장님</div>
