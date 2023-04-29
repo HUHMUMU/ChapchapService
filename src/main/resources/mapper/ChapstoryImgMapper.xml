@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.ChapstoryImgMapper">
+    <resultMap id="ChapstoryImgMap" type="ChapstoryimgsDto">
+        <id property="chsNum" column="chs_num"></id>
+        <result property="chapNum" column="chap_num"/>
+        <result property="img" column="img"/>
+    </resultMap>
+    <insert id="insertOne" useGeneratedKeys="true" keyProperty="chsNum">
+        INSERT INTO chapstoryimgs (chap_num, img) VALUES (#{chapNum}, #{img})
+    </insert>
+    <delete id="deleteOne">
+        DELETE FROM chapstoryimgs WHERE chs_num=#{chsNum}
+    </delete>
+    <select id="findByChapNum" resultType="com.acorn.chapspring.dto.ChapstoryimgsDto">
+        SELECT * FROM chapstoryimgs WHERE chap_num=#{chapNum}
+    </select>
+    <select id="findByChsNum" resultType="com.acorn.chapspring.dto.ChapstoryimgsDto">
+        SELECT * FROM chapstoryimgs WHERE chs_num=#{chsNum}
+    </select>
+    <select id="findByChsNumIn" resultType="com.acorn.chapspring.dto.ChapstoryimgsDto">
+        SELECT * FROM chapstoryimgs WHERE chs_num in
+        <foreach collection="chsNums" item="chsNum" open="(" separator="," close=")">
+            ${chsNum}
+        </foreach>
+    </select>
+</mapper>

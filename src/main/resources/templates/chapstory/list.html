@@ -67,12 +67,13 @@
                 <div class="input-group my-3">
                     <label class="input-group-text bi bi-search" style="background-color: #ffeeba;"></label>
                     <select name="searchField" class="form-control">
+                        <option value="">검색기준</option>
                         <option th:selected="(${#strings.equals(param.searchField,'user_id')})"value="user_id">글쓴이</option>
                         <option th:selected="(${#strings.equals(param.searchField,'title')})"value="title">제목</option>
                         <option th:selected="(${#strings.equals(param.searchField,'content')})"value="content">내용</option>
                     </select>
                     <input type="text" class="form-control " name="searchValue" placeholder="검색어 입력"
-                           th:value="${param.searchValue}" style="width : 70%">
+                           th:value="${param.searchValue}" style="width : 50%">
                     <button class="btn btn-warning">검색</button>
                 </div>
             </form>
