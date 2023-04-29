@@ -9,7 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 </head>
 <div layout:fragment="content">
-  <form name="registerForm" id="registerForm" method="post" action="/review/register.do">
+  <form name="registerForm" id="registerForm" enctype="multipart/form-data" method="post" action="/review/register.do">
     <input type = "text" name="storeNum" th:value="${stores.storeNum}" hidden>
     <input id="user_id" type="text" name="userId" th:value="${session.loginUser.userId}" readonly class="form-control" hidden>
     <input name="rrStatus" value="공개" hidden>
@@ -33,7 +33,8 @@
     </select>
     <input type="text" name="comment" class="form-control" id="storeComment">
 
-    <input class="form-control mt-3" type="file" id="formFile" name="img">
+    <label for="formFile" class="form-label">리뷰 사진 등록</label>
+    <input class="form-control" type="file" id="formFile" name="img">
 
     <div class="text-end mt-3">
       <button class="btn btn-outline-warning me-1" type="reset">초기화</button>
