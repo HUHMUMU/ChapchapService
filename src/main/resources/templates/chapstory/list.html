@@ -11,7 +11,7 @@
     <form action="/chapstory/list.do">
         <div class="card-group mt-xxl-5 m-5 p-5" >
             <div class="card m-1">
-                <img th:src="@{'{path}'(path=${bestList[0].mainImg})}" class="card-img-top" alt="챱스인기글썸네일">
+                 <img th:src="@{'{path}'(path=${bestList[0].mainImg})}" class="card-img-top" alt="챱스인기글썸네일">
                 <div class="card-body">
                     <h3 class="card-title">
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestList[0].chapNum})}" th:text="${bestList[0].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
@@ -49,11 +49,9 @@
                         <option value="">정렬기준</option>
                         <option th:selected="(${#strings.equals(param.order,'user_id')})"value="user_id">아이디</option>
                         <option th:selected="(${#strings.equals(param.order,'chap_num')})"value="chap_num">게시글번호</option>
-<!--                        <option th:selected="(${#strings.equals(param.order,'nickname')})"value="nickname">닉네임</option>-->
                         <option th:selected="(${#strings.equals(param.order,'title')})"value="title">제목</option>
                         <option th:selected="(${#strings.equals(param.order,'content')})"value="content">내용</option>
                         <option th:selected="(${#strings.equals(param.order,'viewcount')})"value="viewcount">조회수</option>
-<!--                        <option th:selected="(${#strings.equals(param.order,'likeCnt')})"value="likeCnt">좋아요수</option>-->
                     </select>
                     <select name="direct" class="form-control">
                         <option value="">방향</option>

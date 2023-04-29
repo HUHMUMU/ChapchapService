@@ -1,15 +1,18 @@
 package com.acorn.chapspring.service;
 
 import com.acorn.chapspring.dto.ChapstoryPageDto;
+import com.acorn.chapspring.dto.ChapstoryimgsDto;
 import com.acorn.chapspring.dto.ChapstorysDto;
 import com.acorn.chapspring.dto.UserDto;
 import com.acorn.chapspring.mapper.ChapStoryMapper;
+import com.acorn.chapspring.mapper.ChapstoryImgMapper;
 import com.acorn.chapspring.mapper.UserMapper;
 import com.github.pagehelper.PageHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +20,7 @@ import java.util.List;
 public class ChapStoryServiceImp implements ChapStoryService{
     private ChapStoryMapper chapStoryMapper;
     private UserMapper userMapper;
+    private ChapstoryImgMapper chapstoryImgMapper;
 //    public ChapStoryServiceImp(ChapStoryMapper chapStoryMapper){this.chapStoryMapper=chapStoryMapper;}
 
     @Override
@@ -71,6 +75,19 @@ public class ChapStoryServiceImp implements ChapStoryService{
     public int remove(int chapNum) {
         int remove=chapStoryMapper.deleteByChapsNum(chapNum);
         return remove;
+    }
+
+    @Override
+    public List<ChapstoryimgsDto> imgList(int[] chsNum) {
+        List<ChapstoryimgsDto> imgList=null;
+        if(chsNum!=null){
+            imgList=new ArrayList<>();
+            for (int c : chsNum){
+                ChapstoryimgsDto imgDto=chapstoryImgMapper.findByChsNum(c);
+                imgList.add(imgDto);
+            }
+        }
+        return imgList;
     }
 
 }

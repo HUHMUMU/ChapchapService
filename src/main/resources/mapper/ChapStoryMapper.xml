@@ -57,8 +57,9 @@
         </if>
     </select>
     <select id="bestList" resultMap="ChapstoryMap">
-        SELECT chap_num, title, viewcount, main_img FROM  chapstorys where post_time >= DATE_FORMAT(now()-7,'%Y%m%d') ORDER BY viewcount desc
+        SELECT chap_num, title, viewcount, main_img FROM  chapstorys ORDER BY viewcount desc
     </select>
+<!--    where post_time >= DATE_FORMAT(now()-7,'%Y%m%d')-->
     <select id="bestListFindByUserId" resultMap="ChapstoryMap">
         SELECT  chap_num, title, viewcount, main_img FROM  chapstorys where user_id=#{userId} ORDER BY viewcount desc
     </select>

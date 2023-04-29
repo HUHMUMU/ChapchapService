@@ -31,16 +31,14 @@ public class ChapStoryController {
 
     private ChapStoryService chapStoryService;
     private UserService userService;
-    @Value("${img.upload.path}")
-    private String uploadPath; //등록 (프로젝트위치+/static/public/img/chapstory
     @Value("${static.path}")
-    private String staticPath; //삭제
+    private String staticPath;
 
     public ChapStoryController(ChapStoryService chapStoryService) {this.chapStoryService=chapStoryService;}
-    @GetMapping("/write.do")
-    public String list() {
-        return "chapstory/write"; // 해당 경로에 대한 뷰 이름 반환
-    }
+//    @GetMapping("/write.do")
+//    public String list() {
+//        return "chapstory/write"; // 해당 경로에 대한 뷰 이름 반환
+//    }
 
     @GetMapping("/list.do")
     public String chapList(
@@ -65,15 +63,6 @@ public class ChapStoryController {
         model.addAttribute("c",chaps);
         return "chapstory/detail";}
 
-//    @GetMapping("/{userId}/blogMain.do")
-//    public String chapMain(
-//            Model model,
-//            @PathVariable String userId,
-//            @SessionAttribute UserDto loginUser){
-//        List<ChapstorysDto> chaps;
-//        chaps = chapStoryService.blogMain(userId);
-//        model.addAttribute("chapstorys",chaps);
-//        return "chapstory/blogMain";}
 
     @GetMapping("/{userId}/blogMain.do")
     public String chapMain(
@@ -115,7 +104,8 @@ public class ChapStoryController {
             RedirectAttributes redirectAttributes,
             @SessionAttribute UserDto loginUser,
             @ModelAttribute ChapstorysDto chaps,
-            @RequestParam(name = "img", required = false)MultipartFile [] imgs) throws IOException
+            @RequestParam(name = "img", required = false)MultipartFile [] imgs
+    ) throws IOException
     {
         String redirectPage="redirect:/register.do";
         if(!loginUser.getUserId().equals(chaps.getUserId())) return redirectPage;
@@ -127,7 +117,7 @@ public class ChapStoryController {
                     String[] contentTypes=img.getContentType().split("/");
                     if(contentTypes[0].equals("image")){
                         String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000)+"."+contentTypes[1];
-                        Path path = Paths.get(uploadPath+"/chapstory/"+fileName);
+                        Path path = Paths.get(staticPath+"/public/img/chapstory/"+fileName);
                         img.transferTo(path);
                         ChapstoryimgsDto imgDto = new ChapstoryimgsDto();
                         imgDto.setImg("/public/img/chapstory/"+fileName);
