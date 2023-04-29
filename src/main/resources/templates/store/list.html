@@ -95,10 +95,7 @@
                         <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" style="width:50px;" onclick="setParking('0', '불가능')">불가능</button>
                     </div>
                     <!-- 필터 적용된 사항 표시 -->
-                    <div class="d-flex justify-content-center align-items-center mt-2" style="width:90%; height:30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
-                        <button th:if="${param.menuName}" th:text="${param.menuName}" type="button" class="btn btn-secondary btn-sm p-0 me-1 ms-1" style="width:50px;"></button>
-                        <button th:if="${param.priceType}" th:text="${param.priceType}" type="button" class="btn btn-secondary btn-sm p-0 me-1 ms-1" style="width:50px;"></button>
-                        <button th:if="${param.parkingType}" th:text="${param.parkingType}" type="button" class="btn btn-secondary btn-sm p-0 me-1 ms-1" style="width:50px;"></button>
+                    <div class="d-flex justify-content-center align-items-center mt-2" id="filterResult" style="width:90%; height:30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
                     </div>
                 </div>
                 <!-- 정렬 부분 -->
