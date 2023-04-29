@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @Controller //< @Component 요청과 응답을 처리 가능
-@RequestMapping("/report")
+@RequestMapping("/store/report")
 @Log4j2
 public class ReportController {
     private ReportService reportService;

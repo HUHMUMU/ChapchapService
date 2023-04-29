@@ -38,6 +38,10 @@
                      select="com.acorn.chapspring.mapper.ReportMapper.findReportByReview"
                      column="review_num"
                      fetchType="eager"/>
+        <collection property="reviewLikes"
+                     select="com.acorn.chapspring.mapper.ReviewLikeMapper.findLikeByReview"
+                     column="review_num"
+                     fetchType="eager"/>
     </resultMap>
     <insert id="insertReview">
         INSERT INTO reviews (content,comment,img,date,star,r_rstatus,user_id,store_num,menu_num)
