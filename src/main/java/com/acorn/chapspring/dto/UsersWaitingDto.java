@@ -3,7 +3,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-
 @Data
 public class UsersWaitingDto {
     private int storeNum; //가게의 고유번호(이름이 같은 가게를 구분하기 위함)

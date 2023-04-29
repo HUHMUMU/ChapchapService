@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.StoreImgMapper">
+    <resultMap id="StoreImgMap" type="com.acorn.chapspring.dto.StoreImgsDto">
+        <id column="img_num" property="imgNum"/>
+        <result column="store_num" property="storeNum"/>
+        <result column="store_img" property="storeImg"/>
+    </resultMap>
+    <select id="findImgByStore" resultMap="StoreImgMap">
+        SELECT * FROM store_imgs WHERE store_num=#{storeNum}
+    </select>
+</mapper>

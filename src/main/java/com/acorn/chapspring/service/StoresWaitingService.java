@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public interface StoresWaitingService {
+
     StoresWaitingDto getStoreWaitingByStoreNum(int storeNum);
     StoresWaitingDto getMaxPeople(int storeNum, int maxPeople);
     StoresWaitingDto getTimeSetup(int storeNum, int timeSetup);
