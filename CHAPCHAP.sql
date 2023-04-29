@@ -300,6 +300,7 @@ CREATE TABLE chat_rooms
     name         VARCHAR(255) NOT NULL COMMENT '채팅방 이름',
     description  TEXT COMMENT '채팅방 설명',
     post_time    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '채팅방 생성 시간',
+    profile_img  VARCHAR(255)                                   NULL COMMENT '프로필사진',
     update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '채팅방 최근 업데이트 시간',
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

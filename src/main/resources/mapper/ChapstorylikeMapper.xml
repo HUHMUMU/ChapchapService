@@ -14,26 +14,15 @@
         DELETE FROM chapstorylikes WHERE user_id=#{userId} AND chap_num=#{chapNum};
     </delete>
     <delete id="deleteByLikeno">
-        DELETE FROM chapstorylikes WHERE user_id=#{userId} AND chap_num=#{chapNum};
+        DELETE FROM chapstorylikes WHERE user_id=#{userId} AND likeno=#{likeno};
     </delete>
     <select id="findByCNumAndUId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto">
-        SELECT * FROM chapstorylikes  WHERE user_id=#{uId} AND chap_num=#{cNum};
+        SELECT * FROM chapstorylikes  WHERE user_id=#{uId} AND chap_num=#{chapNum};
     </select>
     <select id="findByCNumAndUIdIsLoginUserId" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
     <select id="countLikeByCNum" resultType="com.acorn.chapspring.dto.ChapstorylikesDto"></select>
     <select id="countByCnum" resultType="int" parameterType="int">
         SELECT COUNT(*) likeCnt FROM chapstorylikes WHERE chap_num=#{chapNum}
     </select>
-    <update id="likeCheck" parameterType="ChapstorylikesDto">
-        UPDATE chapstorylikes
-        SET like_check = like_check + 1
-        WHERE chap_num=#{chap_num} AND user_id=#{user_id}
-    </update>
-
-    <update id="likeCheckCancel" parameterType="ChapstorylikesDto">
-        UPDATE chapstorylikes
-        SET like_check = 0
-        WHERE user_id=#{user_id} AND chap_num=#{chap_num}
-    </update>
 
 </mapper>

@@ -26,7 +26,8 @@ class ChapStoryMapperTest {
 
     @Test
     void findByChapNum() {
-        chapStoryMapper.findByChapNum(1);
+        ChapstorysDto chap = chapStoryMapper.findByChapNum(1);
+        System.out.println("chap.getChapstoryimgs() = " + chap.getChapstoryimgs());
     }
 
     @Test

@@ -1,0 +1,34 @@
+<!-- register.html -->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>채팅방 작성 페이지</title>
+</head>
+<div layout:fragment="content">
+    <form action="/chat/room/register.do" name="registerForm" enctype="multipart/form-data" method="post">
+        <h3> 채팅방 생성 </h3>
+        <p class="form-floating">
+            <input id="user_id" type="text" name="userId" th:value="${session.loginUser.userId}" readonly class="form-control" placeholder="??">
+            <label for="user_id" class="">아이디(글쓴이)</label>
+        </p>
+        <p class="form-floating">
+            <input id="name" type="text" name="name" class="form-control" placeholder="??">
+            <label for="name" class="form-label">제목을 입력하세요</label>
+<!--            <input type = "file", id="" class="form-control" accept="image/*">-->
+        </p>
+        <p class="input-group">
+            <input type="file" name="img" id="profileImg" value="" class="form-control" placeholder="??">
+            <label class="input-group-text" for="profileImg">프로필</label>
+        </p>
+
+        <p class="text-end">
+            <button id="resetBtn" class="btn btn-outline-warning me-2" type="button" onclick="resetForm()">초기화</button>
+            <button id="addBtn" class="btn btn-outline-primary" type="submit">등록</button>
+        </p>
+    </form>
+</div>
+</html>

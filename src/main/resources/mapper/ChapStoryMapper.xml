@@ -25,6 +25,10 @@
                      select="com.acorn.chapspring.mapper.UserMapper.findByUserNickname"
                      column="nickname"
                      fetchType="lazy"/>
+        <collection property="chapstoryimgs"
+                    select="com.acorn.chapspring.mapper.ChapstoryImgMapper.findByChapNum"
+                    column="chap_num"
+                    fetchType="lazy"/>
     </resultMap>
     <insert useGeneratedKeys="true" keyProperty="chapNum" id="insertOne" parameterType="ChapstorysDto">
         INSERT INTO chapstorys (user_id, title, content, main_img) VALUE (#{userId}, #{title}, #{content}, #{mainImg})
@@ -57,8 +61,11 @@
         </if>
     </select>
     <select id="bestList" resultMap="ChapstoryMap">
-        SELECT chap_num, title, viewcount, main_img FROM  chapstorys where post_time >= DATE_FORMAT(now()-7,'%Y%m%d') ORDER BY viewcount desc
+        SELECT chap_num, title, viewcount
+        FROM chapstorys
+        ORDER BY viewcount DESC
     </select>
+<!--    where post_time >= DATE_FORMAT(now()-7,'%Y%m%d')-->
     <select id="bestListFindByUserId" resultMap="ChapstoryMap">
         SELECT  chap_num, title, viewcount, main_img FROM  chapstorys where user_id=#{userId} ORDER BY viewcount desc
     </select>

@@ -16,6 +16,4 @@ public interface ChapstorylikeMapper {
     int insertOne(ChapstorylikesDto chapLike);
     int deleteByLikeno(int likeno);
     int deleteOne(ChapstorylikesDto chapLike);
-    int likeCheck (ChapstorylikesDto chapLike);
-    int likeCheckCancel (ChapstorylikesDto chapLike);
 }

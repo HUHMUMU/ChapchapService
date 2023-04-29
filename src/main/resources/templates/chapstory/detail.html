@@ -67,9 +67,13 @@
             </div>
         </div>
         <hr>
-        <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="height: 300px; object-fit: cover; margin-top: 50px; justify-self: center; display: block;" class="img-thumbnail mx-auto">
-<!--        <div class="border bg-primary" style="height: 300px; margin-top: 50px"></div>-->
-        <div class="container" style="margin-top: 50px;">
+
+        <div class="d-flex justify-content-center"  th:if="${c.chapstoryimgs != null and not #lists.isEmpty(c.chapstoryimgs)}">
+            <div th:each="ci : ${c.chapstoryimgs}">
+                <img th:src="@{'{path}'(path=${ci.img})}" alt="챱스 썸네일" style="height: 300px; object-fit: cover; margin-top: 50px; justify-self: center; display: block;" class="img-thumbnail mx-auto">
+            </div>
+        </div>
+        <div class="container" style="margin-top: 50px; text-align: center;">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <p th:text="${c.content}"></p>
