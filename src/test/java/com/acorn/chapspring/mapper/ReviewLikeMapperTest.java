@@ -16,7 +16,7 @@ class ReviewLikeMapperTest {
 
     @Test
     void countLikes() {
-        ReviewLikesDto countLike=reviewLikeMapper.countLikeByReview(2);
+        ReviewLikesDto countLike=reviewLikeMapper.countLikeByReview(1);
         System.out.println("countLike = " + countLike);
         assertNotNull(countLike);
     }

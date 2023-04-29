@@ -21,16 +21,19 @@
   <div class="store">
     <p class="storeName d-flex justify-content-center mt-4" th:text="${s.storeName}"></p>
 <!-- 추천 버튼 기능 구현-->
-    <th:block th:if="${recommending!=null && s.storeNum==recommending.storeNum}">
-      <button type="button" class="btn btn-secondary btn-sm mt-3 active" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">
-        추천
-      </button>
+    <th:block th:if="${session.loginUser!=null}">
+      <th:block th:if="${recommending!=null && s.storeNum==recommending.storeNum}">
+        <button type="button" class="btn btn-secondary btn-sm mt-3 active" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">
+          추천
+        </button>
+      </th:block>
+      <th:block th:if="${recommending==null || recommending!=null && s.storeNum!=recommending.storeNum}">
+        <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">
+          추천
+        </button>
+      </th:block>
     </th:block>
-    <th:block th:if="${recommending==null || recommending!=null && s.storeNum!=recommending.storeNum}">
-      <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">
-        추천
-      </button>
-    </th:block>
+
 <!---------------------->
 
 
@@ -111,7 +114,7 @@
     </ul>
   </div>
   <nav class="navbar sticky-top" style="background-color:#fdf9ec">
-    <div class="container-fluid d-flex justify-content-center">
+    <div class="menuBar container-fluid d-flex justify-content-center">
       <a class="navbar-brand m-0" href="#waiting">예약</a>
       <span class="m-2">|</span>
       <a class="navbar-brand m-0" href="#event">이벤트</a>
@@ -231,6 +234,8 @@
                 <a class="btn btn-outline-dark pt-0" style="height: 25px;">팔로우</a>
               </div>
               <div class="d-flex">
+                <p th:text="'★'+${r.star}" class="rating-value"></p>
+                <p><i class="bi bi-dot m-2"></i></p>
                 <p class="review-count" th:text="'작성리뷰 '+${r.countReview}"></p>
                 <p><i class="bi bi-dot m-2"></i></p>
                 <p th:text="${#dates.format(r.date,'yyyy-MM-dd')}"></p>
@@ -238,19 +243,14 @@
             </div>
           </div>
           <div class="d-flex">
-            <div class="d-flex">
-              <p th:text="'★'+${r.star}" class="rating-value"></p>
-              <i class="bi bi-hand-thumbs-up"></i>
-              <p th:text="${r.countLike}"></p>
-              <i class="bi bi-hand-thumbs-down"></i>
-            </div>
+            <th:block th:include="/store/like"></th:block>
             <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,r.userId)}">
               <div class="d-flex justify-content-end">
                 <a th:href="'/review/'+${r.reviewNum}+'/remove.do'" class="btn btn-outline-danger p-0" style="height: 25px;">삭제하기</a>
               </div>
             </th:block>
             <th:block th:unless="${session.loginUser!=null && #strings.equals(session.loginUser.userId,r.userId)}">
-              <th:block th:include="/report/reportReview"></th:block>
+              <th:block th:include="/store/report"></th:block>
             </th:block>
           </div>
         </div>
@@ -349,7 +349,7 @@
     display: none; /*리뷰 숨기기*/
   }
 
-  .container-fluid a:hover{
+  .menuBar a:hover{
     color: #FF5D5D;
     font-weight: bold;
   }
