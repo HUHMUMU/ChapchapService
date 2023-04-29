@@ -122,6 +122,7 @@ public class ChapStoryController {
                         ChapstoryimgsDto imgDto = new ChapstoryimgsDto();
                         imgDto.setImg("/public/img/chapstory/"+fileName);
                         imgDtos.add(imgDto);
+                        log.info(imgDtos);
                     }
                 }
             }
@@ -167,15 +168,25 @@ public class ChapStoryController {
 
     @PostMapping("/modify.do")
     public String modifyAction(
-            @ModelAttribute ChapstorysDto chaps){
+            @ModelAttribute ChapstorysDto chaps,
+            @RequestParam(value = "delImgChsNum",required = false) int [] delImgChsNums,
+            @RequestParam(value = "img",required = false) MultipartFile [] imgs){
         String redirectPath="redirect:/chapstory/"+chaps.getChapNum()+"/modify.do";
+        List<ChapstoryimgsDto> imgDtos=null;
         int modify=0;
         try{
-            modify=chapStoryService.modify(chaps);
+            if(delImgChsNums!=null)imgDtos=chapStoryService.imgList(delImgChsNums);
+            modify=chapStoryService.modify(chaps,delImgChsNums);
         }catch (Exception e){
             log.error(e.getMessage());
         }
         if(modify>0){
+            if(imgDtos!=null){
+                for (ChapstoryimgsDto i : imgDtos){
+                    File imgFile=new File(staticPath+i.getImg());
+                    if(imgFile.exists())imgFile.delete();
+                }
+            }
             redirectPath="redirect:/chapstory/list.do";
         }
         return redirectPath;
@@ -189,14 +200,22 @@ public class ChapStoryController {
         String redirectPath="redirect:/chapstory/"+chapNum+"/modify.do";
         String msg="삭제 실패";
         ChapstorysDto chaps=null;
+        List<ChapstoryimgsDto> imgDtos=null;
         int remove = 0;
         try{
             chaps=chapStoryService.detail(chapNum);
+            imgDtos=chaps.getChapstoryimgs();
             remove=chapStoryService.remove(chapNum);
         }catch (Exception e){
             log.error(e);
         }
         if(remove>0){
+            if(imgDtos!=null){
+                for(ChapstoryimgsDto i : imgDtos){
+                    File imgFile = new File(staticPath+i.getImg());
+                    if(imgFile.exists())imgFile.delete();
+                }
+            }
             msg="삭제 성공!";
             redirectPath="redirect:/chapstory/list.do";
         }

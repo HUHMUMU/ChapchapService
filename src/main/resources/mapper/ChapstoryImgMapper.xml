@@ -12,13 +12,13 @@
     <delete id="deleteOne">
         DELETE FROM chapstoryimgs WHERE chs_num=#{chsNum}
     </delete>
-    <select id="findByChapNum" resultType="com.acorn.chapspring.dto.ChapstoryimgsDto">
+    <select id="findByChapNum" resultMap="ChapstoryImgMap">
         SELECT * FROM chapstoryimgs WHERE chap_num=#{chapNum}
     </select>
-    <select id="findByChsNum" resultType="com.acorn.chapspring.dto.ChapstoryimgsDto">
+    <select id="findByChsNum" resultMap="ChapstoryImgMap">
         SELECT * FROM chapstoryimgs WHERE chs_num=#{chsNum}
     </select>
-    <select id="findByChsNumIn" resultType="com.acorn.chapspring.dto.ChapstoryimgsDto">
+    <select id="findByChsNumIn" resultMap="ChapstoryImgMap">
         SELECT * FROM chapstoryimgs WHERE chs_num in
         <foreach collection="chsNums" item="chsNum" open="(" separator="," close=")">
             ${chsNum}

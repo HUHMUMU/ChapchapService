@@ -11,7 +11,9 @@
     <form action="/chapstory/list.do">
         <div class="card-group mt-xxl-5 m-5 p-5" >
             <div class="card m-1">
-                 <img th:src="@{'{path}'(path=${bestList[0].mainImg})}" class="card-img-top" alt="챱스인기글썸네일">
+                <div th:if="${bestList[0].chapstoryimgs!=null}">
+<!--                    <img th:src="@{'{path}'(path=${bestList[0].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일">-->
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestList[0].chapNum})}" th:text="${bestList[0].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
@@ -19,7 +21,9 @@
                 </div>
             </div>
             <div class="card m-1">
-                <img th:src="@{'{path}'(path=${bestList[1].mainImg})}" class="card-img-top" alt="챱스인기글썸네일">
+                <div th:if="${bestList[1].chapstoryimgs!=null}">
+<!--                    <img th:src="@{'{path}'(path=${bestList[1].chapstoryimgs[1].img})}" class="card-img-top" alt="챱스인기글썸네일">-->
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestList[1].chapNum})}" th:text="${bestList[1].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
@@ -27,10 +31,12 @@
                 </div>
             </div>
             <div class="card m-1">
-                <img th:src="@{'{path}'(path=${bestList[2].mainImg})}" class="card-img-top" alt="챱스인기글썸네일">
+                <div th:if="${bestList[2].chapstoryimgs!=null}">
+<!--                    <img th:src="@{'{path}'(path=${bestList[2].chapstoryimgs[2].img})}" class="card-img-top" alt="챱스인기글썸네일">-->
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">
-                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestList[1].chapNum})}" th:text="${bestList[1].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestList[2].chapNum})}" th:text="${bestList[2].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h3>
                 </div>
             </div>
@@ -81,7 +87,12 @@
         <div style="margin-bottom: 100px">
             <div class="p-4 border-1 bg-white mb-4" th:each="c:${chapstorys}">
                 <div class="d-flex justify-content-around">
-                    <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="width: 200px; height: 200px; object-fit: cover;" class="img-thumbnail">
+                    <p>이건 th 밖입니다</p>
+                    <div th:if="${c.chapstoryimgs==null}">
+                        <p th:text="${c.chapstoryimgs}"></p>
+                        <p>이건 th 안입니다</p>
+<!--                        <img th:src="@{'{path}'(path=${c.chapstoryimgs[0].img})}" alt = "챱스 썸네일" style="width: 200px; height: 200px; object-fit: cover;" class="img-thumbnail">-->
+                    </div>
                     <div style="width:70%">
                         <div class="d-flex justify-content-between ">
                             <div class="d-flex align-items-center mb-2">

@@ -45,8 +45,7 @@ public class ChapStoryServiceImp implements ChapStoryService{
     @Override
     @Transactional
     public ChapstorysDto detail(int chapNum) {
-        chapStoryMapper.updateIncrementViewCountChapNum(chapNum);
-//        chapStoryMapper.updateIncrementLikeChapNum(chapNum);
+        chapStoryMapper.updateIncrementViewCountChapNum(chapNum); //조회수 올리기
         ChapstorysDto detail = chapStoryMapper.findByChapNum(chapNum);
         return detail;
     }
@@ -61,13 +60,24 @@ public class ChapStoryServiceImp implements ChapStoryService{
     @Transactional
     public int register(ChapstorysDto chaps) {
         int register = chapStoryMapper.insertOne(chaps);
+        if(chaps.getChapstoryimgs()!=null){
+            for(ChapstoryimgsDto img : chaps.getChapstoryimgs()){
+                img.setChapNum(chaps.getChapNum());
+                register+=chapstoryImgMapper.insertOne(img);
+            }
+        }
         return register;
     }
 
     @Override
     @Transactional
-    public int modify(ChapstorysDto chaps) {
+    public int modify(ChapstorysDto chaps, int[] delImgChsNum) {
         int modify=chapStoryMapper.updateOne(chaps);
+        if(delImgChsNum!=null){
+            for(int chsNum : delImgChsNum){
+                modify+= chapstoryImgMapper.deleteOne(chsNum);
+            }
+        }
         return modify;
     }
 
