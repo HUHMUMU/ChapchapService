@@ -19,7 +19,15 @@ async function FollowListToggle(toId,btn){//팔로우 이외 페이지에서 팔
         }
     }
 }
-
+async function following(toId,btn){
+    let status=await registerFollow(toId,false);
+    if(status==="1"){
+        alert("팔로우 성공");
+        btn.closest(".followCont").remove();
+    }else{
+        alert("팔로우 실패");
+    }
+}
 async function registerFollow(toId,follower){
     let url=`/follow/${toId}/${follower}/handler.do`
     alert("toId: "+toId+",follower: "+follower);
@@ -37,8 +45,7 @@ async function removeFollow(fromId,follower){
     //follower : true(팔로워삭제), false(팔로잉삭제)
     let url=`/follow/${fromId}/${follower}/handler.do`
     alert("fromId:"+fromId+",follower:"+follower);
-    let method="DELETE";
-    const resp=await fetch(url,{method:method});
+    const resp=await fetch(url,{method:"DELETE"});
     if(resp.status===200){
         return await resp.text();// 0 실패, 1성공
     }else if(resp.status===400){

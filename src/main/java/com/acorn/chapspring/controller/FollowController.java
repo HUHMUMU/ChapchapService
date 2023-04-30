@@ -41,11 +41,11 @@ public class FollowController {
         int remove=0;
         FollowDto follow=new FollowDto();
         if(follower){//상대도 나를 팔로우중임
-            follow.setFromId(userId);//누가=상대방이
-            follow.setToId(loginUser.getUserId());//누구를=로그인유저를
+            follow.setFromId(loginUser.getUserId());//누가=상대방이
+            follow.setToId(userId);//누구를=로그인유저를
         }else{//상대는 나를 팔로우중이 아님
-            follow.setFromId(loginUser.getUserId());//누가=로그인유저가
-            follow.setToId(userId);//누구를=상대방을
+            follow.setFromId(userId);//누가=로그인유저가
+            follow.setToId(loginUser.getUserId());//누구를=상대방을
         }
 
         remove=followService.remove(follow);//삭제
