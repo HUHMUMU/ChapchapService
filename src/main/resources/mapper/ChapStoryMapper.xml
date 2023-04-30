@@ -7,8 +7,6 @@
         <result column="content" property="content"/>
         <result column="viewcount" property="viewcount"/>
         <result column="post_time" property="postTime"/>
-        <result column="profile" property="profile"/>
-        <result column="main_img" property="mainImg"/>
         <result column="update_time" property="updateTime"/>
         <result column="user_id" property="userId"/>
         <result column="chs_rstatus" property="chsRstatus"/>
