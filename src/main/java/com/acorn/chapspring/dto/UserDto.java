@@ -2,6 +2,8 @@ package com.acorn.chapspring.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class UserDto {
     public enum StatusType {
@@ -25,4 +27,9 @@ public class UserDto {
     private String emailCheckCode;
     private StatusType urStatus;
     private String chapbanner;
+
+    //팔로우 구현
+    private boolean following; //팔로잉 체크
+    private List<UserDto> followings; //팔로우리스트
+    private List<UserDto> followers; //팔로워 리스트
 }

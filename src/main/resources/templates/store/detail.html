@@ -11,7 +11,7 @@
   <script src="/public/js/ReviewLike.js" defer></script>
 </head>
 <div layout:fragment="content" th:each="s:${stores}">
-  <div class="image-container store" >
+  <div class="image-container store">
     <img th:src="'http://localhost:8088'+${s.mainImg}" alt="대표 이미지">
     <th:block th:each="img : ${s.storeImgs}">
       <img th:src="'http://localhost:8088'+${img}" alt="가게 이미지">
@@ -47,8 +47,20 @@
     <ul class="list-group">
       <li style="list-style:none;">
         <div class="btn-group store linkBtn">
-          <a class="btn btn-outline-dark btn-sm">찜</a>
-          <a class="btn btn-outline-dark btn-sm" id="share-btn" data-clipboard-text="https://example.com">공유</a>
+<!--        찜 버튼 구현-->
+          <th:block th:if="${session.loginUser!=null}">
+            <th:block th:if="${checkjjim!=null && checkjjim.storeNum==s.storeNum}">
+              <button type="button" class="btn btn-outline-dark btn-sm active" th:onclick="addJjimList([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">찜</button>
+            </th:block>
+            <th:block th:if="${checkjjim==null}">
+              <button type="button" class="btn btn-outline-dark btn-sm" th:onclick="addJjimList([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">찜</button>
+            </th:block>
+          </th:block>
+          <th:block th:if="${session.loginUser==null}">
+            <button type="button" class="btn btn-outline-dark btn-sm">찜</button>
+          </th:block>
+<!--     -------------     -->
+          <a class="btn btn-outline-dark btn-sm " id="share-btn" data-clipboard-text="https://example.com">공유</a>
           <a class="btn btn-outline-dark btn-sm" th:href="${s.instaurl}">인스타</a>
           <a class="btn btn-outline-dark btn-sm" th:href="${s.facebookurl}">페이스북</a>
           <a class="btn btn-outline-dark btn-sm" th:href="${s.youtubeurl}">유튜브</a>
@@ -325,7 +337,7 @@
   a{
     text-decoration: none;
   }
-  .linkBtn a{
+  .linkBtn button,.linkBtn a{
     background-color: #FFE3A9;
   }
   .waiting a{

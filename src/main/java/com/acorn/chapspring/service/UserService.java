@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface UserService {
     UserDto login(UserDto user);//로그인
-    UserDto detail(String userId);//상세정보
+    UserDto detail(String userId,String loginUserId);//상세정보
     int modify(UserDto user);//수정
     int signup(UserDto user);//회원가입
     int dropout(UserDto user);//회원탈퇴
