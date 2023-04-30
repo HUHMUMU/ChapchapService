@@ -107,7 +107,7 @@ public class ChapStoryController {
             @RequestParam(name = "img", required = false)MultipartFile [] imgs
     ) throws IOException
     {
-        String redirectPage="redirect:/register.do";
+            String redirectPage="redirect:/chapstorys/register";
         if(!loginUser.getUserId().equals(chaps.getUserId())) return redirectPage;
         List<ChapstoryimgsDto> imgDtos=null;
         if(imgs!=null){
