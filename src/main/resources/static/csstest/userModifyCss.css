@@ -1,0 +1,34 @@
+.profileCard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    border: 1px solid black;
+}
+.formCard{
+    margin: 20px;
+    border: 1px solid black;
+}
+.img-containerbox{
+    margin: 0px 10px 10px 10px;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    overflow: hidden;
+}
+
+.profileimg{
+    width: 200px;
+    height: 200px;
+    object-fit: fill;
+}
+.inputText{
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+
