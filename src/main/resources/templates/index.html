@@ -48,24 +48,21 @@
     </div>
 
     <!-- 여기서 검색하면 원준형이 만든 지도있는 페이지가 나와야 함 -->
-    <form name="searchForm" action="/" method="post">
+    <form name="searchForm" action="/findStore.do" method="GET">
         <div class="input-group w-50 mt-sm-5 mx-auto">
-            <form action="" class="mx-auto" style="width: 450px">
                 <div class="input-group my-3">
                     <select name="findStore" class="form-control">
                         <option value="">선택</option>
-                        <option th:selected="(${#strings.equals(param.order,'address')})"value="user_id">주소</option>
-                        <option th:selected="(${#strings.equals(param.order,'store_name')})"value="post_time">가게이름</option>
-                        <option th:selected="(${#strings.equals(param.order,'name')})"value="title">메뉴이름</option>
+                        <option value="storeAddress">주소</option>
+                        <option value="storeName">가게이름</option>
+                        <option value="storeMenu">메뉴이름</option>
                     </select>
-                    <input type="text" class="form-control" name="searchValue" placeholder="검색어 입력"
-                           th:value="${param.searchValue}">
+                    <input type="text" class="form-control" name="searchValue" placeholder="검색어 입력">
                     <button class="btn btn-warning">검색</button>
                 </div>
-            </form>
         </div>
     </form>
-<!-- 선택하면 가게에 해당하는 해시태그달려있는거 찾아주는거 -->
+<!-- 선택하면 가게에 해당하는 해시태그 -->
 <!--    <div class="mx-auto">-->
 <!--        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘은 뭘 먹을까?</h1>-->
 
@@ -239,11 +236,11 @@
 
 
     <div class="mx-auto">
-        <h1 class="text-lg-center text-center" style="margin-top: 250px">오늘의 베스트 맛집</h1>
+        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 베스트 맛집</h1>
         <form action="/searchStore.do" method="GET" name="searchStoreForm">
             <div class="d-flex justify-content-center mt-5">
                 <div class="search_box me-3">
-                    <select class="form-select border-warning" name="siAddress" onchange="categoryChange2(this)">
+                    <select class="form-select border-warning" name="siAddress1" onchange="categoryChange2(this)">
                         <option value>시/도 선택</option>
                         <option value="general01">강원</option>
                         <option value="general02">경기</option>
@@ -265,7 +262,7 @@
                 </div>
 
                 <div class="search_box mx ms-3">
-                    <select class="form-select border-warning" name="guAddress" id="state2">
+                    <select class="form-select border-warning" name="guAddress1" id="state2">
                         <option>군/구 선택</option>
                     </select>
                 </div>
@@ -350,8 +347,8 @@
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${store.storeName}"></h5>
-                        <p class="card-text" th:text="${store.detailInfo}"></p>
+                        <h5 class="card-title" th:text="${store.storeName}">오늘의 베스트 추천가게는!?</h5>
+                        <p class="card-text" th:text="${store.detailInfo}">베스트 추천가게 디테일!</p>
                     </div>
                 </div>
             </div>
@@ -378,51 +375,6 @@
 
     <div id="store"></div>
 
-    <script>
-        var xhr = new XMLHttpRequest(); // 1. XMLHttpRequest 객체 생성
-        xhr.onload = function () { // 3. 응답 처리
-            if (xhr.status === 200) {
-                var storeData = JSON.parse(xhr.responseText);
-                var storeHtml;
-                if (storeData.store) {
-                    storeHtml = `
-          <div class="card mt-5 mx-auto w-75">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="http://localhost:8080/images/main/볶음밥.jpg" class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">${storeData.store.storeName}</h5>
-                  <p class="card-text">${storeData.store.detailInfo}</p>
-                </div>
-              </div>
-            </div>
-          </div>`;
-                } else {
-                    storeHtml = `
-          <div class="card mt-5 mx-auto w-75">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="http://localhost:8080/images/main/볶음밥.jpg" class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">오늘의 베스트 추천가게는!?</h5>
-                  <p class="card-text">베스트 추천가게 디테일!</p>
-                </div>
-              </div>
-            </div>
-          </div>`;
-                }
-                document.getElementById("store").innerHTML = storeHtml;
-            }
-        };
-        xhr.open("GET", "/api/store"); // 2. 요청 보내기
-        xhr.send();
-    </script>
-
-
 
     <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 베스트 카페</h1>
     <form action="">
@@ -430,7 +382,7 @@
 
         <div class="d-flex justify-content-center mt-5">
             <div class="search_box me-3">
-                <select class="form-select border-warning" name="" onchange="categoryChange3(this)">
+                <select class="form-select border-warning" name="siAddress2" onchange="categoryChange3(this)">
                     <option value>시/도 선택</option>
                     <option value="general01">강원</option>
                     <option value="general02">경기</option>
@@ -452,7 +404,7 @@
             </div>
 
             <div class="search_box mx ms-3">
-                <select class="form-select border-warning" name="" id="state3">
+                <select class="form-select border-warning" name="guAddress2" id="state3">
                     <option>군/구 선택</option>
                 </select>
             </div>
@@ -569,7 +521,7 @@
 
         <div class="d-flex justify-content-center mt-5">
             <div class="search_box me-3">
-                <select class="form-select border-warning" name="" onchange="categoryChange4(this)">
+                <select class="form-select border-warning" name="siAddress3" onchange="categoryChange4(this)">
                     <option value>시/도 선택</option>
                     <option value="general01">강원</option>
                     <option value="general02">경기</option>
@@ -591,7 +543,7 @@
             </div>
 
             <div class="search_box mx ms-3">
-                <select class="form-select border-warning" name="" id="state4">
+                <select class="form-select border-warning" name="guAddress3" id="state4">
                     <option>군/구 선택</option>
                 </select>
             </div>
@@ -702,95 +654,95 @@
         </div>
     </div>
 
-<!--랜덤으로 맛집을 찾아주는 곳-->
-<!--    <div class="mx-auto">-->
-<!--        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 랜덤 맛집</h1>-->
-<!--        <form action="">-->
+
+    <div class="mx-auto">
+        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 랜덤 맛집</h1>
+        <form action="">
 
 
-<!--            <div class="d-flex justify-content-center mt-5">-->
-<!--                <div class="dropdown me-3">-->
-<!--                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
-<!--                            aria-expanded="false">-->
-<!--                        식당-->
-<!--                    </button>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Another action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Something else here</button>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
+            <div class="d-flex justify-content-center mt-5">
+                <div class="dropdown me-3">
+                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        식당
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item" type="button">Action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Another action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Something else here</button>
+                        </li>
+                    </ul>
+                </div>
 
-<!--                <div class="dropdown me-3">-->
-<!--                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
-<!--                            aria-expanded="false">-->
-<!--                        카페-->
-<!--                    </button>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Another action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Something else here</button>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
+                <div class="dropdown me-3">
+                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        카페
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item" type="button">Action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Another action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Something else here</button>
+                        </li>
+                    </ul>
+                </div>
 
-<!--                <div class="dropdown me-3">-->
-<!--                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
-<!--                            aria-expanded="false">-->
-<!--                        술집-->
-<!--                    </button>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Another action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Something else here</button>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--                <button type="button" class="btn btn-warning ms-3">검색</button>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
+                <div class="dropdown me-3">
+                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        술집
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item" type="button">Action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Another action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Something else here</button>
+                        </li>
+                    </ul>
+                </div>
+                <button type="button" class="btn btn-warning ms-3">검색</button>
+            </div>
+        </form>
+    </div>
 
 
-<!--    <div class="card-group w-75 mx-auto mt-5">-->
-<!--        <div class="card mt-5">-->
-<!--            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title">랜덤맛집 1번</h5>-->
-<!--                <p class="card-text">랜덤 맛집 1번 설명</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="card mt-5">-->
-<!--            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title">랜덤맛집 2번</h5>-->
-<!--                <p class="card-text">랜덤 맛집 2번 설명</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="card mt-5">-->
-<!--            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title">랜덤맛집 3번</h5>-->
-<!--                <p class="card-text">랜덤 맛집 3번 설명</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="card-group w-75 mx-auto mt-5">
+        <div class="card mt-5">
+            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">랜덤맛집 1번</h5>
+                <p class="card-text">랜덤 맛집 1번 설명</p>
+            </div>
+        </div>
+        <div class="card mt-5">
+            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">랜덤맛집 2번</h5>
+                <p class="card-text">랜덤 맛집 2번 설명</p>
+            </div>
+        </div>
+        <div class="card mt-5">
+            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">랜덤맛집 3번</h5>
+                <p class="card-text">랜덤 맛집 3번 설명</p>
+            </div>
+        </div>
+    </div>
 
 
     <footer class="w-75 mx-auto mt-5">

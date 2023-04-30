@@ -129,5 +129,6 @@
     <select id="findReviewsCountByStoreNum" resultType="com.acorn.chapspring.dto.ReviewsCountDto">
 
     </select>
+    <select id="findJjimByStoreNum" resultType="com.acorn.chapspring.dto.JjimManageDto"></select>
 
 </mapper>

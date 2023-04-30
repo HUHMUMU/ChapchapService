@@ -14,19 +14,34 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+
 @AllArgsConstructor //모든 필드를 pojo 형식의 생성자로 자동 생성
 @Controller //< @Component 요청과 응답을 처리 가능
-@Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 @RequestMapping("/")
+@Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 public class MainController {
     private MainService mainService;
 
 
+    @GetMapping("/findStore.do")
+    public String findStoreFrom(
+            @RequestParam("findStore") String findStore,
+            @RequestParam("searchValue") String searchValue,
+            Model model
+    ) {
+
+
+            model.addAttribute("findStore", findStore);
+            model.addAttribute("searchValue", searchValue);
+
+        return "store/list"; //렌더할 뷰
+    }
+
+
     @GetMapping("/searchStore.do")
     public String searchStoreFrom(
-            @RequestParam("siAddress") String siAdd,
-            @RequestParam("guAddress") String guAdd,
+            @RequestParam("siAddress1") String siAdd,
+            @RequestParam("guAddress1") String guAdd,
             Model model
     ) {
 
@@ -44,8 +59,8 @@ public class MainController {
 
     @GetMapping("/searchCafe.do")
     public String searchCafeFrom(
-            @RequestParam("siAddress") String siAdd,
-            @RequestParam("guAddress") String guAdd,
+            @RequestParam("siAddress2") String siAdd,
+            @RequestParam("guAddress2") String guAdd,
             Model model
     ) {
 
@@ -63,8 +78,8 @@ public class MainController {
 
     @GetMapping("/searchPub.do")
     public String searchPubFrom(
-            @RequestParam("siAddress") String siAdd,
-            @RequestParam("guAddress") String guAdd,
+            @RequestParam("siAddress3") String siAdd,
+            @RequestParam("guAddress3") String guAdd,
             Model model
     ) {
 
