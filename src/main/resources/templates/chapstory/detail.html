@@ -8,6 +8,30 @@
     <title>블로그 상세글</title>
     <script src="/public/js/ChapstoryLike.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <style>
+        p{
+            margin: 0;
+        }
+        textarea {
+            border: none;
+            font-size: 22px;
+            padding: 20px;
+            height: auto;
+            min-height: 500px;
+            overflow: auto;
+            resize: none;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const myTextarea = document.querySelector("#myTextarea");
+            myTextarea.addEventListener("input", () => {
+                myTextarea.style.height = "auto";
+                myTextarea.style.height = `${myTextarea.scrollHeight}px`;
+            });
+            myTextarea.style.height = `${myTextarea.scrollHeight}px`;
+        });
+    </script>
 </head>
 <div layout:fragment="content">
     <form action="/chapstory/detail.do" style="margin-top: 50px">
@@ -96,30 +120,14 @@
         <div class="container" style="margin-top: 50px; margin-bottom: 100px; text-align: center;">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
-                    <textarea th:field="${c.content}" style= "width: 100%" class="content"></textarea>
+                    <textarea th:field="${c.content}" style= "width: 100%; min-height: 100px" id="myTextarea" ></textarea>
                 </div>
             </div>
         </div>
     </form>
 </div>
-<style>
-    p{
-        margin: 0;
-    }
-    textarea {
-        resize: none;
-        overflow:visible;
-    }
-</style>
 </html>
-<script>
-    const txtArea = $(".content");
-    if (txtArea) {
-        txtArea.each(function(){
-            $(this).height(this.scrollHeight);
-        });
-    }
-</script>
+
 <script>
     document.querySelector('[data-clipboard-text]').setAttribute('data-clipboard-text', window.location.href);
     var clipboard = new ClipboardJS('#share-btn');
