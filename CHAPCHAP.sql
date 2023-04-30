@@ -319,6 +319,8 @@ CREATE TABLE chat_messages
 );
 
 
+
+
 #여기부터 더미데이터 / store_manages 는 1000개 더미데이터 따로있음
 INSERT INTO store_manages (store_id, pw, business_num, store_call, phone, email) VALUES
  ('store001', 'pw123456', '1234567890', '02-1234-5678', '010-1111-2222', 'store001_owner@email.com'),
