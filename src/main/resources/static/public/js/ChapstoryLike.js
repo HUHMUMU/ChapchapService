@@ -2,12 +2,12 @@ async function chapLikeHandler(cNum){
     const likeCont=document.getElementById("likeCont"+cNum);
     console.log(likeCont);
     let url=`/chapstory/like/${cNum}/handler.do`
-    let url2=`/chapstory/like/${cNum}/read.do`;
+    // let url2=`/chapstory/like/${cNum}/read.do`;
     const resp=await fetch(url);
     if(resp.status===200){
         const json=await resp.json();
         if(!json.handler){
-            alert("성공")
+            alert("성공. 새로고침 해주세요")
         }else{
             alert(json.status+" "+json.handlerType+" 실패")
         }
