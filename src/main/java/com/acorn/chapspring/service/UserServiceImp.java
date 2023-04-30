@@ -11,17 +11,11 @@ import java.util.List;
 @Service
 public class UserServiceImp implements UserService{
     private UserMapper userMapper;
-    private ReviewMapper reviewMapper;
-    private JjimManageMapper jjimManageMapper;
 
     public UserServiceImp(
-            UserMapper userMapper,
-            ReviewMapper reviewMapper,
-            JjimManageMapper jjimManageMapper
+            UserMapper userMapper
     ){
         this.userMapper=userMapper;
-        this.reviewMapper=reviewMapper;
-        this.jjimManageMapper=jjimManageMapper;
     }
     //로그인,가입,탈퇴,수정 부분----------------------------------------------------------------
     @Override//로그인
@@ -65,8 +59,12 @@ public class UserServiceImp implements UserService{
     }
 
     @Override//유저 정보
-    public UserDto detail(String userId) {
-        return userMapper.findByUserId(userId);
+    public UserDto detail(String userId,String loginUserId)
+    {
+        userMapper.setLoginUserId(loginUserId);
+        UserDto detail=userMapper.findByUserId(userId);
+        userMapper.setLoginUserIdIsNull();
+        return detail;
     }
 
 

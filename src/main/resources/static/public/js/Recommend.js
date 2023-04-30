@@ -29,8 +29,6 @@ async function addRecommend(userId,storeNum,btn){//btn=this
     let active=btn.classList.contains("active");
     if(active){
         let c=confirm("삭제하시겠습니까?");
-        let url="/recommend/handler.do";
-        const data=new FormData();
         data.append("userId",userId);
         data.append("storeNum",storeNum);
         if(c){

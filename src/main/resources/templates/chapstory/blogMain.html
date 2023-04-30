@@ -37,36 +37,44 @@
         <div style="margin-top: 70px">
             <h4 style="font-size: 40px; margin-bottom: 40px">인기글</h4>
             <div class="d-flex justify-content-between" style=" margin-bottom: 70px">
-                <div>
-                    <img th:src="@{'{path}'(path=${bestChaps[0].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
-                    <h5>
-                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[0].chapNum})}" th:text="${bestChaps[0].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
-                    </h5>
-                </div>
-                <div>
-                    <img th:src="@{'{path}'(path=${bestChaps[1].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
-                    <h5>
-                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[1].chapNum})}" th:text="${bestChaps[1].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
-                    </h5>
-                </div>
-                <div>
-                    <img th:src="@{'{path}'(path=${bestChaps[2].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
-                    <h5>
-                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[2].chapNum})}" th:text="${bestChaps[2].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
-                    </h5>
-                </div>
-                <div>
-                    <img th:src="@{'{path}'(path=${bestChaps[3].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
-                    <h5>
-                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[3].chapNum})}" th:text="${bestChaps[3].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
-                    </h5>
-                </div>
-                <div>
-                    <img th:src="@{'{path}'(path=${bestChaps[4].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
-                    <h5>
-                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[4].chapNum})}" th:text="${bestChaps[4].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
-                    </h5>
-                </div>
+                <th:block th:if="${bestChaps!=null}">
+                    <div th:each="bestChaps : ${bestChaps}">
+                        <img th:src="@{'{path}'(path=${bestChaps.mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                        <h5>
+                            <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps.chapNum})}" th:text="${bestChaps.title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                        </h5>
+                    </div>
+                </th:block>
+<!--                <div>-->
+<!--                    <img th:src="@{'{path}'(path=${bestChaps[0].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">-->
+<!--                    <h5>-->
+<!--                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[0].chapNum})}" th:text="${bestChaps[0].title}" style="text-decoration: none; color: inherit; width: 100px"></a>-->
+<!--                    </h5>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <img th:src="@{'{path}'(path=${bestChaps[1].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">-->
+<!--                    <h5>-->
+<!--                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[1].chapNum})}" th:text="${bestChaps[1].title}" style="text-decoration: none; color: inherit; width: 100px"></a>-->
+<!--                    </h5>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <img th:src="@{'{path}'(path=${bestChaps[2].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">-->
+<!--                    <h5>-->
+<!--                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[2].chapNum})}" th:text="${bestChaps[2].title}" style="text-decoration: none; color: inherit; width: 100px"></a>-->
+<!--                    </h5>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <img th:src="@{'{path}'(path=${bestChaps[3].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">-->
+<!--                    <h5>-->
+<!--                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[3].chapNum})}" th:text="${bestChaps[3].title}" style="text-decoration: none; color: inherit; width: 100px"></a>-->
+<!--                    </h5>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <img th:src="@{'{path}'(path=${bestChaps[4].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">-->
+<!--                    <h5>-->
+<!--                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[4].chapNum})}" th:text="${bestChaps[4].title}" style="text-decoration: none; color: inherit; width: 100px"></a>-->
+<!--                    </h5>-->
+<!--                </div>-->
             </div>
             <hr>
         </div>

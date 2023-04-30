@@ -12,4 +12,6 @@ public interface JjimManageMapper {
     int insertOneByUserId(JjimManageDto jjim);
 
     int deleteOneByUserIdAndStoreNum(JjimManageDto jjim);
+
+    JjimManageDto findOneByUserIdAndStoreNum(String userId,int storeNum);
 }
