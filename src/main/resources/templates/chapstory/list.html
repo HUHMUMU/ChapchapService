@@ -12,7 +12,7 @@
         <div class="card-group mt-xxl-5 m-5 p-5" >
             <div class="card m-1" >
                 <div th:if="${bestList[0].chapstoryimgs != null and not #lists.isEmpty(bestList[0].chapstoryimgs)}">
-                    <img th:src="@{'{path}'(path=${bestList[0].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일" style="object-fit: cover; width: 100%; height: 100%;">
+                    <img th:src="@{'{path}'(path=${bestList[0].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일" style="object-fit: cover; width: 359.28px; height: 359.28px;">
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">
@@ -22,7 +22,7 @@
             </div>
             <div class="card m-1" >
                 <div th:if="${bestList[1].chapstoryimgs != null and not #lists.isEmpty(bestList[1].chapstoryimgs)}">
-                    <img th:src="@{'{path}'(path=${bestList[1].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일" style="object-fit: cover; width: 100%; height: 100%;">
+                    <img th:src="@{'{path}'(path=${bestList[1].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일" style="object-fit: cover; width: 359.28px; height: 359.28px;">
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">
@@ -32,7 +32,7 @@
             </div>
             <div class="card m-1" >
                 <div th:if="${bestList[2].chapstoryimgs != null and not #lists.isEmpty(bestList[2].chapstoryimgs)}">
-                    <img th:src="@{'{path}'(path=${bestList[2].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일" style="object-fit: contain; width: 100%; height: 100%;">
+                    <img th:src="@{'{path}'(path=${bestList[2].chapstoryimgs[0].img})}" class="card-img-top" alt="챱스인기글썸네일" style="object-fit: contain; width: 359.28px; height: 359.28px;">
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">
@@ -74,7 +74,7 @@
                     <label class="input-group-text bi bi-search" style="background-color: #ffeeba;"></label>
                     <select name="searchField" class="form-control">
                         <option value="">검색기준</option>
-                        <option th:selected="(${#strings.equals(param.searchField,'user_id')})"value="user_id">글쓴이</option>
+                        <option th:selected="(${#strings.equals(param.searchField,'user_id')})"value="user_id">아이디</option>
                         <option th:selected="(${#strings.equals(param.searchField,'title')})"value="title">제목</option>
                         <option th:selected="(${#strings.equals(param.searchField,'content')})"value="content">내용</option>
                     </select>
