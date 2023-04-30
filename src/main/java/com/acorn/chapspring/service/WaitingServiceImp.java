@@ -1,12 +1,18 @@
 package com.acorn.chapspring.service;
 
-import com.acorn.chapspring.dto.WaitingDto;
+import com.acorn.chapspring.dto.ChapstorysDto;
+import com.acorn.chapspring.dto.UsersWaitingDto;
 import com.acorn.chapspring.mapper.WaitingMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Log4j2
@@ -14,21 +20,52 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WaitingServiceImp implements WaitingService {
     private final WaitingMapper waitingMapper;
+//    @Override
+//    public int getFastWaiting(storeNum, waitNum){
+//
+//        int count=0;
+//        for(UsersWaitingDto usersWaitingDto : getWaitingList(storeNum, waitNum)){
+//            if(usersWaitingDto.getWaitNum()<waitNum){
+//                count++;
+//            }else{
+//                break;
+//            }
+//        }
+//        return count;
+//    }
+
+    @Override
+    public int getWaitingCount(int storeNum) {
+        return waitingMapper.getWaitingCount(storeNum);
+    }
+    @Override
+    public int getPrevWaitingCount(int storeNum,int waitNum) {
+        return waitingMapper.getPrevWaitingCount(storeNum, Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), waitNum);
+    }
+    @Override
+    public UsersWaitingDto getWaitingByWaitNum(int storeNum,int waitNum) {
+        return waitingMapper.getWaitingByWaitNum(storeNum, waitNum);
+    }
     // 대기 중인 팀 조회
     @Override
-    public List<WaitingDto> getWaitingList(int waitNum, int storeNum) {
-        return waitingMapper.getWaitingList(waitNum, storeNum);
+    public List<UsersWaitingDto> getWaitingList(int storeNum,int waitNum) {
+        List<UsersWaitingDto> usersWaitingDtos=waitingMapper.getWaitingList(storeNum, waitNum);
+        return waitingMapper.getWaitingList(storeNum,waitNum);
     }
-    // 대기 중인 팀 중 가장 빠른 팀 조회
-    public WaitingDto getFastWaiting(int storeNum, int waitNum) {
-        return waitingMapper.getFastWaiting(storeNum, waitNum);
-    }
-
     // 대기 등록
     @Override
     @Transactional
-    public int addWaiting(WaitingDto waitingDto) {
-        int result = waitingMapper.addWaiting(waitingDto);
+    public int addWaiting(int waitNum, String userId, int storeNum, int userPeople) {
+        int result = waitingMapper.addWaiting(
+                waitNum,
+                userId,
+                storeNum,
+                userPeople,
+                Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+                "대기"
+        );
+        System.out.println(result);
         if (result > 0) {
             log.info("웨이팅 등록 완료 했습니다.");
         } else {
@@ -40,26 +77,45 @@ public class WaitingServiceImp implements WaitingService {
     // 대기 수정
     @Override
     @Transactional
-    public int modifyWaiting(WaitingDto waitingDto) {
-        int result = waitingMapper.modifyWaiting(waitingDto);
-        if (result > 0) {
-            log.info("인원 수정 성공");
-        } else {
-            log.error("인원 수정 실패");
-        }
-        return result;
+    public int modify(UsersWaitingDto usersWaitingDto) {
+        int modify = waitingMapper.modifyOne(usersWaitingDto);
+        return modify;
     }
 
     // 대기 삭제
     @Override
     @Transactional
-    public int deleteWaiting(int waitNum, int waitingNum) {
-        int result = waitingMapper.deleteWaiting(waitNum, waitingNum);
-        if (result > 0) {
-            log.info("웨이팅 취소 완료.");
-        } else {
-            log.error("웨이팅 취소 실패");
-        }
+    public int remove(int waitingNum) {
+        int result = waitingMapper.deleteWaiting(waitingNum);
         return result;
     }
+
+    @Override
+    public UsersWaitingDto detail(int waitingNum) {
+        UsersWaitingDto detail= waitingMapper.getFastWaiting(waitingNum);
+        return detail;
+    }
+
+//    @Override
+//    public UsersWaitingDto detail(int waitingNum) {
+//        waitingMapper.
+//        return detail();
+////       chapStoryMapper.updateIncrementViewCountChapNum(chapNum);
+//////        chapStoryMapper.updateIncrementLikeChapNum(chapNum);
+////        ChapstorysDto detail = chapStoryMapper.findByChapNum(chapNum);
+////        return detail;
+//    }
+
+//    @Override
+//    public int getFastWaiting(int storeNum, int waitNum) {
+//        int count=0;
+//        for(UsersWaitingDto usersWaitingDto : getWaitingList(storeNum, waitNum)){
+//            if(usersWaitingDto.getWaitNum()<waitNum){
+//                count++;
+//            }else{
+//                break;
+//            }
+//        }
+//        return count;
+//    } 여기 일단 주석-> 20:27
 }

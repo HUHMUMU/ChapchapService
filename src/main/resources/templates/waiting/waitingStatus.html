@@ -11,35 +11,12 @@
           crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <style>
-        #div21, #div22, #div23{
-            height: 50vh;
-            text-align: center;
-            text-size-adjust: auto;
 
-        }
-        #alertModal{
-            margin: auto;
-            text-align: center;
-            justify-content: center;
-            height: 50vh;
-            width: 50vh;
-            display: block;
-        }
-        .container{
-            display: block;
-            margin: auto;
-        }
-
-        .card-body{
-            height: 10vh;
-        }
-    </style>
 </head>
 <body>
 <div layout:fragment="content">
 <div class="container" >
-    <div class="row justify-content-center">
+    <div class="d-flex justify-content-center mb-5">
         <!--  2-1 div-->
         <div class="col-4">
             <div class="card" id="div21">
@@ -47,7 +24,7 @@
                     <h5 class="card-title">현재 대기팀</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text"><strong><span th:text="${userswaiting.waitNum}"></span></strong></p>
+                    <p class="card-text"><strong><span th:text="${prevWaitingCount}"></span></strong></p>
                 </div>
             </div>
         </div>
@@ -58,9 +35,9 @@
                     <h5 class="card-title">대기 번호</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">대기 번호 : <strong><span th:text="${userswaiting.waitNum}"></span></strong></p>
-                    <p class="card-text">웨이팅 등록 시간 : <strong><span th:text="${userswaiting.startTime}"></span></strong></p>
-                    <p class="card-text">예상 대기 시간 : <strong><span th:text="${storeswaiting.timeSetup}"></span></strong> 분</p>
+                    <p class="card-text">대기 번호 : <strong><span th:text="${waiting.waitNum}"></span></strong></p>
+                    <p class="card-text">웨이팅 등록 시간 : <strong><span th:text="${waiting.startTime}"></span></strong></p>
+                    <p class="card-text">예상 대기 시간 : <strong><span th:text="${estimatedWaitTime}"></span></strong> 분</p>
                 </div>
             </div>
         </div>
@@ -71,10 +48,10 @@
                     <h5 class="card-title">홍보영상</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text" th:if="${storeAds}">
-                        <a th:href="${storeAds}" target="_blank">링크를 클릭하세요</a>
+                    <p class="card-text" th:if="${storeswaiting.storeAds}">
+                        <a th:href="${storeswaiting.storeAds}" target="_blank">링크를 클릭하세요</a>
                     </p>
-                    <p class="card-text" th:if!="${storeAds}">내용이 없습니다.</p>
+                    <p class="card-text">내용이 없습니다.</p>
                 </div>
             </div>
         </div>
@@ -85,8 +62,8 @@
     <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="deleteWaiting" onclick="'/'">
         대기 취소하기
     </button>
-    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="modifyWaiting" onclick="'/waiting/Modify.do'">
-        <a href=""></a>인원 수정하기
+    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="modifyWaiting" onclick="`/waiting/waitingModify.do`">
+        <a th:href="'${waiting/waitingModify.do}'"></a>인원 수정하기
     </button>
 </div>
 
@@ -102,8 +79,32 @@
     alertModal.style.textAlign = "center";
 
 </script>
-
+</div>
 </body>
 </html>
+<style>
+    #div21, #div22, #div23{
+        height: 50vh;
+        text-align: center;
+        text-size-adjust: auto;
+
+    }
+    #alertModal{
+        margin: auto;
+        text-align: center;
+        justify-content: center;
+        height: 50vh;
+        width: 50vh;
+        display: block;
+    }
+    .container{
+        display: block;
+        margin: auto;
+    }
+
+    .card-body{
+        height: 10vh;
+    }
+</style>
 
 <!-- 이것도 일단 확정-->
