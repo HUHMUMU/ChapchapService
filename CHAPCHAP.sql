@@ -309,7 +309,6 @@ CREATE TABLE chat_messages
     cm_id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '메시지 아이디',
     cr_id     INT UNSIGNED                  NOT NULL COMMENT '채팅방 아이디',
     user_id   VARCHAR(255)                  NOT NULL COMMENT '송신자 아이디',
-    nickname  VARCHAR(255)                  NOT NULL COMMENT '송신자 닉네임',
     content   TEXT                          NOT NULL COMMENT '메시지 내용',
     status    ENUM ('ENTER','LEAVE','CHAT') NOT NULL COMMENT '메세지 상태 상태',
     post_time TIMESTAMP                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '메시지 전송 시간',
