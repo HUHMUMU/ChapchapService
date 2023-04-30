@@ -97,13 +97,13 @@ CREATE TABLE chapstorys
 (
     chap_num    INT auto_increment primary key NOT NULL COMMENT '챱스토리번호',
     title       VARCHAR(255)                   NOT NULL COMMENT '제목',
-    content     TEXT                   NOT NULL COMMENT '내용',
-    viewcount   INT  UNSIGNED                  NULL DEFAULT 0 COMMENT '조회수',
+    content     TEXT                           NOT NULL COMMENT '내용',
+    viewcount   INT UNSIGNED                   NULL     DEFAULT 0 COMMENT '조회수',
     post_time   TIMESTAMP                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성날짜',
     profile     VARCHAR(255)                   NULL COMMENT '프로필',
     update_time TIMESTAMP                      NULL     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜',
     user_id     VARCHAR(255)                   NOT NULL COMMENT '유저아이디',
-    chs_rstatus ENUM ('공개', '심사', '비공개')   NOT NULL DEFAULT '공개' COMMENT '신고상태',
+    chs_rstatus ENUM ('공개', '심사', '비공개')       NOT NULL DEFAULT '공개' COMMENT '신고상태',
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 CREATE TABLE chapstoryLikes
@@ -294,12 +294,12 @@ CREATE TABLE reports
 
 CREATE TABLE chat_rooms
 (
-    cr_id        INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '채팅방 아이디',
-    user_id      VARCHAR(255) NOT NULL COMMENT '채팅방 생성자 아이디',
-    name         VARCHAR(255) NOT NULL COMMENT '채팅방 이름',
-    description  TEXT COMMENT '채팅방 설명',
-    post_time    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '채팅방 생성 시간',
-    profile_img  VARCHAR(255)                                   NULL COMMENT '프로필사진',
+    cr_id       INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '채팅방 아이디',
+    user_id     VARCHAR(255) NOT NULL COMMENT '채팅방 생성자 아이디',
+    name        VARCHAR(255) NOT NULL COMMENT '채팅방 이름',
+    description TEXT COMMENT '채팅방 설명',
+    post_time   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '채팅방 생성 시간',
+    profile_img VARCHAR(255) NULL COMMENT '프로필사진',
     update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '채팅방 최근 업데이트 시간',
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -317,6 +317,17 @@ CREATE TABLE chat_messages
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
+CREATE TABLE follow
+(
+    follow_id   int auto_increment primary key      NOT NULL COMMENT '팔로우 데이터 고유속성번호',
+    from_id     VARCHAR(255)                        NOT NULL COMMENT '나를 팔로우하고 있음',
+    to_id       VARCHAR(255)                        NOT NULL COMMENT '내가 팔로우하고 있음',
+    follow_time timestamp default current_timestamp NOT NULL COMMENT '없어도 됨',
+    unique (from_id, to_id) comment '목록 중복 지정 차단 속성',
+    foreign key (from_id) references users (user_id) on update cascade on delete cascade,
+    foreign key (to_id) references users (user_id) on update cascade on delete cascade
+);
 
 
 #여기부터 더미데이터 / store_manages 는 1000개 더미데이터 따로있음
