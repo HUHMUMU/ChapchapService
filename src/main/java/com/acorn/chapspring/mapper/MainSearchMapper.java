@@ -10,5 +10,7 @@ import java.util.List;
 public interface MainSearchMapper {
     //주소를 받아서 해당되는 가게들을 가져오기
     //리뷰 개수가 가장 많은 가게 하나 찾기
-    StoresDto findByAddressReviewsOne (String siAdd, String guAdd);
+    StoresDto findByStoreReviewsOne (String siAdd, String guAdd);
+    StoresDto findByCafeReviewsOne (String siAdd, String guAdd);
+    StoresDto findByPubReviewsOne (String siAdd, String guAdd);
 }
