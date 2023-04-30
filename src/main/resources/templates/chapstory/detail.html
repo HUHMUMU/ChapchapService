@@ -73,10 +73,10 @@
                 <img th:src="@{'{path}'(path=${ci.img})}" alt="챱스 썸네일" style="height: 300px; object-fit: cover; margin-top: 50px; justify-self: center; display: block;" class="img-thumbnail mx-auto">
             </div>
         </div>
-        <div class="container" style="margin-top: 50px; text-align: center;">
+        <div class="container" style="margin-top: 50px; margin-bottom: 100px; text-align: center;">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
-                    <p th:text="${c.content}"></p>
+                    <textarea th:field="${c.content}" style="min-height: 500px; resize: none; width: 100%"></textarea>
                 </div>
             </div>
         </div>
@@ -85,6 +85,11 @@
 <style>
     p{
         margin: 0;
+    }
+    textarea {
+        resize: none;
+        height: auto;
+        min-height: 100px; /* 최소 높이 */
     }
 </style>
 </html>

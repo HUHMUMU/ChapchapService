@@ -10,7 +10,6 @@
 </head>
 <div layout:fragment="content">
     <form action="/chapstory/register.do" name="registerForm" enctype="multipart/form-data" method="post">
-        <h3> 이건 작성페이지다 !!!</h3>
         <p class="form-floating">
             <input id="user_id" type="text" name="userId" th:value="${session.loginUser.userId}" readonly class="form-control" placeholder="??">
             <label for="user_id" class="">아이디(글쓴이)</label>
