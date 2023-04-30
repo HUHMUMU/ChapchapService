@@ -12,4 +12,6 @@ public interface ReviewMapper {
     int deleteReview(int reviewNum);//리뷰 삭제
 
     List<ReviewsDto> findAllReviewed(String userId);
+
+    ReviewsDto getAverageStarByStoreNum(int storeNum);
 }

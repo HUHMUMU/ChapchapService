@@ -36,6 +36,10 @@
                      select="com.acorn.chapspring.mapper.StoreManageMapper.findStoreCall"
                      column="store_num"
                      fetchType="eager"/>
+        <association property="starAvg"
+                     select="com.acorn.chapspring.mapper.ReviewMapper.getAverageStarByStoreNum"
+                     column="store_num"
+                     fetchType="eager"/>
         <collection property="menuList"
                     select="com.acorn.chapspring.mapper.MenuManageMapper.findMenuByStore"
                     column="store_num"
