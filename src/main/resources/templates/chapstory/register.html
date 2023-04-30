@@ -10,7 +10,6 @@
 </head>
 <div layout:fragment="content">
     <form action="/chapstory/register.do" name="registerForm" enctype="multipart/form-data" method="post">
-        <h3> 이건 작성페이지다 !!!</h3>
         <p class="form-floating">
             <input id="user_id" type="text" name="userId" th:value="${session.loginUser.userId}" readonly class="form-control" placeholder="??">
             <label for="user_id" class="">아이디(글쓴이)</label>
@@ -26,19 +25,21 @@
                 <i class="bi bi-plus-square"></i>
             </button>
         </p>
-<!--        <p class="form-floating">-->
-<!--            <textarea id="content" name="content" class="form-control" placeholder="??"></textarea>-->
-<!--            <label for="content" class="form-label">내용을 입력하세요.</label>-->
-<!--        </p>-->
-        <p>
-            <th:block th:include="/chapstory/write"></th:block>
+        <p class="form-floating">
+            <textarea id="content" name="content" class="form-control" placeholder="??" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
+            <label for="content" class="form-label">내용을 입력하세요.</label>
         </p>
+<!--        <p>-->
+<!--            <th:block th:include="/chapstory/write"></th:block>-->
+<!--        </p>-->
         <p class="text-end">
             <button id="resetBtn" class="btn btn-outline-warning me-2" type="button" onclick="resetForm()">초기화</button>
             <button id="addBtn" class="btn btn-outline-primary" type="submit">등록</button>
         </p>
     </form>
-    <script>
+</div>
+</html>
+<script>
     function resetForm() {
         // 제목 입력 필드 초기화
         document.getElementById('titleInput').value = '';
@@ -48,14 +49,14 @@
 
     }
 
-        const imgAddBtn=document.getElementById("imgAddBtn");
-        const imgCont=document.getElementById("imgCont");
-        imgAddBtn.addEventListener("click",(e)=>{
-            imgCont.insertAdjacentHTML("beforeend",imgInputComponent());
-        });
+    const imgAddBtn=document.getElementById("imgAddBtn");
+    const imgCont=document.getElementById("imgCont");
+    imgAddBtn.addEventListener("click",(e)=>{
+        imgCont.insertAdjacentHTML("beforeend",imgInputComponent());
+    });
 
-        function imgInputComponent( label="이미지",name="mainImg"){
-            return `    <div class="input-group mt-2">
+    function imgInputComponent( label="이미지",name="img"){
+        return `    <div class="input-group mt-2">
                     <label class="input-group-text">${label}</label>
                     <input class="form-control" type="file" name="${name}">
                     <button type="button" class="btn btn-danger" onclick="this.closest('.input-group').remove()">
@@ -63,7 +64,19 @@
                     </button>
                   </div>
               `;
-        }
-    </script>
-</div>
-</html>
+    }
+
+    function resize(obj) {
+        obj.style.height = '1px';
+        obj.style.height = (12 + obj.scrollHeight) + 'px';
+    }
+
+
+</script>
+<style>
+    textarea {
+        min-height: 5rem;
+        overflow-y: hidden;
+        resize: none;
+    }
+</style>

@@ -1,42 +1,77 @@
-async function toggleRecommend(storeNum,btn){//추천 토글 버튼
+const recommend=document.getElementById("Recommend");
+
+
+async function removeRecommend(userId,storeNum){
+    let c=confirm("삭제하시겠습니까?");
+    let url="/recommend/handler.do";
+    const data=new FormData();
+    data.append("userId",userId);
+    data.append("storeNum",storeNum);
+    if(c){
+        const resp=await fetch(url,{method:"DELETE",body:data});
+        if(resp.status===200){
+            const json=await resp.json();
+            if(json.remove>0){
+                alert("삭제 성공");
+                loadRecommends(userId);
+            }else{
+                alert("삭제 실패(이미 삭제됨)");
+            }
+        }else{
+            alert("삭제 실패 status :"+resp.status);
+        }
+    }
+}
+
+async function addRecommend(userId,storeNum,btn){//btn=this
+    let url="/recommend/handler.do";
+    const data=new FormData();
     let active=btn.classList.contains("active");
     if(active){
-        let remove = await deleteRecommend(storeNum);
-        if(remove>0){
-            alert("추천이 취소되었습니다.");
-            btn.classList.remove("active");
-        }else {
-            alert("추천 취소에 실패했습니다.");
+        let c=confirm("삭제하시겠습니까?");
+        let url="/recommend/handler.do";
+        const data=new FormData();
+        data.append("userId",userId);
+        data.append("storeNum",storeNum);
+        if(c){
+            const resp=await fetch(url,{method:"DELETE",body:data});
+            if(resp.status===200){
+                const json=await resp.json();
+                if(json.remove>0){
+                    btn.classList.remove("active");
+                    alert("삭제 성공");
+                }else{
+                    alert("삭제 실패(이미 삭제됨)");
+                }
+            }else{
+                alert("삭제 실패 status :"+resp.status);
+            }
         }
     }else{
-        let add=await addRecommend(storeNum);
-        if(add){
-            alert("추천에 성공했습니다.");
-            btn.classList.add("active");
+        data.append("userId",userId);
+        data.append("storeNum",storeNum);
+        const resp=await fetch(url,{method:"POST",body:data});
+        if(resp.status===200){
+            const json=await resp.json();
+            if(json.add>0){
+                btn.classList.add("active");
+                alert("추가 성공!");
+            }else if(json.add=1){
+                alert("추가 실패! 리스트가 넘침!");
+            }
         }else{
-            alert("추천에 실패했습니다.")
+            alert("추가 실패 status : "+resp.status);
         }
     }
 }
-async function deleteRecommend(storeNum){
-    let url=`/recommend/${storeNum}/handler.do`
-    const resp=await fetch(url,{method:"DELETE"});
+
+async function loadRecommends(userId){
+    let url=`/recommend/${userId}/list.do`;
+    const resp=await fetch(url);
     if(resp.status===200){
-        return await resp.text();
-    }else if(resp.status===400){
-        alert("로그인 플리즈");
-    }else if(resp.status===500){
-        alert("오류고침 플리즈");
-    }
-}
-async function addRecommend(storeNum){
-    let url=`/recommend/${storeNum}/handler.do`
-    const resp=await fetch(url,{method:"POST"});
-    if(resp.status===200){
-        return await resp.text();
-    }else if(resp.status===400){
-        alert("로그인 플리즈");
-    }else if(resp.status===500){
-        alert("오류고침 플리즈");
+        alert("재로드 성공!");
+        let text=await resp.text();
+        // console.log(text);
+        recommend.innerHTML=text;
     }
 }

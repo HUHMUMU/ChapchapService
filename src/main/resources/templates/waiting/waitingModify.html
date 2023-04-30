@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Waiting</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/waiting.css">
+</head>
+<body>
+<div layout:fragment="content">
+<div class="container">
+
+
+  <div class="alert alert-warning" role="alert">
+    <div style="align-content: center; text-align: center">
+    <p ><strong>주의사항</strong> <br>
+      인원 수 변경 시 가게 사정에 따라 입장 순서의 변동이 있을 수 있습니다.</p>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal" id="confirmBtn">확인했습니다</button>
+    </div>
+  </div>
+
+      <div class="row">
+        <div class="col-lg-8 col-md-12">
+          <!-- store information -->
+          <div class="card store-info">
+            <div class="card-body">
+              <h2 class="card-title" th:text="${store.store_name}"></h2>
+              <div class="row">
+                <div class="col-sm-6">
+                  <img th:src="@{/static/images/store_img.jpg}" class="store-img">
+                </div>
+                <div class="col-sm-6">
+                  <div class="waiting-input">
+                    <h4>인원 변경</h4>
+                    <form th:action="@{/waiting}" method="post">
+                      <div class="form-group">
+                        <label for="people-input">인원 수</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button" id="minus-btn">-</button>
+                          </div>
+                          <input type="number" class="form-control" id="people-input" name="user_people"
+                                 placeholder="인원 수를 입력하세요." th:max="${store.max_people}">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="plus-btn">+</button>
+                          </div>
+                        </div>
+                        <small class="form-text text-muted" th:text="${'최대 '+store.max_people+'명까지 가능합니다.'}"></small>
+                      </div>
+                      <div class="form-group">
+                        <div class="form-check">
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary btn-block">등록하기</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+</body>
+
+<script>
+  const confirmBtn = document.getElementById('confirmBtn');
+  confirmBtn.addEventListener('click', function() {
+    const warningMsg = document.querySelector('.alert-warning');
+    warningMsg.style.display = 'none';
+  });
+
+</script>
+</html>
+
+<!-- 이건 확정인듯? -->
+

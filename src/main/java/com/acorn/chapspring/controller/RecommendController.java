@@ -4,39 +4,71 @@ import com.acorn.chapspring.dto.RecommendStoreDto;
 import com.acorn.chapspring.dto.UserDto;
 import com.acorn.chapspring.service.RecommendService;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestController
+import java.io.IOException;
+import java.util.List;
+
+
 @AllArgsConstructor
 @RequestMapping("/recommend")
+@Controller
+@Log4j2
 public class RecommendController {
     private RecommendService recommendService;
 
-    @DeleteMapping("/{storeNum}/handler.do")
-    public int deleteHandler(
-            @PathVariable int storeNum,
-            @SessionAttribute UserDto loginUser
-            ){
-        int remove=0;
-        RecommendStoreDto recommendstore=new RecommendStoreDto();
-        recommendstore.setUserId(loginUser.getUserId());
-        recommendstore.setStoreNum(storeNum);
 
-        remove=recommendService.delete(recommendstore);
-        return remove;
+    @GetMapping("/{userId}/list.do")
+    public String list(
+            @PathVariable String userId,
+            RedirectAttributes redirectAttributes,
+            Model model){
+            List<RecommendStoreDto> recommend=recommendService.recommendList(userId);
+
+            model.addAttribute("recommend",recommend);
+
+
+            return "/user/detail/recommend/list";
     }
 
-    @PostMapping("/{storeNum}/handler.do")
-    public int addHandler(
-            @PathVariable int storeNum,
+    @Data
+    class HandlerDto{
+        private int add;
+        private int remove;
+    }
+    @PostMapping("/handler.do")
+    public @ResponseBody HandlerDto addHandler(
+            @ModelAttribute RecommendStoreDto recommendstore,
+            @SessionAttribute UserDto loginUser
+        )throws IOException {
+        HandlerDto handler=new HandlerDto();
+        List<RecommendStoreDto> list=recommendService.recommendList(loginUser.getUserId());
+        if(list.size()<3){
+            int add=recommendService.add(recommendstore);
+            handler.setAdd(add);
+            return handler;
+        }
+        else {
+            handler.setAdd(0);
+            return handler;
+        }
+    }
+
+    @DeleteMapping("/handler.do")
+    public @ResponseBody HandlerDto removeHandler(
+            RecommendStoreDto recommendstore,
             @SessionAttribute UserDto loginUser
     ){
-        int add=0;
-        RecommendStoreDto recommendStore=new RecommendStoreDto();
-        recommendStore.setStoreNum(storeNum);
-        recommendStore.setUserId(loginUser.getUserId());
-
-        add=recommendService.add(recommendStore);
-        return add;
+        HandlerDto handler=new HandlerDto();
+        int remove=recommendService.delete(recommendstore);
+        handler.setRemove(remove);
+        return handler;
     }
 }
+
+

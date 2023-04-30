@@ -29,4 +29,9 @@ public class RecommendServiceImp implements RecommendService{
         List<RecommendStoreDto> list=recommendStoreMapper.findAllRecommendstoreByUserId(userId);
         return list;
     }
+    @Override
+    public RecommendStoreDto recommendCheck(String userId,int storeNum){
+        RecommendStoreDto recommend=recommendStoreMapper.findOneByUserIdAndStoreNum(userId,storeNum);
+        return recommend;
+    }
 }

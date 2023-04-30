@@ -1,7 +1,9 @@
 package com.acorn.chapspring.controller;
 
-import com.acorn.chapspring.dto.StoreFilterDto;
-import com.acorn.chapspring.dto.StoresDto;
+import com.acorn.chapspring.dto.*;
+import com.acorn.chapspring.service.ReportService;
+import com.acorn.chapspring.service.ReviewService;
+import com.acorn.chapspring.service.RecommendService;
 import com.acorn.chapspring.service.StoreService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -17,20 +19,44 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 public class StoreController {
     private StoreService storeService;
+    private ReviewService reviewService;
+    private ReportService reportService;
+    private RecommendService recommendService;
+
     @GetMapping("/{storeNum}/detail.do")
     public String detail(Model model,
+                        @SessionAttribute UserDto loginUser,
                         @PathVariable int storeNum) {
         StoresDto stores=storeService.getStoreByStoreNum(storeNum);
+//추천버든 기능구현
+        RecommendStoreDto recommending=recommendService.recommendCheck(loginUser.getUserId(), storeNum);
+        model.addAttribute("recommending",recommending);
+//----------------
         model.addAttribute("stores",stores);
         return "store/detail"; // 해당 경로에 대한 뷰 이름 반환
     }
+    @PostMapping("/detail.do")
+    public String registerReport(@SessionAttribute UserDto loginUser,
+                                 @PathVariable int storeNum,
+                                 @RequestBody ReportsDto reports) {
+        String redirectPath="redirect:/store/"+storeNum+"/detail.do";
+        int register=0;
+        try{
+            register=reportService.registerReportByReview(reports);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        if(register>0) {// 신고 성공
+            redirectPath="redirect:/store/"+storeNum+"/detail.do";
+        }
+        return redirectPath;
+    }
+
 
     @GetMapping("/list.do")
     public String list(
             Model model,
            @ModelAttribute StoreFilterDto storeFilterDto) {
-//        PageHelper.startPage(storeFilterDto.getPageNumber(), storeFilterDto.getPageSize(), storeFilterDto.getOrderBy());
-        // 위의 주석은 중복일거같아서 일단 주석처리하고 테스트
         PageInfo<StoresDto> pageInfo = storeService.getFilteredStores(storeFilterDto);
 
         model.addAttribute("page", pageInfo);
@@ -38,5 +64,12 @@ public class StoreController {
         model.addAttribute("filter", storeFilterDto);
         // 수업자료의 boards에 해당
         return "store/list";
+    }
+
+    @GetMapping("/ajaxList.do")
+    public @ResponseBody PageInfo list(
+           @ModelAttribute StoreFilterDto storeFilterDto) {
+        PageInfo<StoresDto> ajaxAddress = storeService.getFilteredStores(storeFilterDto);
+        return ajaxAddress;
     }
 }

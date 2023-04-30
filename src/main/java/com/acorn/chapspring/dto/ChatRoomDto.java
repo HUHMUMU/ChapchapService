@@ -12,4 +12,5 @@ public class ChatRoomDto {
     private String description; //채팅방 설명
     private Date postTime;
     private Date updateTime;
+    private String profileImg;
 }

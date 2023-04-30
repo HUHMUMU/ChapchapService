@@ -10,4 +10,5 @@ public interface RecommendService {
     int add(RecommendStoreDto recommendStore);
     int delete(RecommendStoreDto recommendStore);
     List<RecommendStoreDto> recommendList(String userId);
+    RecommendStoreDto recommendCheck(String userId,int storeNum);
 }

@@ -15,14 +15,14 @@ public class ChatRoomServiceImp implements ChatRoomService{
     @Override
     public List<ChatRoomDto> list() {
         List<ChatRoomDto> list = chatRoomMapper.findAll();
-        return null;
+        return list;
     }
 
     //채팅방 등록
     @Override
     public int register(ChatRoomDto chatRoomDto) {
         int register=chatRoomMapper.insertOne(chatRoomDto);
-        return 0;
+        return register;
     }
 
     @Override

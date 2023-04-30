@@ -4,18 +4,50 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <div layout:fragment="content">
+  <style>
+    .imgbox {
+      border:  1px solid;
+      width: 35px;
+      height: 35px;
+      float: left;
+      margin-right: 10px;
+      margin-top: 3.5px;
+      border-radius: 50%;
+    }
+    .img-thumbnail {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+    .fBox {
+
+    }
+    .updateBox {
+      float: right;
+      border: 1px solid;
+
+    }
+  </style>
   <h1 class="my-4">채팅방 리스트</h1>
   <ul class="list-group">
+    <!--여기서 rooms 는 무엇을 뜻하는 건지 물어보기-->
     <li th:each="r:${rooms}" class="list-group-item">
+      <div class="imgbox">
+          <img th:src="@{'{path}'(path=${r.getProfileImg()})}" class="img-thumbnail">
+      </div>
       <a class="link-secondary"
-         th:href="@{'/chat/room/{crId}/detail.do'(crId=${r.crId})}">
-        <p>
+         th:href="@{'/chat/room/{crId}/detail.do'(crId=${r.crId})}"><!--채팅하는 방으로 넘어가는 URL 과 파라미터-->
+        <p style="line-height: 2.5">
           <strong th:text="${r.name}"></strong>
           <i class="bi bi-dot"></i>
           <span th:text="${r.userId}"></span>
         </p>
         <div th:text="${r.description}"></div>
       </a>
+      <div class="fBox">
+        <span th:text="${r.updateTime}" class="updateBox"></span>
+      </div>
     </li>
   </ul>
+  <button class="button_login btn btn-lg float-end">로그인</button>
 </div>

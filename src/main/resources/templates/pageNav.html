@@ -1,0 +1,34 @@
+<ul class="pagination justify-content-center">
+  <li class="page-item">
+    <a class="page-link text-secondary"
+       style="padding:4px 6px;"
+       th:classappend="${page.isFirstPage ? 'disabled': ''}"
+       th:href="@{''(pageNumber=1,order=${param.order!=null?param.order[0]:''},direct=${param.direct!=null?param.direct[0]:''},menuType=${param.menuType!=null?param.menuType[0]:''},menuName=${param.menuName!=null?param.menuName[0]:''},priceRange=${param.priceRange!=null?param.priceRange[0]:''},priceType=${param.priceType!=null?param.priceType[0]:''},parking=${param.parking!=null?param.parking[0]:''},parkingType=${param.parkingType})}"
+    ><<</a></li>
+  <li class="page-item">
+    <a class="page-link text-secondary"
+       style="padding:4px 6px;"
+       th:classappend="${page.isHasPreviousPage() ? '': 'disabled'}"
+       th:href="@{''(pageNumber=${page.prePage},order=${param.order!=null?param.order[0]:''},direct=${param.direct!=null?param.direct[0]:''},menuType=${param.menuType!=null?param.menuType[0]:''},menuName=${param.menuName!=null?param.menuName[0]:''},priceRange=${param.priceRange!=null?param.priceRange[0]:''},priceType=${param.priceType!=null?param.priceType[0]:''},parking=${param.parking!=null?param.parking[0]:''},parkingType=${param.parkingType})}"
+    ><</a></li>
+  <li th:each="h:${page.navigatepageNums}" class="page-item">
+    <a class="page-link text-secondary"
+       style="padding:4px 6px;"
+       th:classappend="${h==page.pageNum ? 'active' : ''}"
+       th:href="@{''(pageNumber=${h},order=${param.order!=null?param.order[0]:''},direct=${param.direct!=null?param.direct[0]:''},menuType=${param.menuType!=null?param.menuType[0]:''},menuName=${param.menuName!=null?param.menuName[0]:''},priceRange=${param.priceRange!=null?param.priceRange[0]:''},priceType=${param.priceType!=null?param.priceType[0]:''},parking=${param.parking!=null?param.parking[0]:''},parkingType=${param.parkingType})}"
+       th:text="${h}">
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link text-secondary"
+       style="padding:4px 6px;"
+       th:classappend="${page.isHasNextPage ? '': 'disabled'}"
+       th:href="@{''(pageNumber=${page.nextPage},order=${param.order!=null?param.order[0]:''},direct=${param.direct!=null?param.direct[0]:''},menuType=${param.menuType!=null?param.menuType[0]:''},menuName=${param.menuName!=null?param.menuName[0]:''},priceRange=${param.priceRange!=null?param.priceRange[0]:''},priceType=${param.priceType!=null?param.priceType[0]:''},parking=${param.parking!=null?param.parking[0]:''},parkingType=${param.parkingType})}"
+    >></a></li>
+  <li class="page-item">
+    <a class="page-link text-secondary"
+       style="padding:4px 6px;"
+       th:classappend="${!page.isLastPage ? '': 'disabled'}"
+       th:href="@{''(pageNumber=${page.pages},order=${param.order!=null?param.order[0]:''},direct=${param.direct!=null?param.direct[0]:''},menuType=${param.menuType!=null?param.menuType[0]:''},menuName=${param.menuName!=null?param.menuName[0]:''},priceRange=${param.priceRange!=null?param.priceRange[0]:''},priceType=${param.priceType},parking=${param.parking!=null?param.parking[0]:''},parkingType=${param.parkingType})}"
+    >>></a></li>
+</ul>

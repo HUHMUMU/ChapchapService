@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ChapstoryPageDto {
     enum BoardsType{
-        chap_num, user_id, title, content, viewcount, post_time, likes, nickname
+        chap_num, user_id, title, content, viewcount, post_time, likeCnt, nickname
     }
 
     enum DirectType{

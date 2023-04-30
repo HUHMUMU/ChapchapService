@@ -7,14 +7,25 @@
         <result column="content" property="content"/>
         <result column="viewcount" property="viewcount"/>
         <result column="post_time" property="postTime"/>
-        <result column="profile" property="profile"/>
-        <result column="main_img" property="mainImg"/>
         <result column="update_time" property="updateTime"/>
         <result column="user_id" property="userId"/>
         <result column="chs_rstatus" property="chsRstatus"/>
+        <association
+                property="likeCnt"
+                select="com.acorn.chapspring.mapper.ChapstorylikeMapper.countByCnum"
+                column="chap_num"
+                fetchType="eager"/>
         <association property="user"
                     select="com.acorn.chapspring.mapper.UserMapper.findByUserId"
                     column="user_id"
+                    fetchType="lazy"/>
+        <association property="user"
+                     select="com.acorn.chapspring.mapper.UserMapper.findByUserNickname"
+                     column="nickname"
+                     fetchType="lazy"/>
+        <collection property="chapstoryimgs"
+                    select="com.acorn.chapspring.mapper.ChapstoryImgMapper.findByChapNum"
+                    column="chap_num"
                     fetchType="lazy"/>
     </resultMap>
     <insert useGeneratedKeys="true" keyProperty="chapNum" id="insertOne" parameterType="ChapstorysDto">
@@ -32,13 +43,28 @@
     <delete id="deleteByChapsNum">
         DELETE FROM chapstorys WHERE chap_num=#{chapNum}
     </delete>
-    <select id="findAll" resultMap="ChapstoryMap">
-        SELECT * FROM chapstorys
-    </select>
     <select id="findByChapNum" resultMap="ChapstoryMap">
         SELECT * FROM chapstorys WHERE chap_num=#{chapNum}
     </select>
     <select id="findByUserId" resultMap="ChapstoryMap">
-        SELECT * FROM chapstorys WHERE user_id=#{userId}
+        SELECT * FROM chapstorys WHERE user_id=#{userId} ORDER BY post_time desc
+    </select>
+    <select id="findAll" resultMap="ChapstoryMap" parameterType="ChapStoryPageDto">
+        SELECT *,
+               (SELECT COUNT(*) FROM chapstorylikes WHERE chap_num=chapstorys.chap_num),
+               (SELECT nickname FROM users WHERE chapstorys.user_id=users.user_id)
+        FROM chapstorys
+        <if test="searchField!=null">
+            WHERE ${searchField}=#{searchValue}
+        </if>
+    </select>
+    <select id="bestList" resultMap="ChapstoryMap">
+        SELECT chap_num, title, viewcount
+        FROM chapstorys
+        ORDER BY viewcount DESC
+    </select>
+<!--    where post_time >= DATE_FORMAT(now()-7,'%Y%m%d')-->
+    <select id="bestListFindByUserId" resultMap="ChapstoryMap">
+        SELECT  chap_num, title, viewcount, main_img FROM  chapstorys where user_id=#{userId} ORDER BY viewcount desc
     </select>
 </mapper>

@@ -10,7 +10,6 @@
 </head>
 <div layout:fragment="content">
     <form action="/chapstory/modify.do" name="modifyForm" enctype="multipart/form-data" method="post">
-        <h3> 이건 수정페이지다 !!!</h3>
         <input type = "text" name="chapNum" th:value="${c.chapNum}" hidden>
         <p class="form-floating">
             <input id="user_id" type="text" name="userId" th:value="${session.loginUser.userId}" readonly class="form-control" placeholder="??">

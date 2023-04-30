@@ -12,6 +12,6 @@ public class RecommendStoreDto {
     private String storeName;//조인용 변수
 
     //테스트 변수----------------
-    private int recommendNum;
+//    private int recommendNum;
     //-----------------------
 }

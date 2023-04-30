@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.ChatMsgMapper">
+    <resultMap id="ChatMsgMap" type="com.acorn.chapspring.dto.ChatMsgDto">
+        <id property="cmId" column="cm_id"/>
+        <result property="crId" column="cr_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="status" column="status"/>
+        <result property="content" column="content"/>
+        <result property="postTime" column="post_time"/>
+        <association property="userDto" javaType="com.acorn.chapspring.dto.UserDto">
+        <id property="userId" column="user_id"/>
+        <result property="nickname" column="nickname"/>
+        </association>
+    </resultMap>
+    <insert id="insertOne">
+        INSERT INTO chat_messages(cr_id, user_id, content, status)
+        VALUES (#{crId}, #{userId},#{content},#{status})
+    </insert>
+    <select id="findByCrId" resultMap="ChatMsgMap">
+        SELECT cm_id, cr_id, cm.user_id, (SELECT nickname FROM users WHERE user_id = cm.user_id) AS nickname, content, status, post_time
+        FROM chat_messages cm
+        WHERE cr_id = #{crId};
+
+    </select>
+    <select id="findByCrIdAndGraterThanPostTime" resultMap="ChatMsgMap">
+        SELECT * FROM chat_messages WHERE cr_id=#{crId} AND post_time>#{postTime}
+    </select>
+</mapper>
