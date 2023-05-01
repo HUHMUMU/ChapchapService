@@ -2,29 +2,69 @@
 <a class="btn btn-outline-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="setReportId(123)">신고</a>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">게시글 신고하기</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form name="reportForm" id="reportForm">
-          <label for="recipient-name" class="col-form-label">신고사유:</label>
-          <input type="text" name="reportContent" class="form-control" id="recipient-name">
-          <input type="hidden" id="reviewNum" name="reviewNum">
-          <input type="hidden" id="reportUserId" name="reportUserId">
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-        <button type="submit" class="btn btn-primary" onclick="submitReport()">신고</button>
+<form action="/chapstory/report.do">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" enctype="multipart/form-data" method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">게시글 신고하기</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form name="reportForm" id="reportForm" class="form-floating">
+              <label for="recipient-name" class="col-form-label">신고사유:</label>
+              <input type="text" name="reportContent" class="form-control" id="recipient-name">
+              <input type="text" id="chapNum" name="chapNum"  class="form-control" th:value="${c.chapNum}">
+              <input type="text" id="reportUserId" name="reportUserId"  class="form-control" th:value="${session.loginUser.userId}">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary" onclick="submitReport()">신고</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+</form>
+
+<!--&lt;!&ndash; 리뷰를 신고하는 버튼 &ndash;&gt;-->
+<!--<button class="btn btn-outline-primary p-0" style="height: 25px;" onclick="submitReport()">신고</button>-->
+
+<!--&lt;!&ndash; 모달 창 &ndash;&gt;-->
+<!--<div id="reportModal" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span class="close">&times;</span>-->
+<!--        <h2>게시글 신고하기</h2>-->
+<!--        <form>-->
+<!--            <div class="form-group">-->
+<!--                <label for="reportContent">신고 사유</label>-->
+<!--                <textarea id="reportContent" name="reportContent" rows="4" cols="50"></textarea>-->
+<!--            </div>-->
+<!--            <input type="hidden" id="chapNum" value="${chapNum}">-->
+<!--            <button type="button" onclick="submitReport()">신고하기</button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
 
 <script>
-
+    function submitReport() {
+        var chapNum = $('#chapNum').val();
+        var reportContent = $('#reportContent').val();
+        var data = {
+            reportContent: reportContent,
+            chapNum: chapNum
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/report/reportChapstory.do',
+            data: data,
+            success: function() {
+                alert('게시글이 신고되었습니다.');
+            },
+            error: function() {
+                alert('게시글 신고에 실패하였습니다.');
+            }
+        });
+    }
 </script>

@@ -18,4 +18,10 @@ public class ReportServiceImp implements ReportService{
         int register=reportMapper.insertReportByReview(reports);
         return register;
     }
+
+    @Override
+    public int registerReportByChap(ReportsDto reports) {
+        int registerReport=reportMapper.insertReportByChapstory(reports);
+        return registerReport;
+    }
 }
