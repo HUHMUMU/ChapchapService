@@ -60,7 +60,7 @@ public class ChapStoryServiceImp implements ChapStoryService{
     @Transactional
     public int register(ChapstorysDto chaps) {
         int register = chapStoryMapper.insertOne(chaps);
-        if(chaps.getChapstoryimgs()!=null){
+        if(chaps.getChapstoryimgs()!=null){ //이미지도 등록한다면
             for(ChapstoryimgsDto img : chaps.getChapstoryimgs()){
                 img.setChapNum(chaps.getChapNum());
                 register+=chapstoryImgMapper.insertOne(img);
@@ -71,10 +71,10 @@ public class ChapStoryServiceImp implements ChapStoryService{
 
     @Override
     @Transactional
-    public int modify(ChapstorysDto chaps, int[] delImgChsNum) {
+    public int modify(ChapstorysDto chaps, int[] delImgChsNums) {
         int modify=chapStoryMapper.updateOne(chaps);
-        if(delImgChsNum!=null){
-            for(int chsNum : delImgChsNum){
+        if(delImgChsNums!=null){ //삭제할 이미지도 있다면
+            for(int chsNum : delImgChsNums){
                 modify+= chapstoryImgMapper.deleteOne(chsNum);
             }
         }
@@ -92,7 +92,7 @@ public class ChapStoryServiceImp implements ChapStoryService{
         List<ChapstoryimgsDto> imgList=null;
         if(chsNum!=null){
             imgList=new ArrayList<>();
-            for (int c : chsNum){
+            for (int c : chsNum){ // 이미지 여러개 등록 가능
                 ChapstoryimgsDto imgDto=chapstoryImgMapper.findByChsNum(c);
                 imgList.add(imgDto);
             }

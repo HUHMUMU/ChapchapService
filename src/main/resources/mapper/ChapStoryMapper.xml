@@ -54,8 +54,8 @@
                (SELECT COUNT(*) FROM chapstorylikes WHERE chap_num=chapstorys.chap_num),
                (SELECT nickname FROM users WHERE chapstorys.user_id=users.user_id)
         FROM chapstorys
-        <if test="searchField!=null">
-            WHERE ${searchField}=#{searchValue}
+        <if test="searchField!=null and searchValue!=null" >
+            WHERE ${searchField} LIKE CONCAT('%',#{searchValue},'%')
         </if>
     </select>
     <select id="bestList" resultMap="ChapstoryMap">

@@ -124,6 +124,8 @@
     }
 </style>
 <script>
+
+    // 게시글 주소 복사
     document.querySelector('[data-clipboard-text]').setAttribute('data-clipboard-text', window.location.href);
     var clipboard = new ClipboardJS('#share-btn');
     clipboard.on('success', function(e) {
