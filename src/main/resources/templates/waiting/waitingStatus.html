@@ -24,7 +24,7 @@
                     <h5 class="card-title">현재 대기팀</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text"><strong><span th:text="${prevWaitingCount}"></span></strong></p>
+                    <p class="card-text"><strong><span th:text="${waitings.size()-1}"></span></strong></p>
                 </div>
             </div>
         </div>
@@ -35,9 +35,11 @@
                     <h5 class="card-title">대기 번호</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">대기 번호 : <strong><span th:text="${waiting.waitNum}"></span></strong></p>
-                    <p class="card-text">웨이팅 등록 시간 : <strong><span th:text="${waiting.startTime}"></span></strong></p>
-                    <p class="card-text">예상 대기 시간 : <strong><span th:text="${estimatedWaitTime}"></span></strong> 분</p>
+                    <th:block th:if="${waitings!=null}">
+                        <p class="card-text">대기 번호 : <strong th:text="${waitings.size()}"></strong></p>
+                        <p class="card-text">웨이팅 등록 시간 : <strong th:text="${waitings.get(waitings.size()-1).startTime}"></strong></p>
+                        <p class="card-text">예상 대기 시간 : <strong th:text="${storeswaiting.timeSetup*(waitings.size()-1)}"></strong> 분</p>
+                    </th:block>
                 </div>
             </div>
         </div>
@@ -59,12 +61,17 @@
 </div>
 <br>
 <div style="display: flex; text-align: center; margin: auto; height: auto;justify-content: center">
-    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="deleteWaiting" onclick="'/'">
+    <a class="btn btn-warning" th:href="'/waiting/'+${storeswaiting.storeNum}+'/remove.do'" type="button">
+        <i class="bi bi-shop"></i>
         대기 취소하기
-    </button>
-    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="modifyWaiting" onclick="`/waiting/waitingModify.do`">
-        <a th:href="'${waiting/waitingModify.do}'"></a>인원 수정하기
-    </button>
+    </a>
+<!--    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="modifyWaiting" onclick="'/'">-->
+<!--        <a th:href="'${waiting/waitingModify.do}'"></a>인원 수정하기-->
+<!--    </button>-->
+    <a class="btn btn-warning" th:href="'/waiting/'+${storeswaiting.storeNum}+'/waitingModify.do'" type="button">
+        <i class="bi bi-shop"></i>
+        인원 수정하기
+    </a>
 </div>
 
 

@@ -167,7 +167,6 @@ CREATE TABLE userswaiting
 (
     waiting_num  INT primary key auto_increment    NOT NULL COMMENT '웨이팅 고유번호',
     user_people  INT                               NOT NULL COMMENT '유저 인원수',
-    wait_num     INT                               NOT NULL COMMENT '대기 번호',
     waiting_date DATE                              NOT NULL COMMENT '웨이팅 날짜',
     start_time   VARCHAR(255)                      NOT NULL COMMENT '웨이팅 등록시간',
     end_time     VARCHAR(255)                      NULL COMMENT '웨이팅 입장시간',
@@ -175,7 +174,8 @@ CREATE TABLE userswaiting
     user_id      VARCHAR(255)                      NOT NULL COMMENT '유저아이디',
     store_num    INT                               NOT NULL COMMENT '가게고유번호',
     FOREIGN KEY (store_num) REFERENCES stores (store_num),
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    unique (waiting_date,user_id,store_num)
 );
 
 CREATE TABLE storeswaiting

@@ -39,8 +39,9 @@ public class StoresDto {
     private List<HolidaysDto> holiday; //휴무일 가져오기
     private List<StoreImgsDto> storeImgs; //가게 이미지 가져오기
     private ReviewsDto starAvg; //평균 별점
-    private UsersWaitingDto waiting; //웨이팅 대기 팀 수
+    private UsersWaitingDto waitingTeamNum; //웨이팅 대기 팀 수
 
+    private StoresWaitingDto waiting;
     private int categoryNum; // 카테고리 번호
     private int jjimCount; // 찜 갯수
     private int reviewCount; // 리뷰 갯수

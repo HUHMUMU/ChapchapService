@@ -5,6 +5,7 @@ import com.acorn.chapspring.service.StoresWaitingService;
 import com.acorn.chapspring.service.WaitingService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,33 +32,30 @@ public class WaitingController {
         StoresDto stores=storeService.getStoreByStoreNum(storeNum);
         return null;
     }
-
-//    // 대기 중인 팀 중 가장 빠른 팀 조회 API
-//    @GetMapping("/waiting/{storeNum}/waitingStatus.do")
-//    public UsersWaitingDto getFastWaiting(@PathVariable int storeNum, @PathVariable int waitNum) {
-//        return waitingService.getFastWaiting(storeNum, waitNum);
-//    }
-
-    // 대기 등록 API
-//    @PostMapping("/waiting/add")
-//    public int addWaiting(@RequestBody UsersWaitingDto waitingDto) {
+//    @GetMapping("/{storeNum}/{waitNum}/waitingStatus.do")
+//    public String modifyForm(Model model,
+//                             @PathVariable int storeNum,
+//                             @PathVariable int waitNum,
+//                             @SessionAttribute UserDto loginUser){
 //
-//        return waitingService.addWaiting(waitingDto);
+//        StoresDto stores = storeService.getStoreByStoreNum(storeNum);
+//        UsersWaitingDto waiting = waitingService.getWaitingByWaitNum(storeNum, waitNum);
+//        StoresWaitingDto storeswaiting = storesWaitingService.getStoreWaitingByStoreNum(storeNum);
+//        model.addAttribute("stores",stores);
+//        model.addAttribute("waiting", waiting);
+//        model.addAttribute("storeswaiting",storeswaiting);
+//        return "redirect:waiting/"+storeNum+"/waitingModify.do";
 //    }
-    @GetMapping("/{storeNum}/waitingStatus.do/{waitNum}")
+
+    @GetMapping("/{storeNum}/waitingStatus.do")
     public String waitingStatus(Model model,
                                 @SessionAttribute UserDto loginUser,
-                                @PathVariable int storeNum,
-                                @PathVariable int waitNum
+                                @PathVariable int storeNum
                                 ){
         StoresWaitingDto storeswaiting = storesWaitingService.getStoreWaitingByStoreNum(storeNum);
-        int prevWaitingCount = waitingService.getPrevWaitingCount(storeNum, waitNum);
-        UsersWaitingDto waiting = waitingService.getWaitingByWaitNum(storeNum, waitNum);
-        int estimatedWaitTime = storeswaiting.getTimeSetup() * prevWaitingCount;
+        List<UsersWaitingDto> waitings = waitingService.getWaitingByWaitNum( storeNum,loginUser.getUserId());
 
-        model.addAttribute("prevWaitingCount", prevWaitingCount);
-        model.addAttribute("waiting", waiting);
-        model.addAttribute("estimatedWaitTime", estimatedWaitTime);
+        model.addAttribute("waitings", waitings);
         model.addAttribute("storeswaiting", storeswaiting);
         return "waiting/waitingStatus";
     }
@@ -65,7 +63,6 @@ public class WaitingController {
     public String addWaiting(Model model,
                            @PathVariable int storeNum,
                            @SessionAttribute UserDto loginUser) {
-        System.out.println("test");
         StoresDto stores = storeService.getStoreByStoreNum(storeNum);
         StoresWaitingDto storeswaiting = storesWaitingService.getStoreWaitingByStoreNum(storeNum);
 
@@ -73,39 +70,30 @@ public class WaitingController {
         model.addAttribute("storeswaiting",storeswaiting);
         return "waiting/waitingAdd";
     }
-    // 이게 동환이가 건들여서 된 결과물 =>
-    @PostMapping ("/{storeNum}/waitingAdd.do")
+
+    @PostMapping ("/waitingAdd.do")
     public String addWaiting(@SessionAttribute UserDto loginUser,
-                             @PathVariable int storeNum,
-                             @RequestParam int user_people,
+                            @ModelAttribute UsersWaitingDto usersWaitingDto,
                              Model model) {
-        int currentWaitingCount = waitingService.getWaitingCount(storeNum);
-        int addWaiting = waitingService.addWaiting(currentWaitingCount + 1, loginUser.getUserId(), storeNum, user_people);
+        usersWaitingDto.setUserId(loginUser.getUserId());
+        int addWaiting = waitingService.addWaiting(usersWaitingDto);
 
         if(addWaiting>0){// 웨이팅 등록 성공
-            return "redirect:/waiting/"+storeNum+"/waitingStatus.do/"+ (currentWaitingCount + 1);
+            return "redirect:/waiting/"+usersWaitingDto.getStoreNum()+"/waitingStatus.do";
         }
         else  {
-            return "redirect:/waiting/"+storeNum+"/waitingAdd.do";
+            return "redirect:/waiting/"+usersWaitingDto.getStoreNum()+"/waitingAdd.do";
         }
     }
+
 //    이거 한번 ㅅ ㅣ험해봐야함
 
-//    @GetMapping("/{storeNum}/register.do")
-//    public String registerForm(Model model,
-//                               @PathVariable int storeNum,
-//                               @SessionAttribute UserDto loginUser){
-//        StoresDto stores = storeService.getStoreByStoreNum(storeNum);
-//        model.addAttribute("stores",stores);
-//        return "review/register";
-//    }
-    
-//    @GetMapping()
-//    public int
 //    // 대기 수정 API
 //    @PutMapping("/waiting/{storeNum}/waitingModify.do/")
 //    public String modifyWaiting(
+//            Model model,
 //            @RequestBody UsersWaitingDto usersWaitingDto) {
+//
 //        int modifyWaiting=waitingService.modifyWaiting();
 //        int modify=waitingService.modifyWaiting();
 //        if(modify>0){
@@ -115,23 +103,40 @@ public class WaitingController {
 //    } // 20:28 삭제 되나?
 
     // 대기 삭제 API
-    @GetMapping("/{waitNum}/remove.do")
-    public String removeAction(@PathVariable int waitingNum,
+
+    @GetMapping("/{storeNum}/waitingModify.do")
+    public String modifyWaiting(
+            Model model,
+            @PathVariable int storeNum,@SessionAttribute UserDto loginUser) {
+        StoresDto stores = storeService.getStoreByStoreNum(storeNum);
+
+
+        UsersWaitingDto userWaiting=waitingService.detail(storeNum,loginUser.getUserId());
+        model.addAttribute("userWaiting",userWaiting);
+        model.addAttribute("stores",stores); // stores. 이걸 쓸 수 있는건 이걸 써줘서야
+        return "/waiting/waitingModify";
+    } // 20:28 삭제 되나?
+
+    @GetMapping("/{storeNum}/remove.do")
+    public String removeAction( Model model,
+                                @PathVariable int storeNum,
                                 @SessionAttribute UserDto loginUser,
                                 RedirectAttributes redirectAttributes) {
-        String redirectPath="redirect:/waiting/"+waitingNum+"/waitingStatus.do";
+        String redirectPath="";
         String msg="삭제 실패";
-        UsersWaitingDto usersWaitingDto=null;
         int remove=0;
         try{
-            usersWaitingDto=waitingService.detail(waitingNum);
-            remove=waitingService.remove(waitingNum);
+            remove=waitingService.remove(storeNum,loginUser.getUserId());
         }catch (Exception e){
             log.error(e);;
         }
         if(remove>0){
             msg="삭제 성공!";
-            redirectPath="redirect:/store/detail.do";
+            redirectPath="redirect:/store/"+storeNum+"/detail.do";
+        }else{
+            msg="삭제 성공!";
+            redirectPath="redirect:/waiting/"+storeNum+"/waitingStatus.do";
+
         }
         redirectAttributes.addFlashAttribute("msg",msg);
         return redirectPath;
