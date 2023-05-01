@@ -30,6 +30,22 @@ class ReportMapperTest {
     }
 
     @Test
+    void findReportByChapstory() {
+        List<ReportsDto> reports=reportMapper.findReportByChapstory(1);
+        System.out.println("reports = " + reports);
+    }
+
+    @Test
+    void insertReportByChapstory() {
+        ReportsDto report=new ReportsDto();
+        report.setReportUserId("user01");
+        report.setReportContent("신고 테스트");
+        report.setChapNum(1);
+        int registerOne=reportMapper.insertReportByChapstory(report);
+        System.out.println("registerOne = " + registerOne);
+    }
+
+    @Test
     void deleteReportByReviewNum() {
         int delete=reportMapper.deleteReportByReviewNum(5);
         System.out.println("delete = " + delete);

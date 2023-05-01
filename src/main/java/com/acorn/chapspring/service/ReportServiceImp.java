@@ -24,4 +24,10 @@ public class ReportServiceImp implements ReportService{
         int remove=reportMapper.deleteReportByReviewNum(reviewNum);
         return remove;
     }
+
+    @Override
+    public int registerReportByChap(ReportsDto reports) {
+        int registerReport=reportMapper.insertReportByChapstory(reports);
+        return registerReport;
+    }
 }

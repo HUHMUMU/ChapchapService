@@ -12,4 +12,6 @@ public interface ReportMapper {
     List<ReportsDto> findReportByReview(int reviewNum); //리뷰별 신고 찾기
     int insertReportByReview(ReportsDto report); //리뷰 신고 하기
     int deleteReportByReviewNum(int reviewNum); //리뷰 지울때 신고도 지우기
+    List<ReportsDto> findReportByChapstory(int chapNum); //챱스토리 게시글별 신고 찾기
+    int insertReportByChapstory(ReportsDto report); // 챱스토리 신고하기
 }
