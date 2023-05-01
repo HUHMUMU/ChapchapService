@@ -1,5 +1,6 @@
 package com.acorn.chapspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.time.LocalTime;
@@ -7,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class ChapstorysDto {
     private int chapNum; // PK
     private String title; // 제목

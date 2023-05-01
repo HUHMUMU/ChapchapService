@@ -57,11 +57,6 @@ class StoreMapperTest {
 //        storeFilterDto.setParking(1);
 
         // 정렬조건 4개중 1개
-        storeFilterDto.setSortBy("recommended");
-//        storeFilterDto.setSortBy("jjim");
-//        storeFilterDto.setSortBy("review");
-        // 거리순은 아직 미구현
-//        storeFilterDto.setSortBy("distance");
 
         List<StoresDto> stores=storeMapper.findStoresByFilter(storeFilterDto);
         System.out.println("stores = " + stores);

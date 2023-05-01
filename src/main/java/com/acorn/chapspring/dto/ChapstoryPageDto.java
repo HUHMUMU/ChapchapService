@@ -1,8 +1,10 @@
 package com.acorn.chapspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class ChapstoryPageDto {
     enum BoardsType{
         chap_num, user_id, title, content, viewcount, post_time, likeCnt, nickname

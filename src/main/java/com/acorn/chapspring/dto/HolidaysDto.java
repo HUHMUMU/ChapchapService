@@ -1,10 +1,12 @@
 package com.acorn.chapspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class HolidaysDto {
     private int holiNum; // pk
     private int storeNum; // fk 가게 고유 번호

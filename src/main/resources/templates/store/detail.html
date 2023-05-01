@@ -8,44 +8,37 @@
   <title>가게 상세 페이지</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/public/js/ReviewLike.js" defer></script>
 </head>
 <div layout:fragment="content" th:each="s:${stores}">
   <div class="image-container store">
     <img th:src="'http://localhost:8088'+${s.mainImg}" alt="대표 이미지">
-    <img src="/public/img/store/dog.jpg" alt="이미지 설명">
-    <div class="last-column">
-      <img src="/public/img/store/curry.jpg" alt="이미지 설명">
-      <img src="/public/img/store/rice.jpg" alt="이미지 설명">
-    </div>
+    <th:block th:each="img : ${s.storeImgs}">
+      <img th:src="'http://localhost:8088'+${img}" alt="가게 이미지">
+    </th:block>
   </div>
+
   <div class="store">
     <p class="storeName d-flex justify-content-center mt-4" th:text="${s.storeName}"></p>
 <!-- 추천 버튼 기능 구현-->
-    <th:block th:if="${recommending!=null && s.storeNum==recommending.storeNum}">
-      <button type="button" class="btn btn-secondary btn-sm mt-3 active" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">
-        추천
-      </button>
-    </th:block>
-    <th:block th:if="${recommending==null || recommending!=null && s.storeNum!=recommending.storeNum}">
-      <button type="button" class="btn btn-secondary btn-sm mt-3" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">
-        추천
-      </button>
+    <th:block th:if="${session.loginUser!=null}">
+      <th:block th:if="${recommending!=null && s.storeNum==recommending.storeNum}">
+        <button type="button" class="recommendBtn btn btn-outline-dark btn-sm active" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">
+          추천
+        </button>
+      </th:block>
+      <th:block th:if="${recommending==null || recommending!=null && s.storeNum!=recommending.storeNum}">
+        <button type="button" class="recommendBtn btn btn-outline-dark btn-sm" th:onclick="addRecommend([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">
+          추천
+        </button>
+      </th:block>
     </th:block>
 <!---------------------->
-
-
-
   </div>
+
   <div class="store">
-    <span class="starPoint">★4.45/</span>
-    <span th:text="'방문자리뷰 '+${s.reviewCount}" class="starReview"></span>
-  </div>
-  <div class="store">
-    <span class="starHashTag1 me-2">#해시태그1</span>
-    <span class="starHashTag2 me-2">#해시태그2</span>
-    <span class="starHashTag3 me-2">#해시태그3</span>
-    <span class="starHashTag4 me-2">#해시태그4</span>
-    <span class="starHashTag5 me-2">#해시태그5</span>
+    <span th:text="'★'+${#strings.substring(s.starAvg.starAverage, 0, 3)}" class="starPoint"></span>
+    <span th:text="'/방문자리뷰 '+${s.reviewCount}" class="starReview"></span>
   </div>
   <div class="store">
     <p class="badge text-bg-warning waitingTeam">현재 10팀 대기중입니다.</p>
@@ -54,8 +47,20 @@
     <ul class="list-group">
       <li style="list-style:none;">
         <div class="btn-group store linkBtn">
-          <a class="btn btn-outline-dark btn-sm">찜</a>
-          <a class="btn btn-outline-dark btn-sm" id="share-btn" data-clipboard-text="https://example.com">공유</a>
+<!--        찜 버튼 구현-->
+          <th:block th:if="${session.loginUser!=null}">
+            <th:block th:if="${checkjjim!=null && checkjjim.storeNum==s.storeNum}">
+              <button type="button" class="btn btn-outline-dark btn-sm active" th:onclick="addJjimList([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">찜</button>
+            </th:block>
+            <th:block th:if="${checkjjim==null}">
+              <button type="button" class="btn btn-outline-dark btn-sm" th:onclick="addJjimList([[${session.loginUser.userId}]],[[${s.storeNum}]],this)">찜</button>
+            </th:block>
+          </th:block>
+          <th:block th:if="${session.loginUser==null}">
+            <button type="button" class="btn btn-outline-dark btn-sm">찜</button>
+          </th:block>
+<!--     -------------     -->
+          <a class="btn btn-outline-dark btn-sm " id="share-btn" data-clipboard-text="https://example.com">공유</a>
           <a class="btn btn-outline-dark btn-sm" th:href="${s.instaurl}">인스타</a>
           <a class="btn btn-outline-dark btn-sm" th:href="${s.facebookurl}">페이스북</a>
           <a class="btn btn-outline-dark btn-sm" th:href="${s.youtubeurl}">유튜브</a>
@@ -111,7 +116,7 @@
     </ul>
   </div>
   <nav class="navbar sticky-top" style="background-color:#fdf9ec">
-    <div class="container-fluid d-flex justify-content-center">
+    <div class="menuBar container-fluid d-flex justify-content-center">
       <a class="navbar-brand m-0" href="#waiting">예약</a>
       <span class="m-2">|</span>
       <a class="navbar-brand m-0" href="#event">이벤트</a>
@@ -125,8 +130,8 @@
   </nav>
 
   <!-- 예약 -->
-  <div class="waiting d-grid gap-2 col-6 mx-auto">
-    <a class="btn btn-warning" href="#" type="button">
+  <div class="waiting d-grid gap-2 col-6 mx-auto" id="waiting">
+    <a class="btn btn-warning" th:href="'/waiting/'+${s.storeNum}+'/waitingAdd.do'" type="button">
       <i class="bi bi-shop"></i>
       예약하러 가기
     </a>
@@ -231,6 +236,8 @@
                 <a class="btn btn-outline-dark pt-0" style="height: 25px;">팔로우</a>
               </div>
               <div class="d-flex">
+                <p th:text="'★'+${r.star}" class="rating-value"></p>
+                <p><i class="bi bi-dot m-2"></i></p>
                 <p class="review-count" th:text="'작성리뷰 '+${r.countReview}"></p>
                 <p><i class="bi bi-dot m-2"></i></p>
                 <p th:text="${#dates.format(r.date,'yyyy-MM-dd')}"></p>
@@ -238,24 +245,22 @@
             </div>
           </div>
           <div class="d-flex">
-            <div class="d-flex">
-              <p th:text="'★'+${r.star}" class="rating-value"></p>
-              <i class="bi bi-hand-thumbs-up"></i>
-              <p th:text="${r.countLike}"></p>
-              <i class="bi bi-hand-thumbs-down"></i>
+            <div th:id="'likeCont'+${r.reviewNum}">
+              <th:block th:if="${session.loginUser!=null}" th:include="/store/loginLike" th:with="likes=${r.reviewLikes},id=${r.reviewNum}"></th:block>
+              <th:block th:unless="${session.loginUser!=null}" th:include="/store/like" th:with="likes=${r.reviewLikes}"></th:block>
             </div>
             <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,r.userId)}">
               <div class="d-flex justify-content-end">
-                <a th:href="'/review/'+${r.reviewNum}+'/remove.do'" class="btn btn-outline-danger p-0" style="height: 25px;">삭제하기</a>
+                <a th:href="'/review/'+${s.storeNum}+'/'+${r.reviewNum}+'/remove.do'" class="btn btn-outline-danger px-1 pt-0" style="height: 25px;">삭제하기</a>
               </div>
             </th:block>
             <th:block th:unless="${session.loginUser!=null && #strings.equals(session.loginUser.userId,r.userId)}">
-              <th:block th:include="/report/reportReview"></th:block>
+              <th:block th:include="/store/report"></th:block>
             </th:block>
           </div>
         </div>
         <div class="card-body d-flex">
-          <img th:src="'http://localhost:8088'+${r.img}" style="width: 150px; height: 150px;">
+          <img th:src="${r.img}" style="width: 150px; height: 150px;">
           <div class="review-text" style="border: #222 solid 1px; width: 440px; height: 150px;">
             <p th:text="${r.content}" class="review-description m-0"></p>
             <small th:text="${r.menuName.name}+' : '+${r.comment}"></small>
@@ -263,7 +268,7 @@
         </div>
         <div class="card-body">
           <div th:if="${not #lists.isEmpty(r.rReplies)}" class="d-flex" th:each="rr:${r.rReplies}">
-            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+            <div class="flex-shrink-0"><img class="rounded-circle" th:src="'http://localhost:8088'+${s.mainImg}" alt="..." /></div>
             <div class="ms-3" >
               <div class="d-flex">
                 <div class="fw-bold">사장님</div>
@@ -320,10 +325,19 @@
   .store img{
     object-fit: cover;
   }
+  .recommendBtn{
+    height: 25px;
+    padding-top: 0px;
+    margin-top: 50px;
+    background-color: #FFE3A9;
+  }
   p{
     margin: 0;
   }
-  .linkBtn a{
+  a{
+    text-decoration: none;
+  }
+  .linkBtn button,.linkBtn a{
     background-color: #FFE3A9;
   }
   .waiting a{
@@ -344,39 +358,22 @@
     color: #fff;
     background-color: #ffc954;
   }
-
   .hide {
     display: none; /*리뷰 숨기기*/
   }
-
-  .container-fluid a:hover{
+  .menuBar a:hover{
     color: #FF5D5D;
     font-weight: bold;
   }
   .image-container {
     display: flex;
     justify-content: center; /* 수평 중앙 정렬 */
-  }
-
-  .image-container {
-    display: flex;
     flex-wrap: wrap;
   }
-
   .image-container img {
     width: calc(25%);
     height: 200px;
-  }
-
-  .last-column {
-    width: calc(30%);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .last-column img {
-    width: calc(100%);
-    height: 100px;
+    border: 1px solid #FFE3A9;
   }
 
   .store {
@@ -398,12 +395,6 @@
     padding: 5px;
     margin-bottom: 5px;
   }
-
-  .storeDetail{
-    border: #222 solid 1px;
-  }
-
-
   .card-img-overlay .d-inline {
     position: relative;
     top: 20px;
@@ -412,10 +403,6 @@
   .card-body {
     background-color: #FFE3A9;
     margin-bottom: 0px;
-  }
-  .card-text{
-    display: inline-block;
-    font-weight: bold;
   }
   .bookMark{
     background-color: #FF5D5D;

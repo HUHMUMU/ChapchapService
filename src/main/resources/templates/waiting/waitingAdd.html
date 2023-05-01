@@ -5,16 +5,12 @@
       layout:decorate="~{layout}">
 <head>
   <meta charset="UTF-8">
-  <title>Waiting</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/waiting.css">
+  <title>웨이팅 등록</title>
+  <script src="/public/js/WaitingAdd.js" defer th:inline="javascript"></script>
 </head>
 <body>
 <div layout:fragment="content">
-  <div class="container">
+  <div class="d-flex justify-content-center mb-5">
     <div class="alert alert-warning" role="alert">
       <div style="align-content: center; text-align: center">
         <p ><strong>주의사항</strong> <br>
@@ -28,54 +24,56 @@
       </div>
     </div>
 
-        <div class="row">
-          <div class="col-lg-8 col-md-12">
-            <!-- 가게 정보? -->
-            <div class="card store-info">
-              <div class="card-body">
-                <h2 class="card-title" th:text="${stores.store_name}"></h2>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <img th:src="@{/static/images/store_img.jpg}" class="store-img">
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="waiting-input">
-                      <h4>Waiting 등록</h4>
-                      <form th:action="@{/waiting/waitingStatus.html}" method="get">
+    <div class="row">
+      <div class="col-lg-12">
+        <!-- 가게 정보? -->
+        <div class="card store-info">
+          <div class="card-body p-4">
+            <h2 class="card-title" th:text="${stores.storeName}"></h2>
+            <div class="row">
+              <div class="col-sm-6">
+                <!--                <img th:src="'http://localhost:8088'+${s.mainImg}">-->
+              </div>
+              <div class="col-sm-6">
+                <div class="waiting-input">
+                  <h4>웨이팅 등록</h4>
+<!--                  <form name="waitingAdd" id="waitingAdd" method="post" action="/{storeNum}/waitingAdd.do">-->
+                    <form name="waitingAdd" id="waitingAdd" method="post" action="waitingAdd.do">
 
-                        <div class="form-group">
-                          <label for="people-input">인원 수</label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <button class="btn btn-outline-secondary" type="button" id="minusBtn">-</button>
-                            </div>
-                            <input type="number" class="form-control" id="people-input" name="user_people"
-                                   placeholder="인원 수를 입력하세요." th:max="${storeswaiting.max_people}" min="1">
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button" id="plusBtn">+</button>
-                            </div>
-                          </div>
-                          <small class="form-text text-muted" th:text="${'최대 '+storeswaiting.max_people+'명까지 가능합니다.'}"></small>
+                    <div class="form-group">
+                      <label for="people-input">인원 수</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-secondary" type="button" id="minusBtn">-</button>
                         </div>
-                        <div class="form-group">
-                          <div class="form-check">
-                          </div>
+                        <input style="width: 55px;" type="number" class="form-control" id="people-input" name="user_people"
+                               placeholder="인원 수를 입력하세요." th:max="${storeswaiting.maxPeople}" min="1">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" id="plusBtn">+</button>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">등록하기</a></button>
-                      </form>
+                      </div>
+                      <small class="form-text text-muted" th:text="${'최대 '+storeswaiting.maxPeople+'명까지 가능합니다.'}"></small>
                     </div>
-                  </div>
+                    <div class="form-group">
+                      <div class="form-check">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">등록하기</a></button>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-
+        </div>
       </div>
     </div>
   </div>
+</div>
 <script>
+
   const confirmBtn = document.getElementById('confirmBtn');
   confirmBtn.addEventListener('click', function() {
+    alert(confirmBtn);
     const warningMsg = document.querySelector('.alert-warning');
     warningMsg.style.display = 'none';
   });

@@ -75,18 +75,30 @@
                         <a type="button" class="btn btn-outline-secondary btn-sm p-0 m-0 me-1" onclick="setPriceRange('40000-99999999', '그이상')">그이상</a>
                     </div>
                     <!-- 상세 지역 -->
-                    <div class="mb-2 d-flex" style="width: 90%;">
-                        <div class="dropdown" style="width: 100%;">
-                            <button class="btn btn-outline-secondary dropdown-toggle btn-sm" style="width: 100%; height:30px;" type="button" id="detailedArea" data-bs-toggle="dropdown" aria-expanded="false">
-                                상세 지역(미구현)
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="detailedArea">
-                                <li><a class="dropdown-item" href="#">지역 1</a></li>
-                                <li><a class="dropdown-item" href="#">지역 2</a></li>
-                                <li><a class="dropdown-item" href="#">지역 3</a></li>
-                                <li><a class="dropdown-item" href="#">지역 4</a></li>
-                            </ul>
-                        </div>
+                    <div class="mb-2 d-flex justify-content-center align-items-center" style="width:90%; height:32px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" id="detailedArea" data-bs-toggle="dropdown" aria-expanded="false" style="width:50px;">시.도</button>
+                        <ul class="dropdown-menu" aria-labelledby="detailedArea" id="regionDropdown" onclick="categoryChange3(event)">
+                            <li><a class="dropdown-item" href="#" data-value="general01">강원</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general02">경기</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general03">경남</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general04">경북</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general05">광주</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general06">대구</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general07">대전</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general08">부산</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general09">서울</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general10">울산</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general11">인천</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general12">전남</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general13">전북</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general14">제주</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general15">충남</a></li>
+                            <li><a class="dropdown-item" href="#" data-value="general16">충북</a></li>
+                        </ul>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" id="detailedAreaDetail" data-bs-toggle="dropdown" aria-expanded="false" style="width:50px;">군.구</button>
+                        <ul class="dropdown-menu" aria-labelledby="detailedAreaDetail" id="state3" onclick="categoryChange4(event)">
+                            <li><a class="dropdown-item" href="#"></a></li>
+                        </ul>
                     </div>
                     <!-- 주차 가능 여부 -->
                     <div class="d-flex justify-content-center align-items-center" style="width:90%; height:30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
@@ -95,20 +107,17 @@
                         <button type="button" class="btn btn-outline-secondary btn-sm p-0 me-1 ms-1" style="width:50px;" onclick="setParking('0', '불가능')">불가능</button>
                     </div>
                     <!-- 필터 적용된 사항 표시 -->
-                    <div class="d-flex justify-content-center align-items-center mt-2" style="width:90%; height:30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
-                        <button th:if="${param.menuName}" th:text="${param.menuName}" type="button" class="btn btn-secondary btn-sm p-0 me-1 ms-1" style="width:50px;"></button>
-                        <button th:if="${param.priceType}" th:text="${param.priceType}" type="button" class="btn btn-secondary btn-sm p-0 me-1 ms-1" style="width:50px;"></button>
-                        <button th:if="${param.parkingType}" th:text="${param.parkingType}" type="button" class="btn btn-secondary btn-sm p-0 me-1 ms-1" style="width:50px;"></button>
+                    <div class="d-flex justify-content-center align-items-center mt-2" id="filterResult" style="width:90%; height:30px; border-radius: 0.25rem; border-radius: 0.25rem; border: 1px solid #6c757d; line-height: 2.0;">
                     </div>
                 </div>
                 <!-- 정렬 부분 -->
                 <div class="d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
                     <h5>정렬</h5>
                     <div class="d-flex flex-column" name="order">
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mt-0" id="distance" th:onclick="setOrder('distance', [[${param.direct!=null?param.direct[0]:''}]] )" style="height: 30px;">거리순X<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="averageStar" th:onclick="setOrder('averageStar', [[${param.direct!=null?param.direct[0]:''}]] )" style="height: 30px;">별점순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 pe-1 ps-1" id="review_count" th:onclick="setOrder('review_count', [[${param.direct!=null?param.direct[0]:''}]] )" style="height: 30px;">리뷰개수순<i class="bi bi-arrow-down-up"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="jjim_count" th:onclick="setOrder('jjim_count', [[${param.direct!=null?param.direct[0]:''}]] )" style="height: 30px;">찜순<i class="bi bi-arrow-down-up"></i></button>
+<!--                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 mt-0" id="distance" onclick="setOrder('distance', '' )" style="height: 30px;">거리순X<i class="bi bi-arrow-down-up"></i></button>-->
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="averageStar" onclick="setOrder('averageStar', '' )" style="height: 30px;">별점순<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1 pe-1 ps-1" id="review_count" onclick="setOrder('review_count', '' )" style="height: 30px;">리뷰개수순<i class="bi bi-arrow-down-up"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm p-0 m-1" id="jjim_count" onclick="setOrder('jjim_count', '')" style="height: 30px;">찜순<i class="bi bi-arrow-down-up"></i></button>
                     </div>
                 </div>
             </div>
@@ -121,7 +130,7 @@
                         </div>
                         <div class="col-5">
                             <div class="mt-2 mb-2 d-inline">
-                                <h5 class="d-inline" th:text="${p.storeName}"></h5>
+                                <a class="d-inline text-decoration-none se2_font_size" th:href="@{/store/{id}/detail.do(id = ${p.storeNum})}" th:text="${p.storeName}"></a>
                                 <i class="bi bi-star-fill"></i>
                                 <span th:text="${#numbers.formatDecimal(p.averageStar, 1, 2)}"></span>
                             </div>

@@ -54,4 +54,10 @@ class ReviewMapperTest {
         int deleteOne = reviewMapper.deleteReview(72);
         System.out.println("deleteOne = " + deleteOne);
     }
+
+    @Test
+    void getAverageStarByStoreNum(){
+        ReviewsDto starAvg=reviewMapper.getAverageStarByStoreNum(1);
+        System.out.println("starAvg = " + starAvg);
+    }
 }
