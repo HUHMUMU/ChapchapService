@@ -2,6 +2,7 @@ package com.acorn.chapspring.mapper;
 
 import com.acorn.chapspring.dto.JjimManageDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface JjimManageMapper {
 
     int deleteOneByUserIdAndStoreNum(JjimManageDto jjim);
 
-    JjimManageDto findOneByUserIdAndStoreNum(String userId,int storeNum);
+    JjimManageDto findOneByUserIdAndStoreNum(@Param("userId") String userId, @Param("storeNum") int storeNum);
 }

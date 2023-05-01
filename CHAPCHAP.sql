@@ -100,7 +100,6 @@ CREATE TABLE chapstorys
     content     TEXT                           NOT NULL COMMENT '내용',
     viewcount   INT UNSIGNED                   NULL     DEFAULT 0 COMMENT '조회수',
     post_time   TIMESTAMP                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성날짜',
-    profile     VARCHAR(255)                   NULL COMMENT '프로필',
     update_time TIMESTAMP                      NULL     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜',
     user_id     VARCHAR(255)                   NOT NULL COMMENT '유저아이디',
     chs_rstatus ENUM ('공개', '심사', '비공개')       NOT NULL DEFAULT '공개' COMMENT '신고상태',
@@ -309,11 +308,13 @@ CREATE TABLE chat_messages
     cm_id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '메시지 아이디',
     cr_id     INT UNSIGNED                  NOT NULL COMMENT '채팅방 아이디',
     user_id   VARCHAR(255)                  NOT NULL COMMENT '송신자 아이디',
+#     nickname  VARCHAR(255)                  NOT NULL COMMENT '송신자 닉네임',
     content   TEXT                          NOT NULL COMMENT '메시지 내용',
     status    ENUM ('ENTER','LEAVE','CHAT') NOT NULL COMMENT '메세지 상태 상태',
     post_time TIMESTAMP                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '메시지 전송 시간',
     FOREIGN KEY (cr_id) REFERENCES chat_rooms (cr_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
+#     FOREIGN KEY (user_id, nickname) REFERENCES users (user_id, nickname) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -322,82 +323,308 @@ CREATE TABLE follow
     follow_id   int auto_increment primary key      NOT NULL COMMENT '팔로우 데이터 고유속성번호',
     from_id     VARCHAR(255)                        NOT NULL COMMENT '나를 팔로우하고 있음',
     to_id       VARCHAR(255)                        NOT NULL COMMENT '내가 팔로우하고 있음',
-    follow_time timestamp default current_timestamp NOT NULL COMMENT '없어도 됨',
+#     follow_time timestamp default current_timestamp NOT NULL COMMENT '없어도 됨',
     unique (from_id, to_id) comment '목록 중복 지정 차단 속성',
     foreign key (from_id) references users (user_id) on update cascade on delete cascade,
     foreign key (to_id) references users (user_id) on update cascade on delete cascade
 );
 
-
 #여기부터 더미데이터 / store_manages 는 1000개 더미데이터 따로있음
 INSERT INTO store_manages (store_id, pw, business_num, store_call, phone, email) VALUES
- ('store001', 'pw123456', '1234567890', '02-1234-5678', '010-1111-2222', 'store001_owner@email.com'),
- ('store002', 'pw234567', '2345678901', '02-2345-6789', '010-2222-3333', 'store002_owner@email.com'),
- ('store003', 'pw345678', '3456789012', '02-3456-7890', '010-3333-4444', 'store003_owner@email.com'),
- ('store004', 'pw456789', '4567890123', '02-4567-8901', '010-4444-5555', 'store004_owner@email.com'),
- ('store005', 'pw567890', '5678901234', '02-5678-9012', '010-5555-6666', 'store005_owner@email.com'),
- ('store006', 'pw678901', '6789012345', '02-6789-0123', '010-6666-7777', 'store006_owner@email.com'),
- ('store007', 'pw789012', '7890123456', '02-7890-1234', '010-7777-8888', 'store007_owner@email.com'),
- ('store008', 'pw890123', '8901234567', '02-8901-2345', '010-8888-9999', 'store008_owner@email.com'),
- ('store009', 'pw901234', '9012345678', '02-9012-3456', '010-9999-0000', 'store009_owner@email.com'),
- ('store010', 'pw012345', '0123456789', '02-0123-4567', '010-0000-1111', 'store010_owner@email.com'),
- ('admin', '1234', '9012345678', '02-9012-3456', '010-9999-0000', 'admin_owner@email.com');
+                                                                                     ('store001', 'pw123456', '1234567890', '02-1234-5678', '010-1111-2222', 'store001_owner@email.com'),
+                                                                                     ('store002', 'pw234567', '2345678901', '02-2345-6789', '010-2222-3333', 'store002_owner@email.com'),
+                                                                                     ('store003', 'pw345678', '3456789012', '02-3456-7890', '010-3333-4444', 'store003_owner@email.com'),
+                                                                                     ('store004', 'pw456789', '4567890123', '02-4567-8901', '010-4444-5555', 'store004_owner@email.com'),
+                                                                                     ('store005', 'pw567890', '5678901234', '02-5678-9012', '010-5555-6666', 'store005_owner@email.com'),
+                                                                                     ('store006', 'pw678901', '6789012345', '02-6789-0123', '010-6666-7777', 'store006_owner@email.com'),
+                                                                                     ('store007', 'pw789012', '7890123456', '02-7890-1234', '010-7777-8888', 'store007_owner@email.com'),
+                                                                                     ('store008', 'pw890123', '8901234567', '02-8901-2345', '010-8888-9999', 'store008_owner@email.com'),
+                                                                                     ('store009', 'pw901234', '9012345678', '02-9012-3456', '010-9999-0000', 'store009_owner@email.com'),
+                                                                                     ('store010', 'pw012345', '0123456789', '02-0123-4567', '010-0000-1111', 'store010_owner@email.com'),
+                                                                                     ('admin', '1234', '9012345678', '02-9012-3456', '010-9999-0000', 'admin_owner@email.com');
 # stores도 1000개 더미데이터 따로있음
 INSERT INTO stores (store_num, store_name, detail_info, short_info, madein, address, main_img, opentime, lastorder, waiting_closetime, blogurl, youtubeurl, facebookurl, instaurl, s_rstatus, parking, wifi, toilet, smokingroom, babychair) VALUES
-    (1, '맛있는 햄버거집', '다양한 햄버거와 사이드 메뉴를 즐길 수 있는 가게입니다.', '햄버거 천국', '미국', '서울시 강남구 역삼동 123-45', 'logo.png', '10:00 - 22:00', '21:30', '21:00', 'http://burger-blog.com', NULL, 'http://facebook.com/burger', 'http://instagram.com/burger', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
-    (2, '닭갈비 전문점', '신선한 닭고기와 야채로 만든 맛있는 닭갈비를 즐길 수 있는 곳입니다.', '닭갈비의 정석', '한국', '서울시 강남구 역삼동 234-56', 'logo.png', '11:00 - 23:00', '22:30', '22:00', 'http://dakgalbi-blog.com', NULL, 'http://facebook.com/dakgalbi', 'http://instagram.com/dakgalbi', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
-    (3, '탕수육명가', '존맛탱 탕수육을 즐길 수 있는 중국요리 전문점입니다.', '탕수육의 정석', '중국', '서울시 강남구 역삼동 345-67', 'logo.png', '10:00 - 22:00', '21:30', '21:00', 'http://tangsuyuk-blog.com', NULL, 'http://facebook.com/tangsuyuk', 'http://instagram.com/tangsuyuk', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
-    (4, '쌀국수 파라다이스', '베트남 전통 쌀국수를 맛볼 수 있는 가게입니다.', '쌀국수 천국', '베트남', '서울시 강남구 역삼동 456-78', 'logo.png', '10:00 - 22:00', '21:30', '21:00', 'http://pho-blog.com', NULL, 'http://facebook.com/pho', 'http://instagram.com/pho', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
-    (5, '빵 맛집', '다양한 종류의 빵을 판매하는 베이커리입니다.', '빵의 세계', '한국', '서울시 강남구 역삼동 567-89', 'logo.png', '09:00 - 21:00', '20:30', '20:00', 'http://bread-blog.com', NULL, 'http://facebook.com/bread', 'http://instagram.com/bread', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
-    (6, '초밥 천국', '신선한 회로 만든 초밥을 즐길 수 있는 일본요리 전문점입니다.', '초밥의 정석', '일본', '서울시 강남구 역삼동 678-90', 'logo.png', '11:00 - 23:00', '22:30', '22:00', 'http://sushi-blog.com', NULL, 'http://facebook.com/sushi', 'http://instagram.com/sushi', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
-    (7, '족발 맛집', '부드러운 족발을 판매하는 한식 전문점입니다.', '족발의 세계', '한국', '서울시 강남구 역삼동 789-01', 'logo.png', '16:00 - 02:00', '01:30', '01:00', 'http://jokbal-blog.com', NULL, 'http://facebook.com/jokbal', 'http://instagram.com/jokbal', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
-    (8, '치킨 프라자', '맛있는 치킨을 판매하는 프라이드치킨 전문점입니다.', '치킨의 정석', '한국', '서울시 강남구 역삼동 890-12', 'logo.png', '16:00 - 02:00', '01:30', '01:00', 'http://chicken-blog.com', NULL, 'http://facebook.com/chicken', 'http://instagram.com/chicken', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
-    (9, '돈까스 천국', '바삭바삭한 돈까스를 판매하는 일본요리 전문점입니다.', '돈까스의 정석', '일본', '서울시 강남구 역삼동 901-23', 'logo.png', '11:00 - 22:00', '21:30', '21:00', 'http://donkatsu-blog.com', NULL, 'http://facebook.com/donkatsu', 'http://instagram.com/donkatsu', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
-    (10, '파스타 레스토랑', '다양한 종류의 파스타를 판매하는 이탈리아 요리 전문점입니다.', '파스타 천국', '이탈리아', '서울시 강남구 역삼동 912-34', 'logo.png', '11:00 - 23:00', '22:30', '22:00', 'http://pasta-blog.com', NULL, 'http://facebook.com/pasta', 'http://instagram.com/pasta', '공개', TRUE, TRUE, TRUE, FALSE, TRUE);
+                                                                                                                                                                                                                                                 (1, '맛있는 햄버거집', '다양한 햄버거와 사이드 메뉴를 즐길 수 있는 가게입니다.', '햄버거 천국', '미국', '서울시 강남구 역삼동 123-45', 'logo.png', '10:00 - 22:00', '21:30', '21:00', 'http://burger-blog.com', NULL, 'http://facebook.com/burger', 'http://instagram.com/burger', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
+                                                                                                                                                                                                                                                 (2, '닭갈비 전문점', '신선한 닭고기와 야채로 만든 맛있는 닭갈비를 즐길 수 있는 곳입니다.', '닭갈비의 정석', '한국', '서울시 강남구 역삼동 234-56', 'logo.png', '11:00 - 23:00', '22:30', '22:00', 'http://dakgalbi-blog.com', NULL, 'http://facebook.com/dakgalbi', 'http://instagram.com/dakgalbi', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
+                                                                                                                                                                                                                                                 (3, '탕수육명가', '존맛탱 탕수육을 즐길 수 있는 중국요리 전문점입니다.', '탕수육의 정석', '중국', '서울시 강남구 역삼동 345-67', 'logo.png', '10:00 - 22:00', '21:30', '21:00', 'http://tangsuyuk-blog.com', NULL, 'http://facebook.com/tangsuyuk', 'http://instagram.com/tangsuyuk', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
+                                                                                                                                                                                                                                                 (4, '쌀국수 파라다이스', '베트남 전통 쌀국수를 맛볼 수 있는 가게입니다.', '쌀국수 천국', '베트남', '서울시 강남구 역삼동 456-78', 'logo.png', '10:00 - 22:00', '21:30', '21:00', 'http://pho-blog.com', NULL, 'http://facebook.com/pho', 'http://instagram.com/pho', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
+                                                                                                                                                                                                                                                 (5, '빵 맛집', '다양한 종류의 빵을 판매하는 베이커리입니다.', '빵의 세계', '한국', '서울시 강남구 역삼동 567-89', 'logo.png', '09:00 - 21:00', '20:30', '20:00', 'http://bread-blog.com', NULL, 'http://facebook.com/bread', 'http://instagram.com/bread', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
+                                                                                                                                                                                                                                                 (6, '초밥 천국', '신선한 회로 만든 초밥을 즐길 수 있는 일본요리 전문점입니다.', '초밥의 정석', '일본', '서울시 강남구 역삼동 678-90', 'logo.png', '11:00 - 23:00', '22:30', '22:00', 'http://sushi-blog.com', NULL, 'http://facebook.com/sushi', 'http://instagram.com/sushi', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
+                                                                                                                                                                                                                                                 (7, '족발 맛집', '부드러운 족발을 판매하는 한식 전문점입니다.', '족발의 세계', '한국', '서울시 강남구 역삼동 789-01', 'logo.png', '16:00 - 02:00', '01:30', '01:00', 'http://jokbal-blog.com', NULL, 'http://facebook.com/jokbal', 'http://instagram.com/jokbal', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
+                                                                                                                                                                                                                                                 (8, '치킨 프라자', '맛있는 치킨을 판매하는 프라이드치킨 전문점입니다.', '치킨의 정석', '한국', '서울시 강남구 역삼동 890-12', 'logo.png', '16:00 - 02:00', '01:30', '01:00', 'http://chicken-blog.com', NULL, 'http://facebook.com/chicken', 'http://instagram.com/chicken', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
+                                                                                                                                                                                                                                                 (9, '돈까스 천국', '바삭바삭한 돈까스를 판매하는 일본요리 전문점입니다.', '돈까스의 정석', '일본', '서울시 강남구 역삼동 901-23', 'logo.png', '11:00 - 22:00', '21:30', '21:00', 'http://donkatsu-blog.com', NULL, 'http://facebook.com/donkatsu', 'http://instagram.com/donkatsu', '공개', TRUE, TRUE, TRUE, FALSE, TRUE),
+                                                                                                                                                                                                                                                 (10, '파스타 레스토랑', '다양한 종류의 파스타를 판매하는 이탈리아 요리 전문점입니다.', '파스타 천국', '이탈리아', '서울시 강남구 역삼동 912-34', 'logo.png', '11:00 - 23:00', '22:30', '22:00', 'http://pasta-blog.com', NULL, 'http://facebook.com/pasta', 'http://instagram.com/pasta', '공개', TRUE, TRUE, TRUE, FALSE, TRUE);
 
 
 INSERT INTO users (user_id, nickname, pw, name, birth, gender, address, detail_address, email, insta_url, face_url, youtube_url, profile_img, introduce, u_rstatus)VALUES
-   ('admin', '관리자', '1234', '관리자', '1999-11-12', 'MALE', '서울특별시 마포구', '에이콘아카데미', 'admin@example.com', NULL, NULL, NULL, NULL, '관리자', '공개'),
-   ('user01', '철수', 'password123', '김철수', '1990-01-01', 'MALE', '서울시 강남구 역삼동', '아파트 101호', 'chulsoo@example.com', 'https://www.instagram.com/chulsoo', NULL, NULL, NULL, '안녕하세요, 김철수입니다.', '공개'),
-   ('user02', '영희', 'password123', '박영희', '1995-05-05', 'FEMALE', '서울시 서초구 반포동', '빌라 201호', 'younghee@example.com', NULL, 'https://www.facebook.com/younghee', NULL, NULL, '안녕하세요, 박영희입니다.', '심사'),
-   ('user03', '수민', 'password123', '이수민', '1985-10-10', 'MALE', '경기도 부천시 원미구', '오피스텔 302호', 'soomin@example.com', NULL, NULL, 'https://www.youtube.com/soomin', NULL, '안녕하세요, 이수민입니다.', '비공개'),
-   ('user04', '민지', 'password123', '김민지', '2000-03-03', 'FEMALE', '인천광역시 부평구', '아파트 501호', 'minji@example.com', 'https://www.instagram.com/minji', NULL, NULL, NULL, '안녕하세요, 김민지입니다.', '공개'),
-   ('user05', '준호', 'password123', '박준호', '1992-12-12', 'MALE', '대구광역시 중구', '오피스텔 201호', 'junho@example.com', NULL, 'https://www.facebook.com/junho', NULL, NULL, '안녕하세요, 박준호입니다.', '공개'),
-   ('user06', '보검', 'password123', '박보검', '1993-06-16', 'MALE', '서울특별시 강남구', '언주로 12길 29', 'test01@gmail.com', 'https://www.instagram.com/pbg', NULL, NULL, 'https://image.com/pbg.jpg', '안녕하세요, 박보검입니다.', '공개'),
-   ('user07', '예진', 'password123', '손예진', '1982-01-11', 'FEMALE', '서울특별시 강서구', '등촌로 123', 'test02@gmail.com', 'https://www.instagram.com/yejinhand', NULL, NULL, 'https://image.com/yejin.jpg', '안녕하세요, 손예진입니다.', '공개'),
-   ('user08', '종석', 'password123', '이종석', '1987-08-04', 'MALE', '경기도 수원시 영통구', '대학로 123', 'test03@gmail.com', 'https://www.instagram.com/jongsuk0206', NULL, NULL, 'https://image.com/jongsuk.jpg', '안녕하세요, 이종석입니다.', '공개'),
-   ('user09', '효주', 'password123', '한효주', '1987-02-22', 'FEMALE', '서울특별시 종로구', '돈화문로 21길 12', 'test04@gmail.com', 'https://www.instagram.com/hyozzang', NULL, NULL, 'https://image.com/hyozzang.jpg', '안녕하세요, 한효주입니다.', '공개'),
-   ('user10', '남준', 'password5678', '김남준', '1994-09-12', 'MALE', '서울특별시 용산구', '이태원로 3길 30', 'test05@gmail.com', 'https://www.instagram.com/bts.bighitofficial', NULL, 'https://www.youtube.com/channel/UC3IZKseVpdzPSBaWxBxundA', 'https://image.com/bts.jpg', '안녕하세요, 김남준입니다.', '공개'),
-   ('user11', '민수', 'password123', '이민수', '1989-03-22', 'MALE', '부산광역시 동래구', '아파트 301호', 'minsuyy@example.com', 'https://www.instagram.com/minsuyy', NULL, NULL, NULL, '안녕하세요, 이민수입니다.', '공개'),
-   ('user12', '유나', 'password123', '김유나', '1998-08-08', 'FEMALE', '인천광역시 계양구', '빌라 102호', 'yuna_kim@example.com', NULL, 'https://www.facebook.com/yuna_kim', NULL, NULL, '안녕하세요, 김유나입니다.', '심사'),
-   ('user13', '성민', 'password123', '김성민', '1987-07-07', 'MALE', '대전광역시 유성구', '아파트 701호', 'smkim@example.com', NULL, NULL, 'https://www.youtube.com/smkim', NULL, '안녕하세요, 김성민입니다.', '비공개'),
-   ('user14', '영호', 'password123', '이영호', '2001-01-01', 'MALE', '서울특별시 강서구', '오피스텔 201호', 'young_ho@example.com', 'https://www.instagram.com/young_ho', NULL, NULL, NULL, '안녕하세요, 이영호입니다.', '공개'),
-   ('user15', '진아', 'password123', '박진아', '1994-04-15', 'FEMALE', '경기도 안양시', '빌라 501호', 'jinapark@example.com', NULL, 'https://www.facebook.com/jinapark', NULL, NULL, '안녕하세요, 박진아입니다.', '공개'),
-   ('user16', '서준', 'password123', '김서준', '1996-06-16', 'MALE', '경기도 하남시', '오피스텔 501호', 'seojun@example.com', 'https://www.instagram.com/seojun', NULL, NULL, NULL, '안녕하세요, 김서준입니다.', '공개'),
-   ('user17', '민영', 'password123', '이민영', '1988-12-25', 'FEMALE', '서울특별시 마포구', '아파트 102호', 'minyoung@example.com', NULL, 'https://www.facebook.com/minyoung', NULL, NULL, '안녕하세요, 이민영입니다.', '공개'),
-   ('user18', '준기', 'password123', '김준기', '1999-09-09', 'MALE', '서울특별시 송파구', '아파트 302호', 'junki@example.com', 'https://www.instagram.com/junki', NULL, NULL, NULL, '안녕하세요, 김준기입니다.', '공개'),
-   ('user19', '진수', 'password123', '박진수', '1993-07-01', 'MALE', '서울특별시 동작구', '오피스텔 201호', 'jinsu@example.com', NULL, 'https://www.facebook.com/jinsu', NULL, NULL, '안녕하세요, 박진수입니다.', '공개'),
-   ('user20', '은지', 'password123', '김은지', '1995-11-20', 'FEMALE', '인천광역시 서구', '아파트 601호', 'eunji_kim@example.com', NULL, NULL, 'https://www.youtube.com/eunji_kim', NULL, '안녕하세요, 김은지입니다.', '심사');
+                                                                                                                                                                       ('admin', '관리자', '1234', '관리자', '1999-11-12', 'MALE', '서울특별시 마포구', '에이콘아카데미', 'admin@example.com', NULL, NULL, NULL, NULL, '관리자', '공개'),
+                                                                                                                                                                       ('user01', '철수', 'password123', '김철수', '1990-01-01', 'MALE', '서울시 강남구 역삼동', '아파트 101호', 'chulsoo@example.com', 'https://www.instagram.com/chulsoo', NULL, NULL, NULL, '안녕하세요, 김철수입니다.', '공개'),
+                                                                                                                                                                       ('user02', '영희', 'password123', '박영희', '1995-05-05', 'FEMALE', '서울시 서초구 반포동', '빌라 201호', 'younghee@example.com', NULL, 'https://www.facebook.com/younghee', NULL, NULL, '안녕하세요, 박영희입니다.', '심사'),
+                                                                                                                                                                       ('user03', '수민', 'password123', '이수민', '1985-10-10', 'MALE', '경기도 부천시 원미구', '오피스텔 302호', 'soomin@example.com', NULL, NULL, 'https://www.youtube.com/soomin', NULL, '안녕하세요, 이수민입니다.', '비공개'),
+                                                                                                                                                                       ('user04', '민지', 'password123', '김민지', '2000-03-03', 'FEMALE', '인천광역시 부평구', '아파트 501호', 'minji@example.com', 'https://www.instagram.com/minji', NULL, NULL, NULL, '안녕하세요, 김민지입니다.', '공개'),
+                                                                                                                                                                       ('user05', '준호', 'password123', '박준호', '1992-12-12', 'MALE', '대구광역시 중구', '오피스텔 201호', 'junho@example.com', NULL, 'https://www.facebook.com/junho', NULL, NULL, '안녕하세요, 박준호입니다.', '공개'),
+                                                                                                                                                                       ('user06', '보검', 'password123', '박보검', '1993-06-16', 'MALE', '서울특별시 강남구', '언주로 12길 29', 'test01@gmail.com', 'https://www.instagram.com/pbg', NULL, NULL, 'https://image.com/pbg.jpg', '안녕하세요, 박보검입니다.', '공개'),
+                                                                                                                                                                       ('user07', '예진', 'password123', '손예진', '1982-01-11', 'FEMALE', '서울특별시 강서구', '등촌로 123', 'test02@gmail.com', 'https://www.instagram.com/yejinhand', NULL, NULL, 'https://image.com/yejin.jpg', '안녕하세요, 손예진입니다.', '공개'),
+                                                                                                                                                                       ('user08', '종석', 'password123', '이종석', '1987-08-04', 'MALE', '경기도 수원시 영통구', '대학로 123', 'test03@gmail.com', 'https://www.instagram.com/jongsuk0206', NULL, NULL, 'https://image.com/jongsuk.jpg', '안녕하세요, 이종석입니다.', '공개'),
+                                                                                                                                                                       ('user09', '효주', 'password123', '한효주', '1987-02-22', 'FEMALE', '서울특별시 종로구', '돈화문로 21길 12', 'test04@gmail.com', 'https://www.instagram.com/hyozzang', NULL, NULL, 'https://image.com/hyozzang.jpg', '안녕하세요, 한효주입니다.', '공개'),
+                                                                                                                                                                       ('user10', '남준', 'password5678', '김남준', '1994-09-12', 'MALE', '서울특별시 용산구', '이태원로 3길 30', 'test05@gmail.com', 'https://www.instagram.com/bts.bighitofficial', NULL, 'https://www.youtube.com/channel/UC3IZKseVpdzPSBaWxBxundA', 'https://image.com/bts.jpg', '안녕하세요, 김남준입니다.', '공개'),
+                                                                                                                                                                       ('user11', '민수', 'password123', '이민수', '1989-03-22', 'MALE', '부산광역시 동래구', '아파트 301호', 'minsuyy@example.com', 'https://www.instagram.com/minsuyy', NULL, NULL, NULL, '안녕하세요, 이민수입니다.', '공개'),
+                                                                                                                                                                       ('user12', '유나', 'password123', '김유나', '1998-08-08', 'FEMALE', '인천광역시 계양구', '빌라 102호', 'yuna_kim@example.com', NULL, 'https://www.facebook.com/yuna_kim', NULL, NULL, '안녕하세요, 김유나입니다.', '심사'),
+                                                                                                                                                                       ('user13', '성민', 'password123', '김성민', '1987-07-07', 'MALE', '대전광역시 유성구', '아파트 701호', 'smkim@example.com', NULL, NULL, 'https://www.youtube.com/smkim', NULL, '안녕하세요, 김성민입니다.', '비공개'),
+                                                                                                                                                                       ('user14', '영호', 'password123', '이영호', '2001-01-01', 'MALE', '서울특별시 강서구', '오피스텔 201호', 'young_ho@example.com', 'https://www.instagram.com/young_ho', NULL, NULL, NULL, '안녕하세요, 이영호입니다.', '공개'),
+                                                                                                                                                                       ('user15', '진아', 'password123', '박진아', '1994-04-15', 'FEMALE', '경기도 안양시', '빌라 501호', 'jinapark@example.com', NULL, 'https://www.facebook.com/jinapark', NULL, NULL, '안녕하세요, 박진아입니다.', '공개'),
+                                                                                                                                                                       ('user16', '서준', 'password123', '김서준', '1996-06-16', 'MALE', '경기도 하남시', '오피스텔 501호', 'seojun@example.com', 'https://www.instagram.com/seojun', NULL, NULL, NULL, '안녕하세요, 김서준입니다.', '공개'),
+                                                                                                                                                                       ('user17', '민영', 'password123', '이민영', '1988-12-25', 'FEMALE', '서울특별시 마포구', '아파트 102호', 'minyoung@example.com', NULL, 'https://www.facebook.com/minyoung', NULL, NULL, '안녕하세요, 이민영입니다.', '공개'),
+                                                                                                                                                                       ('user18', '준기', 'password123', '김준기', '1999-09-09', 'MALE', '서울특별시 송파구', '아파트 302호', 'junki@example.com', 'https://www.instagram.com/junki', NULL, NULL, NULL, '안녕하세요, 김준기입니다.', '공개'),
+                                                                                                                                                                       ('user19', '진수', 'password123', '박진수', '1993-07-01', 'MALE', '서울특별시 동작구', '오피스텔 201호', 'jinsu@example.com', NULL, 'https://www.facebook.com/jinsu', NULL, NULL, '안녕하세요, 박진수입니다.', '공개'),
+                                                                                                                                                                       ('user20', '은지', 'password123', '김은지', '1995-11-20', 'FEMALE', '인천광역시 서구', '아파트 601호', 'eunji_kim@example.com', NULL, NULL, 'https://www.youtube.com/eunji_kim', NULL, '안녕하세요, 김은지입니다.', '심사');
 
-INSERT INTO chapstorys (title, content, viewcount, post_time,  profile, update_time, user_id, chs_rstatus)
-VALUES ('The best sushi in town', 'I have tried sushi in many places, but this restaurant truly stands out. The quality of the fish is amazing.', 170, '2023-04-11', 'profile11.jpg', '2023-04-11 13:00:00', 'user01', '공개'),
-       ('A wonderful bakery', 'This bakery offers a wide variety of breads and pastries, all of them fresh and delicious.', 160, '2023-04-12', 'profile12.jpg', '2023-04-12 14:00:00', 'user02', '공개'),
-       ('A delightful tea house', 'I visited this tea house with my friends and we had a great time trying out different teas and snacks.', 140, '2023-04-13', 'profile13.jpg', '2023-04-13 15:00:00', 'user03', '공개'),
-       ('A vegan paradise', 'I am a vegan and this restaurant offers a fantastic selection of plant-based dishes. I will definitely be coming back!', 190, '2023-04-14', 'profile14.jpg', '2023-04-14 16:00:00', 'user04', '공개'),
-       ('A fantastic burger joint', 'This place serves some of the juiciest and most flavorful burgers I have ever had. Don\'t miss out!', 210, '2023-04-15', 'profile15.jpg', '2023-04-15 17:00:00', 'user05', '공개'),
-       ('An authentic Italian experience', 'This restaurant transports you straight to Italy with its amazing pasta dishes and warm atmosphere.', 220, '2023-04-16', 'profile16.jpg', '2023-04-16 18:00:00', 'user06', '공개'),
-       ('A great place for desserts', 'If you have a sweet tooth, this place is a must-visit. The selection of desserts is amazing.', 240, '2023-04-17', 'profile17.jpg', '2023-04-17 19:00:00', 'user07', '공개'),
-       ('A cozy and friendly pub', 'This pub has a great selection of beers and a warm atmosphere. I always have a great time here.', 230, '2023-04-18', 'profile18.jpg', '2023-04-18 20:00:00', 'user08', '공개'),
-       ('A fantastic seafood restaurant', 'The seafood at this restaurant is incredibly fresh and the dishes are expertly prepared.', 250, '2023-04-19', 'profile19.jpg', '2023-04-19 21:00:00', 'user09', '공개'),
-       ('A wonderful dining experience', 'I had an amazing time at this restaurant. The food was fantastic and the atmosphere was perfect.', 100, '2023-04-01', 'profile1.jpg', '2023-04-01 12:00:00', 'user01', '공개'),
-       ('A cozy little cafe', 'I found this hidden gem of a cafe in my neighborhood. Great coffee and delicious pastries!', 80, '2023-04-02', 'profile2.jpg', '2023-04-02 14:00:00', 'user02', '공개'),
-       ('Amazing cocktails', 'This bar serves the best cocktails in town. The bartenders are very skilled and friendly.', 120, '2023-04-03', 'profile3.jpg', '2023-04-03 18:00:00', 'user03', '공개'),
-       ('A disappointing experience', 'I had high expectations for this restaurant, but the food was bland and the service was slow.', 60, '2023-04-04', 'profile4.jpg', '2023-04-04 19:00:00', 'user04', '공개'),
-       ('A great spot for brunch', 'I love coming to this place for brunch with my friends. The food is delicious and the atmosphere is relaxed.', 150, '2023-04-05', 'profile5.jpg','2023-04-05 20:00:00', 'user05', '공개'),
-       ('Delicious street food', 'I stumbled upon this street food vendor and was blown away by the taste and quality of their food.', 200, '2023-04-06', 'profile6.jpg','2023-04-06 21:00:00', 'user06', '공개'),
-       ('A hidden gem', 'This small restaurant offers some of the best food I have ever tasted. The service is also impeccable.', 180, '2023-04-07', 'profile7.jpg', '2023-04-07 22:00:00', 'user07', '공개'),
-       ('A unique dining experience', 'I had a truly unique and memorable dining experience at this restaurant. The chef is very creative.', 90, '2023-04-08', 'profile8.jpg', '2023-04-08 23:00:00', 'user08', '공개'),
-       ('A great place for a date', 'I took my date to this restaurant and we both loved the food and the romantic atmosphere.', 110, '2023-04-09', 'profile9.jpg',  '2023-04-09 12:00:00', 'user09', '공개');
+INSERT INTO chapstorys (title, content, viewcount, post_time, update_time, user_id, chs_rstatus)
+VALUES ('어나더클럽 방문기!!', '제가 연남동에 있는 어나더 클럽에 방문하여 치즈후라이피자를 먹어보았습니다. 이제 그 경험을 바탕으로 블로그 리뷰 글을 작성해보겠습니다.
+
+우선, 어나더 클럽은 매우 분위기 있는 곳이었습니다. 조명과 음악이 잘 어우러져 있어서, 친구들과 함께 시간을 보내기 좋은 곳이라는 느낌을 받았습니다.
+
+주문한 치즈후라이피자는 정말 맛있었습니다. 피자 반죽은 바삭하고 쫀득하면서도 적당한 두께감이 있었고, 치즈와 후라이드 포테이토의 조화가 뛰어나 매우 풍부한 맛을 느낄 수 있었습니다. 또한, 치즈와 후라이드 포테이토를 함께 먹을 수 있는 특별한 경험을 제공해준 것 같습니다.
+
+그 외에도 어나더 클럽''에서는 다양한 피자 메뉴와 사이드 메뉴, 음료 등을 제공하고 있습니다. 그중에서도 피자는 정말 맛있었고, 특히 치즈후라이피자는 제가 먹어본 피자 중에서도 최고였습니다.
+
+다만, 가격은 다른 피자집에 비해서 조금 높다는 느낌을 받았습니다. 그러나, 그만큼 품질과 맛이 보장되는 것 같아서 가격에 비해 합리적인 가격정책이라는 느낌도 받았습니다.
+
+종합적으로, 어나더 클럽''에서 제공하는 치즈후라이피자는 정말 맛있고, 분위기 또한 좋은 곳이었습니다. 가격이 다소 높을 수 있지만, 그만큼 맛과 품질이 보장되는 것 같아서 꼭 한 번쯤 방문해보길 추천드립니다.', 300, '2023-03-11 00:00:00', '2023-03-11 00:00:00', 'user01', '공개'),
+
+       ('보쌈 맛집 추천해드려용', '제가 방문한 보쌈집은 서울시 강남구에 위치한 보관이라는 곳이었습니다. 이곳에서는 전통적인 보쌈 요리뿐만 아니라, 보쌈을 포함한 다양한 돼지고기 요리를 제공하고 있습니다.
+
+우선, 보관의 보쌈은 정말 맛있었습니다. 살코기와 껍질 모두 부드럽고, 간도 딱 적당해서 밥과 함께 먹으면 최고의 맛을 느낄 수 있었습니다. 또한, 보쌈과 함께 제공되는 김치와 쌈채소도 신선하고 맛있어서, 완성도 높은 한 끼 식사를 즐길 수 있었습니다.
+
+또한, 보관에서는 보쌈 이외에도 다양한 돼지고기 요리를 제공합니다. 그중에서도 돼지껍데기와 돼지갈비찜은 제가 먹어본 것 중에서도 가장 맛있었습니다. 특히 돼지갈비찜은 고기가 뼈에 따라 붙어있어서, 부드러운 고기와 고소한 소스가 더해져 꼭 한 번 먹어봐야 할 맛입니다.
+
+또한, 보관은 인테리어와 분위기도 좋아서, 가족들이나 친구들과 함께 즐기기 좋은 곳입니다. 다만, 가격이 조금 비싸다는 느낌을 받았습니다. 그러나, 그만큼 품질과 맛이 보장되는 것 같아서 가격에 비해 합리적인 가격정책이라는 느낌도 받았습니다.
+
+종합적으로, 보관에서는 보쌈을 비롯한 다양한 돼지고기 요리를 제공하고 있으며, 맛과 품질 모두 높은 곳입니다. 인테리어와 분위기도 좋아서, 가족들이나 친구들과 함께 즐기기 좋은 곳입니다. 가격은 다소 비싸지만, 그만큼 맛과 품질이 보장되는 것 같아서 꼭 한 번쯤 방문해보길 추천드립니다. ', 290, '2023-03-12 00:00:00', '2023-03-12 14:00:00', 'user02', '공개'),
+
+       ('전통적인 냉면', '저는 서울 중구에 위치한 평가옥이라는 곳에서 냉면을 맛보았습니다. 이곳은 전통적인 손맛으로 만든 냉면을 제공하는 곳으로, 인기 맛집 중 하나로 손꼽히고 있습니다.
+
+제가 주문한 냉면은 평가옥의 대표 메뉴인 메밀소바였습니다. 먼저, 면은 부드럽고 탱글탱글해서 입안에서 살살 녹아내리는 것이 느껴졌습니다. 냉면국물은 깊은 맛이 나서 적당한 물기와 함께 적절한 농도를 느낄 수 있었습니다. 또한, 김치와 쪽파, 머위 등의 색다른 재료와 함께 먹으면 더욱 맛이 좋아지는 것 같았습니다.
+
+그 외에도 평가옥에서는 전통적인 물냉면과 비빔냉면, 육수 냉면 등 다양한 냉면을 제공합니다. 그 중에서도 제가 먹어본 메밀소바는 정말 맛있었습니다.
+
+다만, 평가옥은 인기 맛집이기 때문에 대기 시간이 조금 길다는 느낌을 받았습니다. 하지만, 그만큼 맛있는 냉면을 먹을 수 있는 것이니 조금의 대기 시간은 감수할 만합니다.
+
+종합적으로, 평가옥에서는 전통적인 손맛으로 만든 냉면을 즐길 수 있으며, 메밀소바는 정말 맛있는 대표 메뉴입니다. 대기 시간이 조금 길 수 있지만, 그만큼 맛있는 냉면을 먹을 수 있는 것이니 꼭 한 번쯤 방문해보길 추천드립니다.', 250, '2023-03-12 00:00:00', '2023-03-12 14:00:00', 'user02', '공개'),
+
+       ('신선한 맛과 부드러운 튀김옷', '서울 종로구에 위치한 마이산 돈까스를 방문하여, 이곳에서 제공하는 돈까스를 맛보았습니다.
+
+돈까스는 돈육의 신선한 맛과 부드러운 튀김 옷으로 유명한 이곳에서 정말 맛있게 먹을 수 있었습니다. 입안에서 녹는 돈육과 튀김 옷이 입맛을 돋우는 맛이었습니다. 또한, 소스와 함께 먹으면 더욱 맛을 느낄 수 있었습니다.
+
+마이산 돈까스에서는 다양한 종류의 돈까스를 제공하고 있는데, 그중에서도 양념 돈까스와 치즈 돈까스는 매우 맛있었습니다. 특히 양념 돈까스는 매콤한 양념과 함께 먹으면 깔끔하면서도 강렬한 맛이 나서 중독성이 있었습니다.
+
+다만, 가격이 다른 돈까스집에 비해 조금 높다는 느낌을 받았습니다. 그러나, 그만큼 맛과 품질이 보장되는 것 같아서 가격에 비해 합리적인 가격정책이라는 느낌도 받았습니다.
+
+종합적으로, 마이산 돈까스에서는 신선한 돈육과 부드러운 튀김 옷으로 만든 돈까스를 제공하고 있으며, 양념 돈까스와 치즈 돈까스도 매우 맛있습니다. 가격은 다소 높을 수 있지만, 그만큼 맛과 품질이 보장되는 것 같아서 꼭 한 번쯤 방문해보길 추천드립니다.', 240, '2023-03-13 00:00:00', '2023-03-13 00:00:00', 'user03', '공개'),
+       ('자연밥상김밥', '서울시 성북구에 위치한 자연밥상 김밥은 맛있는 김밥으로 유명한 식당입니다. 제가 시식한 메뉴는 참치마요 김밥과 돈까스 김밥입니다.
+
+먼저, 참치마요 김밥은 참치와 계란 등의 신선한 재료를 넣어서 맛을 더한 김밥입니다. 밥의 식감과 간이 정확해서 입안에서 녹는 것 같았습니다. 참치와 계란 등의 재료도 신선하게 준비되어 있어서, 건강하면서도 맛있게 먹을 수 있었습니다.
+
+그리고 돈까스 김밥은 돈까스와 채소 등이 들어간 김밥으로, 특히 돈까스의 풍미와 부드러움이 돋보이는 메뉴였습니다. 김밥 속에 들어있는 돈까스가 크기가 적당해서 한 입에 먹을 수 있었고, 맛 또한 정말 좋았습니다.
+
+또한, 자연밥상 김밥에서는 김밥뿐만 아니라 다양한 메뉴를 제공합니다. 특히 더운 여름에는 물냉면이 인기 있는 메뉴 중 하나입니다.
+
+가격도 다른 김밥집에 비해 저렴하며, 청결한 식당 내부와 친절한 서비스로 인상적이었습니다.
+
+종합적으로, 자연밥상 김밥에서는 신선한 재료와 정확한 간으로 맛있는 김밥을 제공합니다. 가격도 저렴하며, 청결한 식당 내부와 친절한 서비스로 인상적이었습니다. 김밥을 좋아하시는 분들께 강력히 추천드리는 김밥집입니다.', 230, '2023-03-14 00:00:00', '2023-03-14 00:00:00', 'user01', '공개'),
+       ('납작만두 냠냠냠너무맛있어', '제가 이번에 먹어본 음식은 납작만두입니다! 서울 중구에 위치한 납작만두공장은 유명한 길거리 납작만두 전문점 중 하나입니다. 납작만두는 일반적인 만두보다 조금 더 얇고 크기도 작아서 한 입에 쏙 들어가기 쉽습니다.
+
+납작만두는 기본적으로 고기만두, 김치만두, 소고기만두, 새우만두 등 다양한 종류가 있으며, 다양한 사이드 메뉴와 함께 즐길 수 있습니다. 저는 고기만두와 새우만두를 시식해봤는데, 둘 다 매우 맛있었습니다. 특히 새우만두는 신선한 새우와 담백한 고기가 어우러져서, 입맛을 돋우는 맛이었습니다.
+
+납작만두의 가격은 다른 길거리 음식점에 비해서는 조금 높은 편입니다. 그러나, 퀄리티와 맛은 충분히 보장되는 것 같아서 가격 대비 만족도는 높다고 생각합니다.
+
+종합적으로, 납작만두공장에서는 다양한 종류의 납작만두를 제공하고 있으며, 특히 고기만두와 새우만두는 정말 맛있습니다. 가격은 조금 높은 편이지만, 맛과 퀄리티는 충분히 보장되어 있어서 만족스러운 길거리 음식점 중 하나입니다.', 220, '2023-03-15 00:00:00', '2023-03-15 00:00:00', 'user04', '공개'),
+       ('매콤하고 쫄깃한 떡볶이를 먹어볼까요', '제가 방문한 떡볶이 전문점은 오봉네 떡볶이입니다.
+
+오봉네 떡볶이는 서울시 마포구에 위치한 떡볶이 전문점으로, 고소한 떡볶이 양념과 쫄깃한 떡이 매력적입니다. 이곳에서 시식한 메뉴는 오봉네 떡볶이와 오봉네 떡강정입니다.
+
+오봉네 떡볶이는 달콤하면서도 매콤한 맛이 일품입니다. 특히 떡이 쫄깃하게 끓여져서 맛이 더욱 높아졌습니다. 추가로 떡볶이와 같이 드시는 오뎅과 순대도 부드럽고 맛있어서 살짝 더 담백한 맛을 느낄 수 있었습니다.
+
+오봉네 떡강정은 바삭하면서도 달콤한 맛으로, 떡강정에 묻어있는 카라멜 소스의 풍미가 더해져서 매우 맛있게 먹을 수 있었습니다.
+
+가격은 다른 떡볶이집에 비해서는 조금 높은 편이지만, 맛과 양, 서비스 등이 높아서 가격에 비해 만족스러웠습니다.
+
+종합적으로, 오봉네 떡볶이에서는 매콤하고 쫄깃한 떡볶이와 바삭하면서도 달콤한 떡강정을 제공합니다. 가격은 다소 높은 편이지만, 맛과 양, 서비스 등이 높아서 가격에 비해 만족스러웠습니다. 떡볶이를 좋아하시는 분들께 강력히 추천드리는 떡볶이 전문점입니다.', 210, '2023-03-16 00:00:00', '2023-03-16 00:00:00', 'user04', '공개'),
+       ('삼겹살 맛있게 굽는법 알려드림', '삼겹살을 맛있게 굽는 방법에 대해 알려드릴게요!
+
+1.삼겹살 사전 처리하기
+삼겹살은 냉장고에서 꺼내어 냄새가 나지 않도록 청소해줍니다. 냄새가 심한 부분은 칼로 가볍게 긁어내면서 깨끗하게 해줍니다. 그리고 적당한 크기로 자른 후에, 반드시 냉장고에서 냉장보관해야 합니다.
+
+2.적당한 불로 굽기
+삼겹살은 기름이 많아서 불이 강하면 불이 붙을 위험이 있습니다. 따라서 불을 중간 정도로 조절하여 노릇하게 굽습니다. 불을 너무 강하게 조절하면 삼겹살이 구울 때 불순물이 많이 생기고, 불을 너무 약하게 조절하면 고기가 부드럽게 구워지지 않을 수 있으니 적당한 불로 조절하는 것이 중요합니다.
+
+3.숯불보다 가스불이 더 좋습니다.
+삼겹살을 구울 때는 숯불보다 가스불이 더 좋습니다. 가스불은 온도를 조절하기 쉬우며, 냄새와 불순물이 적어서 고기의 풍미가 더욱 빛납니다.
+
+4.특별한 소스를 사용해보세요.
+삼겹살을 맛있게 굽기 위해서는 특별한 소스를 사용해보세요. 간장, 고추장, 마늘, 고추 등을 섞어서 만든 간장 양념, 고추장 양념, 마늘 간장 등 다양한 소스를 사용하여 맛을 더할 수 있습니다.
+
+5.적절한 익힘으로 맛을 더해보세요.
+삼겹살은 적당한 익힘에서 맛이 더욱 빛납니다. 완전히 익혀서 불순물을 제거해도 괜찮지만, 너무 익혀버리면 삼겹살의 맛이 떨어질 수 있으니 적절한 익힘으로 맛을 더해보세요.
+
+6.잘게 자른 후 먹기
+삼겹살을 구울 때는 잘게 자른 후 먹는 것이 맛을 더욱 높여줍니다. 덜 구운 고기라면 그대부분의 경우, 삼겹살은 더 부드러워서 맛있어지기 때문에 잘게 자른 후 먹는 것이 좋습니다. 또한 삼겹살은 식사의 대표적인 반찬 중 하나이기 때문에, 다양한 나물과 함께 먹으면 더욱 맛있게 즐길 수 있습니다.
+
+                                                 마지막으로, 삼겹살을 맛있게 굽는 방법을 알아봤는데요. 더욱 맛있게 즐길 수 있는 비법 중 하나는, 고기를 굽기 전에 먹고자 하는 인원 수에 맞게 적당한 양을 준비하는 것입니다. 적당한 양의 고기를 구워서 먹으면, 고기의 맛을 더욱 즐길 수 있고 낭비도 방지할 수 있습니다.', 200, '2023-03-17 00:00:00', '2023-03-17 00:00:00', 'user05', '공개'),
+       ('역시 낙지보단 쭈꾸미지', '제가 방문한 직화 쭈꾸미집을 리뷰해드릴게요.
+
+서울 중구에 위치한 쭈꾸미집은 직화로 구운 쭈꾸미를 맛볼 수 있는 인기 맛집입니다. 이곳에서 가장 추천하는 메뉴는 직화 쭈꾸미입니다.
+
+직화 쭈꾸미는 신선한 쭈꾸미를 기름 없이 직화로 구워내어 맛이 더욱 진하고 고소한 향이 나는 요리입니다. 또한, 쭈꾸미가 넉넉하게 들어있어서 한번에 많이 먹을 수 있어 만족도가 높았습니다. 또한, 다양한 새콤달콤한 양념과 함께 즐길 수 있어서, 맛에 대한 선택 폭이 높은 것도 장점 중 하나입니다.
+
+가격은 다른 쭈꾸미집에 비해 조금 높은 편이지만, 퀄리티와 맛은 충분히 보장되는 것 같아서 가격 대비 만족도는 높다고 생각합니다.
+
+종합적으로, 쭈꾸미집에서는 직화로 구운 쭈꾸미를 맛볼 수 있으며, 맛있는 새콤달콤한 양념과 함께 즐길 수 있습니다. 가격은 다소 높은 편이지만, 맛과 퀄리티는 충분히 보장되어 있어서 만족스러운 직화 쭈꾸미집 중 하나입니다.', 190, '2023-03-18 00:00:00', '2023-03-19 14:00:00', 'user06', '공개'),
+       ('통막걸리와 매운막걸리찜닭', '저는 서울시 마포구에 위치한 서광식당에서 시식한 경험이 있습니다.
+
+서광식당은 전통적인 한국의 술인 막걸리와 함께 맛있는 안주를 즐길 수 있는 곳입니다. 이곳에서 가장 추천하는 메뉴는 통 막걸리와 매운막걸리찜닭입니다.
+
+통 막걸리는 무형광을 사용하지 않고, 오래된 방식으로 양조한 술이며, 향과 맛이 더욱 진하고 깔끔합니다. 술의 질이 매우 높아서 한 잔 먹는 즉시 입 안에서 퍼지는 맛과 향이 인상적입니다. 매운막걸리찜닭은 술 안주로 최적인 찜닭 메뉴입니다. 찜닭의 양념과 막걸리의 맛이 상쾌하면서도 깊은 맛을 느낄 수 있습니다. 또한, 찜닭 안에 들어있는 감자, 당면, 고구마 등 다양한 식재료가 입안에서 쫄깃하게 느껴져서 맛을 더욱 즐길 수 있습니다.
+
+가격은 다른 술집에 비해서는 조금 높은 편이지만, 맛과 퀄리티는 충분히 보장되는 것 같아서 가격 대비 만족도는 높다고 생각합니다.
+
+종합적으로, 서광식당에서는 전통적인 통 막걸리와 함께 맛있는 안주를 즐길 수 있으며, 특히 통 막걸리와 매운막걸리찜닭은 정말 맛있습니다. 가격은 다소 높은 편이지만, 맛과 퀄리티는 충분히 보장되어 있어서 만족스러운 막걸리집 중 하나입니다.', 160, '2023-03-19 00:00:00', '2023-03-20 14:00:00', 'user07', '공개'),
+       ('치즈가 폭포로 흐르는 라볶이', '저는 서울시 송파구에 위치한 치즈폭포라볶이에서 시식한 경험이 있습니다.
+
+치즈폭포라볶이는 쫄깃한 떡과 짭쪼름한 매콤한 소스, 그리고 풍부한 치즈가 듬뿍 얹어져 있는 메뉴로 유명합니다. 이곳에서 가장 추천하는 메뉴는 치즈폭포라볶이입니다.
+
+치즈폭포라볶이는 떡이 쫄깃하게 살아있으며, 소스의 매운맛과 치즈의 풍미가 잘 어울려서 맛있게 즐길 수 있습니다. 또한, 분위기 있는 가게 내부와 친절한 서비스도 인상적입니다.
+
+가격은 다른 떡볶이집에 비해 조금 높은 편이지만, 맛과 양이 더해진다는 점에서 가격 대비 만족도가 높다고 생각합니다. 또한, 매장 내부 분위기와 친절한 서비스도 만족스러웠습니다.
+
+종합적으로, 치즈폭포라볶이에서는 쫄깃하고 매콤한 떡볶이와 치즈의 조화가 일품입니다. 가격은 다소 높은 편이지만, 맛과 양, 서비스 모두 높은 수준이기 때문에 만족스러운 떡볶이집 중 하나입니다.', 140, '2023-03-20 00:00:00', '2023-03-21 14:00:00', 'user08', '공개'),
+       ('감자탕 맛집 추천', '서울시 종로구에 위치한 동원집은 매일 300명 이상의 손님들이 찾는 감자탕집으로 유명합니다. 이곳에서 가장 추천하는 메뉴는 동원 감자탕입니다.
+
+동원 감자탕은 분명한 국물맛과 함께 부드러운 고기와 감자가 푹 끓어서 맛이 깊고 진한 감칠맛이 일품입니다. 이 감자탕은 40년 이상의 역사를 가지고 있으며, 천연조미료와 순한양념으로 만들어지기 때문에 불필요한 조미료가 들어가지 않아 건강에도 좋습니다.
+
+가격은 다른 감자탕집에 비해서는 조금 높은 편이지만, 맛과 양이 더해진다는 점에서 가격 대비 만족도가 높다고 생각합니다. 또한, 서비스도 좋아서 손님들의 만족도도 높은 편입니다.
+
+종합적으로, 동원집에서는 깊은 맛과 함께 건강에도 좋은 동원 감자탕을 맛볼 수 있습니다. 가격은 다소 높은 편이지만, 맛과 양, 서비스 모두 높은 수준이기 때문에 만족스러운 감자탕집 중 하나입니다.', 29, '2023-03-21 00:00:00', '2023-03-22 14:00:00', 'user09', '공개'),
+       ('바질페스토 쉽고 간단하게 만드는 법 알려드림', '바질페스토는 이탈리안 요리에서 매우 중요한 재료 중 하나입니다. 신선한 바질, 마늘, 파마산 치즈, 오일 등을 이용하여 매우 쉽게 만들 수 있습니다.
+
+바질페스토를 만드는 방법은 다음과 같습니다.
+
+재료:
+
+1. 신선한 바질 2컵
+2. 마늘 2개
+3. 파마산 치즈 1/2컵
+4. 캐슈넛(혹은 다른 견과류) 1/3컵
+5. 올리브 오일 1컵
+6. 소금, 후추
+
+
+
+만드는 방법:
+
+1. 바질을 깨끗이 씻어 물기를 제거합니다.
+2. 마늘은 껍질을 벗기고 잘게 다지거나 갈아주세요.
+3. 파마산 치즈와 캐슈넛을 블렌더에 넣고 섞어주세요.
+4. 바질과 마늘을 더해 블렌더를 이용하여 갈아주세요.
+5. 갈아낸 바질과 마늘, 파마산 치즈, 캐슈넛을 모두 섞어주면서 올리브 오일을 천천히 붓고 섞어주세요.
+6. 소금과 후추로 간을 해주고, 더 갈아낼 때까지 블렌더를 돌려주세요.
+
+이렇게 만든 바질페스토는 파스타와 함께 즐기는 것이 일반적이지만, 빵이나 샐러드 등 다양한 음식과 함께 즐길 수도 있습니다. 만들어 둔 바질페스토는 냉장고에 보관하여 오랫동안 사용할 수 있습니다.', 80, '2023-03-22 00:00:00', '2023-04-22 14:00:00', 'user10', '공개'),
+       ('꼬치구이 맛집', '소이자카야에서는 일본 전통 음식인 이자카야를 즐길 수 있습니다. 이자카야는 일본의 소주나 맥주를 마시면서 간단한 안주를 즐기는 문화이며, 여기서 가장 추천하는 안주는 꼬치구이입니다.
+
+꼬치구이는 다양한 종류의 꼬치를 즐길 수 있는데, 닭고기, 소고기, 돼지고기, 새우, 오징어 등을 선택할 수 있습니다. 꼬치는 쫄깃하면서도 부드러우며, 소스도 직접 만든 것으로 더욱 맛있습니다.
+
+이곳에서는 다양한 안주와 함께 일본 맥주나 소주를 즐길 수 있습니다. 또한, 분위기 있는 내부 인테리어와 친절한 서비스도 인상적입니다.
+
+가격은 이자카야의 특성상 다른 음식점보다는 다소 높은 편입니다. 하지만, 맛과 분위기, 서비스까지 고려하면 가격 대비 만족도가 높다고 생각합니다.
+
+종합적으로, 소이자카야에서는 맛있는 꼬치구이와 함께 분위기 있는 이자카야 문화를 즐길 수 있습니다. 가격은 다소 높은 편이지만, 맛과 분위기, 서비스 모두 높은 수준이기 때문에 만족스러운 이자카야 중 하나입니다.', 90, '2023-04-23 00:00:00', '2023-04-23 14:00:00', 'user11', '공개'),
+       ('꼬치에꽂혀~~', ' 저는 서울시 강남구에 위치한 양꼬치 형제에서 시식한 경험이 있습니다.
+
+양꼬치 형제는 대형 목장에서 직접 공급받은 신선한 양고기를 사용하여 만든 양꼬치로 유명합니다. 이곳에서 가장 추천하는 메뉴는 양꼬치입니다.
+
+양꼬치 형제에서 제공하는 양꼬치는 양고기만을 사용하여 만들어져, 부드럽고 쫄깃한 식감이 일품입니다. 또한, 직접 만든 매운 양념과 양고기의 고소한 맛이 어우러져 정말 맛있게 즐길 수 있습니다.
+
+가격은 다른 양꼬치집에 비해서는 조금 높은 편이지만, 양꼬치의 크기가 크고 양고기의 질이 좋아서 가격 대비 만족도가 높다고 생각합니다. 또한, 깔끔한 내부 인테리어와 친절한 서비스도 인상적입니다.
+
+종합적으로, 양꼬치 형제에서는 신선하고 맛있는 양고기로 만든 양꼬치를 즐길 수 있습니다. 가격은 다소 높은 편이지만, 양고기의 질과 크기, 매운 양념 등 고객들의 만족도를 높인 요소들이 많기 때문에 추천할 만한 양꼬치집 중 하나입니다.', 58, '2023-04-24 00:00:00', '2023-04-24 14:00:00', 'user12', '공개'),
+       ('고소한 휘낭시에 드셔보세요~~', '이번에는 휘낭시에 맛집에 다녀왔습니다 !!
+휘낭시에가는 프랑스어로 소란스러운 거리라는 뜻으로, 굉장히 예쁘고 아기자기한 분위기의 카페입니다. 이곳에서는 다양한 커피와 디저트를 즐길 수 있습니다. 가장 추천하는 메뉴는 유자치즈케이크와 아이스 아메리카노입니다.
+
+유자치즈케이크는 부드러운 치즈와 유자의 상큼한 맛이 어우러져 정말 맛있게 즐길 수 있습니다. 또한, 카페에서 직접 로스팅한 커피의 향긋한 향과 함께 즐길 수 있는 아이스 아메리카노도 추천합니다.
+
+가격은 다른 카페에 비해서는 조금 높은 편입니다. 하지만, 분위기 있는 내부 인테리어와 친절한 서비스, 그리고 맛과 퀄리티가 높은 디저트와 커피로 인해 가격 대비 만족도가 높다고 생각합니다.
+
+종합적으로, 휘낭시에가에서는 예쁘고 아기자기한 분위기 속에서 맛과 퀄리티가 높은 디저트와 커피를 즐길 수 있습니다. 가격은 다소 높은 편이지만, 분위기와 서비스, 맛과 퀄리티 등을 모두 고려하면 만족스러운 카페 중 하나입니다.', 36, '2023-04-25 00:00:00', '2023-04-25 14:00:00', 'user13', '공개'),
+       ('김선생이 다녀온 맛집 저도 다녀옴', ' 김선생이 리뷰한 맛집 중 하나는 대전 유성구에 위치한 대청호반점입니다. 김선생이 추천한 메뉴는 자장면과 탕수육입니다.
+
+대청호반점의 자장면은 짭짤한 맛과 함께 고소한 느낌이 일품입니다. 또한, 탱글탱글한 면발과 함께 쫄깃한 고기조각이 어우러져 맛과 식감이 정말 좋습니다.
+
+탕수육은 바삭한 튀김옷과 함께 부드러운 돼지고기가 일품입니다. 또한, 직접 만든 달콤한 소스와 함께 즐기면 맛이 더욱 더해집니다.
+
+가격은 다른 중국집에 비해서는 다소 높은 편입니다. 하지만, 맛과 양, 퀄리티 등 모두 높아서 가격 대비 만족도가 높다고 생각합니다. 또한, 깔끔한 내부 인테리어와 친절한 서비스도 인상적입니다.
+
+종합적으로, 대청호반점에서는 짭짤한 맛이 일품인 자장면과 바삭하고 부드러운 탕수육을 즐길 수 있습니다. 가격은 다소 높은 편이지만, 맛과 양, 퀄리티 등을 모두 고려하면 만족스러운 중국집 중 하나입니다.', 52, '2023-04-25 00:00:00', '2023-04-26 14:00:00', 'user14', '공개'),
+       ('맥딜리버리 얄려드립니다!', '맥딜리버리는 맥도날드에서 운영하는 배달 앱으로, 다양한 음식점에서 주문 가능한 서비스를 제공합니다.
+
+가장 큰 장점은 바로 다양한 음식점과 메뉴를 한 곳에서 쉽게 주문할 수 있다는 것입니다. 또한, 앱 내에서 쉽게 결제할 수 있어서 편리합니다.
+
+하지만, 주문 건이 많아지면 배달이 지연되는 경우가 있어서 이 점은 고려해야 할 부분입니다. 또한, 가끔 주문한 메뉴와 다른 메뉴가 배달되는 경우도 있어서 조심해야 합니다.
+
+또한, 맥딜리버리를 이용하면 할인 쿠폰을 받을 수 있어서 가격적으로도 매우 유리합니다.
+
+종합적으로, 맥딜리버리는 다양한 음식점과 메뉴를 한 곳에서 쉽게 주문할 수 있는 편리한 배달 앱입니다. 다만, 주문 건이 많아지면 배달이 지연되는 경우가 있으니 이 점을 고려하고 이용하시는 것이 좋습니다. 또한, 할인 쿠폰을 적극 활용하여 가격적으로도 매우 유리하게 이용할 수 있습니다.', 64, '2023-04-26 00:00:00', '2023-04-26 14:00:00', 'user15', '공개'),
+       ('엄마의 손맛... 리뷰입니다', '맘스터치는 대한민국의 패스트푸드 브랜드 중 하나로, 다양한 메뉴와 맛있는 햄버거로 유명합니다.
+
+가장 추천하는 메뉴는 싸이버거와 치즈스틱입니다. 싸이버거는 고소한 식빵과 함께 쫄깃한 패티와 상큼한 야채, 그리고 특별한 소스가 어우러져 정말 맛있게 즐길 수 있습니다. 치즈스틱은 바삭하게 튀겨진 외피와 부드러운 치즈가 조화를 이루며, 입 안에서 살짝 녹아내리는 맛이 일품입니다.
+
+또한, 맘스터치는 식자재를 공급하는 자체 공장을 보유하고 있어서, 신선하고 청결한 식재료로 만들어진 메뉴를 즐길 수 있습니다.
+
+가격은 다른 패스트푸드 브랜드에 비해서는 다소 높은 편입니다. 하지만, 맛과 퀄리티, 건강에 대한 고려 등을 모두 고려하면 가격 대비 만족도가 높다고 생각합니다.
+
+종합적으로, 맘스터치는 다양한 메뉴와 맛있는 햄버거로 유명한 대한민국의 패스트푸드 브랜드입니다. 특히, 싸이버거와 치즈스틱은 꼭 한 번 시도해봐야 할 메뉴 중 하나입니다. 맛과 퀄리티, 건강에 대한 고려 등을 모두 고려하면 가격 대비 만족도가 높은 패스트푸드 브랜드 중 하나입니다.', 12, '2023-04-26 00:00:00', '2023-04-27 14:00:00', 'user16', '공개'),
+       ('청정묵사발 너무 맛있어요', '제가 추천하는 묵사발 맛집은 경기도 안양시에 위치한 청정묵사발입니다.
+
+청정묵사발의 묵사발은 깊고 진한 육수와 함께 쫄깃하고 부드러운 묵을 먹는 즐거움을 선사합니다. 특히, 묵은 제철 식재료를 사용하여 맛과 건강을 모두 고려한 요리입니다.
+
+또한, 청정묵사발은 묵사발 외에도 다양한 메뉴를 제공합니다. 대표적인 메뉴로는 해물파전, 순대, 묵순떡볶이 등이 있으며, 모두 신선한 재료와 정성스런 요리로 제공됩니다.
+
+가격은 다른 음식점에 비해서는 조금 높은 편입니다. 하지만, 맛과 건강을 고려한 신선한 재료와 정성스러운 요리, 푸짐한 양 등을 모두 고려하면 가격 대비 만족도가 높다고 생각합니다.
+
+종합적으로, 청정묵사발은 깊고 진한 육수와 함께 쫄깃하고 부드러운 묵을 즐길 수 있는 묵사발 맛집입니다. 묵사발 외에도 다양한 메뉴를 제공하며, 신선한 재료와 정성스러운 요리로 제공됩니다. 가격은 조금 높은 편이지만, 맛과 건강, 푸짐한 양 등을 모두 고려하면 가격 대비 만족도가 높은 음식점 중 하나입니다.', 75, '2023-04-27 00:00:00', '2023-04-27 14:00:00', 'user17', '공개'),
+       ('등촌칼국수 죤맛탱 ㅠㅠ', ' 등촌칼국수는 서울 강서구에 위치한 칼국수 전문점으로, 30년 이상의 역사와 전통을 자랑합니다.
+
+등촌칼국수의 칼국수는 국물이 매우 진하고 깊은 맛을 가지고 있으며, 면발 또한 쫄깃하고 탱탱합니다. 또한, 메밀가루와 밀가루를 함께 사용하여 만들어져서, 색다른 맛과 향이 일품입니다.
+
+특히, 등촌칼국수에서는 손질된 닭고기를 사용하여 국물의 맛과 풍미를 한층 더 높여줍니다. 또한, 계절마다 달라지는 육수의 재료와 양념의 양식도 매우 고민해서 제공하고 있습니다.
+
+가격은 다른 칼국수집에 비해서는 조금 높은 편입니다. 하지만, 깊은 맛과 탱탱한 면발, 손질된 닭고기 등의 신선한 재료와 정성스러운 요리, 그리고 깔끔한 내부 인테리어와 친절한 서비스까지 모두 고려하면 가격 대비 만족도가 높다고 생각합니다.
+
+종합적으로, 등촌칼국수는 깊은 맛과 탱탱한 면발, 손질된 닭고기 등의 신선한 재료와 정성스러운 요리, 그리고 깔끔한 내부 인테리어와 친절한 서비스까지 모두 고려하면 가격 대비 만족도가 높은 칼국수 전문점 중 하나입니다. 맛있는 칼국수를 먹고 싶다면 등촌칼국수를 꼭 추천드립니다.', 37, '2023-04-30 00:00:00', '2023-04-30 14:00:00', 'user18', '공개'),
+       ('전통 오코노미야끼 먹어보았습니다!', '마루야의 오코노미야끼는 촉촉하고 부드러운 밀가루로 만들어진 외피와 함께 신선한 새우, 조개, 돼지고기 등 다양한 재료를 함께 구워낸 것이 특징입니다. 또한, 소스의 맛 또한 진하고 깊은 맛을 자랑하며, 여러 가지 토핑을 추가할 수 있어서 맛을 더욱 높여줍니다.
+
+또한, 마루야는 오코노미야끼 뿐만 아니라, 도톰한 국수 면과 고소한 찹쌀떡 등 다양한 메뉴도 제공하고 있습니다.
+
+가격은 다른 일식집에 비해서는 다소 비싼 편입니다. 하지만, 신선한 재료와 정성스러운 요리, 그리고 깔끔한 내부 인테리어와 친절한 서비스까지 모두 고려하면 가격 대비 만족도가 높다고 생각합니다.
+
+종합적으로, 마루야는 촉촉하고 부드러운 외피와 신선한 재료로 만들어진 오코노미야끼를 즐길 수 있는 일식집입니다. 여러 가지 토핑을 추가할 수 있어서 맛을 더욱 높일 수 있으며, 다양한 메뉴도 제공합니다. 가격은 다소 비싼 편이지만, 맛과 퀄리티, 서비스까지 모두 고려하면 가격 대비 만족도가 높은 오코노미야끼 맛집 중 하나입니다.', 53, '2023-04-30 00:00:00', '2023-04-30 14:00:00', 'user19', '공개'),
+       ('이태원 라멘스타 다녀왔습니당', '제가 추천하는 라멘집은 서울 용산구 이태원동에 위치한 라멘스타입니다.
+
+라멘스타의 라멘은 깊고 진한 육수와 탱탱한 면발이 매력적입니다. 특히, 다양한 종류의 라멘을 제공하며, 육수의 특징과 면발의 식감이 다른 라멘들보다 더욱 두드러지게 느껴집니다. 또한, 육수의 고소한 맛과 함께 신선한 재료와 정성스러운 요리로 제공됩니다.
+
+또한, 라멘스타는 라멘 외에도 다양한 일본식 음식을 제공합니다. 대표적인 메뉴로는 돈부리, 규동, 소바 등이 있으며, 모두 신선한 재료와 정성스런 요리로 제공됩니다.
+
+가격은 다른 라멘집에 비해서는 조금 높은 편입니다. 하지만, 깊은 맛과 탱탱한 면발, 신선한 재료와 정성스러운 요리, 그리고 깔끔한 내부 인테리어와 친절한 서비스까지 모두 고려하면 가격 대비 만족도가 높다고 생각합니다.
+
+종합적으로, 라멘스타는 깊은 맛과 탱탱한 면발, 신선한 재료와 정성스러운 요리, 그리고 깔끔한 내부 인테리어와 친절한 서비스까지 모두 고려하면 가격 대비 만족도가 높은 라멘집입니다. 다양한 종류의 라멘과 다양한 일본식 음식을 즐길 수 있으며, 맛있는 라멘을 먹고 싶다면 라멘스타를 꼭 추천드립니다.', 27, '2023-04-30 00:00:00', '2023-04-30 14:00:00', 'user01', '공개'),
+       ('맛있는 전통 멕시코 타코', 'Gringos는 멕시코 전통의 타코를 제공하는 레스토랑으로, 신선한 재료와 향신료를 사용하여 매우 정교하게 만들어진 타코를 즐길 수 있습니다. 특히, 고기와 야채, 그리고 치즈와 소스 등을 조합하여 다양한 맛을 느낄 수 있도록 다양한 종류의 타코를 제공합니다.
+
+타코의 외피도 멕시코 전통 방식을 따라서 손으로 눌러서 만들어져서, 쫄깃하고 탱탱한 식감이 매우 인상적입니다. 또한, 신선한 재료와 정교하게 조합된 소스는 강렬한 맛과 향을 자랑합니다.
+
+가격은 다른 타코집에 비해서는 조금 높은 편입니다. 하지만, 신선한 재료와 정성스러운 요리, 그리고 깔끔한 내부 인테리어와 친절한 서비스까지 모두 고려하면 가격 대비 만족도가 높다고 생각합니다.
+
+종합적으로, Gringos는 멕시코 전통의 타코를 제공하는 레스토랑으로, 신선한 재료와 향신료를 사용하여 매우 정교하게 만들어진 타코를 즐길 수 있습니다. 타코의 외피도 쫄깃하고 탱탱하며, 다양한 종류의 타코와 소스를 즐길 수 있습니다. 가격은 다른 타코집에 비해서는 조금 높은 편이지만, 맛과 퀄리티, 서비스까지 모두 고려하면 가격 대비 만족도가 높은 타코집 중 하나입니다.', 74, '2023-04-30 00:00:00', '2023-04-30 14:00:00', 'user01', '공개');
+
 
 INSERT INTO type_classes (category_num,main_category, sub_category)
 VALUES
@@ -433,26 +660,26 @@ VALUES
     (30,'카페', '기타');
 
 INSERT INTO menu_manages (name, img, price, info, menu_type, status, store_num) VALUES
-    ('불고기햄버거', 'https://example.com/burger.jpg', 7000, '맛있는 햄버거', '대표메뉴', true, 1),
-    ('치즈버거', NULL, 8000, '치즈가 듬뿍 들어간 햄버거', '일반메뉴', true, 1),
-    ('감자튀김', NULL, 5000, '바삭한 감자튀김', '일반메뉴', true, 1),
-    ('매운닭갈비', 'https://example.com/dakgalbi.jpg', 15000, '매콤한 닭갈비', '대표메뉴', true, 2),
-    ('치즈닭갈비', NULL, 17000, '치즈를 뿌린 닭갈비', '일반메뉴', true, 2),
-    ('불고기', NULL, 15000, '맛있는 불고기', '일반메뉴', true, 2),
-    ('찹쌀탕수육', 'https://example.com/tangsuyuk.jpg', 12000, '바삭한 탕수육', '대표메뉴', true, 3),
-    ('잡채', NULL, 10000, '고기와 채소가 들어간 잡채', '일반메뉴', true, 3),
-    ('울면', NULL, 9000, '매콤한 울면', '일반메뉴', true, 3),
-    ('베트남쌀국수', 'https://example.com/pho.jpg', 8000, '시원한 쌀국수', '대표메뉴', true, 4),
-    ('불고기쌀국수', NULL, 10000, '불고기와 쌀국수의 환상조합', '일반메뉴', true, 4),
-    ('야채쌀국수', NULL, 8000, '시원한 야채쌀국수', '일반메뉴', true, 4),
-    ('바게트', 'https://example.com/bread.jpg', 3000, '부드러운 빵', '대표메뉴', true, 5),
-    ('크로와상', NULL, 3500, '버터향 가득한 크로와상', '일반메뉴', true, 5),
-    ('마카롱', NULL, 2000, '색다른 마카롱', '일반메뉴', true, 5),
-    ('초밥', 'https://example.com/sushi.jpg', 20000, '신선한 초밥', '대표메뉴', true, 6),
-    ('족발', 'https://example.com/jokbal.jpg', 18000, '맛있는 족발', '대표메뉴', true, 7),
-    ('치킨', 'https://example.com/chicken.jpg', 16000, '바삭한 치킨', '대표메뉴', true, 8),
-    ('돈까스', 'https://example.com/porkcutlet.jpg', 9000, '고소한 돈까스', '대표메뉴', true, 9),
-    ('파스타', 'https://example.com/pasta.jpg', 13000, '크리미한 파스타', '대표메뉴', true, 10);
+                                                                                    ('불고기햄버거', 'https://example.com/burger.jpg', 7000, '맛있는 햄버거', '대표메뉴', true, 1),
+                                                                                    ('치즈버거', NULL, 8000, '치즈가 듬뿍 들어간 햄버거', '일반메뉴', true, 1),
+                                                                                    ('감자튀김', NULL, 5000, '바삭한 감자튀김', '일반메뉴', true, 1),
+                                                                                    ('매운닭갈비', 'https://example.com/dakgalbi.jpg', 15000, '매콤한 닭갈비', '대표메뉴', true, 2),
+                                                                                    ('치즈닭갈비', NULL, 17000, '치즈를 뿌린 닭갈비', '일반메뉴', true, 2),
+                                                                                    ('불고기', NULL, 15000, '맛있는 불고기', '일반메뉴', true, 2),
+                                                                                    ('찹쌀탕수육', 'https://example.com/tangsuyuk.jpg', 12000, '바삭한 탕수육', '대표메뉴', true, 3),
+                                                                                    ('잡채', NULL, 10000, '고기와 채소가 들어간 잡채', '일반메뉴', true, 3),
+                                                                                    ('울면', NULL, 9000, '매콤한 울면', '일반메뉴', true, 3),
+                                                                                    ('베트남쌀국수', 'https://example.com/pho.jpg', 8000, '시원한 쌀국수', '대표메뉴', true, 4),
+                                                                                    ('불고기쌀국수', NULL, 10000, '불고기와 쌀국수의 환상조합', '일반메뉴', true, 4),
+                                                                                    ('야채쌀국수', NULL, 8000, '시원한 야채쌀국수', '일반메뉴', true, 4),
+                                                                                    ('바게트', 'https://example.com/bread.jpg', 3000, '부드러운 빵', '대표메뉴', true, 5),
+                                                                                    ('크로와상', NULL, 3500, '버터향 가득한 크로와상', '일반메뉴', true, 5),
+                                                                                    ('마카롱', NULL, 2000, '색다른 마카롱', '일반메뉴', true, 5),
+                                                                                    ('초밥', 'https://example.com/sushi.jpg', 20000, '신선한 초밥', '대표메뉴', true, 6),
+                                                                                    ('족발', 'https://example.com/jokbal.jpg', 18000, '맛있는 족발', '대표메뉴', true, 7),
+                                                                                    ('치킨', 'https://example.com/chicken.jpg', 16000, '바삭한 치킨', '대표메뉴', true, 8),
+                                                                                    ('돈까스', 'https://example.com/porkcutlet.jpg', 9000, '고소한 돈까스', '대표메뉴', true, 9),
+                                                                                    ('파스타', 'https://example.com/pasta.jpg', 13000, '크리미한 파스타', '대표메뉴', true, 10);
 
 
 INSERT INTO storetypes (store_num, category_num)
@@ -469,76 +696,76 @@ VALUES
     (10, 4);
 
 INSERT INTO reviews (content, comment, img, date, star, r_rstatus, user_id, store_num, menu_num) VALUES
-   ('맛있는 치킨이었습니다. 분위기도 좋았어요.', '맛있는 치킨', 'chicken1.jpg', '2023-04-01', 5, '공개', 'user01', 1, 1),
-   ('피자가 아주 맛있었습니다. 다음에 또 올게요!', '최고의 피자', 'pizza1.jpg', '2023-04-02', 3, '공개', 'user02', 2, 4),
-   ('초밥이 신선하고 맛있었습니다. 서비스도 좋았습니다.', '신선한 초밥', 'sushi1.jpg', '2023-04-03', 2, '공개', 'user03', 3, 7),
-   ('김밥이 너무 맛있어요! 가격도 저렴해서 좋았습니다.', '저렴한 김밥', 'kimbap1.jpg', '2023-04-04', 4, '공개', 'user04', 4, 10),
-   ('떡볶이가 매콤하고 맛있었습니다. 포장해서 먹었어요.', '떡볶이 추천', 'tteokbokki1.jpg', '2023-04-05', 5, '공개', 'user05', 5, 13),
-   ('삼겹살이 아주 부드럽고 맛있었습니다. 배부르게 먹었어요.', '부드러운 삼겹살', 'samgyeopsal1.jpg', '2023-04-06', 2, '공개', 'user06', 6, 16),
-   ('파스타가 존맛탱이었습니다. 소스도 좋았어요.', '맛있는 파스타', 'pasta1.jpg', '2023-04-07', 3, '공개', 'user07', 7, 17),
-   ('커피가 진짜 맛있었어요. 디저트도 추천합니다.', '커피 맛집', 'coffee1.jpg', '2023-04-08', 1, '공개', 'user08', 8, 18),
-   ('라멘이 정말 맛있었습니다. 국물이 진해요.', '라멘 맛집', 'ramen1.jpg', '2023-04-09', 2, '공개', 'user09', 9, 19),
-   ('짜장면이 아주 맛있었습니다. 짬뽕도 시켜봤는데 좋았어요.', '중화요리 추천', 'jajangmyeon1.jpg', '2023-04-10', 3, '공개', 'user10', 10, 20),
-   ('햄버거가 아주 맛있었습니다. 다양한 메뉴가 있어 좋았어요.', '맛있는 햄버거', 'burger1.jpg', '2023-04-11', 4, '공개', 'user11', 1, 1),
-   ('닭갈비가 아주 맛있었습니다. 야채도 신선해요!', '닭갈비 최고', 'dakgalbi1.jpg', '2023-04-12', 5, '공개', 'user12', 2, 4),
-   ('탕수육이 존맛탱이었습니다. 짬뽕도 좋았어요.', '중식 맛집', 'tangsuyuk1.jpg', '2023-04-13', 1, '공개', 'user13', 3, 7),
-   ('쌀국수가 정말 맛있었습니다. 국물이 진해요.', '쌀국수 맛집', 'pho1.jpg', '2023-04-14', 2, '공개', 'user14', 4, 10),
-   ('빵이 너무 맛있어요! 친절한 서비스도 좋았습니다.', '빵 맛집', 'bread1.jpg', '2023-04-15 16:00:00', 3, '공개', 'user15', 5, 13),
-   ('돈까스가 아주 부드럽고 맛있었습니다. 소스도 좋았어요.', '돈까스 추천', 'donkatsu1.jpg', '2023-04-16', 4, '공개', 'user16', 6, 16),
-   ('샐러드가 정말 신선하고 맛있었습니다. 다양한 메뉴가 있어요.', '샐러드 맛집', 'salad1.jpg', '2023-04-17', 5, '공개', 'user17', 7, 17),
-   ('냉면이 아주 맛있었습니다. 여름에 먹기 좋아요!', '냉면 맛집', 'naengmyeon1.jpg', '2023-04-18', 1, '공개', 'user18', 8, 18),
-   ('참치회가 신선하고 맛있었습니다. 소주랑 잘 어울려요.', '참치회 추천', 'chamchi1.jpg', '2023-04-19', 2, '공개', 'user19', 9, 19),
-   ('케이크가 정말 맛있었습니다. 다양한 종류가 있어 고르기 어려웠어요.', '케이크 맛집', 'cake1.jpg', '2023-04-20', 2, '공개', 'user20', 10, 20),
-   ('두부김치가 아주 맛있었습니다. 매운맛이 좋았어요.', '두부김치 맛집', 'dubukimchi1.jpg', '2023-04-21', 3, '공개', 'user11', 1, 1),
-   ('감자탕이 정말 맛있었습니다. 국물이 진해요.', '감자탕 추천', 'gamjatang1.jpg', '2023-04-22', 4, '공개', 'user20', 2, 4),
-   ('생선회가 신선하고 맛있었습니다. 와사비랑 잘 어울려요.', '생선회 맛집', 'sashimi1.jpg', '2023-04-23', 5, '공개', 'user13', 3, 7),
-   ('김치찌개가 아주 맛있었습니다. 배부르게 먹었어요.', '김치찌개 추천', 'kimchijjigae1.jpg', '2023-04-24',1, '공개', 'user14', 4, 10),
-   ('해물파전이 정말 맛있었습니다. 소주랑 잘 어울려요.', '해물파전 맛집', 'haemulpajeon1.jpg', '2023-04-25', 2, '공개', 'user15', 5, 13),
-   ('갈비탕이 아주 부드럽고 맛있었습니다. 감동이었어요.', '갈비탕 추천', 'galbitang1.jpg', '2023-04-26', 3, '공개', 'user06', 6, 16),
-   ('치즈돈까스가 정말 맛있었습니다. 치즈가 풍성해요.', '치즈돈까스 맛집', 'cheesedonkatsu1.jpg', '2023-04-27', 4, '공개', 'user07', 7, 17),
-   ('짬뽕이 아주 맛있었습니다. 매콤한맛이 좋았어요!', '짬뽕 추천', 'jjamppong1.jpg', '2023-04-28', 5, '공개', 'user18', 8, 18),
-   ('불고기가 정말 맛있었습니다. 소고기가 부드러워요.', '불고기 맛집', 'bulgogi1.jpg', '2023-04-29', 5, '공개', 'user19', 9, 19),
-   ('크림파스타가 아주 맛있었습니다. 크림이 부드러워요.', '크림파스타 추천', 'creampasta1.jpg', '2023-04-30', 1, '공개', 'user20', 10, 20),
-   ('햄버거가 아주 맛있었습니다. 다음에 또 오고 싶어요.', '햄버거 최고!', 'hamburger1.jpg', '2023-04-01', 2, '공개', 'user13', 7, 17),
-   ('닭갈비가 아주 맛있어요. 양념도 좋고 고기도 신선해요.', '닭갈비 맛집', 'dakgalbi2.jpg', '2023-04-02', 3, '공개', 'user05', 2, 4),
-   ('탕수육이 바삭바삭하고 소스도 달지 않아서 좋아요.', '최고의 탕수육', 'tangsuyuk3.jpg', '2023-04-03', 4, '공개', 'user20', 1, 1),
-   ('쌀국수가 시원하고 맛있어요. 국물이 정말 좋아요.', '쌀국수 맛집', 'pho4.jpg', '2023-04-04', 5, '공개', 'user07', 4, 10),
-   ('빵이 정말 부드럽고 맛있어요. 다양한 종류의 빵이 있어요.', '빵의 천국', 'bread5.jpg', '2023-04-05', 1, '공개', 'user12', 5, 13),
-   ('초밥이 신선하고 맛있어요. 회도 부드럽고 좋아요.', '초밥 천국', 'sushi6.jpg', '2023-04-06', 2, '공개', 'user19', 6, 16),
-   ('족발이 부드럽고 맛있어요. 소스도 좋아요.', '족발의 세계', 'jokbal7.jpg', '2023-04-07', 3, '공개', 'user01', 7, 17),
-   ('치킨이 바삭바삭하고 맛있어요. 소스도 좋아요.', '치킨의 정석', 'chicken8.jpg', '2023-04-08', 4, '공개', 'user16', 8, 18),
-   ('돈까스가 바삭하고 맛있어요. 소스도 좋아요.', '돈까스의 정석', 'donkatsu9.jpg', '2023-04-09', 5, '공개', 'user02', 9, 19),
-   ('파스타가 맛있어요. 다양한 종류의 파스타가 있어요.', '파스타 천국', 'pasta10.jpg', '2023-04-10', 1, '공개', 'user17', 10, 20),
-   ('햄버거가 아주 맛있었습니다. 다음에 또 오고 싶어요.', '햄버거 최고!', 'hamburger11.jpg', '2023-04-11', 2, '공개', 'user09', 1, 1),
-   ('닭갈비가 아주 맛있어요. 양념도 좋고 고기도 신선해요.', '닭갈비 맛집', 'dakgalbi12.jpg', '2023-04-12',3, '공개', 'user14', 2, 5),
-   ('탕수육이 바삭바삭하고 소스도 달지 않아서 좋아요.', '최고의 탕수육', 'tangsuyuk13.jpg', '2023-04-13', 4, '공개', 'user11', 3, 9),
-   ('쌀국수가 시원하고 맛있어요. 국물이 정말 좋아요.', '쌀국수 맛집', 'pho14.jpg', '2023-04-14', 5, '공개', 'user18', 4, 11),
-   ('빵이 정말 부드럽고 맛있어요. 다양한 종류의 빵이 있어요.', '빵의 천국', 'bread15.jpg', '2023-04-15', 1, '공개', 'user03', 5, 14),
-   ('초밥이 신선하고 맛있어요. 회도 부드럽고 좋아요.', '초밥 천국', 'sushi16.jpg', '2023-04-16', 2, '공개', 'user06', 6, 16),
-   ('족발이 부드럽고 맛있어요. 소스도 좋아요.', '족발의 세계', 'jokbal17.jpg', '2023-04-17', 3, '공개', 'user08', 7, 17),
-   ('치킨이 바삭바삭하고 맛있어요. 소스도 좋아요.', '치킨의 정석', 'chicken18.jpg', '2023-04-18', 4, '공개', 'user15', 8, 18),
-   ('돈까스가 바삭하고 맛있어요. 소스도 좋아요.', '돈까스의 정석', 'donkatsu19.jpg', '2023-04-19', 5, '공개', 'user10', 9, 19),
-   ('파스타가 맛있어요. 다양한 종류의 파스타가 있어요.', '파스타 천국', 'pasta20.jpg', '2023-04-20', 1, '공개', 'user04', 10, 20),
-   ('피자가 얇고 바삭하면서도 맛있어요. 다양한 토핑이 있어요.', '피자 맛집', 'pizza21.jpg', '2023-04-21',2, '공개', 'user05', 1, 1),
-   ('라멘이 진하고 맛있어요. 면도 쫄깃하고 좋아요.', '라멘 천국', 'ramen22.jpg', '2023-04-22', 3, '공개', 'user07', 2, 5),
-   ('떡볶이가 매콤하고 맛있어요. 고기도 많아서 좋아요.', '떡볶이 맛집', 'tteokbokki23.jpg', '2023-04-23', 4, '공개', 'user12', 3, 8),
-   ('갈비가 부드럽고 맛있어요. 소스도 좋아요.', '갈비 천국', 'galbi24.jpg', '2023-04-24', 5, '공개', 'user10', 4, 10),
-   ('김밥이 신선하고 맛있어요. 다양한 종류의 김밥이 있어요.', '김밥 맛집', 'kimbap25.jpg', '2023-04-25', 1, '공개', 'user15', 5, 14),
-   ('비빔밥이 고소하고 맛있어요. 야채도 신선해요.', '비빔밥의 정석', 'bibimbap26.jpg', '2023-04-26', 2, '공개', 'user03', 6, 16),
-   ('된장찌개가 진하고 맛있어요. 밥도 맛있고 좋아요.', '된장찌개 맛집', 'doenjangjjigae27.jpg', '2023-04-27', 3, '공개', 'user08', 7, 17),
-   ('갈비탕이 진하고 맛있어요. 고기도 부드럽고 좋아요.', '갈비탕 천국', 'galbitang28.jpg', '2023-04-28', 4, '공개', 'user11', 8, 18),
-   ('냉면이 시원하고 맛있어요. 면도 쫄깃하고 좋아요.', '냉면 맛집', 'naengmyeon29.jpg', '2023-04-29', 5, '공개', 'user06', 9, 19),
-   ('칼국수가 시원하고 맛있어요. 면도 쫄깃하고 좋아요.', '칼국수 천국', 'kalguksu30.jpg', '2023-04-30', 1, '공개', 'user14', 2, 5),
-   ('샐러드가 다양하고 맛있어요. 드레싱도 좋아요.', '샐러드 맛집', 'salad31.jpg', '2023-05-01', 2, '공개', 'user01', 1, 1),
-   ('볶음밥이 고소하고 맛있어요. 야채도 신선해요.', '볶음밥의 정석', 'friedrice32.jpg', '2023-05-02', 3, '공개', 'user09', 2, 6),
-   ('떡국이 시원하고 맛있어요. 떡도 쫄깃하고 좋아요.', '떡국 맛집', 'tteokguk33.jpg', '2023-05-03', 4, '공개', 'user16', 3, 8),
-   ('오므라이스가 부드럽고 맛있어요. 소스도 좋아요.', '오므라이스 천국', 'omurice34.jpg', '2023-05-04', 5, '공개', 'user19', 4, 11),
-   ('스테이크가 부드럽고 맛있어요. 소스도 좋아요.', '스테이크의 정석', 'steak35.jpg', '2023-05-05', 1, '공개', 'user05', 5, 14),
-   ('샌드위치가 다양하고 맛있어요. 빵도 신선해요.', '샌드위치 맛집', 'sandwich36.jpg', '2023-05-06', 2, '공개', 'user13', 6, 16),
-   ('치즈돈까스가 바삭하고 맛있어요. 소스도 좋아요.', '치즈돈까스 천국', 'cheesedonkatsu37.jpg', '2023-05-07', 3, '공개', 'user07', 7, 17),
-   ('라떼가 부드럽고 맛있어요. 커피도 좋아요.', '라떼의 정석', 'latte38.jpg', '2023-05-08', 4, '공개', 'user20', 8, 18),
-   ('케이크가 부드럽고 맛있어요. 다양한 종류의 케이크가 있어요.', '케이크 맛집', 'cake39.jpg', '2023-05-09', 5, '공개', 'user02', 9, 19),
-   ('찹쌀떡이 쫄깃하고 맛있어요. 다양한 종류의 찹쌀떡이 있어요.', '찹쌀떡 천국', 'chapssalddeok40.jpg', '2023-05-10', 1, '공개', 'user04', 10, 20);
+                                                                                                     ('맛있는 치킨이었습니다. 분위기도 좋았어요.', '맛있는 치킨', 'chicken1.jpg', '2023-04-01', 5, '공개', 'user01', 1, 1),
+                                                                                                     ('피자가 아주 맛있었습니다. 다음에 또 올게요!', '최고의 피자', 'pizza1.jpg', '2023-04-02', 3, '공개', 'user02', 2, 4),
+                                                                                                     ('초밥이 신선하고 맛있었습니다. 서비스도 좋았습니다.', '신선한 초밥', 'sushi1.jpg', '2023-04-03', 2, '공개', 'user03', 3, 7),
+                                                                                                     ('김밥이 너무 맛있어요! 가격도 저렴해서 좋았습니다.', '저렴한 김밥', 'kimbap1.jpg', '2023-04-04', 4, '공개', 'user04', 4, 10),
+                                                                                                     ('떡볶이가 매콤하고 맛있었습니다. 포장해서 먹었어요.', '떡볶이 추천', 'tteokbokki1.jpg', '2023-04-05', 5, '공개', 'user05', 5, 13),
+                                                                                                     ('삼겹살이 아주 부드럽고 맛있었습니다. 배부르게 먹었어요.', '부드러운 삼겹살', 'samgyeopsal1.jpg', '2023-04-06', 2, '공개', 'user06', 6, 16),
+                                                                                                     ('파스타가 존맛탱이었습니다. 소스도 좋았어요.', '맛있는 파스타', 'pasta1.jpg', '2023-04-07', 3, '공개', 'user07', 7, 17),
+                                                                                                     ('커피가 진짜 맛있었어요. 디저트도 추천합니다.', '커피 맛집', 'coffee1.jpg', '2023-04-08', 1, '공개', 'user08', 8, 18),
+                                                                                                     ('라멘이 정말 맛있었습니다. 국물이 진해요.', '라멘 맛집', 'ramen1.jpg', '2023-04-09', 2, '공개', 'user09', 9, 19),
+                                                                                                     ('짜장면이 아주 맛있었습니다. 짬뽕도 시켜봤는데 좋았어요.', '중화요리 추천', 'jajangmyeon1.jpg', '2023-04-10', 3, '공개', 'user10', 10, 20),
+                                                                                                     ('햄버거가 아주 맛있었습니다. 다양한 메뉴가 있어 좋았어요.', '맛있는 햄버거', 'burger1.jpg', '2023-04-11', 4, '공개', 'user11', 1, 1),
+                                                                                                     ('닭갈비가 아주 맛있었습니다. 야채도 신선해요!', '닭갈비 최고', 'dakgalbi1.jpg', '2023-04-12', 5, '공개', 'user12', 2, 4),
+                                                                                                     ('탕수육이 존맛탱이었습니다. 짬뽕도 좋았어요.', '중식 맛집', 'tangsuyuk1.jpg', '2023-04-13', 1, '공개', 'user13', 3, 7),
+                                                                                                     ('쌀국수가 정말 맛있었습니다. 국물이 진해요.', '쌀국수 맛집', 'pho1.jpg', '2023-04-14', 2, '공개', 'user14', 4, 10),
+                                                                                                     ('빵이 너무 맛있어요! 친절한 서비스도 좋았습니다.', '빵 맛집', 'bread1.jpg', '2023-04-15 16:00:00', 3, '공개', 'user15', 5, 13),
+                                                                                                     ('돈까스가 아주 부드럽고 맛있었습니다. 소스도 좋았어요.', '돈까스 추천', 'donkatsu1.jpg', '2023-04-16', 4, '공개', 'user16', 6, 16),
+                                                                                                     ('샐러드가 정말 신선하고 맛있었습니다. 다양한 메뉴가 있어요.', '샐러드 맛집', 'salad1.jpg', '2023-04-17', 5, '공개', 'user17', 7, 17),
+                                                                                                     ('냉면이 아주 맛있었습니다. 여름에 먹기 좋아요!', '냉면 맛집', 'naengmyeon1.jpg', '2023-04-18', 1, '공개', 'user18', 8, 18),
+                                                                                                     ('참치회가 신선하고 맛있었습니다. 소주랑 잘 어울려요.', '참치회 추천', 'chamchi1.jpg', '2023-04-19', 2, '공개', 'user19', 9, 19),
+                                                                                                     ('케이크가 정말 맛있었습니다. 다양한 종류가 있어 고르기 어려웠어요.', '케이크 맛집', 'cake1.jpg', '2023-04-20', 2, '공개', 'user20', 10, 20),
+                                                                                                     ('두부김치가 아주 맛있었습니다. 매운맛이 좋았어요.', '두부김치 맛집', 'dubukimchi1.jpg', '2023-04-21', 3, '공개', 'user11', 1, 1),
+                                                                                                     ('감자탕이 정말 맛있었습니다. 국물이 진해요.', '감자탕 추천', 'gamjatang1.jpg', '2023-04-22', 4, '공개', 'user20', 2, 4),
+                                                                                                     ('생선회가 신선하고 맛있었습니다. 와사비랑 잘 어울려요.', '생선회 맛집', 'sashimi1.jpg', '2023-04-23', 5, '공개', 'user13', 3, 7),
+                                                                                                     ('김치찌개가 아주 맛있었습니다. 배부르게 먹었어요.', '김치찌개 추천', 'kimchijjigae1.jpg', '2023-04-24',1, '공개', 'user14', 4, 10),
+                                                                                                     ('해물파전이 정말 맛있었습니다. 소주랑 잘 어울려요.', '해물파전 맛집', 'haemulpajeon1.jpg', '2023-04-25', 2, '공개', 'user15', 5, 13),
+                                                                                                     ('갈비탕이 아주 부드럽고 맛있었습니다. 감동이었어요.', '갈비탕 추천', 'galbitang1.jpg', '2023-04-26', 3, '공개', 'user06', 6, 16),
+                                                                                                     ('치즈돈까스가 정말 맛있었습니다. 치즈가 풍성해요.', '치즈돈까스 맛집', 'cheesedonkatsu1.jpg', '2023-04-27', 4, '공개', 'user07', 7, 17),
+                                                                                                     ('짬뽕이 아주 맛있었습니다. 매콤한맛이 좋았어요!', '짬뽕 추천', 'jjamppong1.jpg', '2023-04-28', 5, '공개', 'user18', 8, 18),
+                                                                                                     ('불고기가 정말 맛있었습니다. 소고기가 부드러워요.', '불고기 맛집', 'bulgogi1.jpg', '2023-04-29', 5, '공개', 'user19', 9, 19),
+                                                                                                     ('크림파스타가 아주 맛있었습니다. 크림이 부드러워요.', '크림파스타 추천', 'creampasta1.jpg', '2023-04-30', 1, '공개', 'user20', 10, 20),
+                                                                                                     ('햄버거가 아주 맛있었습니다. 다음에 또 오고 싶어요.', '햄버거 최고!', 'hamburger1.jpg', '2023-04-01', 2, '공개', 'user13', 7, 17),
+                                                                                                     ('닭갈비가 아주 맛있어요. 양념도 좋고 고기도 신선해요.', '닭갈비 맛집', 'dakgalbi2.jpg', '2023-04-02', 3, '공개', 'user05', 2, 4),
+                                                                                                     ('탕수육이 바삭바삭하고 소스도 달지 않아서 좋아요.', '최고의 탕수육', 'tangsuyuk3.jpg', '2023-04-03', 4, '공개', 'user20', 1, 1),
+                                                                                                     ('쌀국수가 시원하고 맛있어요. 국물이 정말 좋아요.', '쌀국수 맛집', 'pho4.jpg', '2023-04-04', 5, '공개', 'user07', 4, 10),
+                                                                                                     ('빵이 정말 부드럽고 맛있어요. 다양한 종류의 빵이 있어요.', '빵의 천국', 'bread5.jpg', '2023-04-05', 1, '공개', 'user12', 5, 13),
+                                                                                                     ('초밥이 신선하고 맛있어요. 회도 부드럽고 좋아요.', '초밥 천국', 'sushi6.jpg', '2023-04-06', 2, '공개', 'user19', 6, 16),
+                                                                                                     ('족발이 부드럽고 맛있어요. 소스도 좋아요.', '족발의 세계', 'jokbal7.jpg', '2023-04-07', 3, '공개', 'user01', 7, 17),
+                                                                                                     ('치킨이 바삭바삭하고 맛있어요. 소스도 좋아요.', '치킨의 정석', 'chicken8.jpg', '2023-04-08', 4, '공개', 'user16', 8, 18),
+                                                                                                     ('돈까스가 바삭하고 맛있어요. 소스도 좋아요.', '돈까스의 정석', 'donkatsu9.jpg', '2023-04-09', 5, '공개', 'user02', 9, 19),
+                                                                                                     ('파스타가 맛있어요. 다양한 종류의 파스타가 있어요.', '파스타 천국', 'pasta10.jpg', '2023-04-10', 1, '공개', 'user17', 10, 20),
+                                                                                                     ('햄버거가 아주 맛있었습니다. 다음에 또 오고 싶어요.', '햄버거 최고!', 'hamburger11.jpg', '2023-04-11', 2, '공개', 'user09', 1, 1),
+                                                                                                     ('닭갈비가 아주 맛있어요. 양념도 좋고 고기도 신선해요.', '닭갈비 맛집', 'dakgalbi12.jpg', '2023-04-12',3, '공개', 'user14', 2, 5),
+                                                                                                     ('탕수육이 바삭바삭하고 소스도 달지 않아서 좋아요.', '최고의 탕수육', 'tangsuyuk13.jpg', '2023-04-13', 4, '공개', 'user11', 3, 9),
+                                                                                                     ('쌀국수가 시원하고 맛있어요. 국물이 정말 좋아요.', '쌀국수 맛집', 'pho14.jpg', '2023-04-14', 5, '공개', 'user18', 4, 11),
+                                                                                                     ('빵이 정말 부드럽고 맛있어요. 다양한 종류의 빵이 있어요.', '빵의 천국', 'bread15.jpg', '2023-04-15', 1, '공개', 'user03', 5, 14),
+                                                                                                     ('초밥이 신선하고 맛있어요. 회도 부드럽고 좋아요.', '초밥 천국', 'sushi16.jpg', '2023-04-16', 2, '공개', 'user06', 6, 16),
+                                                                                                     ('족발이 부드럽고 맛있어요. 소스도 좋아요.', '족발의 세계', 'jokbal17.jpg', '2023-04-17', 3, '공개', 'user08', 7, 17),
+                                                                                                     ('치킨이 바삭바삭하고 맛있어요. 소스도 좋아요.', '치킨의 정석', 'chicken18.jpg', '2023-04-18', 4, '공개', 'user15', 8, 18),
+                                                                                                     ('돈까스가 바삭하고 맛있어요. 소스도 좋아요.', '돈까스의 정석', 'donkatsu19.jpg', '2023-04-19', 5, '공개', 'user10', 9, 19),
+                                                                                                     ('파스타가 맛있어요. 다양한 종류의 파스타가 있어요.', '파스타 천국', 'pasta20.jpg', '2023-04-20', 1, '공개', 'user04', 10, 20),
+                                                                                                     ('피자가 얇고 바삭하면서도 맛있어요. 다양한 토핑이 있어요.', '피자 맛집', 'pizza21.jpg', '2023-04-21',2, '공개', 'user05', 1, 1),
+                                                                                                     ('라멘이 진하고 맛있어요. 면도 쫄깃하고 좋아요.', '라멘 천국', 'ramen22.jpg', '2023-04-22', 3, '공개', 'user07', 2, 5),
+                                                                                                     ('떡볶이가 매콤하고 맛있어요. 고기도 많아서 좋아요.', '떡볶이 맛집', 'tteokbokki23.jpg', '2023-04-23', 4, '공개', 'user12', 3, 8),
+                                                                                                     ('갈비가 부드럽고 맛있어요. 소스도 좋아요.', '갈비 천국', 'galbi24.jpg', '2023-04-24', 5, '공개', 'user10', 4, 10),
+                                                                                                     ('김밥이 신선하고 맛있어요. 다양한 종류의 김밥이 있어요.', '김밥 맛집', 'kimbap25.jpg', '2023-04-25', 1, '공개', 'user15', 5, 14),
+                                                                                                     ('비빔밥이 고소하고 맛있어요. 야채도 신선해요.', '비빔밥의 정석', 'bibimbap26.jpg', '2023-04-26', 2, '공개', 'user03', 6, 16),
+                                                                                                     ('된장찌개가 진하고 맛있어요. 밥도 맛있고 좋아요.', '된장찌개 맛집', 'doenjangjjigae27.jpg', '2023-04-27', 3, '공개', 'user08', 7, 17),
+                                                                                                     ('갈비탕이 진하고 맛있어요. 고기도 부드럽고 좋아요.', '갈비탕 천국', 'galbitang28.jpg', '2023-04-28', 4, '공개', 'user11', 8, 18),
+                                                                                                     ('냉면이 시원하고 맛있어요. 면도 쫄깃하고 좋아요.', '냉면 맛집', 'naengmyeon29.jpg', '2023-04-29', 5, '공개', 'user06', 9, 19),
+                                                                                                     ('칼국수가 시원하고 맛있어요. 면도 쫄깃하고 좋아요.', '칼국수 천국', 'kalguksu30.jpg', '2023-04-30', 1, '공개', 'user14', 2, 5),
+                                                                                                     ('샐러드가 다양하고 맛있어요. 드레싱도 좋아요.', '샐러드 맛집', 'salad31.jpg', '2023-05-01', 2, '공개', 'user01', 1, 1),
+                                                                                                     ('볶음밥이 고소하고 맛있어요. 야채도 신선해요.', '볶음밥의 정석', 'friedrice32.jpg', '2023-05-02', 3, '공개', 'user09', 2, 6),
+                                                                                                     ('떡국이 시원하고 맛있어요. 떡도 쫄깃하고 좋아요.', '떡국 맛집', 'tteokguk33.jpg', '2023-05-03', 4, '공개', 'user16', 3, 8),
+                                                                                                     ('오므라이스가 부드럽고 맛있어요. 소스도 좋아요.', '오므라이스 천국', 'omurice34.jpg', '2023-05-04', 5, '공개', 'user19', 4, 11),
+                                                                                                     ('스테이크가 부드럽고 맛있어요. 소스도 좋아요.', '스테이크의 정석', 'steak35.jpg', '2023-05-05', 1, '공개', 'user05', 5, 14),
+                                                                                                     ('샌드위치가 다양하고 맛있어요. 빵도 신선해요.', '샌드위치 맛집', 'sandwich36.jpg', '2023-05-06', 2, '공개', 'user13', 6, 16),
+                                                                                                     ('치즈돈까스가 바삭하고 맛있어요. 소스도 좋아요.', '치즈돈까스 천국', 'cheesedonkatsu37.jpg', '2023-05-07', 3, '공개', 'user07', 7, 17),
+                                                                                                     ('라떼가 부드럽고 맛있어요. 커피도 좋아요.', '라떼의 정석', 'latte38.jpg', '2023-05-08', 4, '공개', 'user20', 8, 18),
+                                                                                                     ('케이크가 부드럽고 맛있어요. 다양한 종류의 케이크가 있어요.', '케이크 맛집', 'cake39.jpg', '2023-05-09', 5, '공개', 'user02', 9, 19),
+                                                                                                     ('찹쌀떡이 쫄깃하고 맛있어요. 다양한 종류의 찹쌀떡이 있어요.', '찹쌀떡 천국', 'chapssalddeok40.jpg', '2023-05-10', 1, '공개', 'user04', 10, 20);
 INSERT INTO grades (user_grade, grade_low, grade_high)
 VALUES
     ('브론즈', 0, 499),
@@ -603,87 +830,87 @@ INSERT INTO visited_store_lists VALUES (4, '2023-04-13', 'user04', '쌀국수 �
 INSERT INTO visited_store_lists VALUES (5, '2023-04-14', 'user05', '빵 맛집', '서울시 강남구 역삼동 567-89');
 
 INSERT INTO breaktimes (rest_start_time, rest_end_time, store_num) VALUES
-   ('12:30:00', '13:30:00', 1),
-   ('15:00:00', '15:30:00', 1),
-   ('14:00:00', '14:30:00', 2),
-   ('18:00:00', '18:30:00', 2),
-   ('16:00:00', '16:30:00', 3),
-   ('12:00:00', '12:30:00', 4),
-   ('13:30:00', '14:00:00', 4),
-   ('17:00:00', '17:30:00', 5),
-   ('11:30:00', '12:00:00', 5),
-   ('14:30:00', '15:00:00', 6);
+                                                                       ('12:30:00', '13:30:00', 1),
+                                                                       ('15:00:00', '15:30:00', 1),
+                                                                       ('14:00:00', '14:30:00', 2),
+                                                                       ('18:00:00', '18:30:00', 2),
+                                                                       ('16:00:00', '16:30:00', 3),
+                                                                       ('12:00:00', '12:30:00', 4),
+                                                                       ('13:30:00', '14:00:00', 4),
+                                                                       ('17:00:00', '17:30:00', 5),
+                                                                       ('11:30:00', '12:00:00', 5),
+                                                                       ('14:30:00', '15:00:00', 6);
 
 INSERT INTO jjim_manages (jj_status, user_id, store_num) VALUES
-     ('공개', 'user01', 1),
-     ('비공개', 'user01', 2),
-     ('공개', 'user02', 3),
-     ('공개', 'user02', 4),
-     ('비공개', 'user03', 5),
-     ('공개', 'user04', 6),
-     ('비공개', 'user04', 7),
-     ('공개', 'user05', 8),
-     ('비공개', 'user05', 9),
-     ('공개', 'user06', 10);
+                                                             ('공개', 'user01', 1),
+                                                             ('비공개', 'user01', 2),
+                                                             ('공개', 'user02', 3),
+                                                             ('공개', 'user02', 4),
+                                                             ('비공개', 'user03', 5),
+                                                             ('공개', 'user04', 6),
+                                                             ('비공개', 'user04', 7),
+                                                             ('공개', 'user05', 8),
+                                                             ('비공개', 'user05', 9),
+                                                             ('공개', 'user06', 10);
 
 INSERT INTO recommend_stores (comment, user_id, store_num) VALUES
-   ('훌륭한 햄버거!', 'user01', 1),
-   ('맛있는 닭갈비집!', 'user01', 2),
-   ('최고의 탕수육!', 'user01', 3),
-   ('맛있는 쌀국수!', 'user02', 4),
-   ('신선한 초밥!', 'user02', 6),
-   ('맛있는 치킨집!', 'user02', 8),
-   ('부드러운 빵이 좋아요', 'user03', 5),
-   ('맛있는 돈까스집!', 'user03', 9),
-   ('커리가 맛있는 파스타집!', 'user03', 10),
-   ('족발이 정말 맛있어요!', 'user04', 7);
+                                                               ('훌륭한 햄버거!', 'user01', 1),
+                                                               ('맛있는 닭갈비집!', 'user01', 2),
+                                                               ('최고의 탕수육!', 'user01', 3),
+                                                               ('맛있는 쌀국수!', 'user02', 4),
+                                                               ('신선한 초밥!', 'user02', 6),
+                                                               ('맛있는 치킨집!', 'user02', 8),
+                                                               ('부드러운 빵이 좋아요', 'user03', 5),
+                                                               ('맛있는 돈까스집!', 'user03', 9),
+                                                               ('커리가 맛있는 파스타집!', 'user03', 10),
+                                                               ('족발이 정말 맛있어요!', 'user04', 7);
 
 INSERT INTO reviewlikes (rl_status, user_id, review_num) VALUES
-    ('LIKE', 'user01', 1),
-    ('LIKE', 'user02', 2),
-    ('BAD', 'user03', 3),
-    ('LIKE', 'user04', 4),
-    ('BAD', 'user05', 5),
-    ('LIKE', 'user01', 6),
-    ('BAD', 'user02', 7),
-    ('LIKE', 'user03', 8),
-    ('BAD', 'user04', 9),
-    ('LIKE', 'user05', 10);
+                                                             ('LIKE', 'user01', 1),
+                                                             ('LIKE', 'user02', 2),
+                                                             ('BAD', 'user03', 3),
+                                                             ('LIKE', 'user04', 4),
+                                                             ('BAD', 'user05', 5),
+                                                             ('LIKE', 'user01', 6),
+                                                             ('BAD', 'user02', 7),
+                                                             ('LIKE', 'user03', 8),
+                                                             ('BAD', 'user04', 9),
+                                                             ('LIKE', 'user05', 10);
 
 INSERT INTO holidays (store_num, week, date, regular) VALUES
-  (1, '월', NULL, true),
-  (2, '월', NULL, true),
-  (3, '화', NULL, true),
-  (4, '수', NULL, true),
-  (5, '목', NULL, true),
-  (6, NULL, '2023-05-01', false),
-  (7, NULL, '2023-05-02', false),
-  (8, NULL, '2023-05-03', false),
-  (9, NULL, '2023-05-04', false),
-  (10, NULL, '2023-05-05', false);
+                                                          (1, '월', NULL, true),
+                                                          (2, '월', NULL, true),
+                                                          (3, '화', NULL, true),
+                                                          (4, '수', NULL, true),
+                                                          (5, '목', NULL, true),
+                                                          (6, NULL, '2023-05-01', false),
+                                                          (7, NULL, '2023-05-02', false),
+                                                          (8, NULL, '2023-05-03', false),
+                                                          (9, NULL, '2023-05-04', false),
+                                                          (10, NULL, '2023-05-05', false);
 
 INSERT INTO points (point_date, point_plus, point_reason, user_id) VALUES
-   ('2023-04-01', 500, '회원가입 축하 포인트', 'user01'),
-   ('2023-04-02', 300, '이벤트 참여 포인트', 'user01'),
-   ('2023-04-03', 200, '리뷰 작성 포인트', 'user01'),
-   ('2023-04-01', 500, '회원가입 축하 포인트', 'user02'),
-   ('2023-04-04', 100, '추천가게 등록 포인트', 'user02'),
-   ('2023-04-01', 500, '회원가입 축하 포인트', 'user03'),
-   ('2023-04-05', 150, '친구 추천 포인트', 'user03'),
-   ('2023-04-01', 500, '회원가입 축하 포인트', 'user04'),
-   ('2023-04-06', 200, '리뷰 작성 포인트', 'user04'),
-   ('2023-04-01', 500, '회원가입 축하 포인트', 'user05'),
-   ('2023-04-07', 300, '이벤트 참여 포인트', 'user05'),
-   ('2023-04-01', 500, '회원가입 축하 포인트', 'user06'),
-   ('2023-04-08', 100, '추천가게 등록 포인트', 'user06'),
-   ('2023-04-01', 500, '회원가입 축하 포인트', 'user07'),
-   ('2023-04-09', 150, '친구 추천 포인트', 'user07'),
-   ('2023-04-01', 500, '회원가입 축하 포인트', 'user08'),
-   ('2023-04-10', 200, '리뷰 작성 포인트', 'user08'),
-   ('2023-04-01', 500, '회원가입 축하 포인트', 'user09'),
-   ('2023-04-11', 300, '이벤트 참여 포인트', 'user09'),
-   ('2023-04-01', 500, '회원가입 축하 포인트', 'user10'),
-   ('2023-04-12', 100, '추천가게 등록 포인트', 'user10');
+                                                                       ('2023-04-01', 500, '회원가입 축하 포인트', 'user01'),
+                                                                       ('2023-04-02', 300, '이벤트 참여 포인트', 'user01'),
+                                                                       ('2023-04-03', 200, '리뷰 작성 포인트', 'user01'),
+                                                                       ('2023-04-01', 500, '회원가입 축하 포인트', 'user02'),
+                                                                       ('2023-04-04', 100, '추천가게 등록 포인트', 'user02'),
+                                                                       ('2023-04-01', 500, '회원가입 축하 포인트', 'user03'),
+                                                                       ('2023-04-05', 150, '친구 추천 포인트', 'user03'),
+                                                                       ('2023-04-01', 500, '회원가입 축하 포인트', 'user04'),
+                                                                       ('2023-04-06', 200, '리뷰 작성 포인트', 'user04'),
+                                                                       ('2023-04-01', 500, '회원가입 축하 포인트', 'user05'),
+                                                                       ('2023-04-07', 300, '이벤트 참여 포인트', 'user05'),
+                                                                       ('2023-04-01', 500, '회원가입 축하 포인트', 'user06'),
+                                                                       ('2023-04-08', 100, '추천가게 등록 포인트', 'user06'),
+                                                                       ('2023-04-01', 500, '회원가입 축하 포인트', 'user07'),
+                                                                       ('2023-04-09', 150, '친구 추천 포인트', 'user07'),
+                                                                       ('2023-04-01', 500, '회원가입 축하 포인트', 'user08'),
+                                                                       ('2023-04-10', 200, '리뷰 작성 포인트', 'user08'),
+                                                                       ('2023-04-01', 500, '회원가입 축하 포인트', 'user09'),
+                                                                       ('2023-04-11', 300, '이벤트 참여 포인트', 'user09'),
+                                                                       ('2023-04-01', 500, '회원가입 축하 포인트', 'user10'),
+                                                                       ('2023-04-12', 100, '추천가게 등록 포인트', 'user10');
 
 INSERT INTO review_replies (review_num, post_date, content)
 VALUES
@@ -699,41 +926,68 @@ VALUES
     (10, '2023-04-10', '좋은 리뷰 감사드립니다!');
 
 INSERT INTO store_imgs (store_num, store_img) VALUES
-    (1, '/images/storeImg/store1_img1.jpg'),
-    (1, '/images/storeImg/store1_img2.jpg'),
-    (1, '/images/storeImg/store1_img3.jpg'),
-    (2, '/images/storeImg/store2_img1.jpg'),
-    (3, '/images/storeImg/store3_img1.jpg'),
-    (4, '/images/storeImg/store4_img1.jpg'),
-    (4, '/images/storeImg/store4_img2.jpg'),
-    (5, '/images/storeImg/store5_img1.jpg'),
-    (6, '/images/storeImg/store6_img1.jpg'),
-    (7, '/images/storeImg/store7_img1.jpg'),
-    (8, '/images/storeImg/store8_img1.jpg');
+                                                  (1, '/images/storeImg/store1_img1.jpg'),
+                                                  (1, '/images/storeImg/store1_img2.jpg'),
+                                                  (1, '/images/storeImg/store1_img3.jpg'),
+                                                  (2, '/images/storeImg/store2_img1.jpg'),
+                                                  (3, '/images/storeImg/store3_img1.jpg'),
+                                                  (4, '/images/storeImg/store4_img1.jpg'),
+                                                  (4, '/images/storeImg/store4_img2.jpg'),
+                                                  (5, '/images/storeImg/store5_img1.jpg'),
+                                                  (6, '/images/storeImg/store6_img1.jpg'),
+                                                  (7, '/images/storeImg/store7_img1.jpg'),
+                                                  (8, '/images/storeImg/store8_img1.jpg');
 
 INSERT INTO chapstoryimgs (chap_num, img) VALUES
-  (1, '/public/img/chapstory/chapstory1-1.jpg'),
-  (1, '/public/img/chapstory/chapstory1-2.jpg'),
-  (1, '/public/img/chapstory/chapstory1-3.jpg'),
-  (2, '/public/img/chapstory/chapstory2-1.jpg'),
-  (2, '/public/img/chapstory/chapstory2-2.jpg'),
-  (3, '/public/img/chapstory/chapstory3-1.jpg'),
-  (3, '/public/img/chapstory/chapstory3-2.jpg'),
-  (4, '/public/img/chapstory/chapstory4-1.jpg'),
-  (4, '/public/img/chapstory/chapstory4-2.jpg'),
-  (5, '/public/img/chapstory/chapstory5-1.jpg');
+                                              (1, '/public/img/chapstory/피자.jpeg'),
+                                              (2, '/public/img/chapstory/보쌈.jpeg'),
+                                              (3, '/public/img/chapstory/냉면.jpeg'),
+                                              (4, '/public/img/chapstory/돈까스.jpeg'),
+                                              (5, '/public/img/chapstory/김밥.jpeg'),
+                                              (6, '/public/img/chapstory/납작만두.jpeg'),
+                                              (7, '/public/img/chapstory/떡볶이.jpeg'),
+                                              (8, '/public/img/chapstory/삼겹살.jpeg'),
+                                              (8, '/public/img/chapstory/삼겹살2.jpeg'),
+                                              (8, '/public/img/chapstory/삼겹살3.jpeg'),
+                                              (9, '/public/img/chapstory/직화쭈꾸미.jpeg'),
+                                              (10, '/public/img/chapstory/찜닭.jpeg'),
+                                              (11, '/public/img/chapstory/치즈폭포라볶이.jpeg'),
+                                              (12, '/public/img/chapstory/감자탕.jpeg'),
+                                              (13, '/public/img/chapstory/바질페스토.jpeg'),
+                                              (14, '/public/img/chapstory/이자카야.jpeg'),
+                                              (14, '/public/img/chapstory/이자카야2.jpeg'),
+                                              (14, '/public/img/chapstory/이자카야3.jpeg'),
+                                              (15, '/public/img/chapstory/양꼬치.jpeg'),
+                                              (15, '/public/img/chapstory/양꼬치2.jpeg'),
+                                              (16, '/public/img/chapstory/휘낭시에.jpeg'),
+                                              (16, '/public/img/chapstory/휘낭시에2.jpeg'),
+                                              (16, '/public/img/chapstory/휘낭시에3.jpeg'),
+                                              (17, '/public/img/chapstory/김선생.jpeg'),
+                                              (18, '/public/img/chapstory/맘스터치.jpeg'),
+                                              (19, '/public/img/chapstory/맘스터치2.jpeg'),
+                                              (19, '/public/img/chapstory/맘스터치3.jpeg'),
+                                              (20, '/public/img/chapstory/묵사발.jpeg'),
+                                              (21, '/public/img/chapstory/등촌칼국수.jpeg'),
+                                              (21, '/public/img/chapstory/등촌칼국수2.jpeg'),
+                                              (21, '/public/img/chapstory/등촌칼국수3.jpeg'),
+                                              (22, '/public/img/chapstory/오코노미야끼.jpeg'),
+                                              (22, '/public/img/chapstory/오코노미야끼2.jpeg'),
+                                              (23, '/public/img/chapstory/라멘.jpeg'),
+                                              (24, '/public/img/chapstory/타코.jpeg'),
+                                              (24, '/public/img/chapstory/타코2.jpeg'),
+                                              (24, '/public/img/chapstory/타코3.jpeg');
 
 INSERT INTO chap_deals (store_num, event_title, event_condition, event_reward, event_img, event_start, event_end) VALUES
-  (1, '해피 아워 할인', '오후 5시부터 오후 7시 방문', '음료 50% 할인', 'event2.jpg', '2023-04-16', '2023-04-25'),
-  (2, '주말 브런치 이벤트', '주말 브런치 메뉴 주문 시 커피 무료', '커피 1잔 무료', 'event9.jpg', '2023-04-30', '2023-05-15'),
-  (3, '데이트 코스 할인', '데이트 코스 메뉴 주문 시 와인 무료', '와인 1병 무료', 'event10.jpg', '2023-05-01', '2023-05-20'),
-  (4, '샐러드 데이 이벤트', '샐러드 구매 시 음료 무료', '음료수 1잔 무료', 'event8.jpg', '2023-04-28', '2023-05-07'),
-  (5, '베이커리 세일', '빵 구매 시 커피 무료', '커피 1잔 무료', 'event3.jpg', '2023-04-20', '2023-05-05'),
-  (5, '한정 메뉴 할인', '한정 메뉴 주문 시 디저트 무료', '디저트 1개 무료', 'event7.jpg', '2023-04-26', '2023-05-12'),
-  (6, '스시 특별 할인', '2인분 주문 시 1인분 무료', '스시 1인분 무료', 'event1.jpg', '2023-04-15', '2023-04-30'),
-  (8, '치킨 가족 할인', '4인분 주문 시 1인분 무료', '치킨 1인분 무료', 'event4.jpg', '2023-04-18', '2023-04-28'),
-  (10, '피자 콤보 할인', '피자와 사이드메뉴 함께 주문', '음료수 무료', 'event5.jpg', '2023-04-22', '2023-05-02'),
-  (10, '파스타 및 와인 이벤트', '파스타 2인분 주문 시 와인 1병 무료', '와인 1병 무료', 'event6.jpg', '2023-04-24', '2023-05-09');
+                                                                                                                      (1, '해피 아워 할인', '오후 5시부터 오후 7시 방문', '음료 50% 할인', 'event2.jpg', '2023-04-16', '2023-04-25'),
+                                                                                                                      (2, '주말 브런치 이벤트', '주말 브런치 메뉴 주문 시 커피 무료', '커피 1잔 무료', 'event9.jpg', '2023-04-30', '2023-05-15'),
+                                                                                                                      (3, '데이트 코스 할인', '데이트 코스 메뉴 주문 시 와인 무료', '와인 1병 무료', 'event10.jpg', '2023-05-01', '2023-05-20'),
+                                                                                                                      (4, '샐러드 데이 이벤트', '샐러드 구매 시 음료 무료', '음료수 1잔 무료', 'event8.jpg', '2023-04-28', '2023-05-07'),
+                                                                                                                      (5, '베이커리 세일', '빵 구매 시 커피 무료', '커피 1잔 무료', 'event3.jpg', '2023-04-20', '2023-05-05'),
+                                                                                                                      (5, '한정 메뉴 할인', '한정 메뉴 주문 시 디저트 무료', '디저트 1개 무료', 'event7.jpg', '2023-04-26', '2023-05-12'),
+                                                                                                                      (6, '스시 특별 할인', '2인분 주문 시 1인분 무료', '스시 1인분 무료', 'event1.jpg', '2023-04-15', '2023-04-30'),
+                                                                                                                      (8, '치킨 가족 할인', '4인분 주문 시 1인분 무료', '치킨 1인분 무료', 'event4.jpg', '2023-04-18', '2023-04-28'),
+                                                                                                                      (10, '피자 콤보 할인', '피자와 사이드메뉴 함께 주문', '음료수 무료', 'event5.jpg', '2023-04-22', '2023-05-02'),
+                                                                                                                      (10, '파스타 및 와인 이벤트', '파스타 2인분 주문 시 와인 1병 무료', '와인 1병 무료', 'event6.jpg', '2023-04-24', '2023-05-09');
 
 INSERT INTO chat_rooms(user_id, name, post_time)
 VALUES
@@ -775,9 +1029,17 @@ VALUES (1, 'user01'),
        (2, 'user09'),
        (2, 'user10'),
        (3, 'user03'),
+       (3, 'user05'),
+       (3, 'user06'),
        (4, 'user04'),
        (5, 'user05'),
        (6, 'user06'),
+       (6, 'user07'),
+       (6, 'user08'),
+       (6, 'user09'),
+       (6, 'user10'),
+       (6, 'user11'),
+       (6, 'user12'),
        (7, 'user07'),
        (8, 'user08'),
        (9, 'user09'),
@@ -788,7 +1050,9 @@ VALUES (1, 'user01'),
        (15, 'user15'),
        (16, 'user16'),
        (17, 'user17'),
-       (18, 'user18');
+       (18, 'user18'),
+       (19, 'user19'),
+       (20, 'user20');
 
 
 # 여기부터 988개 store_manages, store, storetypes

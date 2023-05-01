@@ -1,8 +1,10 @@
 package com.acorn.chapspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class StoresWaitingDto {
     private int adminWaiting; //PK 웨이팅
     private String closingTime; //웨이팅 마감시간

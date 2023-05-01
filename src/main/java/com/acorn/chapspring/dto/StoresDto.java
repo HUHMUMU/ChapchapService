@@ -1,10 +1,12 @@
 package com.acorn.chapspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class StoresDto {
     private int storeNum; //PK
     private String storeName; //가게 이름
