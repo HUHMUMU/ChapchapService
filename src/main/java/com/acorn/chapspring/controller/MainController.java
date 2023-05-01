@@ -29,9 +29,15 @@ public class MainController {
             @RequestParam("searchValue") String searchValue,
             Model model
     ) {
+        List<StoresDto> stores
+        if (findStore.equals("storeAddress"))
+        List<StoresDto> stores = mainService.getStoreByAddress(searchValue);
+        else if () {
+
+        }
 
 
-            model.addAttribute("findStore", findStore);
+        model.addAttribute("findStore", findStore);
             model.addAttribute("searchValue", searchValue);
 
         return "store/list"; //렌더할 뷰

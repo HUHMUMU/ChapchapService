@@ -1,9 +1,13 @@
 package com.acorn.chapspring.service;
 
 import com.acorn.chapspring.dto.StoresDto;
+
 import com.acorn.chapspring.mapper.MainSearchMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -25,4 +29,23 @@ public class MainServiceImp implements MainService{
     public StoresDto getStoreByPubReviews(String siAdd, String guAdd) {
         return mainSearchMapper.findByPubReviewsOne(siAdd, guAdd);
     }
+
+    @Override
+    public List<StoresDto> getStoreByAddress(String address) {
+
+        return mainSearchMapper.findByStoreAddress(address);
+    }
+
+    @Override
+    public List<StoresDto> getStoreByStoreName(String storeName) {
+
+        return mainSearchMapper.findByStoreName(storeName);
+    }
+
+    @Override
+    public List<StoresDto> getStoreByStoreMenu(String storeMenu) {
+
+        return mainSearchMapper.findByStoreMenu(storeMenu);
+    }
+
 }

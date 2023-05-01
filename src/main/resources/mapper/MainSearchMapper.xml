@@ -63,5 +63,17 @@
             LIMIT 1;
     </select>
 
+    <select id="findByStoreAddress" resultMap="StoresMap">
+        SELECT * FROM stores WHERE address LIKE CONCAT('%',#{param1},'%')
+    </select>
+
+    <select id="findByStoreName" resultMap="StoresMap">
+        SELECT * FROM stores WHERE store_name LIKE CONCAT('%',#{param1},'%')
+    </select>
+
+    <select id="findByStoreMenu" resultMap="StoresMap">
+
+    </select>
+
 
 </mapper>
