@@ -26,14 +26,13 @@ public class StoreController {
                         @SessionAttribute(required = false) UserDto loginUser,
                         @PathVariable int storeNum) {
         StoresDto stores=storeService.getStoreByStoreNum(storeNum); //가게 정보 가져오기
-//추천버든 기능구현
+//추천버튼 기능구현
         if (loginUser != null) {
             //로그인한 유저가 가게를 추천하고 있는지 데이터를 비교하는 작업
             RecommendStoreDto recommending=recommendService.recommendCheck(loginUser.getUserId(), storeNum);
             JjimManageDto checkJjim=jjimService.checkJjim(loginUser.getUserId(),storeNum);
             model.addAttribute("recommending",recommending);
             model.addAttribute("checkjjim",checkJjim);
-
         }
 //----------------
         model.addAttribute("stores",stores);

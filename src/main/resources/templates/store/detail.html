@@ -9,6 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="/public/js/ReviewLike.js" defer></script>
+  <script src="/public/js/StoreDetail.js" defer th:inline="javascript"></script>
 </head>
 <div layout:fragment="content" th:each="s:${stores}">
   <div class="image-container store">
@@ -287,10 +288,7 @@
   </div>
 
 
-  <div id="map" class="store mt-4">
-    <div style="width: 600px; height: 400px; border: #222 solid 1px;">
-      지도가 들어갈거에요
-    </div>
+  <div id="map" class="store mt-4 mb-5" style="max-width: 600px; min-width: 300px; max-height: 600px; min-height: 300px; border: none;">
   </div>
 
 </div>
