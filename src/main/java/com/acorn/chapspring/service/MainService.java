@@ -11,7 +11,4 @@ public interface MainService {
     StoresDto getStoreByCafeReviews(String siAdd,String guAdd);
     StoresDto getStoreByPubReviews(String siAdd,String guAdd);
 
-    List<StoresDto> getStoreByAddress(String address);
-    List<StoresDto> getStoreByStoreName(String storeName);
-    List<StoresDto> getStoreByStoreMenu(String storeMenu);
 }

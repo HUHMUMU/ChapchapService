@@ -85,15 +85,12 @@ function filterResult(){ // 현재 필터된 요소 표시 버튼
 let markers = [];
 function loadStoreList(search){
     let url='/store/ajaxList.do?';
-    if(search){
-        url+=search;
-    }else{
-        for (const key in allParam) {
-            if (allParam[key]) { // 값이 있을 경우에만 추가합니다.
-                url += `&${key}=${allParam[key]}`;
-            }
+    for (const key in allParam) {
+        if (allParam[key]) { // 값이 있을 경우에만 추가합니다.
+            url += `&${key}=${allParam[key]}`;
         }
     }
+
     for (let j = 0; j < markers.length; j++) {
         markers[j].setMap(null);
     }
@@ -146,7 +143,14 @@ function loadStoreList(search){
     filterResult();
 }
 
-loadStoreList(location.search);
+(function init(){
+    const params=location.search.split("&");
+    params.forEach((p)=>{
+        const ps=p.split("=");
+        allParam[ps[0]]=ps[1];
+    })
+    loadStoreList();
+})();
 function getCategoryName(categoryNum) {
     switch(categoryNum) {
         case 1: return "혼밥";
@@ -241,7 +245,7 @@ function pageNavComponent(page = {}){
             <li class="page-item ${isDisabled ? 'disabled' : ''}">
                 <a class="page-link text-secondary"
                    style="padding:4px 6px;"
-                   href="#"
+                   href="javascript:void(0)"
                    onclick = "createPageUrl(${navigatePageNum})"
                    class="${(navigatePageNum === parseInt(allParam.pageNumber)) ? 'active' : ''}">
                    ${pageNum}
@@ -300,6 +304,7 @@ function setParking(parkingValue, parkingText){
     allParam.parkingType = parkingText;
     loadStoreList();
 }
+
 
 // 시군구
 let gangwon = ["강릉시", "동해시", "삼척시", "속초시", "원주시", "춘천시", "태백시", "고성군", "양구군", "양양군", "영월군", "인제군", "정선군", "철원군", "평창군", "홍천군", "화천군", "횡성군"];

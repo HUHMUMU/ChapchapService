@@ -30,22 +30,5 @@ public class MainServiceImp implements MainService{
         return mainSearchMapper.findByPubReviewsOne(siAdd, guAdd);
     }
 
-    @Override
-    public List<StoresDto> getStoreByAddress(String address) {
-
-        return mainSearchMapper.findByStoreAddress(address);
-    }
-
-    @Override
-    public List<StoresDto> getStoreByStoreName(String storeName) {
-
-        return mainSearchMapper.findByStoreName(storeName);
-    }
-
-    @Override
-    public List<StoresDto> getStoreByStoreMenu(String storeMenu) {
-
-        return mainSearchMapper.findByStoreMenu(storeMenu);
-    }
 
 }

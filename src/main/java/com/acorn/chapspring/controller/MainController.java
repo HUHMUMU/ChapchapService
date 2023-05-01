@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 
@@ -25,22 +27,21 @@ public class MainController {
 
     @GetMapping("/findStore.do")
     public String findStoreFrom(
-            @RequestParam("findStore") String findStore,
-            @RequestParam("searchValue") String searchValue,
-            Model model
-    ) {
-        List<StoresDto> stores
-        if (findStore.equals("storeAddress"))
-        List<StoresDto> stores = mainService.getStoreByAddress(searchValue);
-        else if () {
-
+            String findStore,
+            String searchValue
+    ) throws UnsupportedEncodingException {
+        String redirectPath = "redirect:/store/list.do?pageNumber=1";
+        if(findStore.equals("storeAddress"))
+            redirectPath = "redirect:/store/list.do?pageNumber=1&detailArea=" + URLEncoder.encode(searchValue, "UTF-8");
+        else if (findStore.equals("storeName")) {
+            redirectPath = "redirect:/store/list.do?pageNumber=1&searchName=" + URLEncoder.encode(searchValue, "UTF-8");
         }
-
-
-        model.addAttribute("findStore", findStore);
-            model.addAttribute("searchValue", searchValue);
-
-        return "store/list"; //렌더할 뷰
+        else if (findStore.equals("storeMenu")) {
+            redirectPath = "redirect:/store/list.do?pageNumber=1&detailMenuName=" + URLEncoder.encode(searchValue, "UTF-8");
+        }else {
+            System.out.println("돌아가");
+        }
+        return redirectPath;
     }
 
 
