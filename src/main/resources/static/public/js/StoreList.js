@@ -45,7 +45,7 @@ function filterResult(){ // 현재 필터된 요소 표시 버튼
         btn.setAttribute("type", "button");
         btn.setAttribute("class", "btn btn-secondary btn-sm p-0 me-1 ms-1");
         btn.style.width = "50px";
-        btn.innerText = allParam[key];
+        btn.innerText = decodeURIComponent(allParam[key]);
 
         // menuName에 대한 버튼 클릭 처리
         if (key === 'menuName') {
