@@ -42,7 +42,7 @@
     <span th:text="'/방문자리뷰 '+${s.reviewCount}" class="starReview"></span>
   </div>
   <div class="store">
-    <p th:text="'현재 '+${s.waiting.waitingCnt}+'팀 대기중입니다.'" class="badge text-bg-warning waitingTeam">현재 10팀 대기중입니다.</p>
+    <p th:text="'현재 '+${s.waitingTeamNum.waitingCnt}+'팀 대기중입니다.'" class="badge text-bg-warning waitingTeam">현재 10팀 대기중입니다.</p>
   </div>
   <div class="store">
     <ul class="list-group">
@@ -286,9 +286,11 @@
       <a class="btn btn-dark m-0" id="show-more">더보기</a>
     </div>
   </div>
-
-
-  <div id="map" class="store mt-4 mb-5" style="max-width: 600px; min-width: 300px; max-height: 600px; min-height: 300px; border: none;">
+  <div class="store">
+    <input id="storeAddress" type="hidden" th:value="${stores.getAddress()}">
+    <input id="storeName" type="hidden" th:value="${stores.getStoreName()}">
+    <div id="map" class="mt-4 mb-5" style="width: 600px; height: 600px; border: none;">
+    </div>
   </div>
 
 </div>
