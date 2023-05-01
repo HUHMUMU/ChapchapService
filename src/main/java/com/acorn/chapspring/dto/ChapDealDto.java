@@ -1,10 +1,12 @@
 package com.acorn.chapspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class ChapDealDto {
     private int eventNum; //pk (auto increment)
     private int storeNum; //fk 가게 번호

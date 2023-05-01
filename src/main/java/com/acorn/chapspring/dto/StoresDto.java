@@ -1,10 +1,12 @@
 package com.acorn.chapspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class StoresDto {
     private int storeNum; //PK
     private String storeName; //가게 이름
@@ -36,6 +38,7 @@ public class StoresDto {
     private StoretypesDto storeType; //가게 업종 가져오기
     private List<HolidaysDto> holiday; //휴무일 가져오기
     private List<StoreImgsDto> storeImgs; //가게 이미지 가져오기
+    private ReviewsDto starAvg;
 
     private int categoryNum; // 카테고리 번호
     private int jjimCount; // 찜 갯수

@@ -1,8 +1,10 @@
 package com.acorn.chapspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class StoreFilterDto {
     private Integer menuType; // 가게리스트에서 타입으로 필터하기위해 작성
     private String priceRange; // 가격대별로 필터하기위해

@@ -12,12 +12,12 @@
     <div layout:fragment = "content">
         <div>
             <div style="height: 300px; position: relative; background-color: #ffeeba;">
-                <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,chapstorys[0].user.userId)}">
-                    <div class="input-group" style="width: 50%;float:right">
-                        <label class="input-group-text">베너 이미지 변경</label>
-                        <input class="form-control" type="file" name="chapbanner">
-                    </div>
-                </th:block>
+<!--                <th:block th:if="${session.loginUser!=null && #strings.equals(session.loginUser.userId,chapstorys[0].user.userId)}">-->
+<!--                    <div class="input-group" style="width: 50%;float:right">-->
+<!--                        <label class="input-group-text">베너 이미지 변경</label>-->
+<!--                        <input class="form-control" type="file" name="chapbanner">-->
+<!--                    </div>-->
+<!--                </th:block>-->
                 <div class="d-flex justify-content-between p-4 align-items-end" id="box" style="position: absolute; bottom: 0; width: 100%;">
                     <div class="d-flex">
                         <img th:src="@{'{path}'(path=${chapstorys[0].user.profileImg})}" alt = "유저 프사" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail rounded-circle me-3">
@@ -36,37 +36,56 @@
         </div>
         <div style="margin-top: 70px">
             <h4 style="font-size: 40px; margin-bottom: 40px">인기글</h4>
-            <div class="d-flex justify-content-between" style=" margin-bottom: 70px">
-                <div>
-                    <img th:src="@{'{path}'(path=${bestChaps[0].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+            <div class="d-flex justify-content-around" style=" margin-bottom: 70px">
+                <div th:if="${#arrays.length(bestChaps) > 0 and bestChaps[0] != null and not #lists.isEmpty(bestChaps[0])}">
+                    <div th:if="${bestChaps[0].chapstoryimgs != null and not #lists.isEmpty(bestChaps[0].chapstoryimgs)}">
+                        <img th:src="@{'{path}'(path=${bestChaps[0].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    </div>
                     <h5>
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[0].chapNum})}" th:text="${bestChaps[0].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
-                <div>
-                    <img th:src="@{'{path}'(path=${bestChaps[1].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                <div th:if="${#arrays.length(bestChaps) > 1 and bestChaps[1] != null and not #lists.isEmpty(bestChaps[1])}">
+                    <div th:if="${bestChaps[1].chapstoryimgs != null and not #lists.isEmpty(bestChaps[1].chapstoryimgs)}">
+                        <img th:src="@{'{path}'(path=${bestChaps[1].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    </div>
                     <h5>
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[1].chapNum})}" th:text="${bestChaps[1].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
-                <div>
-                    <img th:src="@{'{path}'(path=${bestChaps[2].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                <div th:if="${#arrays.length(bestChaps) > 2 and bestChaps[2] != null and not #lists.isEmpty(bestChaps[2])}">
+                    <div th:if="${bestChaps[2].chapstoryimgs != null and not #lists.isEmpty(bestChaps[2].chapstoryimgs)}">
+                        <img th:src="@{'{path}'(path=${bestChaps[2].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    </div>
                     <h5>
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[2].chapNum})}" th:text="${bestChaps[2].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
-                <div>
-                    <img th:src="@{'{path}'(path=${bestChaps[3].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                <div th:if="${#arrays.length(bestChaps) > 3 and bestChaps[3] != null and not #lists.isEmpty(bestChaps[3])}">
+                    <div th:if="${bestChaps[3].chapstoryimgs != null and not #lists.isEmpty(bestChaps[3].chapstoryimgs)}">
+                        <img th:src="@{'{path}'(path=${bestChaps[3].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    </div>
                     <h5>
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[3].chapNum})}" th:text="${bestChaps[3].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
-                <div>
-                    <img th:src="@{'{path}'(path=${bestChaps[4].mainImg})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                <div th:if="${#arrays.length(bestChaps) > 4 and bestChaps[4] != null and not #lists.isEmpty(bestChaps[4])}">
+                    <div th:if="${bestChaps[4].chapstoryimgs != null and not #lists.isEmpty(bestChaps[4].chapstoryimgs)}">
+                        <img th:src="@{'{path}'(path=${bestChaps[4].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    </div>
                     <h5>
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[4].chapNum})}" th:text="${bestChaps[4].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
+                <div th:if="${#arrays.length(bestChaps) > 5 and bestChaps[5] != null and not #lists.isEmpty(bestChaps[5])}">
+                    <div th:if="${bestChaps[5].chapstoryimgs != null and not #lists.isEmpty(bestChaps[5].chapstoryimgs)}">
+                        <img th:src="@{'{path}'(path=${bestChaps[5].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
+                    </div>
+                    <h5>
+                        <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[5].chapNum})}" th:text="${bestChaps[5].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
+                    </h5>
+                </div>
+
             </div>
             <hr>
         </div>
@@ -76,8 +95,11 @@
                 <div class="col">
                     <div class="card mb-4">
                         <div style="text-align: center; position: relative;">
-                            <small th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}" class="justify-content-end" style="position: absolute; right: 0;"></small>
-                            <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="height: 300px; width: 100%; position: relative; object-fit: cover;" class="img-thumbnail">
+                            <small th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}" class="justify-content-end" style="position: absolute; right: 0; margin-right: 5px"></small>
+                            <div th:if="${c.chapstoryimgs != null and not #lists.isEmpty(c.chapstoryimgs)}">
+                                <img th:src="@{'{path}'(path=${c.chapstoryimgs[0].img})}" alt = "챱스 썸네일" style="height: 300px; width: 100%; position: relative; object-fit: cover;" class="img-thumbnail">
+                            </div>
+<!--                            <img th:src="@{'{path}'(path=${c.mainImg})}" alt = "챱스 썸네일" style="height: 300px; width: 100%; position: relative; object-fit: cover;" class="img-thumbnail">-->
                             <h3 style="margin: 20px">
                                 <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${c.chapNum})}" th:text="${c.title}" style="text-decoration: none; color: inherit; width: 150px"></a>
                             </h3>

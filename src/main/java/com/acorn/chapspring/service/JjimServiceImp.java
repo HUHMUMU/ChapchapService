@@ -25,4 +25,22 @@ public class JjimServiceImp implements JjimService{
         }
         return userJjimList;
     }
+
+    @Override
+    public int add(JjimManageDto jjim){
+        int add=jjimManageMapper.insertOneByUserId(jjim);
+        return add;
+    }
+
+    @Override
+    public int delete(JjimManageDto jjim){
+        int delete=jjimManageMapper.deleteOneByUserIdAndStoreNum(jjim);
+        return delete;
+    }
+
+    @Override
+    public JjimManageDto checkJjim(String userId,int storeNum){
+        JjimManageDto jjim=jjimManageMapper.findOneByUserIdAndStoreNum(userId, storeNum);
+        return  jjim;
+    }
 }

@@ -10,8 +10,19 @@ import org.springframework.stereotype.Service;
 public class MainServiceImp implements MainService{
 
     private MainSearchMapper mainSearchMapper;
+
     @Override
-    public StoresDto getStoreByAddressReviews(String siAdd, String guAdd) {
-        return mainSearchMapper.findByAddressReviewsOne(siAdd, guAdd);
+    public StoresDto getStoreByStoreReviews(String siAdd, String guAdd) {
+        return mainSearchMapper.findByStoreReviewsOne(siAdd, guAdd);
+    }
+
+    @Override
+    public StoresDto getStoreByCafeReviews(String siAdd, String guAdd) {
+        return mainSearchMapper.findByCafeReviewsOne(siAdd, guAdd);
+    }
+
+    @Override
+    public StoresDto getStoreByPubReviews(String siAdd, String guAdd) {
+        return mainSearchMapper.findByPubReviewsOne(siAdd, guAdd);
     }
 }
