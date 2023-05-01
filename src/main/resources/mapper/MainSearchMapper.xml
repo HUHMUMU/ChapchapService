@@ -23,6 +23,10 @@
         <result column="toilet" property="toilet"/>
         <result column="smokingroom" property="smokingroom"/>
         <result column="babychair" property="babychair"/>
+        <collection property="menuList"
+                    select="com.acorn.chapspring.mapper.MenuManageMapper.findMenuByStore"
+                    column="store_num"
+                    fetchType="eager"/>
     </resultMap>
 
     <select id="findByStoreReviewsOne" resultMap="StoresMap">
@@ -57,6 +61,18 @@
         GROUP BY s.store_num
         ORDER BY review_count DESC
             LIMIT 1;
+    </select>
+
+    <select id="findByStoreAddress" resultMap="StoresMap">
+        SELECT * FROM stores WHERE address LIKE CONCAT('%',#{param1},'%')
+    </select>
+
+    <select id="findByStoreName" resultMap="StoresMap">
+        SELECT * FROM stores WHERE store_name LIKE CONCAT('%',#{param1},'%')
+    </select>
+
+    <select id="findByStoreMenu" resultMap="StoresMap">
+
     </select>
 
 

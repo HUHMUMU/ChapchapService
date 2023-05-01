@@ -3,6 +3,10 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+<script src="/public/js/StoreList.js" defer th:inline="javascript">
+
+
+</script>
 <div layout:fragment="content" class="position-relative">
     <button class="btn btn-warning rounded-circle mx-5 position-sticky top-50 start-100 translate-middle-y"
             style="height: 80px; width: 80px" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
@@ -34,7 +38,7 @@
                          style="height: 500px" alt="...">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+            <button class="carousel-control-pstoreAddressrev" type="button" data-bs-target="#carouselExampleFade"
                     data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
@@ -48,202 +52,199 @@
     </div>
 
     <!-- 여기서 검색하면 원준형이 만든 지도있는 페이지가 나와야 함 -->
-    <form name="searchForm" action="/" method="post">
+    <form name="searchForm" action="/findStore.do" method="GET">
         <div class="input-group w-50 mt-sm-5 mx-auto">
-            <form action="" class="mx-auto" style="width: 450px">
-                <div class="input-group my-3">
-                    <select name="findStore" class="form-control">
-                        <option value="">선택</option>
-                        <option th:selected="(${#strings.equals(param.order,'address')})"value="user_id">주소</option>
-                        <option th:selected="(${#strings.equals(param.order,'store_name')})"value="post_time">가게이름</option>
-                        <option th:selected="(${#strings.equals(param.order,'name')})"value="title">메뉴이름</option>
-                    </select>
-                    <input type="text" class="form-control" name="searchValue" placeholder="검색어 입력"
-                           th:value="${param.searchValue}">
-                    <button class="btn btn-warning">검색</button>
-                </div>
-            </form>
+            <div class="input-group my-3">
+                <select name="findStore" class="form-control">
+                    <option value="">선택</option>
+                    <option value="storeAddress">주소</option>
+                    <option value="storeName">가게이름</option>
+                    <option value="storeMenu">메뉴이름</option>
+                </select>
+                <input type="text" class="form-control" name="searchValue" placeholder="검색어 입력">
+                <button class="btn btn-warning">검색</button>
+            </div>
         </div>
     </form>
-<!-- 선택하면 가게에 해당하는 해시태그달려있는거 찾아주는거 -->
-<!--    <div class="mx-auto">-->
-<!--        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘은 뭘 먹을까?</h1>-->
+    <!-- 선택하면 가게에 해당하는 해시태그 -->
+    <!--    <div class="mx-auto">-->
+    <!--        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘은 뭘 먹을까?</h1>-->
 
-<!--        &lt;!&ndash; 지역을 설정하고 족발같은 버튼을 누르면 그 지역의 족발가게들만 보여주게 해야함 원준형이 만든 창에서 &ndash;&gt;-->
-<!--        <form action="" method="post">-->
-<!--            <div class="search_boxes d-flex justify-content-center mt-5">-->
-<!--                <div class="search_box me-3">-->
-<!--                    <select class="form-select border-warning" name="" onchange="categoryChange1(this)">-->
-<!--                        <option value>시/도 선택</option>-->
-<!--                        <option value="general01">강원</option>-->
-<!--                        <option value="general02">경기</option>-->
-<!--                        <option value="general03">경남</option>-->
-<!--                        <option value="general04">경북</option>-->
-<!--                        <option value="general05">광주</option>-->
-<!--                        <option value="general06">대구</option>-->
-<!--                        <option value="general07">대전</option>-->
-<!--                        <option value="general08">부산</option>-->
-<!--                        <option value="general09">서울</option>-->
-<!--                        <option value="general10">울산</option>-->
-<!--                        <option value="general11">인천</option>-->
-<!--                        <option value="general12">전남</option>-->
-<!--                        <option value="general13">전북</option>-->
-<!--                        <option value="general14">제주</option>-->
-<!--                        <option value="general15">충남</option>-->
-<!--                        <option value="general16">충북</option>-->
-<!--                    </select>-->
-<!--                </div>-->
+    <!--        &lt;!&ndash; 지역을 설정하고 족발같은 버튼을 누르면 그 지역의 족발가게들만 보여주게 해야함 원준형이 만든 창에서 &ndash;&gt;-->
+    <!--        <form action="" method="post">-->
+    <!--            <div class="search_boxes d-flex justify-content-center mt-5">-->
+    <!--                <div class="search_box me-3">-->
+    <!--                    <select class="form-select border-warning" name="" onchange="categoryChange1(this)">-->
+    <!--                        <option value>시/도 선택</option>-->
+    <!--                        <option value="general01">강원</option>-->
+    <!--                        <option value="general02">경기</option>-->
+    <!--                        <option value="general03">경남</option>-->
+    <!--                        <option value="general04">경북</option>-->
+    <!--                        <option value="general05">광주</option>-->
+    <!--                        <option value="general06">대구</option>-->
+    <!--                        <option value="general07">대전</option>-->
+    <!--                        <option value="general08">부산</option>-->
+    <!--                        <option value="general09">서울</option>-->
+    <!--                        <option value="general10">울산</option>-->
+    <!--                        <option value="general11">인천</option>-->
+    <!--                        <option value="general12">전남</option>-->
+    <!--                        <option value="general13">전북</option>-->
+    <!--                        <option value="general14">제주</option>-->
+    <!--                        <option value="general15">충남</option>-->
+    <!--                        <option value="general16">충북</option>-->
+    <!--                    </select>-->
+    <!--                </div>-->
 
-<!--                <div class="search_box mx ms-3">-->
-<!--                    <select class="form-select border-warning" name="" id="state1">-->
-<!--                        <option>군/구 선택</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <script>-->
-<!--                function categoryChange1(e) {-->
-<!--                    const state = document.getElementById("state1");-->
+    <!--                <div class="search_box mx ms-3">-->
+    <!--                    <select class="form-select border-warning" name="" id="state1">-->
+    <!--                        <option>군/구 선택</option>-->
+    <!--                    </select>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <script>-->
+    <!--                function categoryChange1(e) {-->
+    <!--                    const state = document.getElementById("state1");-->
 
-<!--                    const gangwon = ["강릉시", "동해시", "삼척시", "속초시", "원주시", "춘천시", "태백시", "고성군", "양구군", "양양군", "영월군", "인제군", "정선군", "철원군", "평창군", "홍천군", "화천군", "횡성군"];-->
-<!--                    const gyeonggi = ["고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "여주군", "연천군"];-->
-<!--                    const gyeongsangnam = ["거제시", "김해시", "마산시", "밀양시", "사천시", "양산시", "진주시", "진해시", "창원시", "통영시", "거창군", "고성군", "남해군", "산청군", "의령군", "창녕군", "하동군", "함안군", "함양군", "합천군"];-->
-<!--                    const gyeongsangbuk = ["경산시", "경주시", "구미시", "김천시", "문경시", "상주시", "안동시", "영주시", "영천시", "포항시", "고령군", "군위군", "봉화군", "성주군", "영덕군", "영양군", "예천군", "울릉군", "울진군", "의성군", "청도군", "청송군", "칠곡군"];-->
-<!--                    const gwangju = ["광산구", "남구", "동구", "북구", "서구"];-->
-<!--                    const daegu = ["남구", "달서구", "동구", "북구", "서구", "수성구", "중구", "달성군"];-->
-<!--                    const daejeon = ["대덕구", "동구", "서구", "유성구", "중구"];-->
-<!--                    const busan = ["강서구", "금정구", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구", "기장군"];-->
-<!--                    const seoul = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];-->
-<!--                    const ulsan = ["남구", "동구", "북구", "중구", "울주군"];-->
-<!--                    const incheon = ["계양구", "남구", "남동구", "동구", "부평구", "서구", "연수구", "중구", "강화군", "옹진군"];-->
-<!--                    const jeonnam = ["광양시", "나주시", "목포시", "순천시", "여수시", "강진군", "고흥군", "곡성군", "구례군", "담양군", "무안군", "보성군", "신안군", "영광군", "영암군", "완도군", "장성군", "장흥군", "진도군", "함평군", "해남군", "화순군"];-->
-<!--                    const jeonbuk = ["군산시", "김제시", "남원시", "익산시", "전주시", "정읍시", "고창군", "무주군", "부안군", "순창군", "완주군", "임실군", "장수군", "진안군"];-->
-<!--                    const jeju = ["서귀포시", "제주시", "남제주군", "북제주군"];-->
-<!--                    const chungbuk = ["제천시", "청주시", "충주시", "괴산군", "단양군", "보은군", "영동군", "옥천군", "음성군", "증평군", "진천군", "청원군"];-->
-
-
-<!--                    let add;-->
-<!--                    if (e.value === "general01") {-->
-<!--                        add = gangwon;-->
-<!--                    } else if (e.value === "general02") {-->
-<!--                        add = gyeonggi;-->
-<!--                    } else if (e.value === "general03") {-->
-<!--                        add = gyeongsangnam;-->
-<!--                    } else if (e.value === "general04") {-->
-<!--                        add = gyeongsangbuk;-->
-<!--                    } else if (e.value === "general05") {-->
-<!--                        add = gwangju;-->
-<!--                    } else if (e.value === "general06") {-->
-<!--                        add = daegu;-->
-<!--                    } else if (e.value === "general07") {-->
-<!--                        add = daejeon;-->
-<!--                    } else if (e.value === "general08") {-->
-<!--                        add = busan;-->
-<!--                    } else if (e.value === "general09") {-->
-<!--                        add = seoul;-->
-<!--                    } else if (e.value === "general10") {-->
-<!--                        add = ulsan;-->
-<!--                    } else if (e.value === "general11") {-->
-<!--                        add = incheon;-->
-<!--                    } else if (e.value === "general12") {-->
-<!--                        add = jeonnam;-->
-<!--                    } else if (e.value === "general13") {-->
-<!--                        add = jeonbuk;-->
-<!--                    } else if (e.value === "general14") {-->
-<!--                        add = jeju;-->
-<!--                    } else if (e.value === "general15") {-->
-<!--                        add = chungnam;-->
-<!--                    } else if (e.value === "general16") {-->
-<!--                        add = chungbuk;-->
-<!--                    }-->
-
-<!--                    state.options.length = 1;-->
-<!--                    // 군/구 갯수;-->
-
-<!--                    for (property in add) {-->
-<!--                        let opt = document.createElement("option");-->
-<!--                        opt.value = add[property];-->
-<!--                        opt.innerHTML = add[property];-->
-<!--                        state.appendChild(opt);-->
-<!--                    }-->
-<!--                }-->
-<!--            </script>-->
+    <!--                    const gangwon = ["강릉시", "동해시", "삼척시", "속초시", "원주시", "춘천시", "태백시", "고성군", "양구군", "양양군", "영월군", "인제군", "정선군", "철원군", "평창군", "홍천군", "화천군", "횡성군"];-->
+    <!--                    const gyeonggi = ["고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "여주군", "연천군"];-->
+    <!--                    const gyeongsangnam = ["거제시", "김해시", "마산시", "밀양시", "사천시", "양산시", "진주시", "진해시", "창원시", "통영시", "거창군", "고성군", "남해군", "산청군", "의령군", "창녕군", "하동군", "함안군", "함양군", "합천군"];-->
+    <!--                    const gyeongsangbuk = ["경산시", "경주시", "구미시", "김천시", "문경시", "상주시", "안동시", "영주시", "영천시", "포항시", "고령군", "군위군", "봉화군", "성주군", "영덕군", "영양군", "예천군", "울릉군", "울진군", "의성군", "청도군", "청송군", "칠곡군"];-->
+    <!--                    const gwangju = ["광산구", "남구", "동구", "북구", "서구"];-->
+    <!--                    const daegu = ["남구", "달서구", "동구", "북구", "서구", "수성구", "중구", "달성군"];-->
+    <!--                    const daejeon = ["대덕구", "동구", "서구", "유성구", "중구"];-->
+    <!--                    const busan = ["강서구", "금정구", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구", "기장군"];-->
+    <!--                    const seoul = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];-->
+    <!--                    const ulsan = ["남구", "동구", "북구", "중구", "울주군"];-->
+    <!--                    const incheon = ["계양구", "남구", "남동구", "동구", "부평구", "서구", "연수구", "중구", "강화군", "옹진군"];-->
+    <!--                    const jeonnam = ["광양시", "나주시", "목포시", "순천시", "여수시", "강진군", "고흥군", "곡성군", "구례군", "담양군", "무안군", "보성군", "신안군", "영광군", "영암군", "완도군", "장성군", "장흥군", "진도군", "함평군", "해남군", "화순군"];-->
+    <!--                    const jeonbuk = ["군산시", "김제시", "남원시", "익산시", "전주시", "정읍시", "고창군", "무주군", "부안군", "순창군", "완주군", "임실군", "장수군", "진안군"];-->
+    <!--                    const jeju = ["서귀포시", "제주시", "남제주군", "북제주군"];-->
+    <!--                    const chungbuk = ["제천시", "청주시", "충주시", "괴산군", "단양군", "보은군", "영동군", "옥천군", "음성군", "증평군", "진천군", "청원군"];-->
 
 
-<!--            <div class="d-flex justify-content-between w-50 mt-5 mx-auto">-->
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">혼밥</p>-->
-<!--                </div>-->
+    <!--                    let add;-->
+    <!--                    if (e.value === "general01") {-->
+    <!--                        add = gangwon;-->
+    <!--                    } else if (e.value === "general02") {-->
+    <!--                        add = gyeonggi;-->
+    <!--                    } else if (e.value === "general03") {-->
+    <!--                        add = gyeongsangnam;-->
+    <!--                    } else if (e.value === "general04") {-->
+    <!--                        add = gyeongsangbuk;-->
+    <!--                    } else if (e.value === "general05") {-->
+    <!--                        add = gwangju;-->
+    <!--                    } else if (e.value === "general06") {-->
+    <!--                        add = daegu;-->
+    <!--                    } else if (e.value === "general07") {-->
+    <!--                        add = daejeon;-->
+    <!--                    } else if (e.value === "general08") {-->
+    <!--                        add = busan;-->
+    <!--                    } else if (e.value === "general09") {-->
+    <!--                        add = seoul;-->
+    <!--                    } else if (e.value === "general10") {-->
+    <!--                        add = ulsan;-->
+    <!--                    } else if (e.value === "general11") {-->
+    <!--                        add = incheon;-->
+    <!--                    } else if (e.value === "general12") {-->
+    <!--                        add = jeonnam;-->
+    <!--                    } else if (e.value === "general13") {-->
+    <!--                        add = jeonbuk;-->
+    <!--                    } else if (e.value === "general14") {-->
+    <!--                        add = jeju;-->
+    <!--                    } else if (e.value === "general15") {-->
+    <!--                        add = chungnam;-->
+    <!--                    } else if (e.value === "general16") {-->
+    <!--                        add = chungbuk;-->
+    <!--                    }-->
 
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">족발</p>-->
-<!--                </div>-->
+    <!--                    state.options.length = 1;-->
+    <!--                    // 군/구 갯수;-->
 
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">보쌈</p>-->
-<!--                </div>-->
+    <!--                    for (property in add) {-->
+    <!--                        let opt = document.createElement("option");-->
+    <!--                        opt.value = add[property];-->
+    <!--                        opt.innerHTML = add[property];-->
+    <!--                        state.appendChild(opt);-->
+    <!--                    }-->
+    <!--                }-->
+    <!--            </script>-->
 
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">치킨</p>-->
-<!--                </div>-->
-<!--            </div>-->
 
-<!--            <div class="d-flex justify-content-between w-50 mt-5 mx-auto">-->
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">고기</p>-->
-<!--                </div>-->
+    <!--            <div class="d-flex justify-content-between w-50 mt-5 mx-auto">-->
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">혼밥</p>-->
+    <!--                </div>-->
 
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">양식</p>-->
-<!--                </div>-->
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">족발</p>-->
+    <!--                </div>-->
 
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">백반</p>-->
-<!--                </div>-->
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">보쌈</p>-->
+    <!--                </div>-->
 
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">일식</p>-->
-<!--                </div>-->
-<!--            </div>-->
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">치킨</p>-->
+    <!--                </div>-->
+    <!--            </div>-->
 
-<!--            <div class="d-flex justify-content-between w-50 mt-5 mx-auto">-->
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">회</p>-->
-<!--                </div>-->
+    <!--            <div class="d-flex justify-content-between w-50 mt-5 mx-auto">-->
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">고기</p>-->
+    <!--                </div>-->
 
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">중식</p>-->
-<!--                </div>-->
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">양식</p>-->
+    <!--                </div>-->
 
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">아시안</p>-->
-<!--                </div>-->
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">백반</p>-->
+    <!--                </div>-->
 
-<!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
-<!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
-<!--                    <p class="text-center" style="height: 10px">패스트푸드</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">일식</p>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+    <!--            <div class="d-flex justify-content-between w-50 mt-5 mx-auto">-->
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">회</p>-->
+    <!--                </div>-->
+
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">중식</p>-->
+    <!--                </div>-->
+
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">아시안</p>-->
+    <!--                </div>-->
+
+    <!--                <div class="d-flex justify-content-center flex-column" style="height: 150px; width: 130px">-->
+    <!--                    <div class="rounded-circle border border-dark border-2" style="height: 130px; width: 130px"></div>-->
+    <!--                    <p class="text-center" style="height: 10px">패스트푸드</p>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </form>-->
+    <!--    </div>-->
 
 
     <div class="mx-auto">
-        <h1 class="text-lg-center text-center" style="margin-top: 250px">오늘의 베스트 맛집</h1>
+        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 베스트 맛집</h1>
         <form action="/searchStore.do" method="GET" name="searchStoreForm">
             <div class="d-flex justify-content-center mt-5">
                 <div class="search_box me-3">
-                    <select class="form-select border-warning" name="siAddress" onchange="categoryChange2(this)">
+                    <select class="form-select border-warning" name="siAddress1" onchange="categoryChange2(this)">
                         <option value>시/도 선택</option>
                         <option value="general01">강원</option>
                         <option value="general02">경기</option>
@@ -265,7 +266,7 @@
                 </div>
 
                 <div class="search_box mx ms-3">
-                    <select class="form-select border-warning" name="guAddress" id="state2">
+                    <select class="form-select border-warning" name="guAddress1" id="state2">
                         <option>군/구 선택</option>
                     </select>
                 </div>
@@ -350,8 +351,8 @@
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${store.storeName}"></h5>
-                        <p class="card-text" th:text="${store.detailInfo}"></p>
+                        <h5 class="card-title" th:text="${store.storeName}">오늘의 베스트 추천가게는!?</h5>
+                        <p class="card-text" th:text="${store.detailInfo}">베스트 추천가게 디테일!</p>
                     </div>
                 </div>
             </div>
@@ -378,51 +379,6 @@
 
     <div id="store"></div>
 
-    <script>
-        var xhr = new XMLHttpRequest(); // 1. XMLHttpRequest 객체 생성
-        xhr.onload = function () { // 3. 응답 처리
-            if (xhr.status === 200) {
-                var storeData = JSON.parse(xhr.responseText);
-                var storeHtml;
-                if (storeData.store) {
-                    storeHtml = `
-          <div class="card mt-5 mx-auto w-75">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="http://localhost:8080/images/main/볶음밥.jpg" class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">${storeData.store.storeName}</h5>
-                  <p class="card-text">${storeData.store.detailInfo}</p>
-                </div>
-              </div>
-            </div>
-          </div>`;
-                } else {
-                    storeHtml = `
-          <div class="card mt-5 mx-auto w-75">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="http://localhost:8080/images/main/볶음밥.jpg" class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">오늘의 베스트 추천가게는!?</h5>
-                  <p class="card-text">베스트 추천가게 디테일!</p>
-                </div>
-              </div>
-            </div>
-          </div>`;
-                }
-                document.getElementById("store").innerHTML = storeHtml;
-            }
-        };
-        xhr.open("GET", "/api/store"); // 2. 요청 보내기
-        xhr.send();
-    </script>
-
-
 
     <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 베스트 카페</h1>
     <form action="">
@@ -430,7 +386,7 @@
 
         <div class="d-flex justify-content-center mt-5">
             <div class="search_box me-3">
-                <select class="form-select border-warning" name="" onchange="categoryChange3(this)">
+                <select class="form-select border-warning" name="siAddress2" onchange="categoryChange3(this)">
                     <option value>시/도 선택</option>
                     <option value="general01">강원</option>
                     <option value="general02">경기</option>
@@ -452,7 +408,7 @@
             </div>
 
             <div class="search_box mx ms-3">
-                <select class="form-select border-warning" name="" id="state3">
+                <select class="form-select border-warning" name="guAddress2" id="state3">
                     <option>군/구 선택</option>
                 </select>
             </div>
@@ -569,7 +525,7 @@
 
         <div class="d-flex justify-content-center mt-5">
             <div class="search_box me-3">
-                <select class="form-select border-warning" name="" onchange="categoryChange4(this)">
+                <select class="form-select border-warning" name="siAddress3" onchange="categoryChange4(this)">
                     <option value>시/도 선택</option>
                     <option value="general01">강원</option>
                     <option value="general02">경기</option>
@@ -591,7 +547,7 @@
             </div>
 
             <div class="search_box mx ms-3">
-                <select class="form-select border-warning" name="" id="state4">
+                <select class="form-select border-warning" name="guAddress3" id="state4">
                     <option>군/구 선택</option>
                 </select>
             </div>
@@ -702,95 +658,95 @@
         </div>
     </div>
 
-<!--랜덤으로 맛집을 찾아주는 곳-->
-<!--    <div class="mx-auto">-->
-<!--        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 랜덤 맛집</h1>-->
-<!--        <form action="">-->
+
+    <div class="mx-auto">
+        <h1 class="text-lg-center text-center" style="margin-top: 200px">오늘의 랜덤 맛집</h1>
+        <form action="">
 
 
-<!--            <div class="d-flex justify-content-center mt-5">-->
-<!--                <div class="dropdown me-3">-->
-<!--                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
-<!--                            aria-expanded="false">-->
-<!--                        식당-->
-<!--                    </button>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Another action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Something else here</button>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
+            <div class="d-flex justify-content-center mt-5">
+                <div class="dropdown me-3">
+                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        식당
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item" type="button">Action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Another action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Something else here</button>
+                        </li>
+                    </ul>
+                </div>
 
-<!--                <div class="dropdown me-3">-->
-<!--                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
-<!--                            aria-expanded="false">-->
-<!--                        카페-->
-<!--                    </button>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Another action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Something else here</button>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
+                <div class="dropdown me-3">
+                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        카페
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item" type="button">Action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Another action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Something else here</button>
+                        </li>
+                    </ul>
+                </div>
 
-<!--                <div class="dropdown me-3">-->
-<!--                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
-<!--                            aria-expanded="false">-->
-<!--                        술집-->
-<!--                    </button>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Another action</button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button class="dropdown-item" type="button">Something else here</button>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--                <button type="button" class="btn btn-warning ms-3">검색</button>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
+                <div class="dropdown me-3">
+                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        술집
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item" type="button">Action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Another action</button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" type="button">Something else here</button>
+                        </li>
+                    </ul>
+                </div>
+                <button type="button" class="btn btn-warning ms-3">검색</button>
+            </div>
+        </form>
+    </div>
 
 
-<!--    <div class="card-group w-75 mx-auto mt-5">-->
-<!--        <div class="card mt-5">-->
-<!--            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title">랜덤맛집 1번</h5>-->
-<!--                <p class="card-text">랜덤 맛집 1번 설명</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="card mt-5">-->
-<!--            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title">랜덤맛집 2번</h5>-->
-<!--                <p class="card-text">랜덤 맛집 2번 설명</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="card mt-5">-->
-<!--            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title">랜덤맛집 3번</h5>-->
-<!--                <p class="card-text">랜덤 맛집 3번 설명</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="card-group w-75 mx-auto mt-5">
+        <div class="card mt-5">
+            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">랜덤맛집 1번</h5>
+                <p class="card-text">랜덤 맛집 1번 설명</p>
+            </div>
+        </div>
+        <div class="card mt-5">
+            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">랜덤맛집 2번</h5>
+                <p class="card-text">랜덤 맛집 2번 설명</p>
+            </div>
+        </div>
+        <div class="card mt-5">
+            <img src="http://localhost:8080/images/main/바나나맛우유.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">랜덤맛집 3번</h5>
+                <p class="card-text">랜덤 맛집 3번 설명</p>
+            </div>
+        </div>
+    </div>
 
 
     <footer class="w-75 mx-auto mt-5">
@@ -812,8 +768,8 @@
         </div>
     </footer>
     <a class="btn btn-outline-warning"
-            style="position: fixed; bottom: 20px; right: 130px; width: 100px;" data-bs-container="body"
-            data-bs-toggle="popover" data-bs-placement="top" data-bs-content="채팅내역?" href="/chattingRoom.do">
+       style="position: fixed; bottom: 20px; right: 130px; width: 100px;" data-bs-container="body"
+       data-bs-toggle="popover" data-bs-placement="top" data-bs-content="채팅내역?" href="/chat/room/list.do">
         채 팅
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
     60
@@ -821,10 +777,10 @@
     </span>
     </a>
     <script th:inline="javascript">
-        async function loadBestStore(siAdd, guAdd){
-            let url=`/index/${siAdd}/${guAdd}/searchStore.do`
+        async function loadBestStore(siAdd, guAdd) {
+            let url = `/index/${siAdd}/${guAdd}/searchStore.do`
             const resp = await fetch(url);
-            let text= await resp.text();
+            let text = await resp.text();
             console.log(text);
 
         }

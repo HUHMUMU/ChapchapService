@@ -12,21 +12,43 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
-@RestController
+
 @AllArgsConstructor //모든 필드를 pojo 형식의 생성자로 자동 생성
 @Controller //< @Component 요청과 응답을 처리 가능
-@Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 @RequestMapping("/")
+@Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 public class MainController {
     private MainService mainService;
 
 
+    @GetMapping("/findStore.do")
+    public String findStoreFrom(
+            String findStore,
+            String searchValue
+    ) throws UnsupportedEncodingException {
+        String redirectPath = "redirect:/store/list.do?pageNumber=1";
+        if(findStore.equals("storeAddress"))
+            redirectPath = "redirect:/store/list.do?pageNumber=1&detailArea=" + URLEncoder.encode(searchValue, "UTF-8");
+        else if (findStore.equals("storeName")) {
+            redirectPath = "redirect:/store/list.do?pageNumber=1&searchName=" + URLEncoder.encode(searchValue, "UTF-8");
+        }
+        else if (findStore.equals("storeMenu")) {
+            redirectPath = "redirect:/store/list.do?pageNumber=1&detailMenuName=" + URLEncoder.encode(searchValue, "UTF-8");
+        }else {
+            System.out.println("돌아가");
+        }
+        return redirectPath;
+    }
+
+
     @GetMapping("/searchStore.do")
     public String searchStoreFrom(
-            @RequestParam("siAddress") String siAdd,
-            @RequestParam("guAddress") String guAdd,
+            @RequestParam("siAddress1") String siAdd,
+            @RequestParam("guAddress1") String guAdd,
             Model model
     ) {
 
@@ -44,8 +66,8 @@ public class MainController {
 
     @GetMapping("/searchCafe.do")
     public String searchCafeFrom(
-            @RequestParam("siAddress") String siAdd,
-            @RequestParam("guAddress") String guAdd,
+            @RequestParam("siAddress2") String siAdd,
+            @RequestParam("guAddress2") String guAdd,
             Model model
     ) {
 
@@ -63,8 +85,8 @@ public class MainController {
 
     @GetMapping("/searchPub.do")
     public String searchPubFrom(
-            @RequestParam("siAddress") String siAdd,
-            @RequestParam("guAddress") String guAdd,
+            @RequestParam("siAddress3") String siAdd,
+            @RequestParam("guAddress3") String guAdd,
             Model model
     ) {
 

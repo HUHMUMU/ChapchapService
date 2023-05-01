@@ -85,15 +85,12 @@ function filterResult(){ // 현재 필터된 요소 표시 버튼
 let markers = [];
 function loadStoreList(search){
     let url='/store/ajaxList.do?';
-    if(search){
-        url+=search;
-    }else{
-        for (const key in allParam) {
-            if (allParam[key]) { // 값이 있을 경우에만 추가합니다.
-                url += `&${key}=${allParam[key]}`;
-            }
+    for (const key in allParam) {
+        if (allParam[key]) { // 값이 있을 경우에만 추가합니다.
+            url += `&${key}=${allParam[key]}`;
         }
     }
+
     for (let j = 0; j < markers.length; j++) {
         markers[j].setMap(null);
     }
@@ -146,7 +143,14 @@ function loadStoreList(search){
     filterResult();
 }
 
-loadStoreList(location.search);
+(function init(){
+    const params=location.search.split("&");
+    params.forEach((p)=>{
+        const ps=p.split("=");
+        allParam[ps[0]]=ps[1];
+    })
+    loadStoreList();
+})();
 function getCategoryName(categoryNum) {
     switch(categoryNum) {
         case 1: return "혼밥";
@@ -222,39 +226,41 @@ function storeLiComponent(store){
                     </div>`
 }
 // 페이지 이동 URL 생성
-function createPageUrl (pageNumber){
-    allParam.pageNumber=pageNumber;
+function createPageUrl (pageNum){
+    allParam.pageNumber=pageNum;
     loadStoreList();
 }
-function pageNavComponent(page){
+function pageNavComponent(page = {}){
     // 페이지 이동 버튼 생성
-    const createPageItem = (pageNum, isDisabled) => {
+    const createPageItem = (pageNum, isActive, isDisabled, isNavButton = false) => {
         let navigatePageNum;
         switch(pageNum){
             case "<<": navigatePageNum = 1; break;
-            case "<": navigatePageNum = page.pageNum-1; break;
-            case ">": navigatePageNum = page.pageNum+1; break;
-            case ">>": navigatePageNum = page.pages; break;
-            default: navigatePageNum = pageNum;
+            case "<": navigatePageNum = Math.max(1, parseInt(allParam.pageNumber) - 1); break;
+            case ">": navigatePageNum = Math.min(page.pages, parseInt(allParam.pageNumber) + 1); break;
+            case ">>": navigatePageNum = parseInt(page.pages); break;
+            default: navigatePageNum = parseInt(pageNum);
         }
         return `
             <li class="page-item ${isDisabled ? 'disabled' : ''}">
-                <a class="page-link text-secondary ${pageNum===page.pageNum ? 'active' : ''}"
+                <a class="page-link text-secondary"
                    style="padding:4px 6px;"
-                   href="#"
-                   onclick = "createPageUrl(${navigatePageNum})">
+                   href="javascript:void(0)"
+                   onclick = "createPageUrl(${navigatePageNum})"
+                   class="${(navigatePageNum === parseInt(allParam.pageNumber)) ? 'active' : ''}">
                    ${pageNum}
                 </a>
             </li>
         `;
     };
     return `
+        <!-- class="active" 와 >> 가 작동하지않는데 그 이유를 모르겠음. -->
         <ul class="pagination justify-content-center">
-            ${createPageItem("<<", page.isFirstPage)}
-            ${createPageItem("<", !page.hasPreviousPage)}
-            ${page.navigatepageNums.map(h => createPageItem(h, false)).join('')}
-            ${createPageItem(">", !page.hasNextPage)}
-            ${createPageItem(">>", page.isLastPage)}
+            ${createPageItem("<<", parseInt(allParam.pageNumber) === 1, page.isFirstPage, true)}
+            ${createPageItem("<", false, !page.hasPreviousPage, true)}
+            ${page.navigatepageNums.map(h => createPageItem(h, h === parseInt(allParam.pageNumber), false)).join('')}
+            ${createPageItem(">", false, !page.hasNextPage, true)}
+            ${createPageItem(">>", false, !page.isLastPage, true)}
         </ul>
     `;
 }
@@ -298,6 +304,7 @@ function setParking(parkingValue, parkingText){
     allParam.parkingType = parkingText;
     loadStoreList();
 }
+
 
 // 시군구
 let gangwon = ["강릉시", "동해시", "삼척시", "속초시", "원주시", "춘천시", "태백시", "고성군", "양구군", "양양군", "영월군", "인제군", "정선군", "철원군", "평창군", "홍천군", "화천군", "횡성군"];
