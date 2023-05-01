@@ -18,6 +18,9 @@ public class UsersWaitingDto {
     private int addWaitNum; // 대기 등록을 누르면 해당 가게에서만 사용되는 대기열에 순서대로 번호 추가
     private int addWaitingNum; // 다른가게에서 웨이팅 등록을 하게되면  고유값 추가?
     private String startTime; // 유저가 웨이팅 대기 등록을 한 시간
+    private String endTime; // 유저가 웨이팅 대기를 끝낸 시간
     private int timeSetup; // 사장님이 등록해 놓은 팀당 기본 대기시간
     private String storeAds; // 사장님이 등록해 놓은 홍보 url
+    
+    private int waitingCnt; // 웨이팅중인 팀 수
 }
