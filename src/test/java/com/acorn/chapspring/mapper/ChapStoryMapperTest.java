@@ -40,7 +40,6 @@ class ChapStoryMapperTest {
         chaps.setChapNum(19);
         chaps.setTitle("테스트");
         chaps.setContent("테스트");
-        chaps.setMainImg("/public/img/chapstory/chapstory1-1.jpg");
         chaps.setUserId("user01");
         int insert= chapStoryMapper.insertOne(chaps);
         ChapStoryMapperTest.chaps=chapStoryMapper.findByChapNum(chaps.getChapNum());
@@ -54,7 +53,6 @@ class ChapStoryMapperTest {
         chaps.setChapNum(1);
         chaps.setTitle("수정 테스트");
         chaps.setContent("수정 테스트");
-        chaps.setMainImg("/public/img/chapstory/chapstory1-2.jpg");
         chaps.setUserId("user01");
         int insert= chapStoryMapper.updateOne(chaps);
         ChapStoryMapperTest.chaps=chapStoryMapper.findByChapNum(chaps.getChapNum());

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acorn.chapspring.mapper.ChapstoryImgMapper">
     <resultMap id="ChapstoryImgMap" type="ChapstoryimgsDto">
-        <id property="chsNum" column="chs_num"></id>
+        <id property="chsNum" column="chs_num"/>
         <result property="chapNum" column="chap_num"/>
         <result property="img" column="img"/>
     </resultMap>

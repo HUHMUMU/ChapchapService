@@ -15,8 +15,6 @@ public class ChapstorysDto {
     private String content; //내용
     private int viewcount; //조휘수
     private Date postTime; //등록날짜
-    private String profile;
-    private String mainImg; //썸네일
     private Date updateTime; //수정날짜
     private String userId; // FK
     private String chsRstatus; // 공개상태

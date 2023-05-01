@@ -41,7 +41,7 @@
                     <div th:if="${bestChaps[0].chapstoryimgs != null and not #lists.isEmpty(bestChaps[0].chapstoryimgs)}">
                         <img th:src="@{'{path}'(path=${bestChaps[0].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
                     </div>
-                    <h5>
+                    <h5 style="margin-top: 10px;">
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[0].chapNum})}" th:text="${bestChaps[0].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
@@ -49,7 +49,7 @@
                     <div th:if="${bestChaps[1].chapstoryimgs != null and not #lists.isEmpty(bestChaps[1].chapstoryimgs)}">
                         <img th:src="@{'{path}'(path=${bestChaps[1].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
                     </div>
-                    <h5>
+                    <h5 style="margin-top: 10px;">
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[1].chapNum})}" th:text="${bestChaps[1].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
@@ -57,7 +57,7 @@
                     <div th:if="${bestChaps[2].chapstoryimgs != null and not #lists.isEmpty(bestChaps[2].chapstoryimgs)}">
                         <img th:src="@{'{path}'(path=${bestChaps[2].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
                     </div>
-                    <h5>
+                    <h5 style="margin-top: 10px;">
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[2].chapNum})}" th:text="${bestChaps[2].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
@@ -65,7 +65,7 @@
                     <div th:if="${bestChaps[3].chapstoryimgs != null and not #lists.isEmpty(bestChaps[3].chapstoryimgs)}">
                         <img th:src="@{'{path}'(path=${bestChaps[3].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
                     </div>
-                    <h5>
+                    <h5 style="margin-top: 10px;">
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[3].chapNum})}" th:text="${bestChaps[3].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
@@ -73,7 +73,7 @@
                     <div th:if="${bestChaps[4].chapstoryimgs != null and not #lists.isEmpty(bestChaps[4].chapstoryimgs)}">
                         <img th:src="@{'{path}'(path=${bestChaps[4].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
                     </div>
-                    <h5>
+                    <h5 style="margin-top: 10px;">
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[4].chapNum})}" th:text="${bestChaps[4].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
@@ -81,7 +81,7 @@
                     <div th:if="${bestChaps[5].chapstoryimgs != null and not #lists.isEmpty(bestChaps[5].chapstoryimgs)}">
                         <img th:src="@{'{path}'(path=${bestChaps[5].chapstoryimgs[0].img})}" alt = "베스트챱스 썸네일" style="height: 150px; width:150px; position: relative; object-fit: cover;" class="img-thumbnail">
                     </div>
-                    <h5>
+                    <h5 style="margin-top: 10px;">
                         <a th:href="@{'/chapstory/{chapNum}/detail.do'(chapNum=${bestChaps[5].chapNum})}" th:text="${bestChaps[5].title}" style="text-decoration: none; color: inherit; width: 100px"></a>
                     </h5>
                 </div>
@@ -124,6 +124,8 @@
     }
 </style>
 <script>
+
+    // 게시글 주소 복사
     document.querySelector('[data-clipboard-text]').setAttribute('data-clipboard-text', window.location.href);
     var clipboard = new ClipboardJS('#share-btn');
     clipboard.on('success', function(e) {

@@ -47,9 +47,9 @@ public class ChapStoryController {
         List<ChapstorysDto> chaps;
         chaps= chapStoryService.list(pageDto);
         List<ChapstorysDto> bestList;
-        bestList = chapStoryService.bestList();
+        bestList = chapStoryService.bestList(); // 인기글
         PageInfo<ChapstorysDto> pageBoards=new PageInfo<>(chaps);
-        model.addAttribute("page",pageBoards);
+        model.addAttribute("page",pageBoards); //페이징
         model.addAttribute("chapstorys",chaps);
         model.addAttribute("bestList",bestList);
         return "chapstory/list";
@@ -107,10 +107,10 @@ public class ChapStoryController {
             @RequestParam(name = "img", required = false)MultipartFile [] imgs
     ) throws IOException
     {
-        String redirectPage="redirect:/register.do";
-        if(!loginUser.getUserId().equals(chaps.getUserId())) return redirectPage;
+            String redirectPage="redirect:/chapstorys/register";
+        if(!loginUser.getUserId().equals(chaps.getUserId())) return redirectPage; //로그인한 유저가 아니라면 게시글 작성 불가능
         List<ChapstoryimgsDto> imgDtos=null;
-        if(imgs!=null){
+        if(imgs!=null){ // 이미지 업로드시 프로젝트 파일에 등록
             imgDtos=new ArrayList<>();
             for(MultipartFile img : imgs){
                 if(!img.isEmpty()){
@@ -169,7 +169,7 @@ public class ChapStoryController {
     @PostMapping("/modify.do")
     public String modifyAction(
             @ModelAttribute ChapstorysDto chaps,
-            @RequestParam(value = "delImgChsNum",required = false) int [] delImgChsNums,
+            @RequestParam(value = "delImgChsNums",required = false) int [] delImgChsNums,
             @RequestParam(value = "img",required = false) MultipartFile [] imgs){
         String redirectPath="redirect:/chapstory/"+chaps.getChapNum()+"/modify.do";
         List<ChapstoryimgsDto> imgDtos=null;

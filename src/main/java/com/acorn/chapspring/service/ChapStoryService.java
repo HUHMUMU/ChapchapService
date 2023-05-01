@@ -13,7 +13,7 @@ public interface ChapStoryService {
     ChapstorysDto detail(int chapNum); //챱스토리 게시글 상세 조회
     List<ChapstorysDto> blogMain(String userId); //챱스토리 블로그메인 게시글 조회
     int register(ChapstorysDto chaps); //챱스토리 작성
-    int modify(ChapstorysDto chaps, int[] delImgChsNum); //챱스토리 수정
+    int modify(ChapstorysDto chaps, int[] delImgChsNums); //챱스토리 수정
     int remove(int chapNum); //챱스토리 삭제
     List<ChapstoryimgsDto> imgList(int[]chsNum);
 
