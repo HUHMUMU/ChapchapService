@@ -11,5 +11,5 @@ import java.util.List;
 public interface ChapDealMapper {
     List<ChapDealDto> findAll(); //모든 챱딜 이벤트 가져오기
 
-    List<ChapDealDto> findEventByStore(int storeNum);
+    List<ChapDealDto> findEventByStore(int storeNum); //가게별 이벤트 가져오기
 }

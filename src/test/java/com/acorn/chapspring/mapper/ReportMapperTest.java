@@ -28,4 +28,10 @@ class ReportMapperTest {
         List<ReportsDto> reports=reportMapper.findReportByReview(1);
         System.out.println("reports = " + reports);
     }
+
+    @Test
+    void deleteReportByReviewNum() {
+        int delete=reportMapper.deleteReportByReviewNum(5);
+        System.out.println("delete = " + delete);
+    }
 }

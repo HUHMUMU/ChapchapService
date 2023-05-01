@@ -11,4 +11,5 @@ import java.util.List;
 public interface ReportMapper {
     List<ReportsDto> findReportByReview(int reviewNum); //리뷰별 신고 찾기
     int insertReportByReview(ReportsDto report); //리뷰 신고 하기
+    int deleteReportByReviewNum(int reviewNum); //리뷰 지울때 신고도 지우기
 }

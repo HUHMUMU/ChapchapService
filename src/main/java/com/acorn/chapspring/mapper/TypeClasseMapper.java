@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface TypeClasseMapper {
-    TypeClassesDto findByStoreType(int categoryNum);
+    TypeClassesDto findByStoreType(int categoryNum);//업종
 }
