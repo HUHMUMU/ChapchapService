@@ -126,7 +126,7 @@ public class WaitingController {
         }
         if(remove>0){
             msg="삭제 성공!";
-            redirectPath="redirect:/store/"+waitingNum+"/detail.do";
+            redirectPath="redirect:/";
         }else{
             msg="삭제 실패!";
             redirectPath="redirect:/waiting/"+waitingNum+"/waitingStatus.do";

@@ -230,40 +230,39 @@ function createPageUrl (pageNum){
     allParam.pageNumber=pageNum;
     loadStoreList();
 }
-function pageNavComponent(page = {}){
+function pageNavComponent(page){
     // 페이지 이동 버튼 생성
-    const createPageItem = (pageNum, isActive, isDisabled, isNavButton = false) => {
+    const createPageItem = (pageNum, isDisabled) => {
         let navigatePageNum;
         switch(pageNum){
             case "<<": navigatePageNum = 1; break;
-            case "<": navigatePageNum = Math.max(1, parseInt(allParam.pageNumber) - 1); break;
-            case ">": navigatePageNum = Math.min(page.pages, parseInt(allParam.pageNumber) + 1); break;
-            case ">>": navigatePageNum = parseInt(page.pages); break;
-            default: navigatePageNum = parseInt(pageNum);
+            case "<": navigatePageNum = page.pageNum-1; break;
+            case ">": navigatePageNum = page.pageNum+1; break;
+            case ">>": navigatePageNum = page.pages; break;
+            default: navigatePageNum = pageNum;
         }
         return `
             <li class="page-item ${isDisabled ? 'disabled' : ''}">
-                <a class="page-link text-secondary"
+                <a class="page-link text-secondary ${pageNum===page.pageNum ? 'active' : ''}"
                    style="padding:4px 6px;"
-                   href="javascript:void(0)"
-                   onclick = "createPageUrl(${navigatePageNum})"
-                   class="${(navigatePageNum === parseInt(allParam.pageNumber)) ? 'active' : ''}">
+                   href="#"
+                   onclick = "createPageUrl(${navigatePageNum})">
                    ${pageNum}
                 </a>
             </li>
         `;
     };
     return `
-        <!-- class="active" 와 >> 가 작동하지않는데 그 이유를 모르겠음. -->
         <ul class="pagination justify-content-center">
-            ${createPageItem("<<", parseInt(allParam.pageNumber) === 1, page.isFirstPage, true)}
-            ${createPageItem("<", false, !page.hasPreviousPage, true)}
-            ${page.navigatepageNums.map(h => createPageItem(h, h === parseInt(allParam.pageNumber), false)).join('')}
-            ${createPageItem(">", false, !page.hasNextPage, true)}
-            ${createPageItem(">>", false, !page.isLastPage, true)}
+            ${createPageItem("<<", page.isFirstPage)}
+            ${createPageItem("<", !page.hasPreviousPage)}
+            ${page.navigatepageNums.map(h => createPageItem(h, false)).join('')}
+            ${createPageItem(">", !page.hasNextPage)}
+            ${createPageItem(">>", page.isLastPage)}
         </ul>
     `;
 }
+
 
 let selectedOrder = "";
 function setOrder(order, selectedDirect) {
