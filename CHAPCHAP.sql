@@ -660,26 +660,26 @@ VALUES
     (30,'카페', '기타');
 
 INSERT INTO menu_manages (name, img, price, info, menu_type, status, store_num) VALUES
-                                                                                    ('불고기햄버거', 'https://example.com/burger.jpg', 7000, '맛있는 햄버거', '대표메뉴', true, 1),
-                                                                                    ('치즈버거', NULL, 8000, '치즈가 듬뿍 들어간 햄버거', '일반메뉴', true, 1),
-                                                                                    ('감자튀김', NULL, 5000, '바삭한 감자튀김', '일반메뉴', true, 1),
-                                                                                    ('매운닭갈비', 'https://example.com/dakgalbi.jpg', 15000, '매콤한 닭갈비', '대표메뉴', true, 2),
-                                                                                    ('치즈닭갈비', NULL, 17000, '치즈를 뿌린 닭갈비', '일반메뉴', true, 2),
-                                                                                    ('불고기', NULL, 15000, '맛있는 불고기', '일반메뉴', true, 2),
+                                                                                    ('불고기햄버거', '/images/menu/img-1682943517352.jpg', 7000, '맛있는 햄버거', '대표메뉴', true, 1),
+                                                                                    ('치즈버거', '/images/menu/img-1682943525934.jpg', 8000, '치즈가 듬뿍 들어간 햄버거', '일반메뉴', true, 1),
+                                                                                    ('감자튀김', '/images/menu/img-1682943537244.jpg', 5000, '바삭한 감자튀김', '일반메뉴', true, 1),
+                                                                                    ('매운닭갈비', '/images/menu/img-1682944063953.jpg', 15000, '매콤한 닭갈비', '대표메뉴', true, 2),
+                                                                                    ('치즈닭갈비', '/images/menu/img-1682944070342.jpg', 17000, '치즈를 뿌린 닭갈비', '일반메뉴', true, 2),
+                                                                                    ('불고기', '/images/menu/img-1682944077411.jpg', 15000, '맛있는 불고기', '일반메뉴', true, 2),
                                                                                     ('찹쌀탕수육', 'https://example.com/tangsuyuk.jpg', 12000, '바삭한 탕수육', '대표메뉴', true, 3),
-                                                                                    ('잡채', NULL, 10000, '고기와 채소가 들어간 잡채', '일반메뉴', true, 3),
-                                                                                    ('울면', NULL, 9000, '매콤한 울면', '일반메뉴', true, 3),
-                                                                                    ('베트남쌀국수', 'https://example.com/pho.jpg', 8000, '시원한 쌀국수', '대표메뉴', true, 4),
-                                                                                    ('불고기쌀국수', NULL, 10000, '불고기와 쌀국수의 환상조합', '일반메뉴', true, 4),
-                                                                                    ('야채쌀국수', NULL, 8000, '시원한 야채쌀국수', '일반메뉴', true, 4),
-                                                                                    ('바게트', 'https://example.com/bread.jpg', 3000, '부드러운 빵', '대표메뉴', true, 5),
-                                                                                    ('크로와상', NULL, 3500, '버터향 가득한 크로와상', '일반메뉴', true, 5),
-                                                                                    ('마카롱', NULL, 2000, '색다른 마카롱', '일반메뉴', true, 5),
-                                                                                    ('초밥', 'https://example.com/sushi.jpg', 20000, '신선한 초밥', '대표메뉴', true, 6),
-                                                                                    ('족발', 'https://example.com/jokbal.jpg', 18000, '맛있는 족발', '대표메뉴', true, 7),
-                                                                                    ('치킨', 'https://example.com/chicken.jpg', 16000, '바삭한 치킨', '대표메뉴', true, 8),
-                                                                                    ('돈까스', 'https://example.com/porkcutlet.jpg', 9000, '고소한 돈까스', '대표메뉴', true, 9),
-                                                                                    ('파스타', 'https://example.com/pasta.jpg', 13000, '크리미한 파스타', '대표메뉴', true, 10);
+                                                                                    ('잡채', '/images/menu/img-1682944138148.jpg', 10000, '고기와 채소가 들어간 잡채', '일반메뉴', true, 3),
+                                                                                    ('울면', '/images/menu/img-1682944158604.jpg', 9000, '매콤한 울면', '일반메뉴', true, 3),
+                                                                                    ('베트남쌀국수', '/images/menu/img-1682944210933.jpg', 8000, '시원한 쌀국수', '대표메뉴', true, 4),
+                                                                                    ('불고기쌀국수', '/images/menu/img-1682944779501.jpg', 10000, '불고기와 쌀국수의 환상조합', '일반메뉴', true, 4),
+                                                                                    ('야채쌀국수', '/images/menu/img-1682944788744.jpg', 8000, '시원한 야채쌀국수', '일반메뉴', true, 4),
+                                                                                    ('바게트', '/images/menu/img-1682944851440.jpg', 3000, '부드러운 빵', '대표메뉴', true, 5),
+                                                                                    ('크로와상', '/images/menu/img-1682944897982.jpg', 3500, '버터향 가득한 크로와상', '일반메뉴', true, 5),
+                                                                                    ('마카롱', '/images/menu/img-1682944905958.jpg', 2000, '색다른 마카롱', '일반메뉴', true, 5),
+                                                                                    ('초밥', '/images/menu/img-1682945019850.jpg', 20000, '신선한 초밥', '대표메뉴', true, 6),
+                                                                                    ('족발', '/images/menu/img-1682945082541.jpg', 18000, '맛있는 족발', '대표메뉴', true, 7),
+                                                                                    ('치킨', '/images/menu/img-1682945136728.jpg', 16000, '바삭한 치킨', '대표메뉴', true, 8),
+                                                                                    ('돈까스', '/images/menu/img-1682945196593.jpg', 9000, '고소한 돈까스', '대표메뉴', true, 9),
+                                                                                    ('파스타', '/images/menu/img-1682945235379.jpg', 13000, '크리미한 파스타', '대표메뉴', true, 10);
 
 
 INSERT INTO storetypes (store_num, category_num)
@@ -817,11 +817,18 @@ INSERT INTO storeswaiting VALUES (3, '17:30:00', 60, true, 10, 'https://store3.c
 INSERT INTO storeswaiting VALUES (4, '20:00:00', 30, true, 30, 'https://store4.com', 4);
 INSERT INTO storeswaiting VALUES (5, '18:30:00', 45, true, 25, 'https://store5.com', 5);
 
-INSERT INTO userswaiting (user_people, wait_num, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, 1, '2023-04-20', '17:30:00', NULL, '대기', 'user01', 1);
-INSERT INTO userswaiting (user_people, wait_num, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (4, 2, '2023-04-21', '18:00:00', NULL, '대기', 'user02', 2);
-INSERT INTO userswaiting (user_people, wait_num, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (5, 3, '2023-04-22', '17:45:00', NULL, '대기', 'user03', 3);
-INSERT INTO userswaiting (user_people, wait_num, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, 4, '2023-04-23', '19:30:00', NULL, '대기', 'user04', 4);
-INSERT INTO userswaiting (user_people, wait_num, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, 5, '2023-04-24', '18:15:00', NULL, '대기', 'user05', 5);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-01', '17:30:00', NULL, '대기', 'user01', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (4, '2023-04-21', '18:00:00', NULL, '대기', 'user02', 2);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (5, '2023-04-22', '17:45:00', NULL, '대기', 'user03', 3);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-04-23', '19:30:00', NULL, '대기', 'user04', 4);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-01', '18:15:00', NULL, '대기', 'user05', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (4, '2023-05-01', '19:20:00', NULL, '대기', 'user06', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-05-01', '19:15:00', NULL, '대기', 'user07', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (1, '2023-05-01', '19:00:00', NULL, '대기', 'user08', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-01', '18:55:00', NULL, '대기', 'user09', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-05-01', '18:50:00', NULL, '대기', 'user10', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-05-01', '18:45:00', NULL, '대기', 'user11', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-01', '18:35:00', NULL, '대기', 'user12', 1);
 
 INSERT INTO visited_store_lists VALUES (1, '2023-04-10', 'user01', '맛있는 햄버거집', '서울시 강남구 역삼동 123-45');
 INSERT INTO visited_store_lists VALUES (2, '2023-04-11', 'user02', '닭갈비 전문점', '서울시 강남구 역삼동 234-56');
@@ -978,16 +985,16 @@ INSERT INTO chapstoryimgs (chap_num, img) VALUES
                                               (24, '/public/img/chapstory/타코3.jpeg');
 
 INSERT INTO chap_deals (store_num, event_title, event_condition, event_reward, event_img, event_start, event_end) VALUES
-                                                                                                                      (1, '해피 아워 할인', '오후 5시부터 오후 7시 방문', '음료 50% 할인', 'event2.jpg', '2023-04-16', '2023-04-25'),
-                                                                                                                      (2, '주말 브런치 이벤트', '주말 브런치 메뉴 주문 시 커피 무료', '커피 1잔 무료', 'event9.jpg', '2023-04-30', '2023-05-15'),
-                                                                                                                      (3, '데이트 코스 할인', '데이트 코스 메뉴 주문 시 와인 무료', '와인 1병 무료', 'event10.jpg', '2023-05-01', '2023-05-20'),
-                                                                                                                      (4, '샐러드 데이 이벤트', '샐러드 구매 시 음료 무료', '음료수 1잔 무료', 'event8.jpg', '2023-04-28', '2023-05-07'),
-                                                                                                                      (5, '베이커리 세일', '빵 구매 시 커피 무료', '커피 1잔 무료', 'event3.jpg', '2023-04-20', '2023-05-05'),
-                                                                                                                      (5, '한정 메뉴 할인', '한정 메뉴 주문 시 디저트 무료', '디저트 1개 무료', 'event7.jpg', '2023-04-26', '2023-05-12'),
-                                                                                                                      (6, '스시 특별 할인', '2인분 주문 시 1인분 무료', '스시 1인분 무료', 'event1.jpg', '2023-04-15', '2023-04-30'),
-                                                                                                                      (8, '치킨 가족 할인', '4인분 주문 시 1인분 무료', '치킨 1인분 무료', 'event4.jpg', '2023-04-18', '2023-04-28'),
-                                                                                                                      (10, '피자 콤보 할인', '피자와 사이드메뉴 함께 주문', '음료수 무료', 'event5.jpg', '2023-04-22', '2023-05-02'),
-                                                                                                                      (10, '파스타 및 와인 이벤트', '파스타 2인분 주문 시 와인 1병 무료', '와인 1병 무료', 'event6.jpg', '2023-04-24', '2023-05-09');
+                                                                                                                      (1, '해피 아워 할인', '오후 5시부터 오후 7시 방문', '음료 50% 할인', '/images/chapdeal/event_img-1682945303920.jpg', '2023-04-16', '2023-04-25'),
+                                                                                                                      (2, '주말 브런치 이벤트', '주말 브런치 메뉴 주문 시 커피 무료', '커피 1잔 무료', '/images/chapdeal/event_img-1682945358788.jpg', '2023-04-30', '2023-05-15'),
+                                                                                                                      (3, '데이트 코스 할인', '데이트 코스 메뉴 주문 시 와인 무료', '와인 1병 무료', '/images/chapdeal/event_img-1682944633951.jpg', '2023-05-01', '2023-05-20'),
+                                                                                                                      (4, '샐러드 데이 이벤트', '샐러드 구매 시 음료 무료', '음료수 1잔 무료', '/images/chapdeal/event_img-1682944810588.jpg', '2023-04-28', '2023-05-07'),
+                                                                                                                      (5, '베이커리 세일', '빵 구매 시 커피 무료', '커피 1잔 무료', '/images/chapdeal/event_img-1682944943923.jpg', '2023-04-20', '2023-05-05'),
+                                                                                                                      (5, '한정 메뉴 할인', '한정 메뉴 주문 시 디저트 무료', '디저트 1개 무료', '/images/chapdeal/event_img-1682944973518.jpg', '2023-04-26', '2023-05-12'),
+                                                                                                                      (6, '스시 특별 할인', '2인분 주문 시 1인분 무료', '스시 1인분 무료', '/images/chapdeal/event_img-1682945038115.jpg', '2023-04-15', '2023-04-30'),
+                                                                                                                      (8, '치킨 가족 할인', '4인분 주문 시 1인분 무료', '치킨 1인분 무료', '/images/chapdeal/event_img-1682945161872.jpg', '2023-04-18', '2023-04-28'),
+                                                                                                                      (10, '피자 콤보 할인', '피자와 사이드메뉴 함께 주문', '음료수 무료', '/images/chapdeal/event_img-1682945278304.jpg', '2023-04-22', '2023-05-02'),
+                                                                                                                      (10, '파스타 및 와인 이벤트', '파스타 2인분 주문 시 와인 1병 무료', '와인 1병 무료', '/images/chapdeal/event_img-1682945285951.jpg', '2023-04-24', '2023-05-09');
 
 INSERT INTO chat_rooms(user_id, name, post_time)
 VALUES
