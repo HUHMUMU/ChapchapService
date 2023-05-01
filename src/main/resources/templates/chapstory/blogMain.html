@@ -93,7 +93,7 @@
             <h4 style="font-size: 40px; margin-bottom: 40px">전체글</h4>
             <div th:each="c:${chapstorys}">
                 <div class="col">
-                    <div class="card mb-4">
+                    <div class="card mb-5">
                         <div style="text-align: center; position: relative;">
                             <small th:text="${#dates.format(c.postTime,'yyyy-MM-dd')}" class="justify-content-end" style="position: absolute; right: 0; margin-right: 5px"></small>
                             <div th:if="${c.chapstoryimgs != null and not #lists.isEmpty(c.chapstoryimgs)}">
