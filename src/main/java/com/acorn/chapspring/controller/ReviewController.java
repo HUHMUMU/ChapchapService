@@ -48,7 +48,7 @@ public class ReviewController {
     public String registerForm(Model model,
                                @PathVariable int storeNum,
                                @SessionAttribute UserDto loginUser){
-        StoresDto stores = storeService.getStoreByStoreNum(storeNum);
+        StoresDto stores = storeService.getStoreByStoreNum(storeNum); //가게 정보 불러오기
         model.addAttribute("stores",stores);
         return "review/register";
     }
@@ -90,11 +90,11 @@ public class ReviewController {
         int remove = 0;
         try{
             if(reviewRepliesService.findRepliesByReview(reviewNum)!=null){
-                remove=reviewRepliesService.removeReply(reviewNum);
+                remove=reviewRepliesService.removeReply(reviewNum); //리뷰의 댓글 삭제
             }
-            remove+=reportService.removeReportByReview(reviewNum);
-            remove+=reviewLikeService.removeLikeByReview(reviewNum);
-            remove+=reviewService.remove(reviewNum);
+            remove+=reportService.removeReportByReview(reviewNum); //리뷰의 신고 삭제
+            remove+=reviewLikeService.removeLikeByReview(reviewNum); //리뷰의 좋아요 삭제
+            remove+=reviewService.remove(reviewNum); //리뷰 삭제
         }catch (Exception e){
             log.error(e);
         }

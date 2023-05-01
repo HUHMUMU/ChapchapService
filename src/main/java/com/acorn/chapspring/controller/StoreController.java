@@ -24,7 +24,7 @@ public class StoreController {
     public String detail(Model model,
                         @SessionAttribute(required = false) UserDto loginUser,
                         @PathVariable int storeNum) {
-        StoresDto stores=storeService.getStoreByStoreNum(storeNum);
+        StoresDto stores=storeService.getStoreByStoreNum(storeNum); //가게 정보 가져오기
 //추천버든 기능구현
 //        if (loginUser != null) {
 //            RecommendStoreDto recommending=recommendService.recommendCheck(loginUser.getUserId(), storeNum);

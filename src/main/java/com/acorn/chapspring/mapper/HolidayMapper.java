@@ -9,5 +9,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface HolidayMapper {
-    List<HolidaysDto> findHoliByStore(int storeNum);
+    List<HolidaysDto> findHoliByStore(int storeNum); //가게별 휴일
 }

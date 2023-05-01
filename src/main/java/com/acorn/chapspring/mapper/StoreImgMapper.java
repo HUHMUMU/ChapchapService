@@ -9,5 +9,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface StoreImgMapper {
-    List<StoreImgsDto> findImgByStore(int storeNum);
+    List<StoreImgsDto> findImgByStore(int storeNum); //가게 별 이미지
 }
