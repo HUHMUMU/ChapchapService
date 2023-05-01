@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ReportService {
     int registerReportByReview(ReportsDto reports);
+    int removeReportByReview(int reviewNum);
 }

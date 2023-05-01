@@ -4,8 +4,7 @@ import com.acorn.chapspring.dto.ChapstoryimgsDto;
 import com.acorn.chapspring.dto.ReviewsDto;
 import com.acorn.chapspring.dto.StoresDto;
 import com.acorn.chapspring.dto.UserDto;
-import com.acorn.chapspring.service.ReviewService;
-import com.acorn.chapspring.service.StoreService;
+import com.acorn.chapspring.service.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -25,14 +24,24 @@ import java.nio.file.Paths;
 @Log4j2 //log 필드로 로그남길 수 있다.(파일로 저장 가능[유지기간,성질])
 public class ReviewController {
     private ReviewService reviewService;
+    private ReviewRepliesService reviewRepliesService;
+    private ReportService reportService;
+    private ReviewLikeService reviewLikeService;
     private StoreService storeService;
 
     @Value("${static.path}")
     private String staticPath;
 
-    public ReviewController(ReviewService reviewService, StoreService storeService) {
+    public ReviewController(ReviewService reviewService,
+                            StoreService storeService,
+                            ReportService reportService,
+                            ReviewRepliesService reviewRepliesService,
+                            ReviewLikeService reviewLikeService) {
         this.reviewService=reviewService;
         this.storeService=storeService;
+        this.reviewRepliesService=reviewRepliesService;
+        this.reportService=reportService;
+        this.reviewLikeService=reviewLikeService;
     }
 
     @GetMapping("/{storeNum}/register.do")
@@ -80,7 +89,12 @@ public class ReviewController {
         String msg="삭제 실패";
         int remove = 0;
         try{
-            remove=reviewService.remove(reviewNum);
+            if(reviewRepliesService.findRepliesByReview(reviewNum)!=null){
+                remove=reviewRepliesService.removeReply(reviewNum);
+            }
+            remove+=reportService.removeReportByReview(reviewNum);
+            remove+=reviewLikeService.removeLikeByReview(reviewNum);
+            remove+=reviewService.remove(reviewNum);
         }catch (Exception e){
             log.error(e);
         }

@@ -32,4 +32,10 @@ public class ReviewLikeServiceImp implements ReviewLikeService{
         return reviewLikeMapper.deleteReviewLike(reviewLikes);
     }
 
+    @Override
+    public int removeLikeByReview(int reviewNum) {
+        int remove=reviewLikeMapper.deleteReview(reviewNum);
+        return remove;
+    }
+
 }

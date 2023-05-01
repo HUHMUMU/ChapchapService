@@ -14,7 +14,7 @@
   <div class="image-container store" >
     <img th:src="'http://localhost:8088'+${s.mainImg}" alt="대표 이미지">
     <th:block th:each="img : ${s.storeImgs}">
-      <img th:src="'http://localhost:8088'+${img}" alt="가게 이미지">
+      <img th:src="'http://localhost:8088'+${img.storeImg}" alt="가게 이미지">
     </th:block>
   </div>
 
@@ -211,7 +211,7 @@
   </th:block>
 
   <div id="review">
-    <div th:each="r,iter:${s.reviewList}" class="store mt-2">
+    <div th:each="r,iter:${s.reviewList}" th:if="${r.rrStatus=='공개' || r.rrStatus=='심사'}" class="store mt-2">
       <div class="card" th:classappend="${iter.index >= 3} ? 'hide' : ''">
         <div class="card-header d-flex justify-content-between">
           <div class="d-flex">

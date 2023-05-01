@@ -4,6 +4,7 @@ import com.acorn.chapspring.dto.ReviewLikesDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -16,4 +17,5 @@ public interface ReviewLikeMapper {
     int insertReviewLike(ReviewLikesDto reviewLikes);
     int updateReviewLike(ReviewLikesDto reviewLikes);
     int deleteReviewLike(ReviewLikesDto reviewLikes);
+    int deleteReview(@Param("reviewNum") int reviewNum); //리뷰 삭제시 좋아요도 삭제
 }

@@ -21,6 +21,9 @@
     <delete id="deleteReviewLike">
         DELETE FROM reviewlikes WHERE review_num=#{reviewNum} AND user_id=#{userId};
     </delete>
+    <delete id="deleteReview">
+        DELETE FROM reviewlikes WHERE review_num=#{reviewNum}
+    </delete>
 
     <select id="countLikeByReview" resultMap="ReviewLikeMap">
         SELECT
