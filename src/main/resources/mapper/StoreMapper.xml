@@ -74,7 +74,16 @@
         <result column="main_category" property="mainCategory"/>
         <result column="sub_category" property="subCategory"/>
     </resultMap>
-
+    <resultMap id="MenuManagesMap" type="MenuManagesDto">
+        <id column="menu_num" property="menuNum"/>
+        <result column="name" property="name"/>
+        <result column="img" property="img"/>
+        <result column="price" property="price"/>
+        <result column="info" property="info"/>
+        <result column="menu_types" property="menuType"/>
+        <result column="status" property="status"/>
+        <result column="store_num" property="storeNum"/>
+    </resultMap>
     <select id="findAllStores" resultMap="StoresMap">
         SELECT * FROM stores
     </select>
@@ -101,6 +110,12 @@
             <if test="priceRange != null and !priceRange.equals('')">
                 AND (SELECT AVG(price) FROM menu_manages WHERE store_num = stores.store_num) BETWEEN
                 SUBSTRING_INDEX(#{priceRange}, '-', 1) AND SUBSTRING_INDEX(#{priceRange}, '-', -1)
+            </if>
+            <if test="searchName != null and !searchName.equals('')">
+                AND stores.store_name LIKE CONCAT('%', #{searchName}, '%')
+            </if>
+            <if test="detailMenuName != null and !detailMenuName.equals('')">
+                AND menu_manages.name LIKE CONCAT('%', #{detailMenuName}, '%')
             </if>
         </trim>
         GROUP BY stores.store_num, type_classes.category_num

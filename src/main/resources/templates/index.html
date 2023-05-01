@@ -811,7 +811,7 @@
             <h5 class="ms-5">2.고객센터</h5>
         </div>
     </footer>
-    <button type="button" class="btn btn-outline-warning"
+    <a class="btn btn-outline-warning"
             style="position: fixed; bottom: 20px; right: 130px; width: 100px;" data-bs-container="body"
             data-bs-toggle="popover" data-bs-placement="top" data-bs-content="채팅내역?" href="/chattingRoom.do">
         채 팅
@@ -819,7 +819,7 @@
     60
     <span class="visually-hidden">unread messages</span>
     </span>
-    </button>
+    </a>
     <script th:inline="javascript">
         async function loadBestStore(siAdd, guAdd){
             let url=`/index/${siAdd}/${guAdd}/searchStore.do`
