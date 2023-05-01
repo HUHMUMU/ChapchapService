@@ -23,7 +23,9 @@ let allParam = {
     'priceType' : "",
     'parking' : "",
     'parkingType' : "",
-    'detailArea' : ""
+    'detailArea' : "",
+    'searchName' : "",
+    'detailMenuName' : ""
 }
 function filterResult(){ // 현재 필터된 요소 표시 버튼
     // 버튼을 추가할 부모 요소를 선택
@@ -79,21 +81,24 @@ function filterResult(){ // 현재 필터된 요소 표시 버튼
         parentElement.appendChild(btn);
     });
 }
-
 // 페이지 로드
-function loadStoreList(){
+let markers = [];
+function loadStoreList(search){
     let url='/store/ajaxList.do?';
-    for (const key in allParam) {
-        if (allParam[key]) { // 값이 있을 경우에만 추가합니다.
-            url += `&${key}=${allParam[key]}`;
+    if(search){
+        url+=search;
+    }else{
+        for (const key in allParam) {
+            if (allParam[key]) { // 값이 있을 경우에만 추가합니다.
+                url += `&${key}=${allParam[key]}`;
+            }
         }
     }
-    let markers = [];
     for (let j = 0; j < markers.length; j++) {
         markers[j].setMap(null);
     }
     markers = [];  // 마커 배열 초기화
-
+    bounds=new kakao.maps.LatLngBounds();
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -141,7 +146,7 @@ function loadStoreList(){
     filterResult();
 }
 
-
+loadStoreList(location.search);
 function getCategoryName(categoryNum) {
     switch(categoryNum) {
         case 1: return "혼밥";

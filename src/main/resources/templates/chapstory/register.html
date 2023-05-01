@@ -11,8 +11,8 @@
 <div layout:fragment="content">
     <form action="/chapstory/register.do" name="registerForm" enctype="multipart/form-data" method="post">
         <p class="form-floating">
-            <input id="user_id" type="text" name="userId" th:value="${session.loginUser.userId}" readonly class="form-control" placeholder="??">
-            <label for="user_id" class="">아이디(글쓴이)</label>
+            <input id="titleInput" type="text" name="userId" th:value="${session.loginUser.userId}" readonly class="form-control" placeholder="??">
+            <label for="titleInput" class="">아이디(글쓴이)</label>
         </p>
         <p class="form-floating">
             <input id="title" type="text" name="title" class="form-control" placeholder="??">
@@ -26,28 +26,31 @@
             </button>
         </p>
         <p class="form-floating">
-            <textarea id="content" name="content" class="form-control" placeholder="??" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
-            <label for="content" class="form-label">내용을 입력하세요.</label>
+            <textarea id="txtContent" name="content" class="form-control" placeholder="??" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
+            <label for="txtContent" class="form-label">내용을 입력하세요.</label>
         </p>
 <!--        <p>-->
 <!--            <th:block th:include="/chapstory/write"></th:block>-->
 <!--        </p>-->
         <p class="text-end">
-            <button id="resetBtn" class="btn btn-outline-warning me-2" type="button" onclick="resetForm()">초기화</button>
-            <button id="addBtn" class="btn btn-outline-primary" type="submit">등록</button>
+            <button class="btn btn-outline-warning me-2" type="reset">초기화</button>
+            <button class="btn btn-outline-primary" type="submit">등록</button>
         </p>
     </form>
 </div>
 </html>
 <script>
-    function resetForm() {
-        // 제목 입력 필드 초기화
-        document.getElementById('titleInput').value = '';
+    // function resetForm() {
+    //     // 제목 입력 필드 초기화
+    //     document.getElementById('titleInput').value = '';
+    //
+    //     // 스마트 에디터 내용 초기화
+    //     oEditors.getById["txtContent"].exec("SET_CONTENTS", ['']);
+    //
+    // }
 
-        // 스마트 에디터 내용 초기화
-        oEditors.getById["txtContent"].exec("SET_CONTENTS", ['']);
 
-    }
+    // 이미지 버튼 클릭시 이미지 등록 추가
 
     const imgAddBtn=document.getElementById("imgAddBtn");
     const imgCont=document.getElementById("imgCont");
@@ -66,6 +69,8 @@
               `;
     }
 
+
+    // textarea가 입력하는 만큼 자동으로 늘어남
     function resize(obj) {
         obj.style.height = '1px';
         obj.style.height = (12 + obj.scrollHeight) + 'px';

@@ -29,10 +29,10 @@
                     fetchType="lazy"/>
     </resultMap>
     <insert useGeneratedKeys="true" keyProperty="chapNum" id="insertOne" parameterType="ChapstorysDto">
-        INSERT INTO chapstorys (user_id, title, content, main_img) VALUE (#{userId}, #{title}, #{content}, #{mainImg})
+        INSERT INTO chapstorys (user_id, title, content) VALUE (#{userId}, #{title}, #{content})
     </insert>
     <update id="updateOne" parameterType="chapstorysDto">
-        UPDATE chapstorys SET title=#{title}, content=#{content}, main_img=#{mainImg} WHERE chap_num=#{chapNum}
+        UPDATE chapstorys SET title=#{title}, content=#{content} WHERE chap_num=#{chapNum}
     </update>
     <update id="updateIncrementViewCountChapNum">
         UPDATE chapstorys SET viewcount=(viewcount+1) WHERE chap_num=#{chapNum}
@@ -54,8 +54,8 @@
                (SELECT COUNT(*) FROM chapstorylikes WHERE chap_num=chapstorys.chap_num),
                (SELECT nickname FROM users WHERE chapstorys.user_id=users.user_id)
         FROM chapstorys
-        <if test="searchField!=null">
-            WHERE ${searchField}=#{searchValue}
+        <if test="searchField!=null and searchValue!=null" >
+            WHERE ${searchField} LIKE CONCAT('%',#{searchValue},'%')
         </if>
     </select>
     <select id="bestList" resultMap="ChapstoryMap">
@@ -65,6 +65,6 @@
     </select>
 <!--    where post_time >= DATE_FORMAT(now()-7,'%Y%m%d')-->
     <select id="bestListFindByUserId" resultMap="ChapstoryMap">
-        SELECT  chap_num, title, viewcount, main_img FROM  chapstorys where user_id=#{userId} ORDER BY viewcount desc
+        SELECT  chap_num, title, viewcount FROM  chapstorys where user_id=#{userId} ORDER BY viewcount desc
     </select>
 </mapper>
