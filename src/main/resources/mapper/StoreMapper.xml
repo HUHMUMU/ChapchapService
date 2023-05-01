@@ -40,6 +40,10 @@
                      select="com.acorn.chapspring.mapper.ReviewMapper.getAverageStarByStoreNum"
                      column="store_num"
                      fetchType="eager"/>
+        <association property="waiting"
+                     select="com.acorn.chapspring.mapper.UsersWaitingMapper.findWaitingNum"
+                     column="store_num"
+                     fetchType="eager"/>
         <collection property="menuList"
                     select="com.acorn.chapspring.mapper.MenuManageMapper.findMenuByStore"
                     column="store_num"

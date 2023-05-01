@@ -1,10 +1,16 @@
 <div class="d-flex">
-  <a href="javascript:void(0)">
+  <a href="javascript:void(0)" class="p-0 me-2">
     <i class="bi bi-hand-thumbs-up"></i>
     <span th:text="${r.countLike.likeCount}"></span>
   </a>
-  <a href="javascript:void(0)">
+  <a href="javascript:void(0)" class="p-0 me-2">
     <i class="bi bi-hand-thumbs-down"></i>
     <span th:text="${r.countLike.badCount}"></span>
   </a>
 </div>
+
+<style>
+  a{
+    color: #222;
+  }
+</style>
