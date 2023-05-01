@@ -44,16 +44,16 @@ public class WaitingServiceImp implements WaitingService {
     // 대기 수정
     @Override
     @Transactional
-    public int modify(UsersWaitingDto usersWaitingDto) {
-        int modify = waitingMapper.updateOne(usersWaitingDto);
+    public int modifyPeople(UsersWaitingDto usersWaitingDto) {
+        int modify = waitingMapper.updatePeople(usersWaitingDto);
         return modify;
     }
 
     // 대기 삭제
     @Override
     @Transactional
-    public int remove(int storeNum, String userId) {
-        int result = waitingMapper.deleteByWaitingNum(storeNum,userId);
+    public int remove(int waitingNum) {
+        int result = waitingMapper.deleteByWaitingNum(waitingNum);
         return result;
     }
 

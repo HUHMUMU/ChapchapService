@@ -33,13 +33,13 @@
         VALUES ( #{userId},#{storeNum},#{userPeople},CURDATE(),CURRENT_TIME(),'대기')
     </insert>
     <!-- 대기 등록한 유저의 인원 수정   -->
-    <update id="updateOne" parameterType="usersWaitingDto">
+    <update id="updatePeople">
         UPDATE userswaiting SET user_people=#{userPeople}
         WHERE waiting_num=#{waitingNum}
     </update>
     <!-- 대기 등록한 유저의 대기 삭제   -->
     <delete id="deleteByWaitingNum">
         DELETE FROM userswaiting
-        WHERE store_num=#{storeNum} AND  user_id=#{userId} AND waiting_date=CURDATE()
+        WHERE waiting_date=CURDATE() AND waiting_num=#{waitingNum}
     </delete>
 </mapper>
