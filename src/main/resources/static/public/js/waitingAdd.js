@@ -1,5 +1,3 @@
-
-
 const confirmBtn = document.getElementById('confirmBtn');
 confirmBtn.addEventListener('click', function() {
     const warningMsg = document.querySelector('.alert-warning');
