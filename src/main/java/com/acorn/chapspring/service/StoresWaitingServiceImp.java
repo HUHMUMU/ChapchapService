@@ -25,4 +25,5 @@ public class StoresWaitingServiceImp implements StoresWaitingService {
     public StoresWaitingDto getStoreAds(int storeNum, String storeAds){
         return storesWaitingMapper.getStoreAdsOne(storeNum,storeAds);
     }
+
 }

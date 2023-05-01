@@ -15,7 +15,17 @@
         INSERT INTO reports (report_store_id,report_user_id,report_content,review_num)
         VALUES (#{reportStoreId}, #{reportUserId}, #{reportContent}, #{reviewNum})
     </insert>
+    <delete id="deleteReportByReviewNum">
+        DELETE FROM reports WHERE review_num=#{reviewNum}
+    </delete>
+    <insert id="insertReportByChapstory">
+        INSERT INTO reports (report_store_id,report_user_id,report_content,chap_num)
+        VALUES (#{reportStoreId}, #{reportUserId}, #{reportContent}, #{chapNum})
+    </insert>
     <select id="findReportByReview" resultMap="ReportMap">
         SELECT * FROM reports WHERE review_num=#{reviewNum}
+    </select>
+    <select id="findReportByChapstory" resultMap="ReportMap">
+        SELECT * FROM reports WHERE chap_num=#{chapNum}
     </select>
 </mapper>

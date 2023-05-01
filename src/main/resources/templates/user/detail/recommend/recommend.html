@@ -23,28 +23,14 @@
             <span th:if="${recommend.comment==null}">코멘트</span>
         </li>
         <li class="list-group-item">
+            <button th:onclick="loadModifyRecommend([[${recommend.userId}]],[[${recommend.storeNum}]])" class="btn btn-primary">
+                수정
+            </button>
             <button th:onclick="removeRecommend([[${recommend.userId}]],[[${recommend.storeNum}]])" class="btn btn-primary">
                 삭제
             </button>
         </li>
     </ul>
-
-
-
-<!--    <img src="..." class="card-img-top" alt="가게 이미지">-->
-<!--    <div class="card-body">-->
-<!--        <h5 class="card-title" >가게 이미지</h5>-->
-<!--    </div>-->
-<!--    <ul class="list-group list-group-flush">-->
-<!--        <li class="list-group-item" th:text="${recommend.storeName}"></li>-->
-<!--        <li class="list-group-item">추천 메뉴</li>-->
-<!--        <li class="list-group-item" >가게 평점</li>-->
-<!--        <li class="list-group-item" th:text="${recommend.comment}"></li>-->
-<!--    </ul>-->
-<!--    <div class="card-body">-->
-<!--        <button type="button" th:onclick="removeRecommend([[${recommend.userId}]],[[${recommend.storeNum}]])" th:text="${recommend.userId} +'-'+${recommend.storeNum}">리스트 삭제</button>-->
-<!--    </div>-->
-
 </div>
 
 

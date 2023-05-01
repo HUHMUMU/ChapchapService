@@ -31,16 +31,14 @@ public class ChapStoryController {
 
     private ChapStoryService chapStoryService;
     private UserService userService;
-
-    private String uploadPath; //등록 (프로젝트위치+/static/public/img/chapstory
-
-    private String staticPath; //삭제
+    @Value("${static.path}")
+    private String staticPath;
 
     public ChapStoryController(ChapStoryService chapStoryService) {this.chapStoryService=chapStoryService;}
-    @GetMapping("/write.do")
-    public String list() {
-        return "chapstory/write"; // 해당 경로에 대한 뷰 이름 반환
-    }
+//    @GetMapping("/write.do")
+//    public String list() {
+//        return "chapstory/write"; // 해당 경로에 대한 뷰 이름 반환
+//    }
 
     @GetMapping("/list.do")
     public String chapList(
@@ -49,9 +47,9 @@ public class ChapStoryController {
         List<ChapstorysDto> chaps;
         chaps= chapStoryService.list(pageDto);
         List<ChapstorysDto> bestList;
-        bestList = chapStoryService.bestList();
+        bestList = chapStoryService.bestList(); // 인기글
         PageInfo<ChapstorysDto> pageBoards=new PageInfo<>(chaps);
-        model.addAttribute("page",pageBoards);
+        model.addAttribute("page",pageBoards); //페이징
         model.addAttribute("chapstorys",chaps);
         model.addAttribute("bestList",bestList);
         return "chapstory/list";
@@ -65,15 +63,6 @@ public class ChapStoryController {
         model.addAttribute("c",chaps);
         return "chapstory/detail";}
 
-//    @GetMapping("/{userId}/blogMain.do")
-//    public String chapMain(
-//            Model model,
-//            @PathVariable String userId,
-//            @SessionAttribute UserDto loginUser){
-//        List<ChapstorysDto> chaps;
-//        chaps = chapStoryService.blogMain(userId);
-//        model.addAttribute("chapstorys",chaps);
-//        return "chapstory/blogMain";}
 
     @GetMapping("/{userId}/blogMain.do")
     public String chapMain(
@@ -115,23 +104,25 @@ public class ChapStoryController {
             RedirectAttributes redirectAttributes,
             @SessionAttribute UserDto loginUser,
             @ModelAttribute ChapstorysDto chaps,
-            @RequestParam(name = "img", required = false)MultipartFile [] imgs) throws IOException
+            @RequestParam(name = "img", required = false)MultipartFile [] imgs
+    ) throws IOException
     {
-        String redirectPage="redirect:/register.do";
-        if(!loginUser.getUserId().equals(chaps.getUserId())) return redirectPage;
+            String redirectPage="redirect:/chapstorys/register";
+        if(!loginUser.getUserId().equals(chaps.getUserId())) return redirectPage; //로그인한 유저가 아니라면 게시글 작성 불가능
         List<ChapstoryimgsDto> imgDtos=null;
-        if(imgs!=null){
+        if(imgs!=null){ // 이미지 업로드시 프로젝트 파일에 등록
             imgDtos=new ArrayList<>();
             for(MultipartFile img : imgs){
                 if(!img.isEmpty()){
                     String[] contentTypes=img.getContentType().split("/");
                     if(contentTypes[0].equals("image")){
                         String fileName=System.currentTimeMillis()+"_"+(int)(Math.random()*10000)+"."+contentTypes[1];
-                        Path path = Paths.get(uploadPath+"/chapstory/"+fileName);
+                        Path path = Paths.get(staticPath+"/public/img/chapstory/"+fileName);
                         img.transferTo(path);
                         ChapstoryimgsDto imgDto = new ChapstoryimgsDto();
                         imgDto.setImg("/public/img/chapstory/"+fileName);
                         imgDtos.add(imgDto);
+                        log.info(imgDtos);
                     }
                 }
             }
@@ -177,15 +168,25 @@ public class ChapStoryController {
 
     @PostMapping("/modify.do")
     public String modifyAction(
-            @ModelAttribute ChapstorysDto chaps){
+            @ModelAttribute ChapstorysDto chaps,
+            @RequestParam(value = "delImgChsNums",required = false) int [] delImgChsNums,
+            @RequestParam(value = "img",required = false) MultipartFile [] imgs){
         String redirectPath="redirect:/chapstory/"+chaps.getChapNum()+"/modify.do";
+        List<ChapstoryimgsDto> imgDtos=null;
         int modify=0;
         try{
-            modify=chapStoryService.modify(chaps);
+            if(delImgChsNums!=null)imgDtos=chapStoryService.imgList(delImgChsNums);
+            modify=chapStoryService.modify(chaps,delImgChsNums);
         }catch (Exception e){
             log.error(e.getMessage());
         }
         if(modify>0){
+            if(imgDtos!=null){
+                for (ChapstoryimgsDto i : imgDtos){
+                    File imgFile=new File(staticPath+i.getImg());
+                    if(imgFile.exists())imgFile.delete();
+                }
+            }
             redirectPath="redirect:/chapstory/list.do";
         }
         return redirectPath;
@@ -199,14 +200,22 @@ public class ChapStoryController {
         String redirectPath="redirect:/chapstory/"+chapNum+"/modify.do";
         String msg="삭제 실패";
         ChapstorysDto chaps=null;
+        List<ChapstoryimgsDto> imgDtos=null;
         int remove = 0;
         try{
             chaps=chapStoryService.detail(chapNum);
+            imgDtos=chaps.getChapstoryimgs();
             remove=chapStoryService.remove(chapNum);
         }catch (Exception e){
             log.error(e);
         }
         if(remove>0){
+            if(imgDtos!=null){
+                for(ChapstoryimgsDto i : imgDtos){
+                    File imgFile = new File(staticPath+i.getImg());
+                    if(imgFile.exists())imgFile.delete();
+                }
+            }
             msg="삭제 성공!";
             redirectPath="redirect:/chapstory/list.do";
         }

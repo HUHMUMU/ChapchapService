@@ -40,14 +40,14 @@
                 <div class="col-sm-6">
                   <div class="waiting-input">
                     <h4>인원 변경</h4>
-                    <form name="modifyForm" id="modifyForm" method="post" action="waiting/waitingModify.do">
+                    <form name="modifyForm" id="modifyForm" method="post" action="waitingModify.do">
                       <div class="form-group">
-                        <label for="people-input">인원 수</label>
+                        <label for="user-people">인원 수</label>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <button class="btn btn-outline-secondary" type="button" id="minus-btn">-</button>
                           </div>
-                          <input style="width: 55px;" type="number" class="form-control" id="people-input" name="user_people" th:value="${userWaiting.userPeople}"
+                          <input style="width: 55px;" type="number" class="form-control" id="user-people" name="user_people" th:value="${userWaiting.userPeople}"
                                  placeholder="인원 수를 입력하세요." th:max="${stores.waiting.maxPeople}" min="1">
                           <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="plus-btn">+</button>

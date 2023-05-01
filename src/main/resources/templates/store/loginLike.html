@@ -1,6 +1,6 @@
 <div class="d-flex">
   <a href="javascript:void(0)" style="color: #222"
-     th:onclick="reviewLikeHandler('LIKE',[[${id}]])" class="d-flex me-1">
+     th:onclick="reviewLikeHandler('LIKE',[[${id}]])" class="d-flex p-0 me-2">
     <div th:each="rr:${r.reviewLikes}">
       <div th:if="${rr.userId==session.loginUser.userId}">
         <i th:classappend="${(rr.rlStatus=='LIKE')?'bi-hand-thumbs-up-fill':'bi-hand-thumbs-up'}"></i>
@@ -11,7 +11,7 @@
   </a>
 
   <a href="javascript:void(0)" style="color: #222"
-     th:onclick="reviewLikeHandler('BAD',[[${id}]])" class="d-flex me-1">
+     th:onclick="reviewLikeHandler('BAD',[[${id}]])" class="d-flex p-0 me-2">
     <div th:each="rr:${r.reviewLikes}">
       <div th:if="${rr.userId==session.loginUser.userId}">
         <i th:classappend="${(rr.rlStatus=='BAD')?'bi-hand-thumbs-down-fill':'bi-hand-thumbs-down'}"></i>

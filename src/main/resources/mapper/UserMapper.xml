@@ -20,6 +20,21 @@
         <result column="introduce" property="introduce"/>
         <result column="u_rstatus" property="urStatus"/>
         <result column="email_check_code" property="emailCheckCode"/>
+        <association
+            property="following"
+            select="com.acorn.chapspring.mapper.FollowMapper.findByToIdAndFromIdIsLoginUserId"
+            column="user_id"
+            fetchType="eager"/>
+        <collection
+            property="followers"
+            select="com.acorn.chapspring.mapper.FollowMapper.findByToId"
+            column="user_id"
+            fetchType="lazy"/>
+        <collection
+            property="followings"
+            select="com.acorn.chapspring.mapper.FollowMapper.findByFromId"
+            column="user_id"
+            fetchType="eager"/>
     </resultMap>
 
     <!--유저서비스 구문-->

@@ -6,11 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>웨이팅 페이지</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="/public/js/waitingAdd.js" defer th:inline="javascript"></script>
 
 </head>
 <body>
@@ -23,19 +19,20 @@
                 <div class="card-header">
                     <h5 class="card-title">현재 대기팀</h5>
                 </div>
-                <div class="card-body">
-                    <p class="card-text"><strong><span th:text="${waitings.size()-1}"></span></strong></p>
+                <div class="card-body" id="userWaitingLengthCont">
+                    <p class="card-text"><strong  th:if="${waitings!=null}" th:text="${waitings.size()-1}"></strong></p>
                 </div>
             </div>
         </div>
+        <!--        -->
         <!--  2-2 div-->
         <div class="col-4">
             <div class="card" id="div22">
                 <div class="card-header">
                     <h5 class="card-title">대기 번호</h5>
                 </div>
-                <div class="card-body">
-                    <th:block th:if="${waitings!=null}">
+                <div class="card-body" id="userWaitingCont">
+                    <th:block th:if="${waitings!=null && waitings.size()>0}">
                         <p class="card-text">대기 번호 : <strong th:text="${waitings.size()}"></strong></p>
                         <p class="card-text">웨이팅 등록 시간 : <strong th:text="${waitings.get(waitings.size()-1).startTime}"></strong></p>
                         <p class="card-text">예상 대기 시간 : <strong th:text="${storeswaiting.timeSetup*(waitings.size()-1)}"></strong> 분</p>
@@ -65,19 +62,74 @@
         <i class="bi bi-shop"></i>
         대기 취소하기
     </a>
+    <a class="btn btn-warning me-5" th:href="'/waiting/'+${waitings.get(waitings.size()-1).getWaitingNum()}+'/remove.do'" type="button">
+        <i class="bi bi-shop"></i>
+        대기 취소하기
+    </a>
 <!--    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="modifyWaiting" onclick="'/'">-->
 <!--        <a th:href="'${waiting/waitingModify.do}'"></a>인원 수정하기-->
 <!--    </button>-->
+<!--    <a th:href="'/review/'+${r.reviewNum}+'/remove.do'" class="btn btn-outline-danger p-0" style="height: 25px;">삭제하기</a>-->
     <a class="btn btn-warning" th:href="'/waiting/'+${storeswaiting.storeNum}+'/waitingModify.do'" type="button">
         <i class="bi bi-shop"></i>
         인원 수정하기
     </a>
 </div>
 
+<script th:inline="javascript">
+    const STORE_NUM=[[${storeswaiting.storeNum}]];
+    const userWaitingCont= document.getElementById("userWaitingCont");
+    const userWaitingLengthCont=document.getElementById("userWaitingLengthCont");
+    async function loadUserWaitingList(){
+        const response=await fetch(`/waiting/${STORE_NUM}/ajaxWaitingStatus.do`);
+        const json=await response.json();
+        const storeswaiting=json.storeswaiting;
+        const waitings=json.waitings;
+        const loginUserWaiting=json.loginUserWaiting;
 
-<script>
+        if(loginUserWaiting.enterStatus==="완료"){
+            alert("입장하세요");
+
+        }else if(loginUserWaiting.enterStatus==="사장취소"){
+            alert("사장님이 취소했습니다 확인하세요!");
+        }else if(loginUserWaiting.enterStatus==="대기"){
+            userWaitingCont.innerHTML="";
+            userWaitingLengthCont.innerHTML="";
+            userWaitingCont.insertAdjacentHTML("beforeend",userWaitingComponent(waitings,storeswaiting));
+            userWaitingLengthCont.insertAdjacentHTML("beforeend",userWaitingLengthComponent(waitings));
+        }
+
+        return true;
+    }
+    async function autoLoad(){
+        let result=await loadUserWaitingList()
+        if (result){
+            await new Promise((resolve)=>{
+                setTimeout(()=>{resolve()},3000)
+            });
+            await autoLoad();
+        }
+    }
+    autoLoad();
+
+    function userWaitingComponent(waitings,storeswaiting){
+        return `
+            <p class="card-text">대기 번호 : <strong>${waitings.length}</strong></p>
+            <p class="card-text">웨이팅 등록 시간 : <strong>${waitings[waitings.length-1].startTime}</strong></p>
+            <p class="card-text">예상 대기 시간 : <strong>${storeswaiting.timeSetup*(waitings.length-1)}</strong> 분</p>
+        `;
+    }
+    function userWaitingLengthComponent(waitings){
+        return `
+            <p className="card-text"><strong>${waitings.length-1}</strong></p>
+        `;
+    }
+
+
+
+
+
     const alertModal = document.getElementById("alertModal");
-
     function confirmAlert() {
         alertModal.style.display = "none";
 

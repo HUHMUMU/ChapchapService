@@ -1,4 +1,4 @@
-<div class="userDetailContainer rounded-3">
+<div class="userDetailContainer rounded-3 overflow-auto">
     <div>
         <table class="table table-hover">
         <thead>
@@ -19,7 +19,7 @@
                 <td th:text="${visited.listNum}"></td>
                 <td th:text="${visited.storeName}"></td>
                 <td th:text="${visited.address}"></td>
-                <td colspan="2" th:text="${visited.visitedDate}"></td>
+                <td colspan="2" th:text="${#dates.format(visited.visitedDate,'yyyy-MM-dd')}"></td>
             </tr>
         </tbody>
         </table>

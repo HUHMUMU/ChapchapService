@@ -11,4 +11,6 @@ public interface StoresWaitingService {
     StoresWaitingDto getTimeSetup(int storeNum, int timeSetup);
     StoresWaitingDto getStoreAds(int storeNum, String storeAds);
 
+
+
 }

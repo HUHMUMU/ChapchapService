@@ -1,11 +1,13 @@
 package com.acorn.chapspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class ReviewsDto {
     private int reviewNum; //PK (auto increment) 리뷰 번호
     private String content; //리뷰 작성 내용
@@ -26,4 +28,6 @@ public class ReviewsDto {
     private MenuManagesDto menuName; //메뉴 이름 가져오기
     private ReviewLikesDto countLike; //리뷰의 좋아요 싫어요
     private List<ReportsDto> reportReview; //리뷰 신고
+    private List<ReviewLikesDto> reviewLikes; //리뷰의 좋아요들
+    private float starAverage;
 }

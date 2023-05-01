@@ -32,7 +32,6 @@ public class RecommendController {
 
             model.addAttribute("recommend",recommend);
 
-
             return "/user/detail/recommend/list";
     }
 

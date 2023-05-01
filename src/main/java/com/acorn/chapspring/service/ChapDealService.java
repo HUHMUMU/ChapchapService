@@ -5,5 +5,5 @@ import com.acorn.chapspring.dto.ChapDealDto;
 import java.util.List;
 
 public interface ChapDealService {
-    List<ChapDealDto> list();
+    List<ChapDealDto> list(); //모든 챱딜 리스트
 }

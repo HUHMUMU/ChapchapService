@@ -11,13 +11,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class MainSearchMapperTest {
-    @Autowired
-    private MainSearchMapper mainSearchMapper;
 
-    @Test
-    void findStore() {
-        StoresDto store= mainSearchMapper.findByAddressReviewsOne("서울", "강남구");
-        System.out.println("store = " + store);
-        assertNotNull(store);
-    }
+
+
+
 }

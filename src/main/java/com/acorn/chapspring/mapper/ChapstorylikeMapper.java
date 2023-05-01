@@ -12,10 +12,8 @@ public interface ChapstorylikeMapper {
 
     ChapstorylikesDto findByCNumAndUId(@Param("cNum")int CNum, @Param("uId")String UId);
     ChapstorylikesDto findByCNumAndUIdIsLoginUserId(@Param("CNum")int CNum);
-    int countByCnum(int Cnum);
+    int countByCnum(int Cnum); // 조
     int insertOne(ChapstorylikesDto chapLike);
     int deleteByLikeno(int likeno);
     int deleteOne(ChapstorylikesDto chapLike);
-    int likeCheck (ChapstorylikesDto chapLike);
-    int likeCheckCancel (ChapstorylikesDto chapLike);
 }

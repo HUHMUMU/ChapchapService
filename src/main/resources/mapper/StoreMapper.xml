@@ -40,6 +40,14 @@
                      select="com.acorn.chapspring.mapper.StoreManageMapper.findStoreCall"
                      column="store_num"
                      fetchType="eager"/>
+        <association property="starAvg"
+                     select="com.acorn.chapspring.mapper.ReviewMapper.getAverageStarByStoreNum"
+                     column="store_num"
+                     fetchType="eager"/>
+        <association property="waitingTeamNum"
+                     select="com.acorn.chapspring.mapper.UsersWaitingMapper.findWaitingNum"
+                     column="store_num"
+                     fetchType="eager"/>
         <collection property="menuList"
                     select="com.acorn.chapspring.mapper.MenuManageMapper.findMenuByStore"
                     column="store_num"
@@ -64,13 +72,26 @@
                     select="com.acorn.chapspring.mapper.HolidayMapper.findHoliByStore"
                     column="store_num"
                     fetchType="eager"/>
+        <collection property="storeImgs"
+                    select="com.acorn.chapspring.mapper.StoreImgMapper.findImgByStore"
+                    column="store_num"
+                    fetchType="eager"/>
     </resultMap>
     <resultMap id="TypeClassesMap" type="TypeClassesDto">
         <id column="category_num" property="categoryNum"/>
         <result column="main_category" property="mainCategory"/>
         <result column="sub_category" property="subCategory"/>
     </resultMap>
-
+    <resultMap id="MenuManagesMap" type="MenuManagesDto">
+        <id column="menu_num" property="menuNum"/>
+        <result column="name" property="name"/>
+        <result column="img" property="img"/>
+        <result column="price" property="price"/>
+        <result column="info" property="info"/>
+        <result column="menu_types" property="menuType"/>
+        <result column="status" property="status"/>
+        <result column="store_num" property="storeNum"/>
+    </resultMap>
     <select id="findAllStores" resultMap="StoresMap">
         SELECT * FROM stores
     </select>
@@ -97,6 +118,12 @@
             <if test="priceRange != null and !priceRange.equals('')">
                 AND (SELECT AVG(price) FROM menu_manages WHERE store_num = stores.store_num) BETWEEN
                 SUBSTRING_INDEX(#{priceRange}, '-', 1) AND SUBSTRING_INDEX(#{priceRange}, '-', -1)
+            </if>
+            <if test="searchName != null and !searchName.equals('')">
+                AND stores.store_name LIKE CONCAT('%', #{searchName}, '%')
+            </if>
+            <if test="detailMenuName != null and !detailMenuName.equals('')">
+                AND menu_manages.name LIKE CONCAT('%', #{detailMenuName}, '%')
             </if>
         </trim>
         GROUP BY stores.store_num, type_classes.category_num
@@ -133,5 +160,6 @@
     <select id="findReviewsCountByStoreNum" resultType="com.acorn.chapspring.dto.ReviewsCountDto">
 
     </select>
+    <select id="findJjimByStoreNum" resultType="com.acorn.chapspring.dto.JjimManageDto"></select>
 
 </mapper>

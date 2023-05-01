@@ -1,8 +1,10 @@
 package com.acorn.chapspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties({"handler"})
 public class MenuManagesDto {
     private int menuNum; // PK (auto increment)
     private String name; //메뉴이름

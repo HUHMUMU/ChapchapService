@@ -2,6 +2,7 @@ package com.acorn.chapspring.service;
 
 import com.acorn.chapspring.dto.ReviewsDto;
 import com.acorn.chapspring.mapper.ReviewMapper;
+import com.acorn.chapspring.mapper.ReviewRepliesMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

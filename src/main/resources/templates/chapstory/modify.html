@@ -7,10 +7,17 @@
 <head>
     <meta charset="UTF-8">
     <title>블로그 수정 페이지</title>
+    <style>
+        .delImgItem>.delImgInput{
+            display: none;
+        }
+        .delImgItem>.delImgInput:checked+img{
+            background-color: red;
+        }
+    </style>
 </head>
 <div layout:fragment="content">
     <form action="/chapstory/modify.do" name="modifyForm" enctype="multipart/form-data" method="post">
-        <h3> 이건 수정페이지다 !!!</h3>
         <input type = "text" name="chapNum" th:value="${c.chapNum}" hidden>
         <p class="form-floating">
             <input id="user_id" type="text" name="userId" th:value="${session.loginUser.userId}" readonly class="form-control" placeholder="??">
@@ -18,8 +25,15 @@
         </p>
         <p class="form-floating">
             <input id="title" type="text" name="title" th:value="${c.title}" class="form-control" placeholder="??">
-            <label for="title" class="form-label">글 제ㅔ</label>
+            <label for="title" class="form-label">글 제목</label>
             <!--            <input type = "file", id="" class="form-control" accept="image/*">-->
+        </p>
+        <p id="imgDelCont">
+            <h4>이미지 삭제 (체크)</h4>
+            <label th:each="img:${c.chapstoryimgs}" class="w-25 delImgItem">
+                <input type = "checkbox" class="delImgInput" name="delImgChsNums" th:value="${img.chsNum}">
+                <img th:src = "@{'{path}'(path=${img.img})}" class="img-thumbnail">
+            </label>
         </p>
         <p id="imgCont">
             <button id="imgAddBtn" class="btn btn-light w-100" type="button">
@@ -28,15 +42,15 @@
             </button>
         </p>
         <p class="form-floating">
-            <textarea id="content" name="content" th:text="${c.content}" class="form-control" placeholder="??"></textarea>
+            <textarea id="content" name="content" th:text="${c.content}" class="form-control" placeholder="??" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
             <label for="content" class="form-label">내용을 입력하세요.</label>
         </p>
 <!--        <p>-->
 <!--            <th:block th:include="/chapstory/modifyWrite"></th:block>-->
 <!--        </p>-->
         <p class="text-end">
-            <button id="resetBtn" class="btn btn-outline-warning me-2" type="button" onclick="resetForm()">초기화</button>
-            <button id="addBtn" class="btn btn-outline-primary" type="submit">등록</button>
+            <button id="resetBtn" class="btn btn-outline-warning me-2" type="reset">초기화</button>
+            <button id="addBtn" class="btn btn-outline-primary" type="submit">수정</button>
         </p>
     </form>
     <script>
@@ -49,6 +63,8 @@
 
         }
 
+
+        // 이미지 버튼 클릭시 이미지 등록 추가
         const imgAddBtn=document.getElementById("imgAddBtn");
         const imgCont=document.getElementById("imgCont");
         imgAddBtn.addEventListener("click",(e)=>{
@@ -64,6 +80,12 @@
                     </button>
                   </div>
               `;
+        }
+
+        // textarea가 입력하는 만큼 자동으로 늘어남
+        function resize(obj) {
+            obj.style.height = '1px';
+            obj.style.height = (12 + obj.scrollHeight) + 'px';
         }
     </script>
 </div>

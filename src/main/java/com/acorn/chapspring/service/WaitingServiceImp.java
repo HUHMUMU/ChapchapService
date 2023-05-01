@@ -22,8 +22,13 @@ public class WaitingServiceImp implements WaitingService {
     }
 
     @Override
-    public List<UsersWaitingDto> getWaitingByWaitNum(int storeNum,String userId) {
+    public List<UsersWaitingDto> getUserWaitings(int storeNum, String userId) {
         return waitingMapper.getWaitingList(  storeNum, userId);
+    }
+
+    @Override
+    public UsersWaitingDto getLoginUserWaiting(int storeNum, String userId) {
+        return waitingMapper.findByStoreNumAndUserIdAndWaitingDateIsCurdate(storeNum, userId);
     }
     // 대기 중인 팀 조회
 
@@ -44,17 +49,22 @@ public class WaitingServiceImp implements WaitingService {
     // 대기 수정
     @Override
     @Transactional
-    public int modify(UsersWaitingDto usersWaitingDto) {
-        int modify = waitingMapper.updateOne(usersWaitingDto);
+    public int modifyPeople(UsersWaitingDto usersWaitingDto) {
+        int modify = waitingMapper.updatePeople(usersWaitingDto);
         return modify;
     }
 
     // 대기 삭제
     @Override
     @Transactional
-    public int remove(int storeNum, String userId) {
-        int result = waitingMapper.deleteByWaitingNum(storeNum,userId);
+    public int remove(int waitingNum) {
+        int result = waitingMapper.deleteByWaitingNum(waitingNum);
         return result;
+    }
+
+    @Override
+    public List<UsersWaitingDto> getWaitingByStoreNum(int storeNum) {
+        return null;
     }
 
 

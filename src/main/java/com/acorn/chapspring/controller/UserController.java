@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -70,7 +71,7 @@ public class UserController {
             @PathVariable String userId,
             @SessionAttribute UserDto loginUser,
             Model model){//렌더할 뷰에 바로 객체 전달
-        UserDto user=userService.detail(userId);
+        UserDto user=userService.detail(userId,loginUser.getUserId());
         model.addAttribute("user",user);
         return "/user/modify";
     }
@@ -115,8 +116,8 @@ public class UserController {
             modelAndView.setViewName("redirect:/user/login.do");
             return modelAndView;
         }
-
-        UserDto user=userService.detail(userId);
+        String loginUserId=(loginUser!=null)?loginUser.getUserId():null;
+        UserDto user=userService.detail(userId,loginUserId);
         List<VisitedStoreDto> visited=visitedStoreService.visited(userId);
         List<ReviewsDto> reviewed=reviewService.reviewed(userId);
         List<UserDto> list=userService.userList();
@@ -135,6 +136,27 @@ public class UserController {
 
         return  modelAndView;
     }
+
+    @GetMapping("/{userId}/follow.do")
+    public ModelAndView follow(
+            @SessionAttribute(required = false) UserDto loginUser,
+            @PathVariable String userId,
+            ModelAndView modelAndView,
+            RedirectAttributes redirectAttributes
+    ){ //ModelAndView : 렌더하는 뷰 설정 및 전달할 객체 설정
+        if(loginUser==null){
+            redirectAttributes.addFlashAttribute("msg","로그인 하셔야 이용할 수 있는 페이지 입니다.");
+            modelAndView.setViewName("redirect:/user/login.do");
+            return modelAndView;
+        }
+        String loginUserId=(loginUser!=null)?loginUser.getUserId():null;
+        UserDto user=userService.detail(userId,loginUserId);
+
+        modelAndView.setViewName("/user/follow/follow");
+        modelAndView.addObject("user",user);
+        return  modelAndView;
+    }
+
 
 
     @GetMapping("/signup.do")
@@ -299,6 +321,7 @@ public class UserController {
             log.error(e.getMessage());
         }
         if(loginUser!=null){
+            log.info(autoLogin);
             if(autoLogin!=null && autoLogin==1){
                 String encryptIdValue = AESEncryption.encryptValue(loginUser.getUserId());
                 String encryptPwValue = AESEncryption.encryptValue(loginUser.getPw());
@@ -310,6 +333,8 @@ public class UserController {
                 loginPw.setMaxAge(7*24*60*60);
                 resp.addCookie(loginId);
                 resp.addCookie(loginPw);
+                log.info(loginId);
+                log.info(loginPw);
             }
             redirectAttributes.addFlashAttribute("msg","로그인 성공");
             session.setAttribute("loginUser",loginUser);

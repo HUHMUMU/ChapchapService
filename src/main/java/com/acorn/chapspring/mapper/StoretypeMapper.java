@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface StoretypeMapper {
-    StoretypesDto findByStoreType(int storeNum);
+    StoretypesDto findByStoreType(int storeNum);// 가게별 업종
 }
