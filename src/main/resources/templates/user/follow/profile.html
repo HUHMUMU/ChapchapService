@@ -2,13 +2,6 @@
   <img th:src="@{'{path}'(path=${f.profileImg})}" class="border rounded-circle" style="width: 45px; height: 45px"/>
   <div class="ms-3">
     <div>
-      <span th:text="${f.userId}"></span>
-      <span th:if="${!f.following}" class="followCont">
-        <i class="bi bi-dot"></i>
-        <button class="btn btn-link p-0" th:onclick="following([[${f.userId}]],this)">팔로우</button>
-      </span>
-    </div>
-    <div class="">
       <small th:text="${f.nickname}"></small>
     </div>
   </div>

@@ -27,12 +27,12 @@
             fetchType="eager"/>
         <collection
             property="followers"
-            select="com.acorn.chapspring.mapper.FollowMapper.findByFromId"
+            select="com.acorn.chapspring.mapper.FollowMapper.findByToId"
             column="user_id"
             fetchType="lazy"/>
         <collection
             property="followings"
-            select="com.acorn.chapspring.mapper.FollowMapper.findByToId"
+            select="com.acorn.chapspring.mapper.FollowMapper.findByFromId"
             column="user_id"
             fetchType="eager"/>
     </resultMap>

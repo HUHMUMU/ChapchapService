@@ -7,13 +7,23 @@
         <result column="user_id" property="userId"/>
         <result column="store_num" property="storeNum"/>
         <result column="store_name" property="storeName"/>
+        <result column="recommend_menu" property="recommendMenu"/>
+        <collection
+            property="menuList"
+            select="com.acorn.chapspring.mapper.MenuManageMapper.findMenuByStore"
+            column="store_num"
+            fetchType="lazy"/>
     </resultMap>
 <!--추천가게 등록-->
     <insert id="insertOneByUserId" useGeneratedKeys="true" keyProperty="recommendStoreNum" parameterType="RecommendStoreDto">
         insert into recommend_stores (comment, user_id, store_num)
             VALUE (#{comment}, #{userId}, #{storeNum})
     </insert>
-<!--추천가게 삭제-->
+    <update id="updateOne" parameterType="RecommendStoreDto">
+        update recommend_stores set comment=#{comment} where recommend_store_num=#{recommendStoreNum};
+
+    </update>
+    <!--추천가게 삭제-->
     <delete id="deleteOneByUserIdAndStoreNum" parameterType="recommendStoreDto">
         delete from recommend_stores where user_id=#{userId} and store_num=#{storeNum}
     </delete>

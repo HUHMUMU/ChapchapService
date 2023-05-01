@@ -1,0 +1,6 @@
+<div th:each="f:${user.followers}"
+     class="list-group-item d-flex justify-content-between align-items-center overflow-auto">
+    <th:block th:include="/user/follow/profile"></th:block>
+
+    <button th:onclick="toggleFollower([[${f.userId}]],this)" type="button" class="btn btn-outline-primary">팔로우</button>
+</div>

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -153,9 +154,9 @@ public class UserController {
 
         modelAndView.setViewName("/user/follow/follow");
         modelAndView.addObject("user",user);
-
         return  modelAndView;
     }
+
 
 
     @GetMapping("/signup.do")
