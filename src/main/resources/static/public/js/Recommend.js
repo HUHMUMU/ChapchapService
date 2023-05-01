@@ -1,4 +1,4 @@
-const recommend=document.getElementById("Recommend");
+ const recommend=document.getElementById("Recommend");
 
 
 async function removeRecommend(userId,storeNum){
@@ -73,3 +73,15 @@ async function loadRecommends(userId){
         recommend.innerHTML=text;
     }
 }
+// async function loadModifyRecommend(){
+//
+//     let url=`/recommend/${recommendId}handler.do`;
+//     const resp = await fetch(url);
+//     if(resp.status===200){
+//         const json=await resp.json();
+//         recommendModifyForm.querySelectorAll("[name]").forEach((input)=>{
+//             let key=input.name;
+//         })_
+//     }
+//
+// }

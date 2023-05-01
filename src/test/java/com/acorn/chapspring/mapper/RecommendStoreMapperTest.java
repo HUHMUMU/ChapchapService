@@ -1,5 +1,6 @@
 package com.acorn.chapspring.mapper;
 
+import com.acorn.chapspring.dto.MenuManagesDto;
 import com.acorn.chapspring.dto.RecommendStoreDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,20 @@ class RecommendStoreMapperTest {
         int insert=recommendStoreMapper.insertOneByUserId(recommendstore);
         assertEquals(insert,1);
     }
+    @Test
+    void updateOne(){
+//        recommendstore=new RecommendStoreDto();
+//        recommendstore.setStoreNum(1);
+//        recommendstore.setUserId("admin");
+//
+//        RecommendStoreDto recommend=recommendStoreMapper.findOneByUserIdAndStoreNum(recommendstore.getUserId(),recommendstore.getStoreNum());
+//        List<MenuManagesDto> storeMenu=recommend.getMenuList();
+//        recommendstore.setRecommendMenu(storeMenu.get(0).getMenuNum());
+//        recommendstore.setComment("햄버거가 정말 맛있어요!");
+//        int update=recommendStoreMapper.updateOne(recommendstore);
+//        assertEquals(update,1);
+//        System.out.println(recommendstore);
+    }
 
     @Test
     void deleteOneByUserIdAndStoreNum() {
@@ -54,4 +69,7 @@ class RecommendStoreMapperTest {
         RecommendStoreDto findOne=recommendStoreMapper.findOneByUserIdAndStoreNum(recommendstore.getUserId(),recommendstore.getStoreNum());
         System.out.println(findOne);
     }
+
+
+
 }
