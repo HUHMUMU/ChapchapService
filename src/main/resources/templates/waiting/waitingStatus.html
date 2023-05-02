@@ -58,10 +58,6 @@
 </div>
 <br>
 <div style="display: flex; text-align: center; margin: auto; height: auto;justify-content: center">
-    <a class="btn btn-warning" th:href="'/waiting/'+${storeswaiting.storeNum}+'/remove.do'" type="button">
-        <i class="bi bi-shop"></i>
-        대기 취소하기
-    </a>
     <a class="btn btn-warning me-5" th:href="'/waiting/'+${waitings.get(waitings.size()-1).getWaitingNum()}+'/remove.do'" type="button">
         <i class="bi bi-shop"></i>
         대기 취소하기
