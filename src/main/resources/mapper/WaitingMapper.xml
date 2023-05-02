@@ -47,5 +47,5 @@
         DELETE FROM userswaiting
         WHERE waiting_date=CURDATE() AND waiting_num=#{waitingNum}
     </delete>
-
+<!--dasasdasdasdasdasddsasaddsadsasad-->
 </mapper>
