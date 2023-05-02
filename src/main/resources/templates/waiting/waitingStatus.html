@@ -14,7 +14,7 @@
 <div class="container" >
     <div class="d-flex justify-content-center mb-5">
         <!--  2-1 div-->
-        <div class="col-4">
+        <div class="col-4 me-1">
             <div class="card" id="div21">
                 <div class="card-header">
                     <h5 class="card-title">현재 대기팀</h5>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <!--  2-2 div-->
-        <div class="col-4">
+        <div class="col-4 me-1">
             <div class="card" id="div22">
                 <div class="card-header">
                     <h5 class="card-title">대기 번호</h5>
@@ -57,7 +57,7 @@
 </div>
 <br>
 <div style="display: flex; text-align: center; margin: auto; height: auto;justify-content: center">
-    <a class="btn btn-warning" th:href="'/waiting/'+${waitings.get(waitings.size()-1).getWaitingNum()}+'/remove.do'" type="button">
+    <a class="btn btn-warning me-5" th:href="'/waiting/'+${waitings.get(waitings.size()-1).getWaitingNum()}+'/remove.do'" type="button">
         <i class="bi bi-shop"></i>
         대기 취소하기
     </a>
