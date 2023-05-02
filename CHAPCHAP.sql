@@ -813,18 +813,18 @@ INSERT INTO storeswaiting VALUES (3, '17:30:00', 60, true, 10, 'https://store3.c
 INSERT INTO storeswaiting VALUES (4, '20:00:00', 30, true, 30, 'https://store4.com', 4);
 INSERT INTO storeswaiting VALUES (5, '18:30:00', 45, true, 25, 'https://store5.com', 5);
 
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-01', '17:30:00', NULL, '대기', 'user01', 1);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (4, '2023-04-21', '18:00:00', NULL, '대기', 'user02', 2);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (5, '2023-04-22', '17:45:00', NULL, '대기', 'user03', 3);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-04-23', '19:30:00', NULL, '대기', 'user04', 4);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-01', '18:15:00', NULL, '대기', 'user05', 1);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (4, '2023-05-01', '19:20:00', NULL, '대기', 'user06', 1);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-05-01', '19:15:00', NULL, '대기', 'user07', 1);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (1, '2023-05-01', '19:00:00', NULL, '대기', 'user08', 1);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-01', '18:55:00', NULL, '대기', 'user09', 1);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-05-01', '18:50:00', NULL, '대기', 'user10', 1);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-05-01', '18:45:00', NULL, '대기', 'user11', 1);
-INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-01', '18:35:00', NULL, '대기', 'user12', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-02', '07:30:00', NULL, '대기', 'user01', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (4, '2023-05-02', '08:01:00', NULL, '대기', 'user02', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (5, '2023-05-02', '07:45:00', NULL, '대기', 'user03', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-05-02', '09:32:00', NULL, '대기', 'user04', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-02', '08:15:00', NULL, '대기', 'user05', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (4, '2023-05-02', '09:23:00', NULL, '대기', 'user06', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-05-02', '09:15:00', NULL, '대기', 'user07', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (1, '2023-05-02', '09:04:00', NULL, '대기', 'user08', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-02', '08:55:00', NULL, '대기', 'user09', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-05-02', '08:54:00', NULL, '대기', 'user10', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (2, '2023-05-02', '08:45:00', NULL, '대기', 'user11', 1);
+INSERT INTO userswaiting (user_people, waiting_date, start_time, end_time, enter_status, user_id, store_num) VALUES (3, '2023-05-02', '08:35:00', NULL, '대기', 'user12', 1);
 
 INSERT INTO visited_store_lists VALUES (1, '2023-04-10', 'user01', '맛있는 햄버거집', '서울시 강남구 역삼동 123-45');
 INSERT INTO visited_store_lists VALUES (2, '2023-04-11', 'user02', '닭갈비 전문점', '서울시 강남구 역삼동 234-56');
