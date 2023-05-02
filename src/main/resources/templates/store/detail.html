@@ -131,12 +131,27 @@
   </nav>
 
   <!-- 예약 -->
-  <div class="waiting d-grid gap-2 col-6 mx-auto" id="waiting">
-    <a class="btn btn-warning" th:href="'/waiting/'+${s.storeNum}+'/waitingAdd.do'" type="button">
-      <i class="bi bi-shop"></i>
-      예약하러 가기
-    </a>
+  <div id="waiting">
+    <th:block th:if="${session.loginUser!=null}">
+      <div class="waiting d-grid gap-2 col-6 mx-auto">
+        <a class="btn btn-warning" th:href="'/waiting/'+${s.storeNum}+'/waitingAdd.do'" type="button">
+          <i class="bi bi-shop"></i>
+          예약하러 가기
+        </a>
+      </div>
+    </th:block>
+    <th:block th:unless="${session.loginUser!=null}">
+      <div class="waiting d-grid gap-2 col-6 mx-auto">
+        <a class="btn btn-warning" href="/user/login.do" type="button">
+          <i class="bi bi-shop"></i>
+          예약하러 가기
+        </a>
+      </div>
+    </th:block>
   </div>
+
+
+
 
   <!-- 챱딜 리스트 -->
   <div id="event">
