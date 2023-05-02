@@ -6,11 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>웨이팅 페이지</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="/public/js/waitingAdd.js" defer th:inline="javascript"></script>
 
 </head>
 <body>
@@ -61,13 +57,14 @@
 </div>
 <br>
 <div style="display: flex; text-align: center; margin: auto; height: auto;justify-content: center">
-    <a class="btn btn-warning" th:href="'/waiting/'+${storeswaiting.storeNum}+'/remove.do'" type="button">
+    <a class="btn btn-warning" th:href="'/waiting/'+${waitings.get(waitings.size()-1).getWaitingNum()}+'/remove.do'" type="button">
         <i class="bi bi-shop"></i>
         대기 취소하기
     </a>
 <!--    <button type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#waiting-modal" id="modifyWaiting" onclick="'/'">-->
 <!--        <a th:href="'${waiting/waitingModify.do}'"></a>인원 수정하기-->
 <!--    </button>-->
+<!--    <a th:href="'/review/'+${r.reviewNum}+'/remove.do'" class="btn btn-outline-danger p-0" style="height: 25px;">삭제하기</a>-->
     <a class="btn btn-warning" th:href="'/waiting/'+${storeswaiting.storeNum}+'/waitingModify.do'" type="button">
         <i class="bi bi-shop"></i>
         인원 수정하기

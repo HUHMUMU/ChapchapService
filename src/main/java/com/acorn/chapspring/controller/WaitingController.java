@@ -32,20 +32,6 @@ public class WaitingController {
         StoresDto stores=storeService.getStoreByStoreNum(storeNum);
         return null;
     }
-//    @GetMapping("/{storeNum}/{waitNum}/waitingStatus.do")
-//    public String modifyForm(Model model,
-//                             @PathVariable int storeNum,
-//                             @PathVariable int waitNum,
-//                             @SessionAttribute UserDto loginUser){
-//
-//        StoresDto stores = storeService.getStoreByStoreNum(storeNum);
-//        UsersWaitingDto waiting = waitingService.getWaitingByWaitNum(storeNum, waitNum);
-//        StoresWaitingDto storeswaiting = storesWaitingService.getStoreWaitingByStoreNum(storeNum);
-//        model.addAttribute("stores",stores);
-//        model.addAttribute("waiting", waiting);
-//        model.addAttribute("storeswaiting",storeswaiting);
-//        return "redirect:waiting/"+storeNum+"/waitingModify.do";
-//    }
 
     @GetMapping("/{storeNum}/waitingStatus.do")
     public String waitingStatus(Model model,
@@ -86,28 +72,11 @@ public class WaitingController {
         }
     }
 
-//    이거 한번 ㅅ ㅣ험해봐야함
-
-//    // 대기 수정 API
-//    @PutMapping("/waiting/{storeNum}/waitingModify.do/")
-//    public String modifyWaiting(
-//            Model model,
-//            @RequestBody UsersWaitingDto usersWaitingDto) {
-//
-//        int modifyWaiting=waitingService.modifyWaiting();
-//        int modify=waitingService.modifyWaiting();
-//        if(modify>0){
-//            return "redirect:/waiting/{storeNum}/waitingStatus.do/{waitNum}";
-//        }
-//        return waitingService.modifyWaiting(usersWaitingDto);
-//    } // 20:28 삭제 되나?
-
-    // 대기 삭제 API
-
     @GetMapping("/{storeNum}/waitingModify.do")
     public String modifyWaiting(
             Model model,
-            @PathVariable int storeNum,@SessionAttribute UserDto loginUser) {
+            @PathVariable int storeNum,
+            @SessionAttribute UserDto loginUser) {
         StoresDto stores = storeService.getStoreByStoreNum(storeNum);
 
 
@@ -116,26 +85,51 @@ public class WaitingController {
         model.addAttribute("stores",stores); // stores. 이걸 쓸 수 있는건 이걸 써줘서야
         return "/waiting/waitingModify";
     } // 20:28 삭제 되나?
+    @PostMapping("/{storeNum}/waitingModify.do")
+    public String modifyWaitingAction(
+            Model model,
+            @PathVariable int storeNum,
+            @SessionAttribute UserDto loginUser,
+            @RequestParam int user_people,
+            RedirectAttributes redirectAttributes) {
+        UsersWaitingDto userWaiting=waitingService.detail(storeNum,loginUser.getUserId());
+        userWaiting.setUserPeople(user_people);
+        int modifyWaiting=waitingService.modifyPeople(userWaiting);
+        String msg="";
+        String redirectPath="";
+        if(modifyWaiting>0){
+            msg="인원 수정 성공";
+            redirectPath="redirect:/waiting/"+storeNum+"/waitingStatus.do";
+        }else{
+            return msg="실패했슈";
+            
+        }
+        redirectAttributes.addFlashAttribute("msg",msg);
+        return redirectPath;
+    }
 
-    @GetMapping("/{storeNum}/remove.do")
+    
+    
+
+    @GetMapping("/{waitingNum}/remove.do")
     public String removeAction( Model model,
-                                @PathVariable int storeNum,
+                                @PathVariable int waitingNum,
                                 @SessionAttribute UserDto loginUser,
                                 RedirectAttributes redirectAttributes) {
         String redirectPath="";
-        String msg="삭제 실패";
+        String msg="";
         int remove=0;
         try{
-            remove=waitingService.remove(storeNum,loginUser.getUserId());
+            remove=waitingService.remove(waitingNum);
         }catch (Exception e){
             log.error(e);;
         }
         if(remove>0){
             msg="삭제 성공!";
-            redirectPath="redirect:/store/"+storeNum+"/detail.do";
+            redirectPath="redirect:/";
         }else{
-            msg="삭제 성공!";
-            redirectPath="redirect:/waiting/"+storeNum+"/waitingStatus.do";
+            msg="삭제 실패!";
+            redirectPath="redirect:/waiting/"+waitingNum+"/waitingStatus.do";
 
         }
         redirectAttributes.addFlashAttribute("msg",msg);
