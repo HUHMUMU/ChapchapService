@@ -35,6 +35,7 @@ public class UserController {
     private RecommendService recommendService;
     private JjimService jjimService;
     private ReviewService reviewService;
+    private StoreService storeService;
 
 
     @GetMapping("/dropout.do")
@@ -108,6 +109,7 @@ public class UserController {
             // UserDto loginUser=(UserDto)session.getAttribute("loginUser")
             // 세션 객체를 파라미터 취급(required=true)해서 없으면 400 에러
             @PathVariable String userId,
+
             ModelAndView modelAndView,
             RedirectAttributes redirectAttributes
     ){ //ModelAndView : 렌더하는 뷰 설정 및 전달할 객체 설정
@@ -118,6 +120,9 @@ public class UserController {
         }
         String loginUserId=(loginUser!=null)?loginUser.getUserId():null;
         UserDto user=userService.detail(userId,loginUserId);
+
+
+
         List<VisitedStoreDto> visited=visitedStoreService.visited(userId);
         List<ReviewsDto> reviewed=reviewService.reviewed(userId);
         List<UserDto> list=userService.userList();
@@ -133,6 +138,7 @@ public class UserController {
         modelAndView.addObject("list",list);
         modelAndView.addObject("recommend",recommend);
         modelAndView.addObject("jjim",jjim);
+
 
         return  modelAndView;
     }

@@ -56,6 +56,9 @@
         SELECT * FROM reviews WHERE store_num=#{storeNum};
     </select>
 
+    <select id="findReviewByUser" resultMap="ReviewMap">
+        select * from reviews where user_id=#{userId};
+    </select>
 <!--    리뷰작성 리스트 출력용-->
     <select id="findAllReviewed" resultMap="ReviewMap">
         select * from reviews inner join stores

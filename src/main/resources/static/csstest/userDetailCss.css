@@ -1,8 +1,10 @@
 .userCard-container {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     justify-content: center;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
 }
 /*유저카드 좌측 css*/
 .userCard-left{
@@ -53,7 +55,7 @@
 
 /*유저카드 우특 css*/
 .userCard-right{
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     width: 600px;
     display: flex;
     flex-direction: column;
@@ -78,12 +80,6 @@
     text-align: center;
 }
 
-.user-badgebox{
-    border: 1px solid black;
-    text-align: center;
-    height: 50px;
-
-}
 .userCard-right ul{/*커뮤니티 목록 css*/
     list-style: none;
     display: flex;
@@ -102,6 +98,7 @@
     text-align: center;
     margin: 10px;
     width: 600px;
+    border-radius: 10px;
 }
 .userCard-right i{
     transform: scale(1.5);
@@ -178,7 +175,7 @@
     list-style: none;
     display: flex;
     justify-content: center;
-    border:1px solid black;
+    /*border:1px solid black;*/
 }
 .card-index p{
     border: 1px solid black;

@@ -67,7 +67,7 @@ async function loadRecommends(userId){
     let url=`/recommend/${userId}/list.do`;
     const resp=await fetch(url);
     if(resp.status===200){
-        alert("재로드 성공!");
+        // alert("재로드 성공!");
         let text=await resp.text();
         // console.log(text);
         recommend.innerHTML=text;

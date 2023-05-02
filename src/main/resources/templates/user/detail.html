@@ -55,9 +55,9 @@
                 </span>
             </a>
 
-            <p th:text="${user.introduce}+${user.faceUrl}+${user.youtubeUrl}+${user.instaUrl}"></p>
+            <p th:text="${user.introduce}"></p>
 
-            <ul style="border : 1px solid black;">
+            <ul>
                 <li>
                     <span th:if="${user.faceUrl==null}">
                         <i class="fa-brands fa-facebook"></i>
@@ -105,10 +105,10 @@
         </div>
         </section>
 
-        <section style="border: 1px solid black;">
+        <section style="margin-bottom: 20px;">
             <nav>
                 <div style="display: flex; justify-content: center;">
-                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="border: 1px solid black;">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item listbutton" role="presentation" >
                             <button class="nav-link active" id="waitingListTab" data-bs-toggle="pill"
                                     data-bs-target="#waitingList" type="button"
@@ -170,18 +170,20 @@
 
                 </div>
             </nav>
-            <div style="border: 1px solid red;">
-                <p>유저 링크 테스트</p>
-                <span th:each="list : ${list}">
-                    <a th:href="@{'/user/{userId}/detail.do'(userId=${list.userId})}" th:text="${list.userId}"></a>
-                </span>
+<!--            <div style="border: 1px solid red;">-->
+<!--                <p>유저 링크 테스트</p>-->
+<!--                <span th:each="list : ${list}">-->
+<!--                    <a th:href="@{'/user/{userId}/detail.do'(userId=${list.userId})}" th:text="${list.userId}"></a>-->
+<!--                </span>-->
 
-                <th:block th:if="${session.loginUser.userId.equals(user.userId)}">
-                    <p>
-                        <a th:href="@{'/user/{userId}/modify.do'(userId=${user.userId})}">수정페이지</a>
-                    </p>
-                </th:block>
-            </div>
+<!--                <th:block th:if="${session.loginUser.userId.equals(user.userId)}">-->
+<!--                    <p>-->
+<!--                        <a th:href="@{'/user/{userId}/modify.do'(userId=${user.userId})}">수정페이지</a>-->
+<!--                    </p>-->
+<!--                </th:block>-->
+<!--                <p>유저 정보</p>-->
+<!--                <p th:text="${user}"></p>-->
+<!--            </div>-->
         </section>
     </div>
 </div>
