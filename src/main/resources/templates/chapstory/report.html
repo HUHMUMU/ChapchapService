@@ -1,31 +1,33 @@
 <!-- Button trigger modal -->
-<a class="btn btn-outline-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="setReportId(123)">신고</a>
+<th:block th:if="${session.loginUser!=null}">
+    <a class="btn btn-outline-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="setReportId(123)">신고</a>
 
-<!-- Modal -->
-<form action="/chapstory/report.do">
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" enctype="multipart/form-data" method="post">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">게시글 신고하기</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form name="reportForm" id="reportForm" class="form-floating">
-              <label for="recipient-name" class="col-form-label">신고사유:</label>
-              <input type="text" name="reportContent" class="form-control" id="recipient-name">
-              <input type="text" id="chapNum" name="chapNum"  class="form-control" th:value="${c.chapNum}">
-              <input type="text" id="reportUserId" name="reportUserId"  class="form-control" th:value="${session.loginUser.userId}">
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-            <button type="submit" class="btn btn-primary" onclick="submitReport()">신고</button>
+    <!-- Modal -->
+    <form action="/chapstory/report.do">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" enctype="multipart/form-data" method="post">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">게시글 신고하기</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form name="reportForm" id="reportForm" class="form-floating">
+                  <label for="recipient-name" class="col-form-label">신고사유:</label>
+                  <input type="text" name="reportContent" class="form-control" id="recipient-name">
+                  <input type="text" id="chapNum" name="chapNum"  class="form-control" th:value="${c.chapNum}">
+                  <input type="text" id="reportUserId" name="reportUserId"  class="form-control" th:value="${session.loginUser.userId}">
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="submit" class="btn btn-primary" onclick="submitReport()">신고</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-</form>
+    </form>
+</th:block>
 
 <!--&lt;!&ndash; 리뷰를 신고하는 버튼 &ndash;&gt;-->
 <!--<button class="btn btn-outline-primary p-0" style="height: 25px;" onclick="submitReport()">신고</button>-->
