@@ -33,9 +33,9 @@
                      column="store_num"
                      fetchType="lazy"/>
         <association property="reviewCount"
-                    select="com.acorn.chapspring.mapper.ReviewMapper.countReviewByStore"
-                    column="store_num"
-                    fetchType="eager"/>
+                     select="com.acorn.chapspring.mapper.ReviewMapper.countReviewByStore"
+                     column="store_num"
+                     fetchType="eager"/>
         <association property="storeCall"
                      select="com.acorn.chapspring.mapper.StoreManageMapper.findStoreCall"
                      column="store_num"
