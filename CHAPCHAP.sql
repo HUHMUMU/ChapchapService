@@ -37,7 +37,7 @@ CREATE TABLE stores
     toilet            BOOLEAN                NOT NULL COMMENT '화장실구분',
     smokingroom       BOOLEAN                NOT NULL COMMENT '흡연실',
     babychair         BOOLEAN                NOT NULL COMMENT '애기의자',
-    FOREIGN KEY (store_num) REFERENCES store_manages (store_num)
+    FOREIGN KEY (store_num) REFERENCES store_manages (store_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE users
@@ -73,7 +73,7 @@ CREATE TABLE menu_manages
     menu_type ENUM ('대표메뉴', '신메뉴', '일반메뉴')   NOT NULL COMMENT '메뉴종류',
     status    BOOLEAN                        NOT NULL COMMENT '메뉴상태',
     store_num INT                            NOT NULL COMMENT '가게고유번호',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num)
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE reviews
@@ -88,9 +88,9 @@ CREATE TABLE reviews
     user_id    VARCHAR(255)                       NOT NULL COMMENT '유저아이디',
     store_num  INT                                NOT NULL COMMENT '가게 고유번호',
     menu_num   INT                                NOT NULL COMMENT '메뉴번호',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num),
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (menu_num) REFERENCES menu_manages (menu_num)
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (menu_num) REFERENCES menu_manages (menu_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE chapstorys
@@ -103,15 +103,15 @@ CREATE TABLE chapstorys
     update_time TIMESTAMP                      NULL     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜',
     user_id     VARCHAR(255)                   NOT NULL COMMENT '유저아이디',
     chs_rstatus ENUM ('공개', '심사', '비공개')       NOT NULL DEFAULT '공개' COMMENT '신고상태',
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE chapstoryLikes
 (
     likeno   INT auto_increment NOT NULL PRIMARY KEY COMMENT '좋아요고유번호',
     chap_num INT                NOT NULL COMMENT '챱스토리번호',
     user_id  VARCHAR(255)       NOT NULL COMMENT '유저아이디',
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (chap_num) REFERENCES chapstorys (chap_num)
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (chap_num) REFERENCES chapstorys (chap_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -137,8 +137,8 @@ CREATE TABLE recommend_stores
     comment             VARCHAR(255)                   NULL COMMENT '한줄평',
     user_id             VARCHAR(255)                   NOT NULL COMMENT '유저아이디',
     store_num           INT(10)                        NOT NULL COMMENT '가게고유번호',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num),
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     UNIQUE (user_id, store_num) # 같은가게 추천 두번 못하게
 );
 
@@ -148,8 +148,8 @@ CREATE TABLE jjim_manages
     jj_status ENUM ('공개', '비공개')             NOT NULL COMMENT '공개여부',
     user_id   VARCHAR(255)                   NOT NULL COMMENT '유저아이디',
     store_num INT(10)                        NOT NULL COMMENT '가게고유번호',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num),
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     UNIQUE (user_id, store_num) # 같은가게 찜 두번 못하게
 );
 
@@ -159,8 +159,8 @@ CREATE TABLE reviewlikes
     rl_status  ENUM ('LIKE', 'BAD')           NOT NULL COMMENT '좋아요 싫어요',
     user_id    VARCHAR(255)                   NOT NULL COMMENT '유저 아이디',
     review_num INT(10)                        NOT NULL COMMENT '리뷰 고유번호',
-    FOREIGN KEY (review_num) REFERENCES reviews (review_num),
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    FOREIGN KEY (review_num) REFERENCES reviews (review_num) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE userswaiting
@@ -173,8 +173,8 @@ CREATE TABLE userswaiting
     enter_status ENUM ('대기', '완료', '유저취소', '사장취소') NOT NULL COMMENT '입장완료상태체크',
     user_id      VARCHAR(255)                      NOT NULL COMMENT '유저아이디',
     store_num    INT                               NOT NULL COMMENT '가게고유번호',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num),
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     unique (waiting_date,user_id,store_num)
 );
 
@@ -187,7 +187,7 @@ CREATE TABLE storeswaiting
     time_setup    INT             NOT NULL COMMENT '웨이팅 시간 설정',
     store_ads     VARCHAR(255)    NULL COMMENT '가게홍보 url',
     store_num     INT             NOT NULL COMMENT '가게 고유번호',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num)
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE type_classes
@@ -202,8 +202,8 @@ CREATE TABLE storetypes
     storetype_id INT primary key auto_increment NOT NULL COMMENT '업종id',
     store_num    INT                            NOT NULL COMMENT '가게고유번호',
     category_num INT                            NOT NULL COMMENT '업종카테고리',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num),
-    FOREIGN KEY (category_num) REFERENCES type_classes (category_num)
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (category_num) REFERENCES type_classes (category_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE breaktimes
@@ -212,7 +212,7 @@ CREATE TABLE breaktimes
     rest_start_time TIME                           NULL COMMENT '휴식시작시간',
     rest_end_time   TIME                           NULL COMMENT '휴식 끝시간',
     store_num       INT                            NOT NULL COMMENT '가게고유번호',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num)
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE holidays
@@ -222,7 +222,7 @@ CREATE TABLE holidays
     week      ENUM ('월','화','수','목','금','토','일')      NULL COMMENT '요일',
     date      DATE                                    NULL COMMENT '일',
     regular   BOOLEAN                                 NULL COMMENT '정규/비정규',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num)
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE chap_deals
@@ -235,7 +235,7 @@ CREATE TABLE chap_deals
     event_img       VARCHAR(255)                   NULL COMMENT '이벤트 이미지',
     event_start     DATE                           NULL COMMENT '이벤트 시작기간',
     event_end       DATE                           NULL COMMENT '이벤트 끝나는기간',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num)
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE points
@@ -245,7 +245,7 @@ CREATE TABLE points
     point_plus   INT                            NULL COMMENT '적립포인트',
     point_reason VARCHAR(255)                   NULL COMMENT '포인트 받은 이유',
     user_id      VARCHAR(255)                   NOT NULL COMMENT '유저아이디',
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE chapstoryimgs
@@ -253,7 +253,7 @@ CREATE TABLE chapstoryimgs
     chs_num  INT primary key auto_increment NOT NULL COMMENT '챱사진 고유번호',
     chap_num INT                            NOT NULL COMMENT '챱스토리 번호',
     img      VARCHAR(255)                   NOT NULL COMMENT '이미지 경로(path)',
-    FOREIGN KEY (chap_num) REFERENCES chapstorys (chap_num)
+    FOREIGN KEY (chap_num) REFERENCES chapstorys (chap_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE review_replies
@@ -262,7 +262,7 @@ CREATE TABLE review_replies
     review_num INT(10)                        NOT NULL COMMENT '리뷰 고유번호',
     post_date  date                           NOT NULL COMMENT '작성 날짜',
     content    VARCHAR(255)                   NOT NULL COMMENT '작성 내용',
-    FOREIGN KEY (review_num) REFERENCES reviews (review_num)
+    FOREIGN KEY (review_num) REFERENCES reviews (review_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE store_imgs
@@ -270,7 +270,7 @@ CREATE TABLE store_imgs
     img_num   INT primary key auto_increment NOT NULL COMMENT '이미지 고유번호',
     store_num INT                            NOT NULL COMMENT '가게고유번호',
     store_img VARCHAR(255)                   NULL COMMENT '가게사진',
-    FOREIGN KEY (store_num) REFERENCES stores (store_num)
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE reports
@@ -283,10 +283,10 @@ CREATE TABLE reports
     user_id         VARCHAR(255)                   NULL COMMENT '신고당한 유저 아이디',
     chap_num        INT                            NULL COMMENT '챱스토리 번호',
     store_num       INT                            NULL COMMENT '가게 고유번호',
-    FOREIGN KEY (review_num) REFERENCES reviews (review_num),
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (chap_num) REFERENCES chapstorys (chap_num),
-    FOREIGN KEY (store_num) REFERENCES stores (store_num)
+    FOREIGN KEY (review_num) REFERENCES reviews (review_num) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (chap_num) REFERENCES chapstorys (chap_num) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (store_num) REFERENCES stores (store_num) ON DELETE CASCADE ON UPDATE CASCADE
     # report_store_id 와 report_user_id 둘중 하나는 NULL 이어야 함
     # review_num 와 user_id 와 chap_num 와 store_num 의 4개중 3개는 NULL 이어야 함
 );
@@ -321,8 +321,8 @@ CREATE TABLE follow
     from_id     VARCHAR(255)                        NOT NULL COMMENT '나를 팔로우하고 있음',
     to_id       VARCHAR(255)                        NOT NULL COMMENT '내가 팔로우하고 있음',
     unique (from_id, to_id) comment '목록 중복 지정 차단 속성',
-    foreign key (from_id) references users (user_id) on update cascade on delete cascade,
-    foreign key (to_id) references users (user_id) on update cascade on delete cascade
+    foreign key (from_id) references users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    foreign key (to_id) references users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 #여기부터 더미데이터 / store_manages 는 1000개 더미데이터 따로있음
