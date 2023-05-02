@@ -830,7 +830,7 @@
                             </form>
                         </div>
                     </div>
-                        <form name="connForm" class="input-group w-75">
+                        <form name="connForm" class="input-group w-75" th:if="${session.loginUser!=null}">
                             <strong class="input-group-text">채팅방 입장</strong>
                             <div class="form-floating">
                                 <input class="form-control" name="userId" th:value="${session.loginUser.nickname}" placeholder="유저" style="width: 16.7rem">
@@ -845,7 +845,7 @@
         </div>
     </div>
 
-    <script th:inline="javascript">
+    <script th:inline="javascript" th:if="${session.loginUser!=null}">
         const LOGIN_U_ID=[[${session.loginUser.userId}]];
         const URL="ws://localhost:9090/chat"
         const connForm=document.forms["connForm"];
