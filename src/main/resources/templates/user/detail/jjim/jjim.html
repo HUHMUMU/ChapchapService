@@ -25,9 +25,7 @@
                             <a th:href="@{'/store/{storeNum}/detail.do'(storeNum=${jjim.storeNum})}" th:text="${jjim.storeName}"></a>
                         </td>
                         <td th:text="${jjim.address}"></td>
-                        <td>
-                            <button></button>
-                        </td>
+
                     </th:block>
                     <th:block th:if="${session.loginUser==null || session.loginUser.userId!=jjim.userId}">
                         <th:block th:if="${jjim.jjStatus.equals('공개')}">
@@ -43,14 +41,6 @@
                 </tbody>
             </table>
     </div>
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end border-top" style="padding: 5px;">
-        <button class="btn btn-primary me-md-2 border-top border-success p-2" type="button">적용</button>
-    </div>
-
-
-
-
 </div>
 
 </html>

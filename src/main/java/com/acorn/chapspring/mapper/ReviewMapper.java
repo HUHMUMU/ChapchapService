@@ -11,6 +11,8 @@ public interface ReviewMapper {
     int insertReview(ReviewsDto reviews); //리뷰 작성
     int deleteReview(int reviewNum); //리뷰 삭제
 
+    List<ReviewsDto> findReviewByUser(String userId);//유저별 리뷰
+
     List<ReviewsDto> findAllReviewed(String userId);
 
     ReviewsDto getAverageStarByStoreNum(int storeNum); //리뷰 별점 평균

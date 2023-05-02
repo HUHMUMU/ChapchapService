@@ -23,9 +23,16 @@ class ReviewMapperTest {
         System.out.println("reviews = " + reviews);
         assertNotNull(reviews);
     }
+    @Test
+    void findReviewByUser(){
+//        List<ReviewsDto> reviews=reviewMapper.findReviewByUser("user01");
+//        System.out.println("reviews : "+reviews);
+//        assertNotNull(reviews);
+    }
 
     @Test
     void findAllReviewed() {
+
     }
 
     @Test

@@ -35,6 +35,11 @@
             select="com.acorn.chapspring.mapper.FollowMapper.findByFromId"
             column="user_id"
             fetchType="eager"/>
+<!--        <collection-->
+<!--            property="reviewList"-->
+<!--            select="com.acorn.chapspring.mapper.ReviewMapper.findReviewByUser"-->
+<!--            column="user_id"-->
+<!--            fetchType="lazy"/>-->
     </resultMap>
 
     <!--유저서비스 구문-->

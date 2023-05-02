@@ -8,7 +8,6 @@
     <title>유저 상세</title>
 </head>
 <div layout:fragment="content">
-    <h1 class="my-4">유저 상세 페이지 </h1>
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active"  data-bs-toggle="tab" data-bs-target="#followersNav" type="button" role="tab">
@@ -21,13 +20,11 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="followersNav" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-            <h2>팔로워 리스트</h2>
             <div id="followerCont" class="list-group overflow-auto" style="height: 60vh;">
                 <th:block th:include="/user/follow/followers"></th:block>
             </div>
         </div>
         <div class="tab-pane fade" id="followingsNav" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-            <h2>팔로잉 리스트</h2>
             <div id="followingCont" class="list-group overflow-auto" style="height: 60vh;">
                 <th:block th:include="/user/follow/followings"></th:block>
             </div>

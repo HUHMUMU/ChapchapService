@@ -34,4 +34,6 @@ public class UserDto {
     private boolean following; //팔로잉 체크
     private List<UserDto> followings; //팔로우리스트
     private List<UserDto> followers; //팔로워 리스트
+
+    private List<ReviewsDto> reviewList;//리뷰 리스트
 }
