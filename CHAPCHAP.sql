@@ -308,22 +308,18 @@ CREATE TABLE chat_messages
     cm_id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '메시지 아이디',
     cr_id     INT UNSIGNED                  NOT NULL COMMENT '채팅방 아이디',
     user_id   VARCHAR(255)                  NOT NULL COMMENT '송신자 아이디',
-#     nickname  VARCHAR(255)                  NOT NULL COMMENT '송신자 닉네임',
     content   TEXT                          NOT NULL COMMENT '메시지 내용',
     status    ENUM ('ENTER','LEAVE','CHAT') NOT NULL COMMENT '메세지 상태 상태',
     post_time TIMESTAMP                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '메시지 전송 시간',
     FOREIGN KEY (cr_id) REFERENCES chat_rooms (cr_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE
-#     FOREIGN KEY (user_id, nickname) REFERENCES users (user_id, nickname) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 
 CREATE TABLE follow
 (
     follow_id   int auto_increment primary key      NOT NULL COMMENT '팔로우 데이터 고유속성번호',
     from_id     VARCHAR(255)                        NOT NULL COMMENT '나를 팔로우하고 있음',
     to_id       VARCHAR(255)                        NOT NULL COMMENT '내가 팔로우하고 있음',
-#     follow_time timestamp default current_timestamp NOT NULL COMMENT '없어도 됨',
     unique (from_id, to_id) comment '목록 중복 지정 차단 속성',
     foreign key (from_id) references users (user_id) on update cascade on delete cascade,
     foreign key (to_id) references users (user_id) on update cascade on delete cascade
