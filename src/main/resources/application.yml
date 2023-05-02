@@ -19,7 +19,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: fhrzl55040@gmail.com
-    #password : gmail 아이디 비밀번호가 아니라 2차 인증 어플리케이션 인증 받은 번호를 넣어야 한다.
+    #password : gmail 아이디 비밀번호가 아니라 2차 인증 어플리케이션 인증 받은 번호를 넣어야 한다.asdf
     password: ${email.password}
     properties:
       mail:
