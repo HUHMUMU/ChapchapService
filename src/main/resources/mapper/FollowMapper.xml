@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.FollowMapper">
+    <resultMap id="UserMap" type="UserDto">
+        <id column="user_id" property="userId"/>
+        <result column="nickname" property="nickname"/>
+        <result column="profile_img" property="profileImg"/>
+        <result column="email" property="email"/>
+        <result column="birth" property="birth"/>
+        <result column="gender" property="gender"/>
+        <result column="address" property="address"/>
+        <result column="detail_address" property="detailAddress"/>
+        <result column="insta_url" property="instaUrl"/>
+        <result column="face_url" property="faceUrl"/>
+        <result column="youtube_url" property="youtubeUrl"/>
+        <result column="introduce" property="introduce"/>
+        <result column="following" property="following"/>
+    </resultMap>
+
+    <insert id="insertOne" parameterType="FollowDto">
+        INSERT INTO follow (from_id, to_id) VALUE (#{fromId},#{toId})
+    </insert>
+    <delete id="deleteByFromIdAndToId" parameterType="FollowDto">
+        DELETE FROM follow WHERE from_id=#{fromId} AND to_id=#{toId}
+    </delete>
+    <select id="findByFromId" resultMap="UserMap">
+        SELECT u.*
+             ,(true) following
+        FROM follow f LEFT JOIN users u ON f.to_id=u.user_id
+        WHERE from_id=#{userId}
+    </select>
+    <select id="findByToId" resultMap="UserMap">
+        SELECT u.*
+             ,(SELECT COUNT(*) FROM follow WHERE from_id=@loginUserId AND to_id=f.from_id) following
+        FROM follow f LEFT JOIN users u ON f.from_id=u.user_id
+        WHERE to_id=#{userId}
+    </select>
+    <select id="findByToIdAndFromIdIsLoginUserId" resultType="boolean">
+        SELECT COUNT(*) FROM follow WHERE from_id=@loginUserId AND to_id=#{userId}
+    </select>
+</mapper>

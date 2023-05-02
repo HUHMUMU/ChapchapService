@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acorn.chapspring.mapper.UsersWaitingMapper">
+    <resultMap id="UsersWaitingMap" type="com.acorn.chapspring.dto.UsersWaitingDto">
+        <id column="waiting_num" property="waitingNum"/>
+        <result column="user_people" property="userPeople"/>
+        <result column="wait_num" property="waitNum"/>
+        <result column="waiting_date" property="waitingDate"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="enter_status" property="enterStatus"/>
+        <result column="user_id" property="userId"/>
+        <result column="store_num" property="storeNum"/>
+    </resultMap>
+    <select id="findWaitingNum" resultMap="UsersWaitingMap">
+        SELECT COUNT(*) waitingCnt FROM userswaiting
+        WHERE store_num=#{storeNum}
+          AND waiting_date=DATE(NOW()) AND enter_status='대기';
+    </select>
+
+</mapper>

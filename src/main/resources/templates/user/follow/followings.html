@@ -1,0 +1,9 @@
+
+<div th:each="f:${user.followings}"
+     class="list-group-item d-flex justify-content-between align-items-center">
+    <th:block th:include="/user/follow/profile"></th:block>
+<!--    <th:block th:if="${session.loginUser.userId==user.userId}">-->
+        <button th:onclick="toggleFollowing([[${f.userId}]],this)" type="button" class="btn btn-outline-danger active">삭제</button>
+<!--    </th:block>-->
+
+</div>
