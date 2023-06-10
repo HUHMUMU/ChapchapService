@@ -1,12 +1,20 @@
 <!-- register.html -->
-<!DOCTYPE html>
+<!DOCTYPE html>\
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
     <meta charset="UTF-8">
     <title>블로그 작성 페이지</title>
+    <script src="/public/js/ckeditor.js" defer></script>
+    <style>
+        .ck-editor__editable {
+            height: 50vh;
+        }
+    </style>
+
 </head>
 <div layout:fragment="content">
     <form action="/chapstory/register.do" name="registerForm" enctype="multipart/form-data" method="post">
@@ -26,8 +34,8 @@
             </button>
         </p>
         <p class="form-floating">
-            <textarea id="txtContent" name="content" class="form-control" placeholder="??" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
-            <label for="txtContent" class="form-label">내용을 입력하세요.</label>
+            <textarea id="txtContent" name="content" class="form-control" placeholder="내용을 입력하세요." onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
+<!--            <label for="txtContent" class="form-label">내용을 입력하세요.</label>-->
         </p>
 <!--        <p>-->
 <!--            <th:block th:include="/chapstory/write"></th:block>-->
@@ -40,16 +48,6 @@
 </div>
 </html>
 <script>
-    // function resetForm() {
-    //     // 제목 입력 필드 초기화
-    //     document.getElementById('titleInput').value = '';
-    //
-    //     // 스마트 에디터 내용 초기화
-    //     oEditors.getById["txtContent"].exec("SET_CONTENTS", ['']);
-    //
-    // }
-
-
     // 이미지 버튼 클릭시 이미지 등록 추가
 
     const imgAddBtn=document.getElementById("imgAddBtn");
